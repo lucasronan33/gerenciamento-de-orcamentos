@@ -1,0 +1,9 @@
+export const primaryColor = '#C3073F'
+export const primaryDarkColor = '#1a1a1d'
+
+export const succesColor = '#07bc0c'
+export const infoColor = '#0197F6'
+export const errorColor = '#f2af29'
+export const warningColor = '#f2af29'
+
+export const blueDocument = 'rgb(0, 70, 255)'
