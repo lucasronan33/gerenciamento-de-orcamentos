@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom'
 import { Container } from '../../styles/GlobalStyles';
-import { Card } from '../Header/Cards/CardStyles';
+import { Card } from '../Header/styles';
 import { CardIcons, ContainerCardOrc, DivTitle, InfoCardOrc, StatusOrc } from './CardOrcStyles';
 import { IoCopyOutline, IoEyeOutline, IoTrashOutline } from 'react-icons/io5';
 import { FiEdit } from 'react-icons/fi';

@@ -11,8 +11,6 @@ export const ContainerCardOrc = styled.div`
     border-radius: 1.5vh;
     border: 1px solid #ccc;
 
-    @media(width)
-
     *{
         display: flex;
         justify-content: center;
