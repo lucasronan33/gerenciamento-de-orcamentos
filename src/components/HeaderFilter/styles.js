@@ -4,12 +4,26 @@ import styled from "styled-components";
 export const DivContainerFilter = styled.div`
     flex-grow: 1;
     flex-direction: column;
+    position: relative;
 
     .dropDownMenu{
+        width: 100%;
+        position: absolute;
         z-index: 2;
-        padding: 1vh;
-        /* background-color: red; */
+        top: 90%;
         background-color: #f5f5f5;
+        border-radius: 0 0 1vh 1vh;
+        overflow: auto;
+
+        *{
+            width: 100%;
+            padding: 1vh 2.5vh;
+            justify-content: start;
+
+            &:hover{
+                background-color: #ccc;
+            }
+        }
     }
 `
 
