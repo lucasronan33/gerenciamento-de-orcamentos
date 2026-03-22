@@ -13,10 +13,23 @@ export default function HeaderFilter() {
     const [open, setOpen] = useState(false)
     const ref = useRef()
 
+    const [search, setSearch] = useState('Todos os status')
+    const [selected, setSelected] = useState('Todos os status')
+    const options = [
+        'Todos os status',
+        'Rascunho',
+        'Enviado',
+        'Aprovado',
+        'Rejeitado',
+        'Finalizado',
+    ]
+
     useEffect(() => {
         function handleClickOutside(e) {
+
             if (ref.current && !ref.current.contains(e.target)) {
                 setOpen(false)
+                setSearch(selected)
             }
         }
 
@@ -25,7 +38,9 @@ export default function HeaderFilter() {
         return () => {
             document.removeEventListener('click', handleClickOutside)
         }
-    }, [])
+    }, [selected])
+
+    const filteredOptions = options.filter(option => option.toLowerCase().includes(search.toLowerCase()))
 
     return (
         <Container>
@@ -48,21 +63,38 @@ export default function HeaderFilter() {
                         <input
                             type='text'
                             placeholder='Filtrar por status do Orçamento'
-                            onClick={() => setOpen(true)}
+                            value={search}
+                            onClick={(e) => {
+                                setOpen(true)
+                                setSearch('')
+                            }}
+                            onChange={(e) => setSearch(e.target.value)}
                         />
                     </InptSearch>
 
                     {open && (
                         <div className='dropDownMenu'>
-                            <div>teste 1</div>
-                            <div>teste 2</div>
-                            <div>teste 3</div>
-                            <div>teste 4</div>
+                            {filteredOptions.length > 0 ? (
+                                filteredOptions.map((item, index) => (
+                                    <div
+                                        key={index}
+                                        onClick={() => {
+                                            setSelected(item)
+                                            setSearch(item)
+                                            setOpen(false)
+                                        }}
+                                    >
+                                        {item}
+                                    </div>
+                                ))
+                            ) : (
+                                <div> Nenhum resultado</div>
+                            )}
                         </div>
                     )}
                 </DivContainerFilter>
 
             </Card>
-        </Container>
+        </Container >
     )
 }
