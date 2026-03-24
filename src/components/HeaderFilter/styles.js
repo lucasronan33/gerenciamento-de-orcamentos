@@ -15,13 +15,17 @@ export const DivContainerFilter = styled.div`
         border-radius: 0 0 1vh 1vh;
         overflow: auto;
 
-        *{
+        .option{
             width: 100%;
             padding: 1vh 2.5vh;
             justify-content: start;
 
             &:hover{
                 background-color: #ccc;
+            }
+            
+            &.selected{
+                background: #ccc;
             }
         }
     }
@@ -63,7 +67,7 @@ export const InptSearch = styled.div`
         left: 0;
 
         &.input-search{
-            padding-inline: 7.5vh;
+            padding-left: 7.5vh;
         }
 
         &:focus{

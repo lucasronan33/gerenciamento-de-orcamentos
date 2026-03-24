@@ -1,6 +1,6 @@
 import React from 'react';
 import { Container } from '../../styles/GlobalStyles';
-import { Card } from '../Header/styles';
+import { Card } from '../HeaderMain/styles';
 import { DivContainerFilter, InptSearch } from './styles'
 import { IoSearchOutline } from 'react-icons/io5';
 import { HiOutlineChevronDown } from 'react-icons/hi';
@@ -78,6 +78,7 @@ export default function HeaderFilter() {
                                 filteredOptions.map((item, index) => (
                                     <div
                                         key={index}
+                                        className={`option ${item === selected ? 'selected' : ''}`}
                                         onClick={() => {
                                             setSelected(item)
                                             setSearch(item)

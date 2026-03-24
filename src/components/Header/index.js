@@ -1,58 +1,22 @@
-import React from 'react';
-import { IoMdCheckmarkCircleOutline } from 'react-icons/io';
-import { IoDocumentTextOutline, IoTrendingUp } from 'react-icons/io5';
-
-import * as colors from '../../config/colors';
-import { Card, CardInfo } from './styles';
-import { Container } from '../../styles/GlobalStyles';
-
+import React from 'react'
+import './style.css'
+import { Container } from '../../styles/GlobalStyles'
 
 export default function Header() {
+
     return (
-        <Container>
-            <Card>
-                <CardInfo>
-                    <p>Total de Orçamentos</p>
-                    <p>{0}</p>
-                </CardInfo>
+        <div className='header'>
+            <Container>
+                <div className='logo' />
+                <div className='title'>
+                    <h2>
+                        <b>Gerenciamento de Orçamentos</b>
+                    </h2>
+                    <text>Crie e gerencie seus orçamentos de forma simples</text>
+                </div>
 
-                <CardInfo $color={colors.blueDocument}>
-                    <IoDocumentTextOutline />
-                </CardInfo>
-            </Card>
-
-            <Card>
-                <CardInfo $color={colors.succesColor}>
-                    <p>Aprovados</p>
-                    <p>{0}</p>
-                </CardInfo>
-
-                <CardInfo $color={colors.succesColor}>
-                    <IoMdCheckmarkCircleOutline />
-                </CardInfo>
-            </Card>
-
-            <Card>
-                <CardInfo >
-                    <p>Valor Total</p>
-                    <p>R$ { } </p>
-                </CardInfo>
-
-                <CardInfo $color={colors.blueDocument}>
-                    <IoTrendingUp />
-                </CardInfo>
-            </Card>
-
-            <Card>
-                <CardInfo $color={colors.succesColor}>
-                    <p>Valor Aprovado</p>
-                    <p>R$ { }</p>
-                </CardInfo>
-
-                <CardInfo $color={colors.succesColor}>
-                    <IoTrendingUp />
-                </CardInfo>
-            </Card>
-        </Container>
+                <button>Novo orçamento</button>
+            </Container>
+        </div>
     )
 }
