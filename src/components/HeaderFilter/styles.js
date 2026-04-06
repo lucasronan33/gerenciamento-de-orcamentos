@@ -4,16 +4,22 @@ import styled from "styled-components";
 export const DivContainerFilter = styled.div`
     flex-grow: 1;
     flex-direction: column;
+    align-items: center;
     position: relative;
 
     .dropDownMenu{
         width: 100%;
+        flex-direction: column;
         position: absolute;
         z-index: 2;
         top: 90%;
         background-color: #f5f5f5;
         border-radius: 0 0 1vh 1vh;
         overflow: auto;
+
+        &.budget-menu{
+            max-height: 10vh;
+        }
 
         .option{
             width: 100%;
@@ -33,6 +39,7 @@ export const DivContainerFilter = styled.div`
 
 export const InptSearch = styled.div`
     width: 100%;
+    align-items: center;
     background-color:#f5f5f5;
     border-radius: 1vh;
     height: 5vh;

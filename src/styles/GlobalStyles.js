@@ -33,7 +33,6 @@ button{
     border-radius: 1.5vh;
     padding: 1.5vh 3vh;
     color: #fff;
-    align-items: center;
     font-weight: bold;
     column-gap: 1.5vh;
     align-items: center;

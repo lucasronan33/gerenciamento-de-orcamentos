@@ -5,9 +5,9 @@
     background-color: #1111115f;
     align-items: center;
     justify-content: center;
+    position: fixed;
+    inset: 0;
     z-index: 3;
-    top: 0;
-    left: 0;
 }
 
 .container-newBudget {
@@ -46,8 +46,9 @@
 
 .container-buttons-budget {
     display: grid;
-    gap: 1vh 20vh;
+    gap: 1vh 3vh;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    justify-content: end;
 }
 
 .button-nav-budget {
@@ -59,7 +60,7 @@
 }
 
 .button-nav-budget:hover {
-    background: #eee;
+    background: #f5f5f5;
 }
 
 .button-nav-budget.active {

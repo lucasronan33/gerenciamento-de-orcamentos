@@ -12,11 +12,16 @@ export default function Header() {
     console.log(newBudget)
     const handleBudget = () => {
         setNewBudget(true)
+        document.body.style.overflow = 'hidden'
+    }
+    const handleIsVisible = () => {
+        setNewBudget(false)
+        document.body.removeAttribute('style')
     }
 
     return (
         <div className='header'>
-            <NewBudget isVisible={newBudget} />
+            <NewBudget isVisible={newBudget} handleIsVisible={handleIsVisible} />
             <div className='container'>
                 <div className='container-logo-title'>
                     <div className='logo' />

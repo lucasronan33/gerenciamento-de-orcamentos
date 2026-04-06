@@ -6,7 +6,7 @@ import { NavBudget } from './styles';
 import { Button } from '../Button';
 import { FormBudget } from '../FormBudget';
 
-export default function NewBudget({ isVisible }) {
+export default function NewBudget({ isVisible, handleIsVisible }) {
   const [active, setActive] = useState('Básico')
   const options = [
     'Básico',
@@ -24,12 +24,11 @@ export default function NewBudget({ isVisible }) {
   if (!isVisible) return;
   const handleButtonActive = (option) => {
     setActive(option)
-    console.log(active)
   }
 
   return (
-    <div className="span-newBudget">
-      <form className="container-newBudget">
+    <div className="span-newBudget" onClick={() => handleIsVisible(false)}>
+      <form className="container-newBudget" onClick={(e) => e.stopPropagation()}>
         <div className="header-budget">
           <Title>Novo Orçamento</Title>
           <Subtitle>Preencha as informações do orçamento</Subtitle>
@@ -59,7 +58,7 @@ export default function NewBudget({ isVisible }) {
         </FormBudget.Root>
 
         <div className='container-buttons-budget'>
-          <Button.Root className='btn-cancel'>Cancelar</Button.Root>
+          <Button.Root onClick={() => handleIsVisible(false)} className='btn-cancel'>Cancelar</Button.Root>
           <Button.Root>Criar Orçamento</Button.Root>
         </div>
 
