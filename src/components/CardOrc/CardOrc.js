@@ -9,60 +9,58 @@ import { FiEdit } from 'react-icons/fi';
 export default function CardOrc() {
 
     return (
-        <Container>
-            <ContainerCardOrc>
-                <DivTitle>
-                    <h2>{'ORC-123'} </h2>
-                    <StatusOrc>Rascunho</StatusOrc>
-                </DivTitle>
-                <p className='clientName'>{'Nome cliente'} </p>
+        <ContainerCardOrc>
+            <DivTitle>
+                <h2>{'ORC-123'} </h2>
+                <StatusOrc>Rascunho</StatusOrc>
+            </DivTitle>
+            <p className='clientName'>{'Nome cliente'} </p>
 
-                <InfoCardOrc>
-                    <div>
-                        <p>Data: </p>
-                        <p>00/00/00</p>
-                    </div>
+            <InfoCardOrc>
+                <div>
+                    <p>Data: </p>
+                    <p>00/00/00</p>
+                </div>
 
-                    <div>
-                        <p>Horario: </p>
-                        <p>00:00</p>
-                    </div>
+                <div>
+                    <p>Horario: </p>
+                    <p>00:00</p>
+                </div>
 
+                <div>
+                    <p>Itens: </p>
+                    <p>0</p>
+                </div>
+            </InfoCardOrc>
+            <InfoCardOrc>
+                <div >
+                    <h3>Total: </h3>
+                    <h3>R$ </h3>
+                </div>
+            </InfoCardOrc>
+            <CardIcons>
+                <Link to={`/edit`} className='viewOrc' >
                     <div>
-                        <p>Itens: </p>
-                        <p>0</p>
+                        <IoEyeOutline /> Ver
                     </div>
-                </InfoCardOrc>
-                <InfoCardOrc>
+                </Link>
+                <Link to={`/edit`} >
                     <div >
-                        <h3>Total: </h3>
-                        <h3>R$ </h3>
+                        <FiEdit />
                     </div>
-                </InfoCardOrc>
-                <CardIcons>
-                    <Link to={`/edit`} className='viewOrc' >
-                        <div>
-                            <IoEyeOutline /> Ver
-                        </div>
-                    </Link>
-                    <Link to={`/edit`} >
-                        <div >
-                            <FiEdit />
-                        </div>
-                    </Link>
-                    <Link to={`/edit`} >
-                        <div >
-                            <IoCopyOutline />
-                        </div>
-                    </Link>
-                    <Link to={`/edit`} >
-                        <div >
-                            <IoTrashOutline className='trashIco' />
-                        </div>
-                    </Link>
-                </CardIcons>
+                </Link>
+                <Link to={`/edit`} >
+                    <div >
+                        <IoCopyOutline />
+                    </div>
+                </Link>
+                <Link to={`/edit`} >
+                    <div >
+                        <IoTrashOutline className='trashIco' />
+                    </div>
+                </Link>
+            </CardIcons>
 
-            </ContainerCardOrc>
-        </Container>
+        </ContainerCardOrc>
     )
 }

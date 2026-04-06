@@ -26,13 +26,18 @@ html,border-style,#root{
     height: 100%;
 }
 button{
+    height: fit-content;
     cursor: pointer;
     background: ${primaryColor};
     border: none;
-    padding: 10px 20px;
+    border-radius: 1.5vh;
+    padding: 1.5vh 3vh;
     color: #fff;
-    border-radius: 4px;
-    font-weight: 700;
+    align-items: center;
+    font-weight: bold;
+    column-gap: 1.5vh;
+    align-items: center;
+    justify-content: center;
 }
 a{
     text-decoration: none;
@@ -46,6 +51,7 @@ ul{
 export const Container = styled.section`
     max-width: 90%;
     margin: 30px auto;
+    justify-content: center;
     display: flex;
     flex-wrap: wrap;
     gap: 2vh;

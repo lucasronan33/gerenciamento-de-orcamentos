@@ -1,8 +1,6 @@
 import styled from 'styled-components';
 
 export const ContainerCardOrc = styled.div`
-    min-width: 25%;
-    flex-grow: 1;
     padding: 3vh;
     display: flex;
     flex-wrap: wrap;

@@ -21,6 +21,8 @@ export const Card = styled.div`
     }
 
     &.card-filter{
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
         padding: 2vh 3vh;
     }
 `

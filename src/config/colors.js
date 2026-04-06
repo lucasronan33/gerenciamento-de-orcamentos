@@ -1,4 +1,4 @@
-export const primaryColor = '#C3073F'
+export const primaryColor = '#000'
 export const primaryDarkColor = '#1a1a1d'
 
 export const succesColor = '#07bc0c'
