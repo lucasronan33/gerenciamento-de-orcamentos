@@ -42,16 +42,6 @@ export function BudgetContentClient() {
                 <FormBudget.Label text='E-mail' />
                 <FormBudget.Input typeInput='email' placeholder='contato@empresa.com' />
             </FormBudget.ContainerInput>
-
-            <FormBudget.ContainerInput>
-                <FormBudget.Label text='E-mail' />
-                <FormBudget.Input typeInput='email' placeholder='contato@empresa.com' />
-            </FormBudget.ContainerInput>
-
-            <FormBudget.ContainerInput>
-                <FormBudget.Label text='E-mail' />
-                <FormBudget.Input typeInput='email' placeholder='contato@empresa.com' />
-            </FormBudget.ContainerInput>
         </>
     )
 }

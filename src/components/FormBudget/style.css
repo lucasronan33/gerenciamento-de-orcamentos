@@ -44,7 +44,68 @@ input:focus {
     flex-grow: 1;
 }
 
+header,
+.content {
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+}
+
+.budget-container-items {
+    width: 100%;
+    gap: 3vh;
+    flex-wrap: wrap;
+}
+
+.budget-content-items {
+    width: 100%;
+    min-height: 10vh;
+    padding-block: 5vh;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: #555;
+    border-bottom: #ddd solid 1px;
+}
+
+.budget-total-subtotal-container {
+    width: 100%;
+    align-items: flex-end;
+    flex-direction: column;
+}
+
+.budget-total-subtotal-container div {
+    width: 60%;
+    justify-content: space-between;
+}
+
+.budget-total-subtotal-container div label {
+    padding-block: 2vh;
+}
+
+.budget-total-subtotal-container .budget-subtotal-container {
+    border-bottom: #ddd solid 1px;
+}
+
+.budget-subtotal-container label {
+    font-weight: normal;
+}
+
+.budget-total-container label {
+    font-size: x-large;
+}
+
 @media (width < 500px) {
+    header {
+        flex-direction: column;
+        row-gap: 2vh;
+        align-items: stretch;
+    }
+
+    header div {
+        justify-content: center;
+    }
 
     .input-small,
     .input-meidum,
@@ -52,5 +113,9 @@ input:focus {
     .input-xx-large,
     .input-fill {
         flex-grow: 1;
+    }
+
+    .budget-total-subtotal-container div {
+        width: 100%;
     }
 }

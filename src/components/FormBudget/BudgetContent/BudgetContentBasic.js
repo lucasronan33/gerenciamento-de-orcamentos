@@ -24,14 +24,15 @@ export function BudgetContentBasic() {
 
             if (ref.current && !ref.current.contains(e.target)) {
                 setOpen(false)
+
                 setSearch(selected)
             }
         }
 
-        document.addEventListener('click', handleClickOutside)
+        document.addEventListener('mousedown', handleClickOutside)
 
         return () => {
-            document.removeEventListener('click', handleClickOutside)
+            document.removeEventListener('mousedown', handleClickOutside)
         }
     }, [selected])
 
@@ -58,7 +59,7 @@ export function BudgetContentBasic() {
                             type='text'
                             placeholder='Filtrar por status do Orçamento'
                             value={search}
-                            onClick={(e) => {
+                            onMouseDown={(e) => {
                                 setOpen(true)
                                 setSearch('')
                             }}
@@ -73,7 +74,7 @@ export function BudgetContentBasic() {
                                     <div
                                         key={index}
                                         className={`option ${item === selected ? 'selected' : ''}`}
-                                        onClick={() => {
+                                        onMouseDown={() => {
                                             setSelected(item)
                                             setSearch(item)
                                             setOpen(false)

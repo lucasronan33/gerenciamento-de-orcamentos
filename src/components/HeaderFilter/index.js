@@ -26,7 +26,6 @@ export default function HeaderFilter() {
 
     useEffect(() => {
         function handleClickOutside(e) {
-
             if (ref.current && !ref.current.contains(e.target)) {
                 setOpen(false)
                 setSearch(selected)

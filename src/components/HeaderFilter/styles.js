@@ -14,11 +14,12 @@ export const DivContainerFilter = styled.div`
         z-index: 2;
         top: 90%;
         background-color: #f5f5f5;
-        border-radius: 0 0 1vh 1vh;
+        border-radius: 1vh;
         overflow: auto;
+        box-shadow: 0px 10px 10px #0000005a;
 
         &.budget-menu{
-            max-height: 10vh;
+            max-height: 25vh;
         }
 
         .option{
