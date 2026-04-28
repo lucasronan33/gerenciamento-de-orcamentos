@@ -91,15 +91,22 @@ export function BudgetContentBasic() {
                 </DivContainerFilter>
             </FormBudget.ContainerInput>
 
-            <FormBudget.ContainerInput>
-                <FormBudget.Label text='Data *' />
-                <FormBudget.Input typeInput='date' />
-            </FormBudget.ContainerInput>
+            <div className='budget-container-items'>
+                <FormBudget.ContainerInput>
+                    <FormBudget.Label text='Data *' />
+                    <FormBudget.Input typeInput='date' />
+                </FormBudget.ContainerInput>
 
-            <FormBudget.ContainerInput>
-                <FormBudget.Label text='Valido até *' />
-                <FormBudget.Input typeInput='date' />
-            </FormBudget.ContainerInput>
+                <FormBudget.ContainerInput>
+                    <FormBudget.Label text='Horário *' />
+                    <FormBudget.Input typeInput='time' />
+                </FormBudget.ContainerInput>
+
+                <FormBudget.ContainerInput>
+                    <FormBudget.Label text='Valido até *' />
+                    <FormBudget.Input typeInput='date' />
+                </FormBudget.ContainerInput>
+            </div>
         </>
     )
 }

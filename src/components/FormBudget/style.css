@@ -25,7 +25,8 @@ input:focus {
 }
 
 .input-small {
-    width: 15%;
+    width: 20%;
+    align-self: flex-end;
 }
 
 .input-meidum {
@@ -60,8 +61,7 @@ header,
 
 .budget-content-items {
     width: 100%;
-    min-height: 10vh;
-    padding-block: 5vh;
+    min-height: 15vh;
     justify-content: center;
     align-items: center;
     text-align: center;

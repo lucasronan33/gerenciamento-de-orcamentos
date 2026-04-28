@@ -9,7 +9,6 @@ import { Button } from '../Button'
 export default function Header() {
     const [newBudget, setNewBudget] = useState(false)
 
-    console.log(newBudget)
     const handleBudget = () => {
         setNewBudget(true)
         document.body.style.overflow = 'hidden'
