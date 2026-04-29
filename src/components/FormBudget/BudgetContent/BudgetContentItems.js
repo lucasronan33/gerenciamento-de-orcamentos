@@ -7,6 +7,7 @@ import { Button } from '../../Button';
 import { FaPlus } from 'react-icons/fa';
 import { BudgetCardItem } from './styled';
 import { Trash2 } from 'lucide-react';
+import CardItem from '../../CardItem/CardItem';
 
 export function BudgetContentItems() {
     const [open, setOpen] = useState(false)
@@ -33,9 +34,13 @@ export function BudgetContentItems() {
                 if (item.id === id) {
                     const updated = { ...item, [field]: value }
 
-                    updated.priceTotalItem =
+                    let priceTotalItem =
                         (updated.quantity * updated.unityPrice -
-                            (updated.quantity * updated.unityPrice * (updated.discount / 100))).toFixed(2)
+                            updated.quantity * updated.unityPrice * (updated.discount / 100))
+
+                    priceTotalItem *= (updated.itemTaxes / 100) + 1
+
+                    updated.priceTotalItem = priceTotalItem.toFixed(2)
 
                     return updated
                 } else { return item }
@@ -100,9 +105,13 @@ export function BudgetContentItems() {
                         itemTaxes: 0,
                     }
 
-                    newItem.priceTotalItem =
+                    let priceTotalItem =
                         (newItem.quantity * newItem.unityPrice -
-                            (newItem.quantity * newItem.unityPrice * (newItem.discount / 100))).toFixed(2)
+                            newItem.quantity * newItem.unityPrice * (newItem.discount / 100))
+
+                    priceTotalItem *= (newItem.itemTaxes / 100)
+
+                    newItem.priceTotalItem = priceTotalItem.toFixed(2)
                     setItems(prev => [...prev, newItem])
                 }}>
                     <FaPlus />
@@ -118,105 +127,16 @@ export function BudgetContentItems() {
                 ) : (
                     <div className='budget-container-items'>
                         {items.map((item) => (
-
-                            <BudgetCardItem key={item.id}>
-                                <header>
-                                    <div>Item {item.id} </div>
-                                    <div className='container-trash-icon'>
-                                        <Trash2 onClick={() => {
-                                            setItems(prev => prev.filter(i => i.id !== item.id))
-                                        }} />
-                                    </div>
-                                </header>
-
-                                <div className='budget-container-items' onClick={(e) => {
-                                }}>
-                                    <FormBudget.ContainerInput>
-                                        <FormBudget.Label text='Categoria' />
-                                        <FormBudget.Input typeInput='text' placeholder='Ex.: Limpeza' />
-                                    </FormBudget.ContainerInput>
-
-                                    <FormBudget.ContainerInput>
-                                        <FormBudget.Label text='Código/ID' />
-                                        <FormBudget.Input typeInput='text' placeholder='Código do produto' />
-                                    </FormBudget.ContainerInput>
-
-                                    <FormBudget.ContainerInput size='small'>
-                                        <FormBudget.Label text='Qtd. *' />
-                                        <FormBudget.Input typeInput='number'
-                                            min='1'
-                                            value={item.quantity}
-                                            onChange={(e) => {
-                                                changeValueInput({
-                                                    itemId: item.id,
-                                                    field: 'quantity',
-                                                    value: e.target.value,
-                                                    minValue: 1
-                                                })
-                                            }}
-                                        />
-                                    </FormBudget.ContainerInput>
-
-
-                                    <FormBudget.ContainerInput size='small'>
-                                        <FormBudget.Label text='Preço Unit. *' />
-                                        <FormBudget.Input typeInput='number'
-                                            min='0'
-                                            value={item.unityPrice}
-                                            onChange={(e) => {
-                                                changeValueInput({
-                                                    itemId: item.id,
-                                                    field: 'unityPrice',
-                                                    value: e.target.value,
-                                                    minValue: 0
-                                                })
-                                            }}
-                                        />
-                                    </FormBudget.ContainerInput>
-
-                                    <FormBudget.ContainerInput size='small' >
-                                        <FormBudget.Label text='Desc. (%)' />
-                                        <FormBudget.Input typeInput='number'
-                                            min='0'
-                                            value={item.discount}
-                                            onChange={(e) => {
-                                                changeValueInput({
-                                                    itemId: item.id,
-                                                    field: 'discount',
-                                                    value: e.target.value,
-                                                    minValue: 0
-                                                })
-                                            }}
-                                        />
-                                    </FormBudget.ContainerInput>
-
-                                    <FormBudget.ContainerInput size='small' >
-                                        <FormBudget.Label text='Impostos sob produto (%)' />
-                                        <FormBudget.Input typeInput='number'
-                                            min='0'
-                                            value={item.itemTaxes}
-                                            onChange={(e) => {
-                                                changeValueInput({
-                                                    itemId: item.id,
-                                                    field: 'itemTaxes',
-                                                    value: e.target.value,
-                                                    minValue: 0
-                                                })
-                                            }}
-                                        />
-                                    </FormBudget.ContainerInput>
-
-                                    <FormBudget.ContainerInput size='xx-large' >
-                                        <FormBudget.Label text='Obs. do item' />
-                                        <FormBudget.Input typeInput='text' placeholder='Ex.: Usado somente para limpeza' />
-                                    </FormBudget.ContainerInput>
-
-                                    <FormBudget.ContainerInput size='small' >
-                                        <FormBudget.Label text='Total' />
-                                        <FormBudget.LockedLabel text={item.priceTotalItem} />
-                                    </FormBudget.ContainerInput>
-                                </div>
-                            </BudgetCardItem>
+                            <CardItem
+                                item={item}
+                                key={item.id}
+                                onChange={changeValueInput}
+                                onDelete={(id) => {
+                                    setItems(prev =>
+                                        prev.filter(i => i.id !== id)
+                                    )
+                                }}
+                            />
                         )
                         )}
                     </div>

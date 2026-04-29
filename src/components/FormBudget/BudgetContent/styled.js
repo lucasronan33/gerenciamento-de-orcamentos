@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { errorColor, succesColor } from '../../../config/colors';
 
 export const BudgetCardItem = styled.div`
     width: 100%;
@@ -34,6 +35,14 @@ export const BudgetCardItem = styled.div`
                 }
             }
         }
+    }
+
+    .discount-card-item{
+        color: ${succesColor};
+    }
+
+    .taxes-card-item{
+        color: ${errorColor};
     }
     
 `
