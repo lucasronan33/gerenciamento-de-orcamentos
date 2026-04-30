@@ -89,8 +89,16 @@ header,
     padding-block: 2vh;
 }
 
-.budget-total-subtotal-container .budget-subtotal-container {
+.budget-total-subtotal-container .budget-subtotal-container.last {
     border-bottom: #ddd solid 1px;
+}
+
+.budget-subtotal-container.discount {
+    color: #07bc0c;
+}
+
+.budget-subtotal-container.taxes {
+    color: #e74d3c;
 }
 
 .budget-subtotal-container label {

@@ -5,8 +5,6 @@ import { HiOutlineChevronDown } from 'react-icons/hi';
 import { Title } from '../../Header/styles';
 import { Button } from '../../Button';
 import { FaPlus } from 'react-icons/fa';
-import { BudgetCardItem } from './styled';
-import { Trash2 } from 'lucide-react';
 import CardItem from '../../CardItem/CardItem';
 
 export function BudgetContentItems() {
@@ -25,6 +23,8 @@ export function BudgetContentItems() {
     const [priceSubtotal, setPriceSubtotal] = useState(0)
     const [priceTotal, setPriceTotal] = useState(0)
     const [taxes, setTaxes] = useState(0)
+    const [globalDiscount, setGlobalDiscount] = useState(0)
+    const [shippingFee, setShippingFee] = useState(0)
 
     function updateItem(id, field, value) {
 
@@ -35,8 +35,8 @@ export function BudgetContentItems() {
                     const updated = { ...item, [field]: value }
 
                     let priceTotalItem =
-                        (updated.quantity * updated.unityPrice -
-                            updated.quantity * updated.unityPrice * (updated.discount / 100))
+                        updated.quantity * updated.unityPrice -
+                        updated.quantity * updated.unityPrice * (updated.discount / 100)
 
                     priceTotalItem *= (updated.itemTaxes / 100) + 1
 
@@ -68,13 +68,40 @@ export function BudgetContentItems() {
         }, 0)
         return subtotal.toFixed(2)
     }
+    function calcPriceTotal() {
+
+        let total = Number(priceSubtotal) + Number(shippingFee)
+        total -= (total * (globalDiscount / 100))
+        total *= ((taxes / 100) + 1)
+        return (total)
+    }
+
+    const calValueTaxes = () => {
+        let valueTaxes = Number(priceSubtotal) + Number(shippingFee)
+        valueTaxes -= (valueTaxes * (globalDiscount / 100))
+        valueTaxes *= (taxes / 100)
+
+        return valueTaxes.toFixed(2)
+    }
+
+    const calValueDiscount = () => {
+        let valueDiscount = Number(priceSubtotal) + Number(shippingFee)
+        valueDiscount *= (globalDiscount / 100)
+
+        return valueDiscount.toFixed(2)
+    }
 
     useEffect(() => {
+
         const subtotal = calcPriceSubtotal()
         setPriceSubtotal(subtotal)
-    }, [items])
+
+        const total = calcPriceTotal()
+        setPriceTotal(total)
+    }, [items, priceSubtotal, globalDiscount, taxes, shippingFee])
     useEffect(() => {
 
+        if (selected !== 'Valor Customizado') setShippingFee(0)
         if (!open) return
         function handleClickOutside(e) {
             if (ref.current && !ref.current.contains(e.target)) {
@@ -88,6 +115,7 @@ export function BudgetContentItems() {
         return () => {
             document.removeEventListener('mousedown', handleClickOutside)
         }
+
     }, [open, selected])
 
     const filteredOptions = options.filter(option => option.toLowerCase().includes(search.toLowerCase()))
@@ -119,8 +147,6 @@ export function BudgetContentItems() {
                 </Button.Root>
             </header>
 
-            {/* SEPARA EM UM NOVO COMPONENTE O CARD ITEM */}
-
             <div className='budget-content-items'>
                 {items.length === 0 ? (
                     'Nenhum item adicionado. Clique em "Adicionar Item" para começar'
@@ -146,12 +172,32 @@ export function BudgetContentItems() {
             <div className='budget-container-items'>
                 <FormBudget.ContainerInput>
                     <FormBudget.Label text='Desconto Global (%)' />
-                    <FormBudget.Input typeInput='number' min='0' />
+                    <FormBudget.Input typeInput='number'
+                        min='0'
+                        value={globalDiscount}
+                        onChange={
+                            (e) => {
+                                let value = e.target.value
+                                if (value < 0) value = ''
+
+                                setGlobalDiscount(value)
+                            }
+                        } />
                 </FormBudget.ContainerInput>
 
                 <FormBudget.ContainerInput>
                     <FormBudget.Label text='Impostos (%)' />
-                    <FormBudget.Input typeInput='number' min='0' />
+                    <FormBudget.Input typeInput='number'
+                        min='0'
+                        value={taxes}
+                        onChange={
+                            (e) => {
+                                let value = e.target.value
+                                if (value < 0) value = ''
+
+                                setTaxes(value)
+                            }
+                        } />
                 </FormBudget.ContainerInput>
 
                 <FormBudget.ContainerInput size='large'>
@@ -198,7 +244,17 @@ export function BudgetContentItems() {
                 {selected === 'Valor Customizado' && (
                     <FormBudget.ContainerInput>
                         <FormBudget.Label text='Valor do Frete' />
-                        <FormBudget.Input typeInput='number' />
+                        <FormBudget.Input typeInput='number'
+                            min='0'
+                            value={shippingFee}
+                            onChange={
+                                (e) => {
+                                    let value = e.target.value
+                                    if (value < 0) value = ''
+
+                                    setShippingFee(value)
+                                }
+                            } />
                     </FormBudget.ContainerInput>
                 )}
             </div>
@@ -207,6 +263,24 @@ export function BudgetContentItems() {
                     <label>Subtotal</label>
                     <label>R$ {priceSubtotal} </label>
                 </div>
+                {shippingFee > 0 && (
+                    <div className='budget-subtotal-container'>
+                        <label>Frete</label>
+                        <label>R$ {shippingFee} </label>
+                    </div>
+                )}
+                {globalDiscount > 0 && (
+                    <div className='budget-subtotal-container discount'>
+                        <label>{`Desconto (${globalDiscount}%)`}</label>
+                        <label> - R$ {calValueDiscount()} </label>
+                    </div>
+                )}
+                {taxes > 0 && (
+                    <div className='budget-subtotal-container taxes'>
+                        <label>{`Impostos (${taxes}%)`}</label>
+                        <label>R$ {calValueTaxes()} </label>
+                    </div>
+                )}
                 <div className='budget-total-container'>
                     <label>Total</label>
                     <label> R$ {priceTotal.toFixed(2)}</label>
