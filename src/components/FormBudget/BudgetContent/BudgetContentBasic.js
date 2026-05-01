@@ -19,6 +19,10 @@ export function BudgetContentBasic() {
         'Finalizado',
     ]
 
+    function numberBudget() {
+        return crypto.randomUUID()
+    }
+
     useEffect(() => {
         function handleClickOutside(e) {
 
@@ -29,10 +33,10 @@ export function BudgetContentBasic() {
             }
         }
 
-        document.addEventListener('mousedown', handleClickOutside)
+        document.addEventListener('click', handleClickOutside)
 
         return () => {
-            document.removeEventListener('mousedown', handleClickOutside)
+            document.removeEventListener('click', handleClickOutside)
         }
     }, [selected])
 
@@ -42,12 +46,12 @@ export function BudgetContentBasic() {
         <>
             <FormBudget.ContainerInput>
                 <FormBudget.Label text='Numero do Orçamento *' />
-                <FormBudget.Input typeInput='text' placeholder='Numero do Orçamento' />
+                <FormBudget.LockedLabel placeholder='Numero do Orçamento' name='budgetNumber' />
             </FormBudget.ContainerInput>
 
             <FormBudget.ContainerInput>
                 <FormBudget.Label text='Nome do Cliente *' />
-                <FormBudget.Input typeInput='text' placeholder='Nome do Cliente' />
+                <FormBudget.Input typeInput='text' placeholder='Nome do Cliente' name='clientName' />
             </FormBudget.ContainerInput>
 
             <FormBudget.ContainerInput size='meidum'>
@@ -57,6 +61,7 @@ export function BudgetContentBasic() {
                         <HiOutlineChevronDown className='chevronDown-icon' />
                         <input
                             type='text'
+                            name='budgetStatus'
                             placeholder='Filtrar por status do Orçamento'
                             value={search}
                             onMouseDown={(e) => {
@@ -94,17 +99,17 @@ export function BudgetContentBasic() {
             <div className='budget-container-items'>
                 <FormBudget.ContainerInput>
                     <FormBudget.Label text='Data *' />
-                    <FormBudget.Input typeInput='date' />
+                    <FormBudget.Input typeInput='date' name='date' />
                 </FormBudget.ContainerInput>
 
                 <FormBudget.ContainerInput>
                     <FormBudget.Label text='Horário *' />
-                    <FormBudget.Input typeInput='time' />
+                    <FormBudget.Input typeInput='time' step="1800" name='time' />
                 </FormBudget.ContainerInput>
 
                 <FormBudget.ContainerInput>
                     <FormBudget.Label text='Valido até *' />
-                    <FormBudget.Input typeInput='date' />
+                    <FormBudget.Input typeInput='date' name='validity' />
                 </FormBudget.ContainerInput>
             </div>
         </>

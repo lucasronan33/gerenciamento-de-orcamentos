@@ -4,6 +4,7 @@ import { FormBudgetLockedLabel } from './FormBudgetLockedLabel';
 import { FormBudgetRoot } from './FormBudgetRoot';
 import { FormBudgetContainerInput } from './FormBudgetContainerInput';
 import { BudgetContent } from './BudgetContent';
+import { FormBudgetTextArea } from './FormBudgetTextArea';
 
 
 export const FormBudget = {
@@ -12,5 +13,6 @@ export const FormBudget = {
     Label: FormBudgetLabel,
     LockedLabel: FormBudgetLockedLabel,
     Input: FormBudgetInput,
+    TextArea: FormBudgetTextArea,
     Content: BudgetContent,
 }

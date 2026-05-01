@@ -173,6 +173,7 @@ export function BudgetContentItems() {
                 <FormBudget.ContainerInput>
                     <FormBudget.Label text='Desconto Global (%)' />
                     <FormBudget.Input typeInput='number'
+                        name='globalDiscount'
                         min='0'
                         value={globalDiscount}
                         onChange={
@@ -188,6 +189,7 @@ export function BudgetContentItems() {
                 <FormBudget.ContainerInput>
                     <FormBudget.Label text='Impostos (%)' />
                     <FormBudget.Input typeInput='number'
+                        name='taxes'
                         min='0'
                         value={taxes}
                         onChange={
@@ -207,6 +209,7 @@ export function BudgetContentItems() {
                             <HiOutlineChevronDown className='chevronDown-icon' />
                             <input
                                 type='text'
+                                name='shippingType'
                                 placeholder='Tipo de frete'
                                 value={search}
                                 onMouseDown={(e) => {
@@ -245,6 +248,7 @@ export function BudgetContentItems() {
                     <FormBudget.ContainerInput>
                         <FormBudget.Label text='Valor do Frete' />
                         <FormBudget.Input typeInput='number'
+                            name='shippingFee'
                             min='0'
                             value={shippingFee}
                             onChange={

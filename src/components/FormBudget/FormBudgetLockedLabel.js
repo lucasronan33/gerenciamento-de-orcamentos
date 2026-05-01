@@ -17,7 +17,7 @@ export const LockedLabel = styled.label`
 export function FormBudgetLockedLabel({ text }) {
     return (
         <LockedLabel>
-            R$ {text}
+            {text}
         </LockedLabel>
     )
 }

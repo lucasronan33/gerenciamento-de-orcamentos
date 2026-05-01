@@ -27,8 +27,8 @@ export default function NewBudget({ isVisible, handleIsVisible }) {
   }
 
   return (
-    <div className="span-newBudget" onClick={() => handleIsVisible(false)}>
-      <form className="container-newBudget" onClick={(e) => e.stopPropagation()}>
+    <div className="span-newBudget" onMouseDown={() => handleIsVisible(false)}>
+      <form className="container-newBudget" onMouseDown={(e) => e.stopPropagation()}>
         <div className="header-budget">
           <Title>Novo Orçamento</Title>
           <Subtitle>Preencha as informações do orçamento</Subtitle>

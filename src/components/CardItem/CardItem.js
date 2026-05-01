@@ -36,10 +36,10 @@ export default function CardItem({
             }
         }
 
-        document.addEventListener('mousedown', handleClickOutside)
+        document.addEventListener('click', handleClickOutside)
 
         return () => {
-            document.removeEventListener('mousedown', handleClickOutside)
+            document.removeEventListener('click', handleClickOutside)
         }
     }, [open, selected])
 
@@ -57,12 +57,12 @@ export default function CardItem({
             <div className='budget-container-items'>
                 <FormBudget.ContainerInput>
                     <FormBudget.Label text='Categoria' />
-                    <FormBudget.Input typeInput='text' placeholder='Ex.: Limpeza' />
+                    <FormBudget.Input typeInput='text' placeholder='Ex.: Limpeza' name='category' />
                 </FormBudget.ContainerInput>
 
                 <FormBudget.ContainerInput>
                     <FormBudget.Label text='Código/ID' />
-                    <FormBudget.Input typeInput='text' placeholder='Código do produto' />
+                    <FormBudget.Input typeInput='text' placeholder='Código do produto' name='productCode' />
                 </FormBudget.ContainerInput>
 
 
@@ -73,6 +73,7 @@ export default function CardItem({
                             <HiOutlineChevronDown className='chevronDown-icon' />
                             <input
                                 type='text'
+                                name='metricUnity'
                                 placeholder='Unidade de medida'
                                 value={search}
                                 onMouseDown={(e) => {
@@ -105,23 +106,17 @@ export default function CardItem({
                             </div>
                         )}
                     </DivContainerFilter>
-
                 </FormBudget.ContainerInput>
-                {selected === 'Valor Customizado' && (
-                    <FormBudget.ContainerInput>
-                        <FormBudget.Label text='Valor do Frete' />
-                        <FormBudget.Input typeInput='number' />
-                    </FormBudget.ContainerInput>
-                )}
 
                 <FormBudget.ContainerInput size='xx-large' >
                     <FormBudget.Label text='Obs. do item' />
-                    <FormBudget.Input typeInput='text' placeholder='Ex.: Usado somente para limpeza' />
+                    <FormBudget.Input typeInput='text' placeholder='Ex.: Usado somente para limpeza' name='obsItem' />
                 </FormBudget.ContainerInput>
 
                 <FormBudget.ContainerInput >
                     <FormBudget.Label text='Qtd. *' />
                     <FormBudget.Input typeInput='number'
+                        name='quantity'
                         min='1'
                         value={item.quantity}
                         onChange={(e) => {
@@ -138,6 +133,7 @@ export default function CardItem({
                 <FormBudget.ContainerInput size='small'>
                     <FormBudget.Label text='Preço Unit. *' />
                     <FormBudget.Input typeInput='number'
+                        name='unityPrice'
                         min='0'
                         value={item.unityPrice}
                         onChange={(e) => {
@@ -154,6 +150,7 @@ export default function CardItem({
                 <FormBudget.ContainerInput size='small' >
                     <FormBudget.Label text='Desc. (%)' />
                     <FormBudget.Input typeInput='number'
+                        name='itemDiscount'
                         min='0'
                         value={item.discount}
                         onChange={(e) => {
@@ -170,6 +167,7 @@ export default function CardItem({
                 <FormBudget.ContainerInput size='medium' >
                     <FormBudget.Label text='Impostos sob produto (%)' />
                     <FormBudget.Input typeInput='number'
+                        name='itemTaxes'
                         min='0'
                         value={item.itemTaxes}
                         onChange={(e) => {
@@ -185,7 +183,7 @@ export default function CardItem({
 
                 <FormBudget.ContainerInput size='medium' >
                     <FormBudget.Label text='Total' />
-                    <FormBudget.LockedLabel text={item.priceTotalItem} />
+                    <FormBudget.LockedLabel text={'R$ ' + item.priceTotalItem} />
                 </FormBudget.ContainerInput>
 
                 <FormBudget.ContainerInput size='medium' >
