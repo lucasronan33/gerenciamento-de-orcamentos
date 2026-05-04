@@ -1,7 +1,13 @@
 const mongoose = require('mongoose');
+const validator = require('validator');
 
 const BudgetItemSchema = new mongoose.Schema(
   {
+    itemRef: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Items',
+      default: null,
+    },
     category: String,
     unity: {
       type: String,
@@ -24,8 +30,9 @@ const BudgetItemSchema = new mongoose.Schema(
     discount: { type: Number, required: true, default: 0 },
     itemTaxes: { type: Number, required: true, default: 0 },
     priceTotalItem: { type: Number, required: true, default: 0 },
-  }, { _id: true }
-)
+  },
+  { _id: true }
+);
 
 const BudgetSchema = new mongoose.Schema(
   {
@@ -69,7 +76,7 @@ const BudgetSchema = new mongoose.Schema(
 
     items: [BudgetItemSchema],
 
-    condtions: {
+    conditions: {
       paymentMethod: {
         type: String,
         enum: [],
@@ -107,4 +114,85 @@ const BudgetSchema = new mongoose.Schema(
   }
 );
 
-module.exports = mongoose.model('Budget', BudgetSchema);
+const BudgetModel = mongoose.model('Budget', BudgetSchema);
+
+class Budget {
+  constructor(body) {
+    this.body = body
+    this.errors = []
+    this.budget = null
+  }
+
+  async register() {
+    this.validation()
+    if (this.errors.length > 0) return
+
+    this.budget = await BudgetModel.create(this.body)
+  }
+
+  async findById(id) {
+    if (typeof id !== 'string') return
+
+    const budget = await BudgetModel.findById(id)
+    return budget
+  }
+
+  validation() {
+    this.cleanUp()
+
+    if (!this.body.client.name) this.errors.push('Nome do cliente é um campo obrigatorio')
+    if (!this.body.date || !validator.isDate(this.body.date)) this.errors.push('Data ou formato da data invalido')
+    if (!this.body.validUntil || !validator.isDate(this.body.validUntil)) this.errors.push('Data ou formato da data invalido')
+    if (!this.body.time || !validator.isTime(this.body.time)) this.errors.push('Horario ou formato do horario invalido')
+    if (this.body.client.email && !validator.isEmail(this.body.client.email)) this.errors.push('email invalido')
+
+  }
+
+  cleanUp() {
+    this.body = {
+      code: this.body.budgetNumber,
+      status: this.body.budgetStatus,
+
+      date: this.body.date,
+      time: this.body.time,
+      validUntil: this.body.validity,
+
+      client: {
+        name: this.body.clientName,
+        phone: this.body.tel,
+        email: this.body.email,
+        cpfcnpj: this.body.cpf_cnpj,
+        address: {
+          street: this.body.street,
+          number: this.body.streetNumber,
+          city: this.body.city,
+          state: this.body.state,
+          zipCode: this.body.zipCode,
+        },
+      },
+
+      items: this.body.items || [],
+
+      conditions: {
+        paymentMethod: this.body.paymentMethod,
+        shippingTime: this.body.deliveryTime,
+        paymentConditions: this.body.paymentConditions,
+        warranty: this.body.warranty,
+        obsBudget: this.body.obsBudget,
+        termsConditions: this.body.termsConditions,
+
+      },
+
+      shipping: this.body.shippingType,
+      totals: {
+        subtotal: 0,
+        taxes: this.body.taxes,
+        globalDiscount: this.body.globalDiscount,
+        shippingFee: this.body.shippingFee,
+        total: 0,
+      },
+    }
+  }
+}
+
+module.exports = { Budget, BudgetModel, BudgetSchema, BudgetItemSchema }

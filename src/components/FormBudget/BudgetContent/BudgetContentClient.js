@@ -30,7 +30,7 @@ export function BudgetContentClient() {
 
             <FormBudget.ContainerInput size='small'>
                 <FormBudget.Label text='CEP' />
-                <FormBudget.Input typeInput='text' placeholder='0000-000' name='zip' />
+                <FormBudget.Input typeInput='text' placeholder='0000-000' name='zipCode' />
             </FormBudget.ContainerInput>
 
             <FormBudget.ContainerInput size='medium'>
