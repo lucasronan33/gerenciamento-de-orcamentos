@@ -5,8 +5,9 @@ import { FaPlus } from 'react-icons/fa'
 import NewBudget from '../NewBudget'
 import { Subtitle, Title } from './styles'
 import { Button } from '../Button'
+import { BudgetProvider } from '../BudgetContext'
 
-export default function Header() {
+export default function Header(props) {
     const [newBudget, setNewBudget] = useState(false)
 
     const handleBudget = () => {
@@ -20,7 +21,9 @@ export default function Header() {
 
     return (
         <div className='header'>
-            <NewBudget isVisible={newBudget} handleIsVisible={handleIsVisible} />
+            <BudgetProvider>
+                <NewBudget isVisible={newBudget} handleIsVisible={handleIsVisible} {...props} />
+            </BudgetProvider>
             <div className='container'>
                 <div className='container-logo-title'>
                     <div className='logo' />

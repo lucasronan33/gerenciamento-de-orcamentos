@@ -6,6 +6,7 @@ import { Title } from '../../Header/styles';
 import { Button } from '../../Button';
 import { FaPlus } from 'react-icons/fa';
 import CardItem from '../../CardItem/CardItem';
+import { useBudget } from '../../BudgetContext';
 
 export function BudgetContentItems() {
     const [open, setOpen] = useState(false)
@@ -19,33 +20,22 @@ export function BudgetContentItems() {
         'FOB (por conta do cliente)',
         'Valor Customizado',
     ]
-    const [items, setItems] = useState([])
-    const [priceSubtotal, setPriceSubtotal] = useState(0)
-    const [priceTotal, setPriceTotal] = useState(0)
-    const [taxes, setTaxes] = useState(0)
-    const [globalDiscount, setGlobalDiscount] = useState(0)
-    const [shippingFee, setShippingFee] = useState(0)
+    const { budget, setBudget, updateTotals, updateItem, calcTotal } = useBudget()
 
-    function updateItem(id, field, value) {
+    function addItem() {
+        const newItem = {
+            id: budget.items.length + 1,
+            quantity: 1,
+            unityPrice: 0,
+            discount: 0,
+            taxes: 0,
+        }
+        newItem.total = calcTotal(newItem)
 
-
-        setItems(prev => {
-            return prev.map(item => {
-                if (item.id === id) {
-                    const updated = { ...item, [field]: value }
-
-                    let priceTotalItem =
-                        updated.quantity * updated.unityPrice -
-                        updated.quantity * updated.unityPrice * (updated.discount / 100)
-
-                    priceTotalItem *= (updated.itemTaxes / 100) + 1
-
-                    updated.priceTotalItem = priceTotalItem.toFixed(2)
-
-                    return updated
-                } else { return item }
-            })
-        })
+        setBudget(prev => ({
+            ...prev,
+            items: [...prev.items, newItem]
+        }))
     }
 
     function changeValueInput({ itemId, field, value, minValue }) {
@@ -62,31 +52,32 @@ export function BudgetContentItems() {
 
     function calcPriceSubtotal() {
 
-        const subtotal = items.reduce((acc, item) => {
-            const value = Number(item.priceTotalItem) || 0
+        const subtotal = budget.items.reduce((acc, item) => {
+            const value = Number(item.total) || 0
             return acc + value
-        }, 0)
-        return subtotal.toFixed(2)
+        }, 0).toFixed(2)
+        return subtotal
     }
     function calcPriceTotal() {
+        const subtotal = calcPriceSubtotal()
 
-        let total = Number(priceSubtotal) + Number(shippingFee)
-        total -= (total * (globalDiscount / 100))
-        total *= ((taxes / 100) + 1)
-        return (total)
+        let total = Number(subtotal) + Number(budget.totals.shipping)
+        total -= (total * (budget.totals.discount / 100))
+        total *= ((budget.totals.taxes / 100) + 1)
+        return (total.toFixed(2))
     }
 
     const calValueTaxes = () => {
-        let valueTaxes = Number(priceSubtotal) + Number(shippingFee)
-        valueTaxes -= (valueTaxes * (globalDiscount / 100))
-        valueTaxes *= (taxes / 100)
+        let valueTaxes = Number(budget.totals.subtotal) + Number(budget.totals.shipping)
+        valueTaxes -= (valueTaxes * (budget.totals.discount / 100))
+        valueTaxes *= (budget.totals.taxes / 100)
 
         return valueTaxes.toFixed(2)
     }
 
     const calValueDiscount = () => {
-        let valueDiscount = Number(priceSubtotal) + Number(shippingFee)
-        valueDiscount *= (globalDiscount / 100)
+        let valueDiscount = Number(budget.totals.subtotal) + Number(budget.totals.shipping)
+        valueDiscount *= (budget.totals.discount / 100)
 
         return valueDiscount.toFixed(2)
     }
@@ -94,14 +85,16 @@ export function BudgetContentItems() {
     useEffect(() => {
 
         const subtotal = calcPriceSubtotal()
-        setPriceSubtotal(subtotal)
+        updateTotals('subtotal', subtotal)
 
         const total = calcPriceTotal()
-        setPriceTotal(total)
-    }, [items, priceSubtotal, globalDiscount, taxes, shippingFee])
+        updateTotals('total', total)
+
+    }, [budget.items])
+
     useEffect(() => {
 
-        if (selected !== 'Valor Customizado') setShippingFee(0)
+        if (selected !== 'Valor Customizado') updateTotals('shipping', 0)
         if (!open) return
         function handleClickOutside(e) {
             if (ref.current && !ref.current.contains(e.target)) {
@@ -124,43 +117,32 @@ export function BudgetContentItems() {
             <header>
                 <Title>Itens do Orçamento</Title>
 
-                <Button.Root onClick={() => {
-                    const newItem = {
-                        id: items.length + 1,
-                        quantity: 1,
-                        unityPrice: 0,
-                        discount: 0,
-                        itemTaxes: 0,
-                    }
-
-                    let priceTotalItem =
-                        (newItem.quantity * newItem.unityPrice -
-                            newItem.quantity * newItem.unityPrice * (newItem.discount / 100))
-
-                    priceTotalItem *= (newItem.itemTaxes / 100)
-
-                    newItem.priceTotalItem = priceTotalItem.toFixed(2)
-                    setItems(prev => [...prev, newItem])
-                }}>
+                <Button.Root
+                    onClick={addItem}
+                >
                     <FaPlus />
                     Adicionar Item
                 </Button.Root>
             </header>
 
             <div className='budget-content-items'>
-                {items.length === 0 ? (
+                {budget.items.length === 0 ? (
                     'Nenhum item adicionado. Clique em "Adicionar Item" para começar'
                 ) : (
                     <div className='budget-container-items'>
-                        {items.map((item) => (
+                        {budget.items.map((item, index) => (
                             <CardItem
                                 item={item}
-                                key={item.id}
+                                key={item.id = index + 1}
                                 onChange={changeValueInput}
                                 onDelete={(id) => {
-                                    setItems(prev =>
-                                        prev.filter(i => i.id !== id)
+                                    setBudget(
+                                        prev => ({
+                                            ...prev,
+                                            items: prev.items.filter(i => i.id !== item.id)
+                                        })
                                     )
+
                                 }}
                             />
                         )
@@ -175,13 +157,13 @@ export function BudgetContentItems() {
                     <FormBudget.Input typeInput='number'
                         name='globalDiscount'
                         min='0'
-                        value={globalDiscount}
+                        value={budget.totals.discount}
                         onChange={
                             (e) => {
                                 let value = e.target.value
                                 if (value < 0) value = ''
 
-                                setGlobalDiscount(value)
+                                updateTotals('discount', value)
                             }
                         } />
                 </FormBudget.ContainerInput>
@@ -191,13 +173,13 @@ export function BudgetContentItems() {
                     <FormBudget.Input typeInput='number'
                         name='taxes'
                         min='0'
-                        value={taxes}
+                        value={budget.totals.taxes}
                         onChange={
                             (e) => {
                                 let value = e.target.value
                                 if (value < 0) value = ''
 
-                                setTaxes(value)
+                                updateTotals('taxes', value)
                             }
                         } />
                 </FormBudget.ContainerInput>
@@ -250,13 +232,13 @@ export function BudgetContentItems() {
                         <FormBudget.Input typeInput='number'
                             name='shippingFee'
                             min='0'
-                            value={shippingFee}
+                            value={budget.totals.shipping}
                             onChange={
                                 (e) => {
                                     let value = e.target.value
                                     if (value < 0) value = ''
 
-                                    setShippingFee(value)
+                                    updateTotals('shipping', value)
                                 }
                             } />
                     </FormBudget.ContainerInput>
@@ -265,29 +247,29 @@ export function BudgetContentItems() {
             <div className='budget-total-subtotal-container'>
                 <div className='budget-subtotal-container'>
                     <label>Subtotal</label>
-                    <label>R$ {priceSubtotal} </label>
+                    <label>R$ {budget.totals.subtotal} </label>
                 </div>
-                {shippingFee > 0 && (
+                {budget.totals.shipping > 0 && (
                     <div className='budget-subtotal-container'>
                         <label>Frete</label>
-                        <label>R$ {shippingFee} </label>
+                        <label>R$ {budget.totals.shipping} </label>
                     </div>
                 )}
-                {globalDiscount > 0 && (
+                {budget.totals.discount > 0 && (
                     <div className='budget-subtotal-container discount'>
-                        <label>{`Desconto (${globalDiscount}%)`}</label>
+                        <label>{`Desconto (${budget.totals.discount}%)`}</label>
                         <label> - R$ {calValueDiscount()} </label>
                     </div>
                 )}
-                {taxes > 0 && (
+                {budget.totals.taxes > 0 && (
                     <div className='budget-subtotal-container taxes'>
-                        <label>{`Impostos (${taxes}%)`}</label>
+                        <label>{`Impostos (${budget.totals.taxes}%)`}</label>
                         <label>R$ {calValueTaxes()} </label>
                     </div>
                 )}
                 <div className='budget-total-container'>
                     <label>Total</label>
-                    <label> R$ {priceTotal.toFixed(2)}</label>
+                    <label> R$ {budget.totals.total}</label>
                 </div>
             </div>
         </ >

@@ -24,7 +24,7 @@ export function BudgetContentBasic() {
     ]
 
     function numberBudget() {
-        return new Date().toLocaleString('pt-BR').replace(/[/,:]/g, '-').replace(' ', '')
+        return Math.floor(Math.random() * 999999)
     }
 
     useEffect(() => {

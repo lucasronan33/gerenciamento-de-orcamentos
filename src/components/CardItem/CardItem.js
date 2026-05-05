@@ -169,11 +169,11 @@ export default function CardItem({
                     <FormBudget.Input typeInput='number'
                         name='itemTaxes'
                         min='0'
-                        value={item.itemTaxes}
+                        value={item.taxes}
                         onChange={(e) => {
                             onChange({
                                 itemId: item.id,
-                                field: 'itemTaxes',
+                                field: 'taxes',
                                 value: e.target.value,
                                 minValue: 0,
                             })
@@ -183,7 +183,7 @@ export default function CardItem({
 
                 <FormBudget.ContainerInput size='medium' >
                     <FormBudget.Label text='Total' />
-                    <FormBudget.LockedLabel text={'R$ ' + item.priceTotalItem} />
+                    <FormBudget.LockedLabel text={'R$ ' + item.total} />
                 </FormBudget.ContainerInput>
 
                 <FormBudget.ContainerInput size='medium' >
@@ -192,9 +192,9 @@ export default function CardItem({
                             {`Desconto (${item.discount}%)`}
                         </div>
                     )}
-                    {item.itemTaxes > 0 && (
+                    {item.taxes > 0 && (
                         <div className='taxes-card-item'>
-                            {`Impostos (${item.itemTaxes}%)`}
+                            {`Impostos (${item.taxes}%)`}
                         </div>
                     )}
                 </FormBudget.ContainerInput>
