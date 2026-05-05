@@ -6,8 +6,12 @@ import { FormBudget } from '..';
 import { DivContainerFilter, InptSearch } from '../../HeaderFilter/styles';
 
 export function BudgetContentBasic() {
-    const [open, setOpen] = useState(false)
     const ref = useRef()
+    const [open, setOpen] = useState(false)
+
+    const [date, setDate] = useState()
+    const [time, setTime] = useState()
+    const [validity, setValidity] = useState()
 
     const [search, setSearch] = useState('Rascunho')
     const [selected, setSelected] = useState('Rascunho')
@@ -20,7 +24,7 @@ export function BudgetContentBasic() {
     ]
 
     function numberBudget() {
-        return crypto.randomUUID()
+        return new Date().toLocaleString('pt-BR').replace(/[/,:]/g, '-').replace(' ', '')
     }
 
     useEffect(() => {
@@ -46,7 +50,7 @@ export function BudgetContentBasic() {
         <>
             <FormBudget.ContainerInput>
                 <FormBudget.Label text='Numero do Orçamento *' />
-                <FormBudget.LockedLabel placeholder='Numero do Orçamento' name='budgetNumber' />
+                <FormBudget.LockedInput placeholder='Numero do Orçamento' name='budgetNumber' defaultValue={numberBudget()} />
             </FormBudget.ContainerInput>
 
             <FormBudget.ContainerInput>
@@ -99,17 +103,44 @@ export function BudgetContentBasic() {
             <div className='budget-container-items'>
                 <FormBudget.ContainerInput>
                     <FormBudget.Label text='Data *' />
-                    <FormBudget.Input typeInput='date' name='date' />
+                    <FormBudget.Input
+                        typeInput='date'
+                        name='date'
+                        value={date}
+                        onChange={(e) => {
+                            const value = e.target.value
+
+                            setDate(value)
+                        }}
+                    />
                 </FormBudget.ContainerInput>
 
                 <FormBudget.ContainerInput>
                     <FormBudget.Label text='Horário *' />
-                    <FormBudget.Input typeInput='time' step="1800" name='time' />
+                    <FormBudget.Input
+                        typeInput='time' step="1800"
+                        name='time'
+                        value={time}
+                        onChange={(e) => {
+                            const value = e.target.value
+
+                            setTime(value)
+                        }}
+                    />
                 </FormBudget.ContainerInput>
 
                 <FormBudget.ContainerInput>
                     <FormBudget.Label text='Valido até *' />
-                    <FormBudget.Input typeInput='date' name='validity' />
+                    <FormBudget.Input
+                        typeInput='date'
+                        name='validity'
+                        value={validity}
+                        onChange={(e) => {
+                            const value = e.target.value
+
+                            setValidity(value)
+                        }}
+                    />
                 </FormBudget.ContainerInput>
             </div>
         </>

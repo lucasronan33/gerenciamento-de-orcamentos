@@ -1,4 +1,4 @@
-const { BudgetModel } = require('../models/Budget');
+const { Budget, BudgetModel } = require('../models/Budget');
 
 exports.index = async (req, res) => {
   const budgets = await BudgetModel.find().sort({ createdAt: -1 });
@@ -16,8 +16,20 @@ exports.show = async (req, res) => {
 };
 
 exports.store = async (req, res) => {
-  const budget = await BudgetModel.create(req.body);
-  return res.status(201).json(budget);
+  try {
+    const budget = new Budget(req.body);
+    await budget.register();
+
+    if (budget.errors.length > 0) {
+      return res.status(400).json({ errors: budget.errors });
+    }
+
+    return res.status(201).json(budget.budget);
+  } catch (error) {
+    return res.status(400).json({
+      errors: [error.message],
+    });
+  }
 };
 
 exports.update = async (req, res) => {

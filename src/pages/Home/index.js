@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import './style.css'
 
@@ -6,12 +6,14 @@ import axios from '../../services/axios';
 import { useDispatch } from 'react-redux';
 import * as actions from '../../store/modules/example/actions';
 import HeaderMain from '../../components/HeaderMain';
-import CardOrc from '../../components/CardOrc/CardOrc';
 import HeaderFilter from '../../components/HeaderFilter';
 import Header from '../../components/Header';
 import { Container } from '../../styles/GlobalStyles';
+import CardBudget from '../../components/CardBudget/CardBudget';
 
-export default function Login() {
+export default function Home() {
+    const [budgets, setBudgets] = useState([])
+
     const dispatch = useDispatch();
     function handleClick(e) {
         e.preventDefault();
@@ -19,16 +21,24 @@ export default function Login() {
         dispatch(actions.clicaBotaoRequest());
     }
 
+    useEffect(() => {
+        async function getData() {
+            const response = await axios.get('/budgets')
+            setBudgets(response.data)
+            console.log('response: ', response.data)
+        }
+        getData()
+    }, [])
+
     return (
         <div>
             <Header />
             <HeaderMain />
             <HeaderFilter />
             <div className='content'>
-                <CardOrc />
-                <CardOrc />
-                <CardOrc />
-                <CardOrc />
+                {budgets.map(budget => (
+                    <CardBudget key={budget._id} budget={budget} />
+                ))}
             </div>
         </div>
     );

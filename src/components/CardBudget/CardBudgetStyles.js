@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const ContainerCardOrc = styled.div`
+export const ContainerCardBudget = styled.div`
     padding: 3vh;
     display: flex;
     flex-wrap: wrap;
@@ -25,14 +25,14 @@ export const DivTitle = styled.div`
     width: 100%;
     justify-content: space-between;
 `
-export const StatusOrc = styled.div`
+export const StatusBudget = styled.div`
     padding: 5px 20px;
     border: 1px solid #ccc;
     border-radius: 10px;
     font-size: small;
 `
 
-export const InfoCardOrc = styled.div`
+export const InfoCardBudget = styled.div`
     width: 100%;
     padding-block: 1vh;
     row-gap: 1vh;

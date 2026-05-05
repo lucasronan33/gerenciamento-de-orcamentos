@@ -1,6 +1,10 @@
 const mongoose = require('mongoose');
 const validator = require('validator');
 
+function generateBudgetCode() {
+  return Date.now()
+}
+
 const BudgetItemSchema = new mongoose.Schema(
   {
     itemRef: {
@@ -39,7 +43,7 @@ const BudgetSchema = new mongoose.Schema(
     user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
-      required: true
+      default: null,
     },
 
     code: { type: String, trim: true, required: true },
@@ -56,9 +60,9 @@ const BudgetSchema = new mongoose.Schema(
       required: true
     },
 
-    date: { type: Date, required: true },
-    time: { type: Date, required: true },
-    validUntil: { type: Date, required: true },
+    date: { type: String, required: true },
+    time: { type: String, required: true },
+    validUntil: { type: String, required: true },
 
     client: {
       name: { type: String, trim: true, required: true },
@@ -149,9 +153,24 @@ class Budget {
   }
 
   cleanUp() {
+    const toNumber = (value, defaultValue = 0) => {
+      if (value === undefined || value === null || value === '') return defaultValue
+      return Number(value)
+    }
+
+    const normalizeShipping = (value) => {
+      const shippingMap = {
+        'CIF (por nossa conta)': 'CIF',
+        'FOB (por conta do cliente)': 'FOB',
+      }
+
+      return shippingMap[value] || value || 'Sem Frete'
+    }
+
     this.body = {
-      code: this.body.budgetNumber,
-      status: this.body.budgetStatus,
+      user: this.body.user || null,
+      code: this.body.budgetNumber || this.body.code || generateBudgetCode(),
+      status: this.body.budgetStatus || this.body.status || 'Rascunho',
 
       date: this.body.date,
       time: this.body.time,
@@ -163,7 +182,7 @@ class Budget {
         email: this.body.email,
         cpfcnpj: this.body.cpf_cnpj,
         address: {
-          street: this.body.street,
+          street: this.body.street || this.body.address,
           number: this.body.streetNumber,
           city: this.body.city,
           state: this.body.state,
@@ -174,7 +193,7 @@ class Budget {
       items: this.body.items || [],
 
       conditions: {
-        paymentMethod: this.body.paymentMethod,
+        paymentMethod: this.body.paymentMethod || 'À vista',
         shippingTime: this.body.deliveryTime,
         paymentConditions: this.body.paymentConditions,
         warranty: this.body.warranty,
@@ -183,12 +202,12 @@ class Budget {
 
       },
 
-      shipping: this.body.shippingType,
+      shipping: normalizeShipping(this.body.shippingType),
       totals: {
         subtotal: 0,
-        taxes: this.body.taxes,
-        globalDiscount: this.body.globalDiscount,
-        shippingFee: this.body.shippingFee,
+        taxes: toNumber(this.body.taxes),
+        globalDiscount: toNumber(this.body.globalDiscount),
+        shippingFee: toNumber(this.body.shippingFee),
         total: 0,
       },
     }

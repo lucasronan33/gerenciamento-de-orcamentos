@@ -1,43 +1,41 @@
 import React from 'react';
 import { Link } from 'react-router-dom'
-import { Container } from '../../styles/GlobalStyles';
-import { Card } from '../HeaderMain/styles';
-import { CardIcons, ContainerCardOrc, DivTitle, InfoCardOrc, StatusOrc } from './CardOrcStyles';
+import { CardIcons, ContainerCardBudget, DivTitle, InfoCardBudget, StatusBudget } from './CardBudgetStyles';
 import { IoCopyOutline, IoEyeOutline, IoTrashOutline } from 'react-icons/io5';
 import { FiEdit } from 'react-icons/fi';
 
-export default function CardOrc() {
+export default function CardBudget({ budget }) {
 
     return (
-        <ContainerCardOrc>
+        <ContainerCardBudget>
             <DivTitle>
-                <h2>{'ORC-123'} </h2>
-                <StatusOrc>Rascunho</StatusOrc>
+                <h2>{budget.code} </h2>
+                <StatusBudget>Rascunho</StatusBudget>
             </DivTitle>
-            <p className='clientName'>{'Nome cliente'} </p>
+            <p className='clientName'>{budget.client?.name} </p>
 
-            <InfoCardOrc>
+            <InfoCardBudget>
                 <div>
                     <p>Data: </p>
-                    <p>00/00/00</p>
+                    <p>{budget.date} </p>
                 </div>
 
                 <div>
                     <p>Horario: </p>
-                    <p>00:00</p>
+                    <p>{budget.time} </p>
                 </div>
 
                 <div>
                     <p>Itens: </p>
-                    <p>0</p>
+                    <p>{budget.items?.length || 0} </p>
                 </div>
-            </InfoCardOrc>
-            <InfoCardOrc>
+            </InfoCardBudget>
+            <InfoCardBudget>
                 <div >
                     <h3>Total: </h3>
-                    <h3>R$ </h3>
+                    <h3>R$ {budget.total} </h3>
                 </div>
-            </InfoCardOrc>
+            </InfoCardBudget>
             <CardIcons>
                 <Link to={`/edit`} className='viewOrc' >
                     <div>
@@ -61,6 +59,6 @@ export default function CardOrc() {
                 </Link>
             </CardIcons>
 
-        </ContainerCardOrc>
+        </ContainerCardBudget>
     )
 }

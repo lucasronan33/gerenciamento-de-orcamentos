@@ -1,7 +1,7 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
 
-import Login from "../pages/Login";
+import Home from "../pages/Home";
 import Page404 from "../pages/Page404";
 import MyRoute from "./MyRoute";
 
@@ -10,7 +10,7 @@ export default function Routers() {
         <Routes>
             <Route element={
                 <MyRoute>
-                    <Login />
+                    <Home />
                 </MyRoute>
             } path='/' />
 
