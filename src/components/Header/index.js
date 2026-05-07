@@ -1,29 +1,62 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import './style.css'
-import { Container } from '../../styles/GlobalStyles'
 import { FaPlus } from 'react-icons/fa'
 import NewBudget from '../NewBudget'
 import { Subtitle, Title } from './styles'
 import { Button } from '../Button'
-import { BudgetProvider } from '../BudgetContext'
+import { useNavigate, useParams } from 'react-router-dom'
+import axios from '../../services/axios'
 
 export default function Header(props) {
     const [newBudget, setNewBudget] = useState(false)
+    const [budgetData, setBudgetData] = useState(null)
+    const { id } = useParams()
+    const isNew = id === 'new'
+    const isView = id === 'view'
 
-    const handleBudget = () => {
-        setNewBudget(true)
-        document.body.style.overflow = 'hidden'
-    }
+    const navigate = useNavigate()
+
     const handleIsVisible = () => {
         setNewBudget(false)
+        setBudgetData(null)
+        navigate('/')
         document.body.removeAttribute('style')
     }
+    useEffect(() => {
+
+        if (isNew) {
+            setNewBudget(true)
+            setBudgetData(null)
+            document.body.style.overflow = 'hidden'
+            return
+        }
+
+        async function getData() {
+            try {
+                if (id) {
+                    const { data } = await axios.get(`/budgets/${id}`)
+                    setBudgetData(data)
+                    setNewBudget(true)
+                }
+            } catch (error) {
+                console.log(error)
+            }
+        }
+        getData()
+
+        if (!id) return
+    }, [id])
 
     return (
         <div className='header'>
-            <BudgetProvider>
-                <NewBudget isVisible={newBudget} handleIsVisible={handleIsVisible} {...props} />
-            </BudgetProvider>
+            <NewBudget
+                isVisible={newBudget}
+                handleIsVisible={handleIsVisible}
+                budgetData={budgetData}
+                isNew={isNew}
+                id={id}
+                key={id}
+                {...props} />
             <div className='container'>
                 <div className='container-logo-title'>
                     <div className='logo' />
@@ -36,7 +69,7 @@ export default function Header(props) {
                         </Subtitle>
                     </div>
                 </div>
-                <Button.Root className='button-header' onClick={handleBudget}>
+                <Button.Root className='button-header' onClick={() => navigate('budget/new')}>
                     <FaPlus />
                     Novo Orçamento
                 </Button.Root>

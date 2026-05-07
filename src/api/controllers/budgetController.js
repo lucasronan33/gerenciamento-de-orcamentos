@@ -23,6 +23,7 @@ exports.store = async (req, res) => {
     if (budget.errors.length > 0) {
       return res.status(400).json({ errors: budget.errors });
     }
+    console.log(budget.budget)
 
     return res.status(201).json(budget.budget);
   } catch (error) {
@@ -34,7 +35,7 @@ exports.store = async (req, res) => {
 
 exports.update = async (req, res) => {
   const budget = await BudgetModel.findByIdAndUpdate(req.params.id, req.body, {
-    new: true,
+    returnDocument: 'after',
     runValidators: true
   });
 

@@ -61,6 +61,7 @@ export default function HeaderFilter() {
                         <HiOutlineChevronDown className='chevronDown-icon' />
                         <input
                             type='text'
+                            className='filter'
                             placeholder='Filtrar por status do Orçamento'
                             value={search}
                             onClick={(e) => {

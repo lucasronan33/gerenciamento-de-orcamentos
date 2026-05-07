@@ -1,9 +1,11 @@
+import { show } from '../../services/axiosRoutes';
+
 const { createContext, useState, useContext } = require('react');
 
 const BudgetContext = createContext()
 
 export function BudgetProvider({ children }) {
-    const [budget, setBudget] = useState({
+    const initialState = {
         basic: {},
         client: {},
         items: [],
@@ -15,12 +17,22 @@ export function BudgetProvider({ children }) {
             subtotal: 0,
             total: 0,
         }
-    })
+    }
+    const [budget, setBudget] = useState(initialState)
+    const [budgets, setBudgets] = useState([])
 
-    function updateBudget(field, value) {
+    async function fetchBudgets() {
+        const response = await show('/budgets')
+        await setBudgets(response.data)
+    }
+
+    function updateBudget(field, subfield, value) {
         setBudget(prev => ({
             ...prev,
-            [field]: value
+            [field]: {
+                ...prev[field],
+                [subfield]: value
+            }
         }))
     }
 
@@ -64,6 +76,9 @@ export function BudgetProvider({ children }) {
         <BudgetContext.Provider
             value={{
                 budget,
+                budgets,
+                initialState,
+                fetchBudgets,
                 setBudget,
                 updateBudget,
                 updateItem,

@@ -2,6 +2,8 @@ const mongoose = require('mongoose');
 
 const ItemsSchema = new mongoose.Schema(
     {
+        id: Number,
+        code: Number,
         category: String,
         unity: {
             type: String,
@@ -22,8 +24,8 @@ const ItemsSchema = new mongoose.Schema(
         quantity: { type: Number, required: true, default: 1 },
         unityPrice: { type: Number, required: true, default: 0 },
         discount: { type: Number, required: true, default: 0 },
-        itemTaxes: { type: Number, required: true, default: 0 },
-        priceTotalItem: { type: Number, required: true, default: 0 },
+        taxes: { type: Number, required: true, default: 0 },
+        total: { type: Number, required: true, default: 0 },
     },
     {
         _id: true,
@@ -67,8 +69,8 @@ class Items {
 
         const priceTotalItem = () => {
             let total =
-                this.body.quantity * this.body.unityPrice -
-                this.body.quantity * this.body.unityPrice * ((this.body.itemDiscount || this.body.discount || 0) / 100)
+                this.body.items.quantity * this.body.items.unityPrice -
+                this.body.items.quantity * this.body.items.unityPrice * ((this.body.items.discount || 0) / 100)
 
             total *= (this.body.itemTaxes / 100) + 1
 
@@ -76,14 +78,16 @@ class Items {
             return total
         }
         this.body = {
-            category: this.body.category,
-            unity: this.body.metricUnity || this.body.unity,
-            obsItem: this.body.obsItem,
-            quantity: this.body.quantity,
-            unityPrice: this.body.unityPrice || 0,
-            discount: this.body.itemDiscount || this.body.discount || 0,
-            itemTaxes: this.body.itemTaxes || 0,
-            priceTotalItem: priceTotalItem()
+            id: this.body.items.id,
+            code: this.body.items.code,
+            category: this.body.items.category,
+            unity: this.body.items.metricUnity,
+            obsItem: this.body.items.obsItem,
+            quantity: this.body.items.quantity,
+            unityPrice: this.body.items.unityPrice,
+            discount: this.body.items.discount,
+            itemTaxes: this.body.items.taxes,
+            total: priceTotalItem()
         }
     }
 

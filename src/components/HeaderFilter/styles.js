@@ -74,6 +74,10 @@ export const InptSearch = styled.div`
         border-radius: 1vh;
         left: 0;
 
+        &.filter{
+            font-weight: bold;
+        }
+        
         &.input-search{
             padding-left: 7.5vh;
         }

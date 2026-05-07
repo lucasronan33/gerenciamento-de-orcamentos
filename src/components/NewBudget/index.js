@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import './style.css';
 import { Subtitle, Title } from '../Header/styles';
@@ -6,9 +6,18 @@ import { NavBudget } from './styles';
 import { Button } from '../Button';
 import { FormBudget } from '../FormBudget';
 import validator from 'validator'
-import axios from '../../services/axios';
+import { store, update } from '../../services/axiosRoutes';
+import { useBudget } from '../BudgetContext';
+import { useNavigate } from 'react-router-dom';
 
-export default function NewBudget({ isVisible, handleIsVisible }) {
+export default function NewBudget({
+  isVisible,
+  handleIsVisible,
+  budgetData,
+  isNew,
+  id,
+}) {
+  const navigate = useNavigate()
   const [active, setActive] = useState('Básico')
   const options = [
     'Básico',
@@ -23,62 +32,58 @@ export default function NewBudget({ isVisible, handleIsVisible }) {
     { key: 'Condições', component: <FormBudget.Content.Conditions /> },
   ]
 
-  if (!isVisible) return;
+  const { fetchBudgets, initialState, budget, setBudget } = useBudget()
+
   const handleButtonActive = (option) => {
     setActive(option)
   }
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const formErrors = []
 
-    const formData = new FormData(e.target);
+    if (!budget.basic.name || budget.basic.name === '') formErrors.push({ name: 'Nome é um campo obrigatório' })
+    if (!budget.basic.date || !validator.isDate(budget.basic.date)) formErrors.push({ date: 'Data ou formato da data invalido' })
+    if (!budget.basic.validUntil || !validator.isDate(budget.basic.validUntil)) formErrors.push({ validUntil: 'Data ou formato da data invalido' })
+    if (!budget.basic.time || !validator.isTime(budget.basic.time)) formErrors.push({ time: 'Horario ou formato do horario invalido' })
+    if (budget.client.email && !validator.isEmail(budget.client.email)) formErrors.push({ email: 'email invalido' })
 
-    const data = Object.fromEntries(formData.entries());
-
-    if (!data.clientName || data.clientName === '') formErrors.push({ clientName: 'Nome é um campo obrigatório' })
-    if (!data.date || !validator.isDate(data.date)) formErrors.push({ date: 'Data ou formato da data invalido' })
-    if (!data.validity || !validator.isDate(data.validity)) formErrors.push({ validity: 'Data ou formato da data invalido' })
-    if (!data.time || !validator.isTime(data.time)) formErrors.push({ time: 'Horario ou formato do horario invalido' })
-    if (data.email && !validator.isEmail(data.email)) formErrors.push({ email: 'email invalido' })
-
-    if (formErrors.length > 0) return console.log(formErrors)
+    if (formErrors.length > 0) {
+      setBudget(prev => ({
+        ...prev,
+        formErrors
+      }))
+    }
     try {
-      const response = await axios.post(`/budgets`, {
-        budgetNumber: data.budgetNumber,
-        budgetStatus: data.budgetStatus,
-        date: data.date,
-        time: data.time,
-        validity: data.validity,
-        clientName: data.clientName,
-        tel: data.tel,
-        email: data.email,
-        cpf_cnpj: data.cpf_cnpj,
-        street: data.street,
-        streetNumber: data.streetNumber,
-        city: data.city,
-        state: data.state,
-        zipCode: data.zipCode,
-        items: data.items,
-        paymentMethod: data.paymentMethod,
-        deliveryTime: data.deliveryTime,
-        paymentConditions: data.paymentConditions,
-        warranty: data.warranty,
-        obsBudget: data.obsBudget,
-        termsConditions: data.termsConditions,
-        shippingType: data.shippingType,
-        taxes: data.taxes,
-        globalDiscount: data.globalDiscount,
-        shippingFee: data.shippingFee,
-      })
+      if (budgetData) {
+        console.log(budget)
+        const response = await update(`/budgets/${id}`, budget)
+        console.log('response: ', response.data)
+      } else {
+        console.log(budget)
+        const response = await store(`/budgets`, budget)
+        console.log('response: ', response.data)
+      }
+      fetchBudgets()
+      navigate('/')
+      handleIsVisible(false)
 
-      console.log(response.data)
     } catch (err) {
       console.log(err.response?.data || err.message)
     }
   };
 
+  useEffect(() => {
+    if (isNew) {
+      setBudget(initialState)
+      return
+    }
+    if (budgetData) {
+      setBudget(budgetData)
+    }
+  }, [budgetData, isNew])
+
+  if (!isVisible) return;
   return (
     <div className="span-newBudget" onMouseDown={() => handleIsVisible(false)}>
       <form className="container-newBudget" onMouseDown={(e) => e.stopPropagation()} onSubmit={handleSubmit}>

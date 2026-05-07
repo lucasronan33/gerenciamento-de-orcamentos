@@ -4,12 +4,14 @@ import { FormBudget } from '../FormBudget'
 import { useEffect, useRef, useState } from 'react'
 import { HiOutlineChevronDown } from 'react-icons/hi'
 import { DivContainerFilter, InptSearch } from '../HeaderFilter/styles'
+import { useBudget } from '../BudgetContext'
 
 export default function CardItem({
     item,
     onChange,
     onDelete
 }) {
+    const { budget, updateItem } = useBudget()
     const [open, setOpen] = useState(false)
     const ref = useRef()
 
@@ -27,12 +29,14 @@ export default function CardItem({
     ]
 
     useEffect(() => {
+        updateItem(item.id, 'metricUnity', selected)
 
         if (!open) return
         function handleClickOutside(e) {
             if (ref.current && !ref.current.contains(e.target)) {
                 setOpen(false)
                 setSearch(selected)
+                updateItem(item.id, 'metricUnity', selected)
             }
         }
 
@@ -57,12 +61,24 @@ export default function CardItem({
             <div className='budget-container-items'>
                 <FormBudget.ContainerInput>
                     <FormBudget.Label text='Categoria' />
-                    <FormBudget.Input typeInput='text' placeholder='Ex.: Limpeza' name='category' />
+                    <FormBudget.Input
+                        typeInput='text'
+                        placeholder='Ex.: Limpeza'
+                        name='category'
+                        value={item.category}
+                        onChange={(e) => updateItem(item.id, 'category', e.target.value)}
+                    />
                 </FormBudget.ContainerInput>
 
                 <FormBudget.ContainerInput>
                     <FormBudget.Label text='Código/ID' />
-                    <FormBudget.Input typeInput='text' placeholder='Código do produto' name='productCode' />
+                    <FormBudget.Input
+                        typeInput='text'
+                        placeholder='Código do produto'
+                        name='productCode'
+                        value={item.code}
+                        onChange={(e) => updateItem(item.id, 'code', e.target.value)}
+                    />
                 </FormBudget.ContainerInput>
 
 
@@ -87,17 +103,18 @@ export default function CardItem({
                         {open && (
                             <div className='dropDownMenu budget-menu'>
                                 {filteredOptions.length > 0 ? (
-                                    filteredOptions.map((item, index) => (
+                                    filteredOptions.map((option, index) => (
                                         <div
                                             key={index}
-                                            className={`option ${item === selected ? 'selected' : ''}`}
+                                            className={`option ${option === selected ? 'selected' : ''}`}
                                             onMouseDown={() => {
-                                                setSelected(item)
-                                                setSearch(item)
+                                                setSelected(option)
+                                                setSearch(option)
+                                                updateItem(item.id, 'metricUnity', option)
                                                 setOpen(false)
                                             }}
                                         >
-                                            {item}
+                                            {option}
                                         </div>
                                     ))
                                 ) : (
@@ -110,7 +127,13 @@ export default function CardItem({
 
                 <FormBudget.ContainerInput size='xx-large' >
                     <FormBudget.Label text='Obs. do item' />
-                    <FormBudget.Input typeInput='text' placeholder='Ex.: Usado somente para limpeza' name='obsItem' />
+                    <FormBudget.Input
+                        typeInput='text'
+                        placeholder='Ex.: Usado somente para limpeza'
+                        name='obsItem'
+                        value={item.obsItem}
+                        onChange={(e) => updateItem(item.id, 'obsItem', e.target.value)}
+                    />
                 </FormBudget.ContainerInput>
 
                 <FormBudget.ContainerInput >

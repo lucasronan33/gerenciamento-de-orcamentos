@@ -20,7 +20,7 @@ export function BudgetContentItems() {
         'FOB (por conta do cliente)',
         'Valor Customizado',
     ]
-    const { budget, setBudget, updateTotals, updateItem, calcTotal } = useBudget()
+    const { budget, setBudget, updateTotals, updateBudget, updateItem, calcTotal } = useBudget()
 
     function addItem() {
         const newItem = {
@@ -90,16 +90,23 @@ export function BudgetContentItems() {
         const total = calcPriceTotal()
         updateTotals('total', total)
 
-    }, [budget.items])
+    }, [
+        budget.items,
+        budget.totals.discount,
+        budget.totals.taxes,
+        budget.totals.shipping,
+    ])
 
     useEffect(() => {
 
+        updateBudget('totals', 'shippingType', selected)
         if (selected !== 'Valor Customizado') updateTotals('shipping', 0)
         if (!open) return
         function handleClickOutside(e) {
             if (ref.current && !ref.current.contains(e.target)) {
                 setOpen(false)
                 setSearch(selected)
+                updateBudget('totals', 'shippingType', selected)
             }
         }
 
@@ -205,17 +212,18 @@ export function BudgetContentItems() {
                         {open && (
                             <div className='dropDownMenu budget-menu'>
                                 {filteredOptions.length > 0 ? (
-                                    filteredOptions.map((item, index) => (
+                                    filteredOptions.map((option, index) => (
                                         <div
                                             key={index}
-                                            className={`option ${item === selected ? 'selected' : ''}`}
+                                            className={`option ${option === selected ? 'selected' : ''}`}
                                             onMouseDown={() => {
-                                                setSelected(item)
-                                                setSearch(item)
+                                                setSelected(option)
+                                                setSearch(option)
+                                                updateBudget('totals', 'shippingType', option)
                                                 setOpen(false)
                                             }}
                                         >
-                                            {item}
+                                            {option}
                                         </div>
                                     ))
                                 ) : (

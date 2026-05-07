@@ -12,6 +12,8 @@ const BudgetItemSchema = new mongoose.Schema(
       ref: 'Items',
       default: null,
     },
+    id: Number,
+    code: Number,
     category: String,
     unity: {
       type: String,
@@ -32,8 +34,8 @@ const BudgetItemSchema = new mongoose.Schema(
     quantity: { type: Number, required: true, default: 1 },
     unityPrice: { type: Number, required: true, default: 0 },
     discount: { type: Number, required: true, default: 0 },
-    itemTaxes: { type: Number, required: true, default: 0 },
-    priceTotalItem: { type: Number, required: true, default: 0 },
+    taxes: { type: Number, required: true, default: 0 },
+    total: { type: Number, required: true, default: 0 },
   },
   { _id: true }
 );
@@ -46,29 +48,32 @@ const BudgetSchema = new mongoose.Schema(
       default: null,
     },
 
-    code: { type: String, trim: true, required: true },
-    status: {
-      type: String,
-      enum: [
-        'Rascunho',
-        'Enviado',
-        'Aprovado',
-        'Rejeitado',
-        'Finalizado',
-      ],
-      default: 'Rascunho',
-      required: true
+    basic: {
+      code: { type: String, trim: true, required: true },
+      name: { type: String, trim: true, required: true },
+      status: {
+        type: String,
+        enum: [
+          'Rascunho',
+          'Enviado',
+          'Aprovado',
+          'Rejeitado',
+          'Finalizado',
+        ],
+        default: 'Rascunho',
+        required: true
+      },
+
+      date: { type: String, required: true },
+      time: { type: String, required: true },
+      validUntil: { type: String, required: true },
     },
 
-    date: { type: String, required: true },
-    time: { type: String, required: true },
-    validUntil: { type: String, required: true },
-
     client: {
-      name: { type: String, trim: true, required: true },
+      enterpriseName: { type: String, trim: true },
       phone: { type: String, trim: true },
       email: { type: String, trim: true },
-      cpfcnpj: { type: String, trim: true },
+      cpf_cnpj: { type: String, trim: true },
       address: {
         street: { type: String, trim: true },
         number: { type: String, trim: true },
@@ -76,6 +81,7 @@ const BudgetSchema = new mongoose.Schema(
         state: { type: String, trim: true },
         zipCode: { type: String, trim: true },
       },
+      default: {}
     },
 
     items: [BudgetItemSchema],
@@ -92,29 +98,30 @@ const BudgetSchema = new mongoose.Schema(
       warranty: { type: String, trim: true },
       obsBudget: { type: String, trim: true },
       termsConditions: { type: String, trim: true },
-
+      default: {},
     },
 
-    shipping: {
-      type: String,
-      enum: [
-        'Sem Frete',
-        'CIF',
-        'FOB',
-        'Valor Customizado',
-      ],
-      default: 'Sem Frete'
-    },
     totals: {
       subtotal: { type: Number, required: true, default: 0 },
       taxes: { type: Number, required: true, default: 0 },
-      globalDiscount: { type: Number, required: true, default: 0 },
-      shippingFee: { type: Number, required: true, default: 0 },
+      discount: { type: Number, required: true, default: 0 },
+      shipping: { type: Number, required: true, default: 0 },
+      shippingType: {
+        type: String,
+        enum: [
+          'Sem Frete',
+          'CIF',
+          'FOB',
+          'Valor Customizado',
+        ],
+        default: 'Sem Frete'
+      },
       total: { type: Number, required: true, default: 0 },
     },
   },
   {
-    timestamps: true
+    timestamps: true,
+    minimize: false,
   }
 );
 
@@ -126,8 +133,8 @@ class Budget {
     this.errors = []
     this.budget = null
   }
-
   async register() {
+    console.log('body: ', this.body)
     this.validation()
     if (this.errors.length > 0) return
 
@@ -144,11 +151,11 @@ class Budget {
   validation() {
     this.cleanUp()
 
-    if (!this.body.client.name) this.errors.push('Nome do cliente é um campo obrigatorio')
-    if (!this.body.date || !validator.isDate(this.body.date)) this.errors.push('Data ou formato da data invalido')
-    if (!this.body.validUntil || !validator.isDate(this.body.validUntil)) this.errors.push('Data ou formato da data invalido')
-    if (!this.body.time || !validator.isTime(this.body.time)) this.errors.push('Horario ou formato do horario invalido')
-    if (this.body.client.email && !validator.isEmail(this.body.client.email)) this.errors.push('email invalido')
+    if (!this.body.basic.name) this.errors.push({ name: 'Nome do cliente é um campo obrigatorio' })
+    if (!this.body.basic.date || !validator.isDate(this.body.basic.date)) this.errors.push({ date: 'Data ou formato da data invalido' })
+    if (!this.body.basic.validUntil || !validator.isDate(this.body.basic.validUntil)) this.errors.push({ validUntil: 'Data ou formato da data invalido' })
+    if (!this.body.basic.time || !validator.isTime(this.body.basic.time)) this.errors.push({ time: 'Horario ou formato do horario invalido' })
+    if (this.body.client.email && !validator.isEmail(this.body.client.email)) this.errors.push({ email: 'email invalido' })
 
   }
 
@@ -158,57 +165,58 @@ class Budget {
       return Number(value)
     }
 
+    const calcSubtotal = () => {
+      const subtotal = this.body.items.reduce((acc, item) => {
+        const value = Number(item.total) || 0
+        return acc + value
+      }, 0).toFixed(2)
+      return Number(subtotal)
+    }
+
+    const calcTotal = () => {
+      const subtotal = calcSubtotal()
+
+      let total = Number(subtotal) + Number(this.body.totals.shipping)
+      total -= (total * (this.body.totals.discount / 100))
+      total *= ((this.body.totals.taxes / 100) + 1)
+      return (total.toFixed(2))
+    }
+
     const normalizeShipping = (value) => {
       const shippingMap = {
         'CIF (por nossa conta)': 'CIF',
         'FOB (por conta do cliente)': 'FOB',
       }
 
-      return shippingMap[value] || value || 'Sem Frete'
+      return shippingMap[value]
     }
+
+    console.log('this.body: ', this.body)
 
     this.body = {
       user: this.body.user || null,
-      code: this.body.budgetNumber || this.body.code || generateBudgetCode(),
-      status: this.body.budgetStatus || this.body.status || 'Rascunho',
-
-      date: this.body.date,
-      time: this.body.time,
-      validUntil: this.body.validity,
-
-      client: {
-        name: this.body.clientName,
-        phone: this.body.tel,
-        email: this.body.email,
-        cpfcnpj: this.body.cpf_cnpj,
-        address: {
-          street: this.body.street || this.body.address,
-          number: this.body.streetNumber,
-          city: this.body.city,
-          state: this.body.state,
-          zipCode: this.body.zipCode,
-        },
+      basic: {
+        code: this.body.basic.code || generateBudgetCode(),
+        date: this.body.basic.date,
+        name: this.body.basic.name,
+        status: this.body.basic.status,
+        time: this.body.basic.time,
+        validUntil: this.body.basic.validUntil,
       },
+
+      client: this.body.client || {},
 
       items: this.body.items || [],
 
-      conditions: {
-        paymentMethod: this.body.paymentMethod || 'À vista',
-        shippingTime: this.body.deliveryTime,
-        paymentConditions: this.body.paymentConditions,
-        warranty: this.body.warranty,
-        obsBudget: this.body.obsBudget,
-        termsConditions: this.body.termsConditions,
+      conditions: this.body.conditions || {},
 
-      },
-
-      shipping: normalizeShipping(this.body.shippingType),
       totals: {
-        subtotal: 0,
-        taxes: toNumber(this.body.taxes),
-        globalDiscount: toNumber(this.body.globalDiscount),
-        shippingFee: toNumber(this.body.shippingFee),
-        total: 0,
+        subtotal: calcSubtotal(),
+        taxes: toNumber(this.body.totals.taxes),
+        discount: toNumber(this.body.totals.discount),
+        shipping: toNumber(this.body.totals.shipping),
+        shippingType: normalizeShipping(this.body.totals.shippingType),
+        total: calcTotal(),
       },
     }
   }

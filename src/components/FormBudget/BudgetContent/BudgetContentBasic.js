@@ -4,14 +4,13 @@ import '../style.css'
 import { HiOutlineChevronDown } from 'react-icons/hi';
 import { FormBudget } from '..';
 import { DivContainerFilter, InptSearch } from '../../HeaderFilter/styles';
+import { useBudget } from '../../BudgetContext';
 
 export function BudgetContentBasic() {
+    const { budget, updateBudget } = useBudget()
+
     const ref = useRef()
     const [open, setOpen] = useState(false)
-
-    const [date, setDate] = useState()
-    const [time, setTime] = useState()
-    const [validity, setValidity] = useState()
 
     const [search, setSearch] = useState('Rascunho')
     const [selected, setSelected] = useState('Rascunho')
@@ -23,17 +22,20 @@ export function BudgetContentBasic() {
         'Finalizado',
     ]
 
-    function numberBudget() {
-        return Math.floor(Math.random() * 999999)
-    }
-
     useEffect(() => {
+        if (!budget.basic.code) {
+            const code = Math.floor(Math.random() * 999999)
+            updateBudget('basic', 'code', code)
+        }
+        updateBudget('basic', 'status', selected)
+
         function handleClickOutside(e) {
 
             if (ref.current && !ref.current.contains(e.target)) {
                 setOpen(false)
 
                 setSearch(selected)
+                updateBudget('basic', 'status', selected)
             }
         }
 
@@ -50,12 +52,18 @@ export function BudgetContentBasic() {
         <>
             <FormBudget.ContainerInput>
                 <FormBudget.Label text='Numero do Orçamento *' />
-                <FormBudget.LockedInput placeholder='Numero do Orçamento' name='budgetNumber' defaultValue={numberBudget()} />
+                <FormBudget.LockedInput placeholder='Numero do Orçamento' name='budgetNumber' value={budget.basic?.code || ''} />
             </FormBudget.ContainerInput>
 
             <FormBudget.ContainerInput>
                 <FormBudget.Label text='Nome do Cliente *' />
-                <FormBudget.Input typeInput='text' placeholder='Nome do Cliente' name='clientName' />
+                <FormBudget.Input
+                    typeInput='text'
+                    placeholder='Nome do Cliente'
+                    name='clientName'
+                    value={budget.basic.name}
+                    onChange={(e) => updateBudget('basic', 'name', e.target.value)}
+                />
             </FormBudget.ContainerInput>
 
             <FormBudget.ContainerInput size='meidum'>
@@ -67,7 +75,7 @@ export function BudgetContentBasic() {
                             type='text'
                             name='budgetStatus'
                             placeholder='Filtrar por status do Orçamento'
-                            value={search}
+                            value={budget.basic.status || search}
                             onMouseDown={(e) => {
                                 setOpen(true)
                                 setSearch('')
@@ -86,6 +94,7 @@ export function BudgetContentBasic() {
                                         onMouseDown={() => {
                                             setSelected(item)
                                             setSearch(item)
+                                            updateBudget('basic', 'status', item)
                                             setOpen(false)
                                         }}
                                     >
@@ -106,12 +115,8 @@ export function BudgetContentBasic() {
                     <FormBudget.Input
                         typeInput='date'
                         name='date'
-                        value={date}
-                        onChange={(e) => {
-                            const value = e.target.value
-
-                            setDate(value)
-                        }}
+                        value={budget.basic.date}
+                        onChange={(e) => updateBudget('basic', 'date', e.target.value)}
                     />
                 </FormBudget.ContainerInput>
 
@@ -120,12 +125,8 @@ export function BudgetContentBasic() {
                     <FormBudget.Input
                         typeInput='time' step="1800"
                         name='time'
-                        value={time}
-                        onChange={(e) => {
-                            const value = e.target.value
-
-                            setTime(value)
-                        }}
+                        value={budget.basic.time}
+                        onChange={(e) => updateBudget('basic', 'time', e.target.value)}
                     />
                 </FormBudget.ContainerInput>
 
@@ -133,13 +134,9 @@ export function BudgetContentBasic() {
                     <FormBudget.Label text='Valido até *' />
                     <FormBudget.Input
                         typeInput='date'
-                        name='validity'
-                        value={validity}
-                        onChange={(e) => {
-                            const value = e.target.value
-
-                            setValidity(value)
-                        }}
+                        name='validUntil'
+                        value={budget.basic.validUntil}
+                        onChange={(e) => updateBudget('basic', 'validUntil', e.target.value)}
                     />
                 </FormBudget.ContainerInput>
             </div>

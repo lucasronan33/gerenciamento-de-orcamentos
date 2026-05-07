@@ -16,9 +16,9 @@ export default createGlobalStyle`
     box-sizing: border-box;
 }
 body{
-    /* width: 415px;
-    height: 915px;
-    margin: 0 auto; */
+    /* width: 415px; */
+    min-height: 100dvh;
+    /* margin: 0 auto; */
     font-family: sans-serif;
     /* background-color: ${primaryDarkColor}; */
 }

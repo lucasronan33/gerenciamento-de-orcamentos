@@ -71,24 +71,21 @@ export const CardIcons = styled.div`
         width: 45%;
     }
 
-    a{
+    .links,.viewOrc{
         flex-grow: 1;
-        div{
-            width: 100%;
-            padding: 1vh;
-            border: 1px solid #ccc;
-            border-radius: 10px;
-            gap: 1vh;
+        padding: 1vh;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        gap: 1vh;
 
-            .trashIco{
-                color: darkred;
-            }
-
-            svg{
-                max-width: 100%;
-                max-height: 100%;
-            }
-            
+        .trashIco{
+            color: darkred;
         }
+
+        svg{
+            max-width: 100%;
+            max-height: 100%;
+        }
+            
     }
 `
