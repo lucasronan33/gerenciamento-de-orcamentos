@@ -1,9 +1,5 @@
 import {
     primaryColor,
-    primaryDarkColor,
-    errorColor,
-    infoColor,
-    warningColor
 } from "../config/colors";
 
 import styled, { createGlobalStyle } from "styled-components";
@@ -16,12 +12,9 @@ export default createGlobalStyle`
     box-sizing: border-box;
 }
 body{
-    /* width: 415px; */
-    min-height: 100dvh;
-    /* margin: 0 auto; */
-    font-family: sans-serif;
-    /* background-color: ${primaryDarkColor}; */
-}
+        min-height: 100dvh;
+        font-family: sans-serif;
+    }
 html,border-style,#root{
     height: 100%;
 }
@@ -56,5 +49,4 @@ export const Container = styled.section`
     gap: 2vh;
     background-color: #fff;
     border-radius: 4px;
-    /* box-shadow: 0 0 10px rgba(0,0,0,0.1); */
-`
+    `

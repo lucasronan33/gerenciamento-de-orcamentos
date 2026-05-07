@@ -1,9 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 
 import './style.css'
 
-import { useDispatch } from 'react-redux';
-import * as actions from '../../store/modules/example/actions';
 import HeaderMain from '../../components/HeaderMain';
 import HeaderFilter from '../../components/HeaderFilter';
 import Header from '../../components/Header';
@@ -19,16 +17,9 @@ export default function Home() {
     const navigate = useNavigate()
     const { budgets, fetchBudgets } = useBudget()
 
-    const dispatch = useDispatch();
-    function handleClick(e) {
-        e.preventDefault();
-
-        dispatch(actions.clicaBotaoRequest());
-    }
-
     useEffect(() => {
         fetchBudgets()
-    }, [])
+    })
 
     return (
         <div>

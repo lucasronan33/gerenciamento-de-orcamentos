@@ -81,7 +81,7 @@ export default function NewBudget({
     if (budgetData) {
       setBudget(budgetData)
     }
-  }, [budgetData, isNew])
+  }, [budgetData, isNew, setBudget, initialState])
 
   if (!isVisible) return;
   return (

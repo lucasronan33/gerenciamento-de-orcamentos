@@ -11,7 +11,7 @@ export default function CardItem({
     onChange,
     onDelete
 }) {
-    const { budget, updateItem } = useBudget()
+    const { updateItem } = useBudget()
     const [open, setOpen] = useState(false)
     const ref = useRef()
 
@@ -45,7 +45,7 @@ export default function CardItem({
         return () => {
             document.removeEventListener('click', handleClickOutside)
         }
-    }, [open, selected])
+    }, [open, selected, item.id, updateItem])
 
     const filteredOptions = options.filter(option => option.toLowerCase().includes(search.toLowerCase()))
     return (

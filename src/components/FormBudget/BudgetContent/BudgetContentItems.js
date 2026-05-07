@@ -50,23 +50,6 @@ export function BudgetContentItems() {
         }
     }
 
-    function calcPriceSubtotal() {
-
-        const subtotal = budget.items.reduce((acc, item) => {
-            const value = Number(item.total) || 0
-            return acc + value
-        }, 0).toFixed(2)
-        return subtotal
-    }
-    function calcPriceTotal() {
-        const subtotal = calcPriceSubtotal()
-
-        let total = Number(subtotal) + Number(budget.totals.shipping)
-        total -= (total * (budget.totals.discount / 100))
-        total *= ((budget.totals.taxes / 100) + 1)
-        return (total.toFixed(2))
-    }
-
     const calValueTaxes = () => {
         let valueTaxes = Number(budget.totals.subtotal) + Number(budget.totals.shipping)
         valueTaxes -= (valueTaxes * (budget.totals.discount / 100))
@@ -84,17 +67,23 @@ export function BudgetContentItems() {
 
     useEffect(() => {
 
-        const subtotal = calcPriceSubtotal()
+        const subtotal = budget.items.reduce((acc, item) => {
+            const value = Number(item.total) || 0
+            return acc + value
+        }, 0).toFixed(2)
         updateTotals('subtotal', subtotal)
 
-        const total = calcPriceTotal()
-        updateTotals('total', total)
+        let total = Number(subtotal) + Number(budget.totals.shipping)
+        total -= (total * (budget.totals.discount / 100))
+        total *= ((budget.totals.taxes / 100) + 1)
+        updateTotals('total', total.toFixed(2))
 
     }, [
         budget.items,
         budget.totals.discount,
         budget.totals.taxes,
         budget.totals.shipping,
+        updateTotals,
     ])
 
     useEffect(() => {
@@ -116,7 +105,7 @@ export function BudgetContentItems() {
             document.removeEventListener('mousedown', handleClickOutside)
         }
 
-    }, [open, selected])
+    }, [open, selected, updateTotals, updateBudget])
 
     const filteredOptions = options.filter(option => option.toLowerCase().includes(search.toLowerCase()))
     return (

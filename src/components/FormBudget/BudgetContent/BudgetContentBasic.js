@@ -44,7 +44,11 @@ export function BudgetContentBasic() {
         return () => {
             document.removeEventListener('click', handleClickOutside)
         }
-    }, [selected])
+    }, [
+        selected,
+        budget.basic.code,
+        updateBudget
+    ])
 
     const filteredOptions = options.filter(option => option.toLowerCase().includes(search.toLowerCase()))
 

@@ -45,7 +45,7 @@ export default function Header(props) {
         getData()
 
         if (!id) return
-    }, [id])
+    }, [id, isNew, isView])
 
     return (
         <div className='header'>

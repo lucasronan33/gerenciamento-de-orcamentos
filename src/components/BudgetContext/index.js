@@ -1,6 +1,6 @@
 import { show } from '../../services/axiosRoutes';
 
-const { createContext, useState, useContext } = require('react');
+const { createContext, useState, useContext, useCallback } = require('react');
 
 const BudgetContext = createContext()
 
@@ -43,7 +43,7 @@ export function BudgetProvider({ children }) {
         return approvedBudgets
     }
 
-    function updateBudget(field, subfield, value) {
+    const updateBudget = useCallback((field, subfield, value) => {
         setBudget(prev => ({
             ...prev,
             [field]: {
@@ -51,9 +51,9 @@ export function BudgetProvider({ children }) {
                 [subfield]: value
             }
         }))
-    }
+    }, [])
 
-    function updateTotals(field, value) {
+    const updateTotals = ((field, value) => {
         setBudget(prev => ({
             ...prev,
             totals: {
@@ -61,7 +61,7 @@ export function BudgetProvider({ children }) {
                 [field]: value
             }
         }))
-    }
+    }, [])
 
     function calcTotal(item) {
         let total =
@@ -73,7 +73,7 @@ export function BudgetProvider({ children }) {
         return total.toFixed(2)
     }
 
-    function updateItem(id, field, value) {
+    const updateItem = useCallback((id, field, value) => {
 
 
         setBudget(prev => ({
@@ -87,7 +87,7 @@ export function BudgetProvider({ children }) {
                 return updated
             })
         }))
-    }
+    }, [])
 
     return (
         <BudgetContext.Provider
