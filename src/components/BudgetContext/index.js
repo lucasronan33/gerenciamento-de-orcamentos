@@ -21,6 +21,7 @@ const initialState = {
 export function BudgetProvider({ children }) {
     const [budget, setBudget] = useState(initialState)
     const [budgets, setBudgets] = useState([])
+    const [filterSelected, setFilterSelected] = useState('')
     const [filteredBudgets, setFilteredBudgets] = useState([])
 
     const fetchBudgets = useCallback(async () => {
@@ -34,15 +35,17 @@ export function BudgetProvider({ children }) {
             setFilteredBudgets(budgets)
             return
         }
-
+        console.log('filterSelected: ', filterSelected)
         const filtered = budgets.filter(
             item => {
                 const normalizeValue = String(value).toLowerCase()
-                if (item.basic.code.includes(normalizeValue)) return item
-                if (item.basic.name.includes(normalizeValue)) return item
-                if (item.client?.enterpriseName?.includes(normalizeValue)) return item
-                if (item.client?.email?.includes(normalizeValue)) return item
-                return null
+                if (item.basic.status !== filterSelected) return false
+
+                if (item.basic.code.includes(normalizeValue)) return true
+                if (item.basic.name.includes(normalizeValue)) return true
+                if (item.client?.enterpriseName?.includes(normalizeValue)) return true
+                if (item.client?.email?.includes(normalizeValue)) return true
+                return false
             }
         )
         setFilteredBudgets(filtered)
@@ -55,7 +58,10 @@ export function BudgetProvider({ children }) {
         }
 
         const filtered = budgets.filter(
-            item => item.basic.status === filterValue
+            item => {
+                if (item.basic.status === filterValue) return item
+                return null
+            }
         )
         setFilteredBudgets(filtered)
     }
@@ -142,12 +148,15 @@ export function BudgetProvider({ children }) {
 
                     budgets,
                     setBudgets,
+                    calcTotalBudgets,
+                    approvedBudgets,
+
+                    filterSelected,
+                    setFilterSelected,
                     inputFilterBudgets,
                     filterBudgets,
                     filteredBudgets,
                     fetchBudgets,
-                    calcTotalBudgets,
-                    approvedBudgets,
                 }
             }>
             {children}

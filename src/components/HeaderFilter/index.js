@@ -10,13 +10,12 @@ import { useEffect } from 'react';
 import { useBudget } from '../BudgetContext';
 
 export default function HeaderFilter() {
-    const { inputFilterBudgets, filterBudgets } = useBudget()
+    const { inputFilterBudgets, filterBudgets, filterSelected, setFilterSelected } = useBudget()
 
     const [open, setOpen] = useState(false)
     const ref = useRef()
 
     const [search, setSearch] = useState('Todos os status')
-    const [selected, setSelected] = useState('Todos os status')
     const options = [
         'Todos os status',
         'Rascunho',
@@ -30,7 +29,7 @@ export default function HeaderFilter() {
         function handleClickOutside(e) {
             if (ref.current && !ref.current.contains(e.target)) {
                 setOpen(false)
-                setSearch(selected)
+                setSearch(filterSelected)
             }
         }
 
@@ -39,7 +38,7 @@ export default function HeaderFilter() {
         return () => {
             document.removeEventListener('click', handleClickOutside)
         }
-    }, [selected])
+    }, [filterSelected])
 
     const filteredOptions = options.filter(option => option.toLowerCase().includes(search.toLowerCase()))
 
@@ -83,9 +82,9 @@ export default function HeaderFilter() {
                                 filteredOptions.map((item, index) => (
                                     <div
                                         key={index}
-                                        className={`option ${item === selected ? 'selected' : ''}`}
+                                        className={`option ${item === filterSelected ? 'selected' : ''}`}
                                         onClick={() => {
-                                            setSelected(item)
+                                            setFilterSelected(item)
                                             filterBudgets(item)
                                             setSearch(item)
                                             setOpen(false)
