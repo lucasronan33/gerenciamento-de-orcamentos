@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { FormBudget } from '..';
 import { DivContainerFilter, InptSearch } from '../../HeaderFilter/styles';
 import { HiOutlineChevronDown } from 'react-icons/hi';
@@ -38,6 +38,27 @@ export function BudgetContentItems() {
         }))
     }
 
+    const subtotal = useMemo(() => {
+        return budget.items.reduce((acc, item) => {
+            const value = Number(item.total) || 0
+            return acc + value
+        }, 0).toFixed(2)
+    }, [budget.items])
+
+    const total = useMemo(() => {
+        let value = Number(subtotal) + Number(budget.totals.shipping)
+        value -= (value * (budget.totals.discount / 100))
+        value *= ((budget.totals.taxes / 100) + 1)
+        return value.toFixed(2)
+
+    }, [
+        subtotal,
+        budget.totals.discount,
+        budget.totals.taxes,
+        budget.totals.shipping,
+    ])
+
+
     function changeValueInput({ itemId, field, value, minValue }) {
         const valueInput = value
 
@@ -66,30 +87,18 @@ export function BudgetContentItems() {
     }
 
     useEffect(() => {
-
-        const subtotal = budget.items.reduce((acc, item) => {
-            const value = Number(item.total) || 0
-            return acc + value
-        }, 0).toFixed(2)
-        updateTotals('subtotal', subtotal)
-
-        let total = Number(subtotal) + Number(budget.totals.shipping)
-        total -= (total * (budget.totals.discount / 100))
-        total *= ((budget.totals.taxes / 100) + 1)
-        updateTotals('total', total.toFixed(2))
-
-    }, [
-        budget.items,
-        budget.totals.discount,
-        budget.totals.taxes,
-        budget.totals.shipping,
-        updateTotals,
-    ])
+        if (budget.totals.shippingType) {
+            setSearch(budget.totals.shippingType)
+            setSelected(budget.totals.shippingType)
+        }
+    }, [budget.totals.shippingType])
 
     useEffect(() => {
 
-        updateBudget('totals', 'shippingType', selected)
-        if (selected !== 'Valor Customizado') updateTotals('shipping', 0)
+        console.log('selected: ', selected)
+        console.log('shippingType: ', budget.totals.shippingType)
+        if (selected !== 'Valor Customizado' && budget.totals.shipping !== 0) updateTotals('shipping', 0)
+
         if (!open) return
         function handleClickOutside(e) {
             if (ref.current && !ref.current.contains(e.target)) {
@@ -100,12 +109,21 @@ export function BudgetContentItems() {
         }
 
         document.addEventListener('mousedown', handleClickOutside)
+        if (budget.totals.shippingType === selected) return
+        if (budget.totals.shippingType !== selected) updateBudget('totals', 'shippingType', selected)
 
         return () => {
             document.removeEventListener('mousedown', handleClickOutside)
         }
 
-    }, [open, selected, updateTotals, updateBudget])
+    }, [
+        open,
+        selected,
+        budget.totals.shipping,
+        budget.totals.shippingType,
+        updateBudget,
+        updateTotals
+    ])
 
     const filteredOptions = options.filter(option => option.toLowerCase().includes(search.toLowerCase()))
     return (
@@ -244,7 +262,7 @@ export function BudgetContentItems() {
             <div className='budget-total-subtotal-container'>
                 <div className='budget-subtotal-container'>
                     <label>Subtotal</label>
-                    <label>R$ {budget.totals.subtotal} </label>
+                    <label>R$ {subtotal} </label>
                 </div>
                 {budget.totals.shipping > 0 && (
                     <div className='budget-subtotal-container'>
@@ -266,7 +284,7 @@ export function BudgetContentItems() {
                 )}
                 <div className='budget-total-container'>
                     <label>Total</label>
-                    <label> R$ {budget.totals.total}</label>
+                    <label> R$ {total}</label>
                 </div>
             </div>
         </ >

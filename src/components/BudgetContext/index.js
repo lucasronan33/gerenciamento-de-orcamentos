@@ -4,20 +4,21 @@ const { createContext, useState, useContext, useCallback } = require('react');
 
 const BudgetContext = createContext()
 
-export function BudgetProvider({ children }) {
-    const initialState = {
-        basic: {},
-        client: {},
-        items: [],
-        conditions: {},
-        totals: {
-            discount: 0,
-            taxes: 0,
-            shipping: 0,
-            subtotal: 0,
-            total: 0,
-        }
+const initialState = {
+    basic: {},
+    client: {},
+    items: [],
+    conditions: {},
+    totals: {
+        discount: 0,
+        taxes: 0,
+        shipping: 0,
+        shippingType: 'Sem Frete',
+        subtotal: 0,
+        total: 0,
     }
+}
+export function BudgetProvider({ children }) {
     const [budget, setBudget] = useState(initialState)
     const [budgets, setBudgets] = useState([])
     const [filteredBudgets, setFilteredBudgets] = useState([])
@@ -27,6 +28,25 @@ export function BudgetProvider({ children }) {
         setBudgets(response.data)
         setFilteredBudgets(response.data)
     }, [])
+
+    function inputFilterBudgets(value) {
+        if (value === 'Todos os status') {
+            setFilteredBudgets(budgets)
+            return
+        }
+
+        const filtered = budgets.filter(
+            item => {
+                const normalizeValue = String(value).toLowerCase()
+                if (item.basic.code.includes(normalizeValue)) return item
+                if (item.basic.name.includes(normalizeValue)) return item
+                if (item.client?.enterpriseName?.includes(normalizeValue)) return item
+                if (item.client?.email?.includes(normalizeValue)) return item
+                return null
+            }
+        )
+        setFilteredBudgets(filtered)
+    }
 
     function filterBudgets(filterValue) {
         if (filterValue === 'Todos os status') {
@@ -67,15 +87,20 @@ export function BudgetProvider({ children }) {
         }))
     }, [])
 
-    const updateTotals = ((field, value) => {
-        setBudget(prev => ({
-            ...prev,
-            totals: {
-                ...prev.totals,
-                [field]: value
+    function updateTotals(field, value) {
+        setBudget(prev => {
+
+            if (prev.totals[field] === value) return prev
+
+            return {
+                ...prev,
+                totals: {
+                    ...prev.totals,
+                    [field]: value
+                }
             }
-        }))
-    }, [])
+        })
+    }
 
     function calcTotal(item) {
         let total =
@@ -117,6 +142,7 @@ export function BudgetProvider({ children }) {
 
                     budgets,
                     setBudgets,
+                    inputFilterBudgets,
                     filterBudgets,
                     filteredBudgets,
                     fetchBudgets,

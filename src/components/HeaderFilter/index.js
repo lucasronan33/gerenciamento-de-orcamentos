@@ -10,7 +10,7 @@ import { useEffect } from 'react';
 import { useBudget } from '../BudgetContext';
 
 export default function HeaderFilter() {
-    const { filterBudgets } = useBudget()
+    const { inputFilterBudgets, filterBudgets } = useBudget()
 
     const [open, setOpen] = useState(false)
     const ref = useRef()
@@ -54,6 +54,9 @@ export default function HeaderFilter() {
                             type='text'
                             className='input-search'
                             placeholder='Buscar por número, cliente ou e-mail'
+                            onChange={(e) => {
+                                inputFilterBudgets(e.target.value)
+                            }}
                         />
                     </InptSearch>
                 </DivContainerFilter>

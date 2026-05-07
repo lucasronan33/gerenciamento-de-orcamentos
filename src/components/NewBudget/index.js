@@ -53,6 +53,7 @@ export default function NewBudget({
         ...prev,
         formErrors
       }))
+      return console.log(formErrors)
     }
     try {
       if (budgetData) {
