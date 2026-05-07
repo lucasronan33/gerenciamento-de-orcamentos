@@ -15,11 +15,11 @@ import { useNavigate } from 'react-router-dom';
 
 export default function Home() {
     const navigate = useNavigate()
-    const { budgets, fetchBudgets } = useBudget()
+    const { budgets, filteredBudgets, fetchBudgets } = useBudget()
 
     useEffect(() => {
         fetchBudgets()
-    })
+    }, [fetchBudgets])
 
     return (
         <div>
@@ -41,9 +41,21 @@ export default function Home() {
                             Novo Orçamento
                         </Button.Root>
                     </Card>
-                    : budgets.map(budget => (
-                        <CardBudget key={budget._id} budget={budget} />
-                    ))}
+                    :
+                    filteredBudgets.length < 1 ?
+                        <Card className='cardHomeNewBudget'>
+                            <FileText className='iconFile' />
+                            <h3>
+                                Nenhum orçamento encontrado
+                            </h3>
+                            <p>
+                                Tente ajustar os filtros de busca
+                            </p>
+                        </Card>
+                        : filteredBudgets.map(budget => (
+                            <CardBudget key={budget._id} budget={budget} />
+                        ))}
+
             </div>
         </div>
     );

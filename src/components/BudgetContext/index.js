@@ -20,10 +20,24 @@ export function BudgetProvider({ children }) {
     }
     const [budget, setBudget] = useState(initialState)
     const [budgets, setBudgets] = useState([])
+    const [filteredBudgets, setFilteredBudgets] = useState([])
 
-    async function fetchBudgets() {
+    const fetchBudgets = useCallback(async () => {
         const response = await show('/budgets')
-        await setBudgets(response.data)
+        setBudgets(response.data)
+        setFilteredBudgets(response.data)
+    }, [])
+
+    function filterBudgets(filterValue) {
+        if (filterValue === 'Todos os status') {
+            setFilteredBudgets(budgets)
+            return
+        }
+
+        const filtered = budgets.filter(
+            item => item.basic.status === filterValue
+        )
+        setFilteredBudgets(filtered)
     }
 
     function calcTotalBudgets() {
@@ -103,6 +117,8 @@ export function BudgetProvider({ children }) {
 
                     budgets,
                     setBudgets,
+                    filterBudgets,
+                    filteredBudgets,
                     fetchBudgets,
                     calcTotalBudgets,
                     approvedBudgets,

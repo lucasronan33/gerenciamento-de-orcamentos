@@ -7,8 +7,10 @@ import { HiOutlineChevronDown } from 'react-icons/hi';
 import { useState } from 'react';
 import { useRef } from 'react';
 import { useEffect } from 'react';
+import { useBudget } from '../BudgetContext';
 
 export default function HeaderFilter() {
+    const { filterBudgets } = useBudget()
 
     const [open, setOpen] = useState(false)
     const ref = useRef()
@@ -81,6 +83,7 @@ export default function HeaderFilter() {
                                         className={`option ${item === selected ? 'selected' : ''}`}
                                         onClick={() => {
                                             setSelected(item)
+                                            filterBudgets(item)
                                             setSearch(item)
                                             setOpen(false)
                                         }}
