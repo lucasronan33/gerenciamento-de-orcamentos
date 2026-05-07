@@ -26,6 +26,23 @@ export function BudgetProvider({ children }) {
         await setBudgets(response.data)
     }
 
+    function calcTotalBudgets() {
+
+        const total = budgets.reduce((prevValue, currentValue) => {
+            const value = Number(currentValue.totals.total) || 0
+            return prevValue + value
+        }, 0).toFixed(2)
+
+        return total
+    }
+
+    function approvedBudgets() {
+        const approvedBudgets = budgets.filter(
+            item => item.basic.status.toLowerCase().trim() === 'aprovado'
+        )
+        return approvedBudgets
+    }
+
     function updateBudget(field, subfield, value) {
         setBudget(prev => ({
             ...prev,
@@ -74,17 +91,23 @@ export function BudgetProvider({ children }) {
 
     return (
         <BudgetContext.Provider
-            value={{
-                budget,
-                budgets,
-                initialState,
-                fetchBudgets,
-                setBudget,
-                updateBudget,
-                updateItem,
-                updateTotals,
-                calcTotal,
-            }}>
+            value={
+                {
+                    initialState,
+                    budget,
+                    setBudget,
+                    updateBudget,
+                    updateItem,
+                    updateTotals,
+                    calcTotal,
+
+                    budgets,
+                    setBudgets,
+                    fetchBudgets,
+                    calcTotalBudgets,
+                    approvedBudgets,
+                }
+            }>
             {children}
         </BudgetContext.Provider>
     )
