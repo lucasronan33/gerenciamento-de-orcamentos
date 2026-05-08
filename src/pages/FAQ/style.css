@@ -1,0 +1,41 @@
+.faq-page {
+    width: 90%;
+    margin: 30px auto;
+    display: flex;
+    flex-direction: column;
+    gap: 3vh;
+}
+
+.faq-heading {
+    display: flex;
+    flex-direction: column;
+    gap: 1vh;
+}
+
+.faq-heading p,
+.faq-item p {
+    color: #555;
+}
+
+.faq-list {
+    display: flex;
+    flex-direction: column;
+    gap: 2vh;
+}
+
+.faq-item {
+    padding: 3vh;
+    border: 1px solid #ccc;
+    border-radius: 1.5vh;
+}
+
+.faq-item summary {
+    cursor: pointer;
+    font-size: large;
+    font-weight: 700;
+}
+
+.faq-item p {
+    margin-top: 2vh;
+    line-height: 1.5;
+}

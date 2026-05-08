@@ -6,6 +6,7 @@ import { Subtitle, Title } from './styles'
 import { Button } from '../Button'
 import { useNavigate, useParams } from 'react-router-dom'
 import axios from '../../services/axios'
+import Sidebar from '../Sidebar'
 
 export default function Header(props) {
     const [newBudget, setNewBudget] = useState(false)
@@ -59,6 +60,7 @@ export default function Header(props) {
                 {...props} />
             <div className='container'>
                 <div className='container-logo-title'>
+                    <Sidebar />
                     <div className='logo' />
                     <div className='container-title'>
                         <Title>

@@ -1,9 +1,14 @@
 import React from "react";
 import { Navigate, useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
 import PropTypes from "prop-types";
 export default function MyRoute({ children, isClosed, isPublicOnly, ...rest }) {
     const location = useLocation()
-    const isLoggedIn = false
+    const { isCheckingAuth, isLoggedIn } = useSelector((state) => state.auth || {})
+
+    if (isCheckingAuth && isClosed) {
+        return null
+    }
 
     if (isClosed && !isLoggedIn) {
         return (
@@ -17,7 +22,7 @@ export default function MyRoute({ children, isClosed, isPublicOnly, ...rest }) {
     if (isPublicOnly && isLoggedIn) {
         return (
             <Navigate
-                to='/home'
+                to='/'
                 replace />
         )
     }
@@ -31,5 +36,6 @@ MyRoute.defaultProps = {
 
 MyRoute.propTypes = {
     children: PropTypes.node.isRequired,
-    isClosed: PropTypes.bool
+    isClosed: PropTypes.bool,
+    isPublicOnly: PropTypes.bool,
 }

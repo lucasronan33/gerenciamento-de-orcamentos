@@ -1,0 +1,107 @@
+.settings-page {
+    width: 90%;
+    margin: 30px auto;
+    display: flex;
+    flex-direction: column;
+    gap: 3vh;
+}
+
+.settings-heading,
+.settings-form,
+.settings-list,
+.settings-item {
+    display: flex;
+}
+
+.settings-heading {
+    flex-direction: column;
+    gap: 1vh;
+}
+
+.settings-heading p {
+    color: #555;
+}
+
+.settings-form {
+    flex-direction: column;
+    gap: 2vh;
+    padding: 3vh;
+    border: 1px solid #ccc;
+    border-radius: 1.5vh;
+}
+
+.settings-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 2vh;
+    flex-wrap: wrap;
+}
+
+.settings-list {
+    flex-direction: column;
+    gap: 2vh;
+}
+
+.settings-item {
+    justify-content: space-between;
+    gap: 2vh;
+    padding: 3vh;
+    border: 1px solid #ccc;
+    border-radius: 1.5vh;
+}
+
+.settings-item div:first-child {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8vh;
+}
+
+.settings-item strong {
+    color: #333;
+}
+
+.settings-item p {
+    color: #555;
+}
+
+.settings-item-actions {
+    display: flex;
+    align-items: center;
+    gap: 1vh;
+}
+
+.settings-item-actions button {
+    width: 44px;
+    height: 44px;
+    padding: 0;
+}
+
+.settings-item-actions svg,
+.settings-actions svg {
+    width: 18px;
+    height: 18px;
+}
+
+.field-helper {
+    font-size: small;
+    font-weight: 600;
+}
+
+.field-helper.error {
+    color: #e74d3c;
+}
+
+@media (width < 650px) {
+    .settings-item {
+        flex-direction: column;
+    }
+
+    .settings-item-actions,
+    .settings-actions {
+        justify-content: stretch;
+    }
+
+    .settings-actions button {
+        width: 100%;
+    }
+}

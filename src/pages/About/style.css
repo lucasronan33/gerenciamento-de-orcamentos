@@ -1,0 +1,16 @@
+.about-page {
+    width: 90%;
+    margin: 30px auto;
+}
+
+.about-page section {
+    max-width: 760px;
+    display: flex;
+    flex-direction: column;
+    gap: 2vh;
+}
+
+.about-page p {
+    color: #555;
+    line-height: 1.6;
+}
