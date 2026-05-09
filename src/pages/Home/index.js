@@ -8,9 +8,8 @@ import Header from '../../components/Header';
 import CardBudget from '../../components/CardBudget/CardBudget';
 import { useBudget } from '../../components/BudgetContext';
 import { Card } from '../../components/HeaderMain/styles';
-import { FileText } from 'lucide-react';
+import { FileText, Plus } from 'lucide-react';
 import { Button } from '../../components/Button';
-import { FaPlus } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 
 export default function Home() {
@@ -37,7 +36,7 @@ export default function Home() {
                             Clique no botão "Novo Orçamento" para começar
                         </p>
                         <Button.Root className='button-header' onClick={() => navigate('budget/new')}>
-                            <FaPlus />
+                            <Plus />
                             Novo Orçamento
                         </Button.Root>
                     </Card>

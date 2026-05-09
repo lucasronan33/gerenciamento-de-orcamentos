@@ -53,24 +53,23 @@ export default function NewBudget({
         ...prev,
         formErrors
       }))
-      return console.log(formErrors)
+      return
     }
     try {
       if (budgetData) {
-        console.log(budget)
-        const response = await update(`/budgets/${id}`, budget)
-        console.log('response: ', response.data)
+        await update(`/budgets/${id}`, budget)
       } else {
-        console.log(budget)
-        const response = await store(`/budgets`, budget)
-        console.log('response: ', response.data)
+        await store(`/budgets`, budget)
       }
       fetchBudgets()
       navigate('/')
       handleIsVisible(false)
 
     } catch (err) {
-      console.log(err.response?.data || err.message)
+      setBudget(prev => ({
+        ...prev,
+        formErrors: [{ api: err.response?.data?.message || 'Nao foi possivel salvar o orcamento' }]
+      }))
     }
   };
 

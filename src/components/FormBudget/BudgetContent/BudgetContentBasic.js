@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import '../style.css'
 
-import { HiOutlineChevronDown } from 'react-icons/hi';
+import { ChevronDown } from 'lucide-react';
 import { FormBudget } from '..';
 import { DivContainerFilter, InptSearch } from '../../HeaderFilter/styles';
 import { useBudget } from '../../BudgetContext';
@@ -56,7 +56,7 @@ export function BudgetContentBasic() {
         <>
             <FormBudget.ContainerInput>
                 <FormBudget.Label text='Numero do Orçamento *' />
-                <FormBudget.LockedInput placeholder='Numero do Orçamento' name='budgetNumber' value={budget.basic?.code || ''} />
+                <FormBudget.LockedLabel placeholder='Numero do Orçamento' name='budgetNumber' text={budget.basic?.code || ''} />
             </FormBudget.ContainerInput>
 
             <FormBudget.ContainerInput>
@@ -74,7 +74,7 @@ export function BudgetContentBasic() {
                 <FormBudget.Label text='Status do Orçamento' />
                 <DivContainerFilter ref={ref}>
                     <InptSearch>
-                        <HiOutlineChevronDown className='chevronDown-icon' />
+                        <ChevronDown className='chevronDown-icon' />
                         <input
                             type='text'
                             name='budgetStatus'

@@ -2,8 +2,7 @@ import React from 'react';
 import { Container } from '../../styles/GlobalStyles';
 import { Card } from '../HeaderMain/styles';
 import { DivContainerFilter, InptSearch } from './styles'
-import { IoSearchOutline } from 'react-icons/io5';
-import { HiOutlineChevronDown } from 'react-icons/hi';
+import { ChevronDown, Search } from 'lucide-react';
 import { useState } from 'react';
 import { useRef } from 'react';
 import { useEffect } from 'react';
@@ -48,7 +47,7 @@ export default function HeaderFilter() {
 
                 <DivContainerFilter>
                     <InptSearch>
-                        <IoSearchOutline className='search-icon' />
+                        <Search className='search-icon' />
                         <input
                             type='text'
                             className='input-search'
@@ -62,7 +61,7 @@ export default function HeaderFilter() {
 
                 <DivContainerFilter ref={ref}>
                     <InptSearch>
-                        <HiOutlineChevronDown className='chevronDown-icon' />
+                        <ChevronDown className='chevronDown-icon' />
                         <input
                             type='text'
                             className='filter'

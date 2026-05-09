@@ -1,18 +1,28 @@
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import { CircleHelp, Info, LogOut, Menu, PackagePlus, Settings, X } from 'lucide-react'
+import { CircleHelp, Home, Info, LogOut, Menu, PackagePlus, Settings, X } from 'lucide-react'
 import { logoutRequest } from '../../store/modules/auth/actions'
 import './style.css'
 
 const menuSections = [
     {
+        title: 'Principal',
+        items: [
+            {
+                label: 'Home',
+                icon: Home,
+                path: '/',
+            },
+        ],
+    },
+    {
         title: 'Cadastros',
         items: [
             {
-                label: 'Cadastro de itens predefinidos',
+                label: 'Cadastro de itens predefinidos (em desenvolvimento)',
                 icon: PackagePlus,
-                path: '/itens-predefinidos',
+                path: '/predefineditems',
             },
         ],
     },
@@ -20,17 +30,17 @@ const menuSections = [
         title: 'Configuracoes',
         items: [
             {
-                label: 'Configuracoes',
+                label: 'Configurações (em desenvolvimento)',
                 icon: Settings,
-                path: '/configuracoes',
+                path: '/settings',
             },
             {
                 label: 'Sobre Nos',
                 icon: Info,
-                path: '/sobre-nos',
+                path: '/about',
             },
             {
-                label: 'FAQ',
+                label: 'FAQ (em desenvolvimento)',
                 icon: CircleHelp,
                 path: '/faq',
             },
@@ -45,11 +55,13 @@ export default function Sidebar() {
 
     const handleNavigate = (path) => {
         navigate(path)
+        document.activeElement.blur()
         setIsOpen(false)
     }
 
     const handleLogout = () => {
         dispatch(logoutRequest())
+        document.activeElement.blur()
         setIsOpen(false)
         navigate('/login')
     }
@@ -70,7 +82,10 @@ export default function Sidebar() {
                     className='sidebar-overlay'
                     type='button'
                     aria-label='Fechar menu'
-                    onClick={() => setIsOpen(false)}
+                    onClick={() => {
+                        document.activeElement.blur()
+                        setIsOpen(false)
+                    }}
                 />
             )}
 
@@ -84,7 +99,10 @@ export default function Sidebar() {
                         className='sidebar-close-button'
                         type='button'
                         aria-label='Fechar menu'
-                        onClick={() => setIsOpen(false)}
+                        onClick={() => {
+                            document.activeElement.blur()
+                            setIsOpen(false)
+                        }}
                     >
                         <X />
                     </button>

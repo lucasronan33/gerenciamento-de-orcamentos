@@ -13,7 +13,7 @@ function* exampleRequest() {
     try {
         yield call(requisicao);
         yield put(actions.clicaBotaoSuccess());
-    } catch (error) {
+    } catch {
         toast.error('Deu erro')
         yield put(actions.clicaBotaoFailure());
     }

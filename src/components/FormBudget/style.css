@@ -4,7 +4,8 @@
     gap: 0.5vh;
 }
 
-label {
+label,
+.form-budget-label {
     font-size: large;
     font-weight: 600;
 }
@@ -93,7 +94,7 @@ header,
     justify-content: space-between;
 }
 
-.budget-total-subtotal-container div label {
+.budget-total-subtotal-container div span {
     padding-block: 2vh;
 }
 
@@ -109,11 +110,11 @@ header,
     color: #e74d3c;
 }
 
-.budget-subtotal-container label {
+.budget-subtotal-container span {
     font-weight: normal;
 }
 
-.budget-total-container label {
+.budget-total-container span {
     font-size: x-large;
 }
 

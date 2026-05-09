@@ -1,8 +1,7 @@
-import { Trash2 } from 'lucide-react'
+import { ChevronDown, Trash2 } from 'lucide-react'
 import { BudgetCardItem } from '../FormBudget/BudgetContent/styled'
 import { FormBudget } from '../FormBudget'
 import { useEffect, useRef, useState } from 'react'
-import { HiOutlineChevronDown } from 'react-icons/hi'
 import { DivContainerFilter, InptSearch } from '../HeaderFilter/styles'
 import { useBudget } from '../BudgetContext'
 
@@ -86,7 +85,7 @@ export default function CardItem({
                     <FormBudget.Label text='Unidade' />
                     <DivContainerFilter ref={ref}>
                         <InptSearch>
-                            <HiOutlineChevronDown className='chevronDown-icon' />
+                            <ChevronDown className='chevronDown-icon' />
                             <input
                                 type='text'
                                 name='metricUnity'

@@ -35,7 +35,6 @@ export function BudgetProvider({ children }) {
             setFilteredBudgets(budgets)
             return
         }
-        console.log('filterSelected: ', filterSelected)
         const filtered = budgets.filter(
             item => {
                 const normalizeValue = String(value).toLowerCase()

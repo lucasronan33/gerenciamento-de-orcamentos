@@ -20,6 +20,7 @@ html,border-style,#root{
 }
 button{
     height: fit-content;
+    display: flex;
     cursor: pointer;
     background: ${primaryColor};
     border: none;

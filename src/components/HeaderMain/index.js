@@ -1,6 +1,5 @@
 import React from 'react';
-import { IoMdCheckmarkCircleOutline } from 'react-icons/io';
-import { IoDocumentTextOutline, IoTrendingUp } from 'react-icons/io5';
+import { CircleCheck, FileText, TrendingUp } from 'lucide-react';
 
 import * as colors from '../../config/colors';
 import { Card, CardInfo } from './styles';
@@ -34,7 +33,7 @@ export default function HeaderMain() {
                 </CardInfo>
 
                 <CardInfo $color={colors.blueDocument}>
-                    <IoDocumentTextOutline />
+                    <FileText />
                 </CardInfo>
             </Card>
 
@@ -45,7 +44,7 @@ export default function HeaderMain() {
                 </CardInfo>
 
                 <CardInfo $color={colors.succesColor}>
-                    <IoMdCheckmarkCircleOutline />
+                    <CircleCheck />
                 </CardInfo>
             </Card>
 
@@ -56,7 +55,7 @@ export default function HeaderMain() {
                 </CardInfo>
 
                 <CardInfo $color={colors.blueDocument}>
-                    <IoTrendingUp />
+                    <TrendingUp />
                 </CardInfo>
             </Card>
 
@@ -67,7 +66,7 @@ export default function HeaderMain() {
                 </CardInfo>
 
                 <CardInfo $color={colors.succesColor}>
-                    <IoTrendingUp />
+                    <TrendingUp />
                 </CardInfo>
             </Card>
         </Container>

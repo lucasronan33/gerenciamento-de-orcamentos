@@ -1,10 +1,9 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { FormBudget } from '..';
 import { DivContainerFilter, InptSearch } from '../../HeaderFilter/styles';
-import { HiOutlineChevronDown } from 'react-icons/hi';
+import { ChevronDown, Plus } from 'lucide-react';
 import { Title } from '../../Header/styles';
 import { Button } from '../../Button';
-import { FaPlus } from 'react-icons/fa';
 import CardItem from '../../CardItem/CardItem';
 import { useBudget } from '../../BudgetContext';
 
@@ -95,8 +94,6 @@ export function BudgetContentItems() {
 
     useEffect(() => {
 
-        console.log('selected: ', selected)
-        console.log('shippingType: ', budget.totals.shippingType)
         if (selected !== 'Valor Customizado' && budget.totals.shipping !== 0) updateTotals('shipping', 0)
 
         if (!open) return
@@ -134,7 +131,7 @@ export function BudgetContentItems() {
                 <Button.Root
                     onClick={addItem}
                 >
-                    <FaPlus />
+                    <Plus />
                     Adicionar Item
                 </Button.Root>
             </header>
@@ -202,7 +199,7 @@ export function BudgetContentItems() {
                     <FormBudget.Label text='Tipo do frete' />
                     <DivContainerFilter ref={ref}>
                         <InptSearch>
-                            <HiOutlineChevronDown className='chevronDown-icon' />
+                            <ChevronDown className='chevronDown-icon' />
                             <input
                                 type='text'
                                 name='shippingType'
@@ -261,30 +258,30 @@ export function BudgetContentItems() {
             </div>
             <div className='budget-total-subtotal-container'>
                 <div className='budget-subtotal-container'>
-                    <label>Subtotal</label>
-                    <label>R$ {subtotal} </label>
+                    <span>Subtotal</span>
+                    <span>R$ {subtotal} </span>
                 </div>
                 {budget.totals.shipping > 0 && (
                     <div className='budget-subtotal-container'>
-                        <label>Frete</label>
-                        <label>R$ {budget.totals.shipping} </label>
+                        <span>Frete</span>
+                        <span>R$ {budget.totals.shipping} </span>
                     </div>
                 )}
                 {budget.totals.discount > 0 && (
                     <div className='budget-subtotal-container discount'>
-                        <label>{`Desconto (${budget.totals.discount}%)`}</label>
-                        <label> - R$ {calValueDiscount()} </label>
+                        <span>{`Desconto (${budget.totals.discount}%)`}</span>
+                        <span> - R$ {calValueDiscount()} </span>
                     </div>
                 )}
                 {budget.totals.taxes > 0 && (
                     <div className='budget-subtotal-container taxes'>
-                        <label>{`Impostos (${budget.totals.taxes}%)`}</label>
-                        <label>R$ {calValueTaxes()} </label>
+                        <span>{`Impostos (${budget.totals.taxes}%)`}</span>
+                        <span>R$ {calValueTaxes()} </span>
                     </div>
                 )}
                 <div className='budget-total-container'>
-                    <label>Total</label>
-                    <label> R$ {total}</label>
+                    <span>Total</span>
+                    <span> R$ {total}</span>
                 </div>
             </div>
         </ >

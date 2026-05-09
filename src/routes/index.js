@@ -32,7 +32,7 @@ export default function Routers() {
                     <MyRoute isPublicOnly>
                         <Register />
                     </MyRoute>
-                } path='/cadastro' />
+                } path='/register' />
 
                 <Route element={
                     <MyRoute isClosed>
@@ -50,19 +50,19 @@ export default function Routers() {
                     <MyRoute isClosed>
                         <PresetItems />
                     </MyRoute>
-                } path='/itens-predefinidos' />
+                } path='/predefineditems' />
 
                 <Route element={
                     <MyRoute isClosed>
                         <Settings />
                     </MyRoute>
-                } path='/configuracoes' />
+                } path='/settings' />
 
                 <Route element={
                     <MyRoute isClosed>
                         <About />
                     </MyRoute>
-                } path='/sobre-nos' />
+                } path='/about' />
 
                 <Route element={
                     <MyRoute isClosed>

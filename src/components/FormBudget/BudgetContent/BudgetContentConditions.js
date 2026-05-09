@@ -1,4 +1,4 @@
-import { HiOutlineChevronDown } from 'react-icons/hi';
+import { ChevronDown } from 'lucide-react';
 import { FormBudget } from '..';
 import { DivContainerFilter, InptSearch } from '../../HeaderFilter/styles';
 import { useEffect, useRef, useState } from 'react';
@@ -53,7 +53,7 @@ export function BudgetContentConditions() {
                 <FormBudget.Label text='Forma de Pagamento' />
                 <DivContainerFilter ref={ref}>
                     <InptSearch>
-                        <HiOutlineChevronDown className='chevronDown-icon' />
+                        <ChevronDown className='chevronDown-icon' />
                         <input
                             type='text'
                             name='paymentMethod'

@@ -1,16 +1,31 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom'
-import { CardIcons, ContainerCardBudget, DivTitle, InfoCardBudget, StatusBudget } from './CardBudgetStyles';
-import { IoCopyOutline, IoEyeOutline, IoTrashOutline } from 'react-icons/io5';
-import { FiEdit } from 'react-icons/fi';
+import { CardIcons, ConfirmDeleteModal, ContainerCardBudget, DivTitle, InfoCardBudget, StatusBudget } from './CardBudgetStyles';
+import { Copy, Edit, Eye, Trash2 } from 'lucide-react';
 import { destroy, store } from '../../services/axiosRoutes';
 import { useBudget } from '../BudgetContext';
+import { Button } from '../Button';
 
 export default function CardBudget({ budget }) {
     const navigate = useNavigate()
     const { fetchBudgets } = useBudget()
+    const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
+    const [isDeleting, setIsDeleting] = useState(false)
 
     const id = budget._id
+
+    const handleDelete = async () => {
+        try {
+            setIsDeleting(true)
+            await destroy(`/budgets/${id}`)
+            fetchBudgets()
+            setIsDeleteModalOpen(false)
+        } catch {
+            setIsDeleteModalOpen(false)
+        } finally {
+            setIsDeleting(false)
+        }
+    }
 
     return (
         <ContainerCardBudget>
@@ -47,14 +62,14 @@ export default function CardBudget({ budget }) {
                     className='viewOrc'
                     onClick={() => { navigate(`/budget/${id}`) }}
                 >
-                    <IoEyeOutline /> Ver
+                    <Eye /> Ver
                 </div>
 
                 <div
                     className='links'
                     onClick={() => { navigate(`/budget/${id}`) }}
                 >
-                    <FiEdit />
+                    <Edit />
                 </div>
 
                 <div
@@ -74,28 +89,55 @@ export default function CardBudget({ budget }) {
 
                             await store('/budgets', newBudget)
                             fetchBudgets()
-                        } catch (error) {
-                            console.log({ error })
+                        } catch {
                         }
                     }}
                 >
-                    <IoCopyOutline />
+                    <Copy />
                 </div>
                 <div
                     className='links'
-                    onClick={async () => {
-                        try {
-                            await destroy(`/budgets/${id}`)
-                            fetchBudgets()
-                        } catch (error) {
-
-                        }
-                    }}
+                    onClick={() => setIsDeleteModalOpen(true)}
                 >
-                    <IoTrashOutline className='trashIco' />
+                    <Trash2 className='trashIco' />
                 </div>
             </CardIcons>
 
+            {isDeleteModalOpen && (
+                <ConfirmDeleteModal>
+                    <button
+                        type='button'
+                        className='confirm-delete-overlay'
+                        aria-label='Fechar confirmacao'
+                        onClick={() => setIsDeleteModalOpen(false)}
+                    />
+                    <div className='confirm-delete-content'>
+                        <h2>Excluir orcamento?</h2>
+                        <p>
+                            Esta acao vai remover o orçamento {' '}
+                            <strong>{budget.basic.name}</strong>
+                            {' '}
+                            do historico.
+                        </p>
+                        <div className='confirm-delete-actions'>
+                            <Button.Root
+                                className='btn-cancel'
+                                onClick={() => setIsDeleteModalOpen(false)}
+                                disabled={isDeleting}
+                            >
+                                Cancelar
+                            </Button.Root>
+                            <Button.Root
+                                className='btn-delete'
+                                onClick={handleDelete}
+                                disabled={isDeleting}
+                            >
+                                {isDeleting ? 'Excluindo...' : 'Excluir'}
+                            </Button.Root>
+                        </div>
+                    </div>
+                </ConfirmDeleteModal>
+            )}
         </ContainerCardBudget>
     )
 }

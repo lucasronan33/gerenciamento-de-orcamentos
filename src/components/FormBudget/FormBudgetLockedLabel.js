@@ -2,7 +2,7 @@ import styled from 'styled-components'
 import './style.css'
 import propTypes from 'prop-types'
 
-export const LockedLabel = styled.label`
+export const LockedLabel = styled.div`
     width: 100%;
     height: 5vh;
     font-size: large;
@@ -16,7 +16,7 @@ export const LockedLabel = styled.label`
 
 export function FormBudgetLockedLabel({ text }) {
     return (
-        <LockedLabel>
+        <LockedLabel className='form-budget-label'>
             {text}
         </LockedLabel>
     )

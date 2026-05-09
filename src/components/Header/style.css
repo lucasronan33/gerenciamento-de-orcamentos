@@ -31,10 +31,16 @@
 /*----------------------------------------*/
 .logo {
     min-width: 10vh;
-    height: 75%;
+    height: 10vh;
     aspect-ratio: 1 / 1;
-    border-radius: 50%;
-    background: #ccc;
+}
+
+.cls-1 {
+    fill: #000;
+}
+
+.cls-2 {
+    fill: #fff;
 }
 
 /*----------------------------------------*/
