@@ -10,6 +10,7 @@ import { PersistGate } from 'redux-persist/integration/react';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { authMeRequest } from "./store/modules/auth/actions";
+import { GoogleOAuthProvider } from '@react-oauth/google';
 
 function AuthInitializer() {
   const dispatch = useDispatch()
@@ -23,17 +24,18 @@ function AuthInitializer() {
 
 function App() {
   return (
-    <Provider store={store}>
-      <PersistGate persistor={persistor}>
-        <BrowserRouter >
-          <GlobalStyles />
-          <ToastContainer autoClose={3000} />
-          <AuthInitializer />
-          <Routers />
-        </BrowserRouter>
-      </PersistGate>
-    </Provider>
-
+    <GoogleOAuthProvider clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID} >
+      <Provider store={store}>
+        <PersistGate persistor={persistor}>
+          <BrowserRouter >
+            <GlobalStyles />
+            <ToastContainer autoClose={3000} />
+            <AuthInitializer />
+            <Routers />
+          </BrowserRouter>
+        </PersistGate>
+      </Provider>
+    </GoogleOAuthProvider>
   );
 }
 

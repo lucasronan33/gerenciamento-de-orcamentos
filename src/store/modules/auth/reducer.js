@@ -12,6 +12,20 @@ const initialState = {
 
 export default function reducer(state = initialState, action) {
     switch (action.type) {
+        case types.GOOGLE_LOGIN_SUCCESS:
+            return {
+                ...state,
+                isLoading: false,
+                isLoggedIn: true,
+                user: action.payload.user,
+                accessToken: action.payload.accessToken,
+            }
+        case types.GOOGLE_LOGIN_FAILURE:
+            return {
+                ...state,
+                isLoading: false,
+            }
+
         case types.LOGIN_REQUEST:
         case types.REGISTER_REQUEST:
             return {

@@ -78,3 +78,24 @@ export function logoutSuccess() {
         type: types.LOGOUT_SUCCESS,
     };
 }
+
+export function googleLoginRequest(payload) {
+    return {
+        type: types.GOOGLE_LOGIN_REQUEST,
+        payload,
+    };
+}
+
+export function googleLoginSuccess(payload) {
+    return {
+        type: types.GOOGLE_LOGIN_SUCCESS,
+        payload,
+    };
+}
+
+export function googleLoginFailure(payload) {
+    return {
+        type: types.GOOGLE_LOGIN_FAILURE,
+        payload,
+    };
+}

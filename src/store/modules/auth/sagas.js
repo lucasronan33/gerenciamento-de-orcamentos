@@ -5,7 +5,7 @@ import { clearAccessToken, setAccessToken } from '../../../services/authToken';
 import * as actions from './actions';
 import * as types from '../types';
 
-function normalizeErrors(error) {
+export function normalizeErrors(error) {
     const data = error.response?.data;
 
     if (Array.isArray(data?.errors)) {
