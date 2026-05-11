@@ -11,7 +11,6 @@ function* googleLogin({ payload }) {
         const response = yield call(store, '/auth/google', payload);
         const { accessToken, user } = response.data;
 
-        console.log(payload)
         setAccessToken(accessToken);
 
         yield put(googleLoginSuccess({

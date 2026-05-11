@@ -99,8 +99,7 @@ export default function Login() {
                         </div>
 
                         <GoogleLogin
-                            onSuccess={credentialResponse => {
-                                console.log('success: ', credentialResponse)
+                            onSuccess={(credentialResponse) => {
                                 dispatch(googleLoginRequest({
                                     credential: credentialResponse.credential
                                 }))
