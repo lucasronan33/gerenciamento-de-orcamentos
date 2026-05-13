@@ -11,71 +11,74 @@ import Settings from '../pages/Settings';
 import FAQ from '../pages/FAQ';
 import PresetItems from '../pages/PresetItems';
 import About from '../pages/About';
+import { SettingsProvider } from '../components/SettingsContext';
 
 export default function Routers() {
     return (
-        <BudgetProvider>
-            <Routes>
-                <Route element={
-                    <MyRoute isPublicOnly>
-                        <Login />
-                    </MyRoute>
-                } path='/login' />
+        <SettingsProvider>
+            <BudgetProvider>
+                <Routes>
+                    <Route element={
+                        <MyRoute isPublicOnly>
+                            <Login />
+                        </MyRoute>
+                    } path='/login' />
 
-                <Route element={
-                    <MyRoute isPublicOnly>
-                        <Register />
-                    </MyRoute>
-                } path='/register' />
+                    <Route element={
+                        <MyRoute isPublicOnly>
+                            <Register />
+                        </MyRoute>
+                    } path='/register' />
 
-                <Route element={
-                    <MyRoute isPublicOnly>
-                        <Register />
-                    </MyRoute>
-                } path='/register' />
+                    <Route element={
+                        <MyRoute isPublicOnly>
+                            <Register />
+                        </MyRoute>
+                    } path='/register' />
 
-                <Route element={
-                    <MyRoute isClosed>
-                        <Home />
-                    </MyRoute>
-                } path='/' />
+                    <Route element={
+                        <MyRoute isClosed>
+                            <Home />
+                        </MyRoute>
+                    } path='/' />
 
-                <Route element={
-                    <MyRoute isClosed>
-                        <Home />
-                    </MyRoute>
-                } path='/budget/:id' />
+                    <Route element={
+                        <MyRoute isClosed>
+                            <Home />
+                        </MyRoute>
+                    } path='/budget/:id' />
 
-                <Route element={
-                    <MyRoute isClosed>
-                        <PresetItems />
-                    </MyRoute>
-                } path='/predefineditems' />
+                    <Route element={
+                        <MyRoute isClosed>
+                            <PresetItems />
+                        </MyRoute>
+                    } path='/predefineditems' />
 
-                <Route element={
-                    <MyRoute isClosed>
-                        <Settings />
-                    </MyRoute>
-                } path='/settings' />
+                    <Route element={
+                        <MyRoute isClosed>
+                            <Settings />
+                        </MyRoute>
+                    } path='user/:id/settings' />
 
-                <Route element={
-                    <MyRoute isClosed>
-                        <About />
-                    </MyRoute>
-                } path='/about' />
+                    <Route element={
+                        <MyRoute isClosed>
+                            <About />
+                        </MyRoute>
+                    } path='/about' />
 
-                <Route element={
-                    <MyRoute isClosed>
-                        <FAQ />
-                    </MyRoute>
-                } path='/faq' />
+                    <Route element={
+                        <MyRoute isClosed>
+                            <FAQ />
+                        </MyRoute>
+                    } path='/faq' />
 
-                <Route element={
-                    <MyRoute >
-                        <Page404 />
-                    </MyRoute>
-                } path='*' />
-            </Routes>
-        </BudgetProvider>
+                    <Route element={
+                        <MyRoute >
+                            <Page404 />
+                        </MyRoute>
+                    } path='*' />
+                </Routes>
+            </BudgetProvider>
+        </SettingsProvider>
     )
 }

@@ -14,6 +14,7 @@ export default createGlobalStyle`
 body{
         min-height: 100dvh;
         font-family: sans-serif;
+        background-color: #fff;
     }
 html,border-style,#root{
     height: 100%;
@@ -51,3 +52,12 @@ export const Container = styled.section`
     background-color: #fff;
     border-radius: 4px;
     `
+
+export const Box = styled.div`
+    display: flex;
+    padding: 2vh;
+    gap: 3vh;
+    border: #ddd 1px solid;
+    border-radius: 2vh;
+    flex-wrap: wrap;
+`

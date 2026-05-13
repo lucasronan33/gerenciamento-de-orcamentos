@@ -1,4 +1,5 @@
 .form-budget-container-input {
+    display: flex;
     height: fit-content;
     flex-direction: column;
     gap: 0.5vh;
@@ -10,26 +11,34 @@ label,
     font-weight: 600;
 }
 
-input:not(input[type='checkbox']) {
+input:not(input[type='checkbox']),
+select {
     height: 5vh;
 }
 
 input:not(input[type='checkbox']),
-textarea {
+textarea,
+select {
     width: 100%;
     font-size: medium;
     background: #f5f5f5;
     padding: 1vh 2.5vh;
     border-radius: 1vh;
+    align-items: center;
     border: none;
     resize: none;
     font-family: inherit;
 }
 
 input:not(input[type='checkbox']):focus,
-textarea:focus {
+textarea:focus,
+select:focus {
     outline: #555 1px solid;
     box-shadow: 0px 0px 10px #aaa;
+}
+
+select {
+    appearance: base-select;
 }
 
 .input-small {
@@ -37,7 +46,7 @@ textarea:focus {
     align-self: flex-end;
 }
 
-.input-meidum {
+.input-medium {
     width: 30%;
     align-self: flex-end;
     justify-content: flex-end;
@@ -130,7 +139,7 @@ header,
     }
 
     .input-small,
-    .input-meidum,
+    .input-medium,
     .input-large,
     .input-xx-large,
     .input-fill {

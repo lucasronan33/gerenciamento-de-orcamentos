@@ -21,7 +21,16 @@ export function BudgetContentBasic() {
         'Rejeitado',
         'Finalizado',
     ]
+    const times = []
 
+    for (let h = 0; h < 24; h++) {
+        for (let m = 0; m < 60; m += 15) {
+            times.push(
+                `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}`
+            )
+        }
+
+    }
     useEffect(() => {
         if (!budget.basic.code) {
             const code = Math.floor(Math.random() * 999999)
@@ -125,16 +134,6 @@ export function BudgetContentBasic() {
                 </FormBudget.ContainerInput>
 
                 <FormBudget.ContainerInput>
-                    <FormBudget.Label text='Horário *' />
-                    <FormBudget.Input
-                        typeInput='time' step="1800"
-                        name='time'
-                        value={budget.basic.time}
-                        onChange={(e) => updateBudget('basic', 'time', e.target.value)}
-                    />
-                </FormBudget.ContainerInput>
-
-                <FormBudget.ContainerInput>
                     <FormBudget.Label text='Valido até *' />
                     <FormBudget.Input
                         typeInput='date'
@@ -142,6 +141,35 @@ export function BudgetContentBasic() {
                         value={budget.basic.validUntil}
                         onChange={(e) => updateBudget('basic', 'validUntil', e.target.value)}
                     />
+                </FormBudget.ContainerInput>
+
+                <FormBudget.ContainerInput>
+                    <FormBudget.Label text='Horário *' />
+                    <select
+                        value={budget.basic.time}
+                        onChange={(e) => updateBudget('basic', 'time', e.target.value)}
+                    >
+                        {times.map((option, index) =>
+                            <option key={index}>
+                                {option}
+                            </option>)
+                        }
+                    </select>
+                </FormBudget.ContainerInput>
+
+                <FormBudget.ContainerInput>
+                    <FormBudget.Label text='Duração do Serviço' />
+
+                    <select
+                        value={budget.basic.timeService}
+                        onChange={(e) => updateBudget('basic', 'timeService', e.target.value)}
+                    >
+                        {times.map((option, index) =>
+                            <option key={index}>
+                                {option}m
+                            </option>
+                        )}
+                    </select>
                 </FormBudget.ContainerInput>
             </div>
         </>

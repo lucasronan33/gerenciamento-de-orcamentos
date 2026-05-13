@@ -1,107 +1,69 @@
-.settings-page {
+main {
+    padding-block: 3vh;
+}
+
+section {
     width: 90%;
-    margin: 30px auto;
+    margin: 0 auto;
+}
+
+.container-settings {
     display: flex;
-    flex-direction: column;
+    margin-block: 3vh;
+    padding: 2vh;
     gap: 3vh;
-}
-
-.settings-heading,
-.settings-form,
-.settings-list,
-.settings-item {
-    display: flex;
-}
-
-.settings-heading {
-    flex-direction: column;
-    gap: 1vh;
-}
-
-.settings-heading p {
-    color: #555;
-}
-
-.settings-form {
-    flex-direction: column;
-    gap: 2vh;
-    padding: 3vh;
-    border: 1px solid #ccc;
-    border-radius: 1.5vh;
-}
-
-.settings-actions {
-    display: flex;
-    justify-content: flex-end;
-    gap: 2vh;
+    border: #ddd 1px solid;
+    border-radius: 2vh;
     flex-wrap: wrap;
 }
 
-.settings-list {
-    flex-direction: column;
-    gap: 2vh;
+/* .container-settings-head {
+    width: 100%;
 }
 
-.settings-item {
+.container-settings>div {
+    display: flex;
+    flex-direction: row;
+    place-items: center;
+} */
+
+.opening-hours {
+    display: flex;
+    gap: 2vh;
+    place-items: center;
+}
+
+.opening-hours select {
+    min-width: 35%;
+}
+
+.week-date {
+    display: flex;
+    flex-direction: row;
+    flex-grow: 1;
     justify-content: space-between;
-    gap: 2vh;
-    padding: 3vh;
-    border: 1px solid #ccc;
-    border-radius: 1.5vh;
 }
 
-.settings-item div:first-child {
+.week-date>.date {
     display: flex;
-    flex-direction: column;
-    gap: 0.8vh;
-}
-
-.settings-item strong {
-    color: #333;
-}
-
-.settings-item p {
-    color: #555;
-}
-
-.settings-item-actions {
-    display: flex;
+    width: 4vh;
+    height: 4vh;
+    border-radius: 50%;
     align-items: center;
-    gap: 1vh;
+    justify-content: center;
+    cursor: pointer;
 }
 
-.settings-item-actions button {
-    width: 44px;
-    height: 44px;
-    padding: 0;
+.date-active {
+    background: greenyellow;
 }
 
-.settings-item-actions svg,
-.settings-actions svg {
-    width: 18px;
-    height: 18px;
+.date-inactive {
+    background: #ddd;
 }
 
-.field-helper {
-    font-size: small;
-    font-weight: 600;
-}
-
-.field-helper.error {
-    color: #e74d3c;
-}
-
-@media (width < 650px) {
-    .settings-item {
-        flex-direction: column;
-    }
-
-    .settings-item-actions,
-    .settings-actions {
-        justify-content: stretch;
-    }
-
-    .settings-actions button {
-        width: 100%;
-    }
+.btn-save {
+    width: fit-content;
+    padding-inline: 10vh;
+    justify-self: end;
 }

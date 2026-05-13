@@ -1,11 +1,11 @@
 import { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { CircleHelp, Home, Info, LogOut, Menu, PackagePlus, Settings, X } from 'lucide-react'
 import { logoutRequest } from '../../store/modules/auth/actions'
 import './style.css'
 
-const menuSections = [
+const getMenuSections = (userId) => [
     {
         title: 'Principal',
         items: [
@@ -32,7 +32,7 @@ const menuSections = [
             {
                 label: 'Configurações (em desenvolvimento)',
                 icon: Settings,
-                path: '/settings',
+                path: `/user/${userId}/settings`,
             },
             {
                 label: 'Sobre Nos',
@@ -52,6 +52,9 @@ export default function Sidebar() {
     const [isOpen, setIsOpen] = useState(false)
     const dispatch = useDispatch()
     const navigate = useNavigate()
+
+    const userId = useSelector(state => state.auth.user._id)
+    const menuSections = getMenuSections(userId)
 
     const handleNavigate = (path) => {
         navigate(path)
