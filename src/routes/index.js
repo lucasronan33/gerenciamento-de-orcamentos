@@ -58,7 +58,7 @@ export default function Routers() {
                         <MyRoute isClosed>
                             <Settings />
                         </MyRoute>
-                    } path='user/:id/settings' />
+                    } path='user/settings' />
 
                     <Route element={
                         <MyRoute isClosed>

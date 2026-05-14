@@ -32,7 +32,7 @@ const getMenuSections = (userId) => [
             {
                 label: 'Configurações (em desenvolvimento)',
                 icon: Settings,
-                path: `/user/${userId}/settings`,
+                path: `/user/settings`,
             },
             {
                 label: 'Sobre Nos',

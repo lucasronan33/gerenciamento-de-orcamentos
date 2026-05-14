@@ -23,9 +23,7 @@ export function SettingsProvider({ children }) {
             const { data } = await show('/user/settings')
             return data
         } catch (error) {
-            console.log(error)
-            // setSettings(initialState)
-
+            return error
         }
     }, [])
 
@@ -35,15 +33,16 @@ export function SettingsProvider({ children }) {
             [field]: settings
         }))
     }
-    function updateSubSettings(field, subfield, settings) {
+    function updateSubSettings(field, subfield, setting) {
+        console.log(settings)
         setSettings(prev => ({
             ...prev,
             [field]: {
-                ...[field],
+                ...prev[field],
                 [subfield]:
-                    typeof settings === 'function'
-                        ? settings(prev[field][subfield])
-                        : settings
+                    typeof setting === 'function'
+                        ? setting(prev[field][subfield])
+                        : setting
             }
         }))
     }
