@@ -67,3 +67,9 @@ section {
     padding-inline: 10vh;
     justify-self: end;
 }
+
+@media (width<500px) {
+    .btn-save {
+        width: 100%;
+    }
+}

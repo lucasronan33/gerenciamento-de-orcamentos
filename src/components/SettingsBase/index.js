@@ -1,5 +1,5 @@
-import { SettingsServicve } from './SettingsService';
+import { SettingsService, } from './SettingsService';
 
 export const SettingsBase = {
-    Service: SettingsServicve
+    Service: SettingsService
 }

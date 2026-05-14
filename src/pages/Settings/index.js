@@ -6,8 +6,16 @@ import { FormBudget } from '../../components/FormBudget'
 import { NavBudget } from '../../components/NewBudget/styles'
 import { Button } from '../../components/Button'
 import { SettingsBase } from '../../components/SettingsBase'
+import { SaveIcon } from 'lucide-react'
+import { useSelector } from 'react-redux'
+import { useSettings } from '../../components/SettingsContext'
+import { update } from '../../services/axiosRoutes'
+import { toast } from 'react-toastify'
 
 export default function Settings() {
+    const { isLoading } = useSelector(state => state.auth || {})
+    const { settings } = useSettings()
+
     const [active, setActive] = useState('Atendimento')
     const options = [
         'Atendimento',
@@ -24,6 +32,25 @@ export default function Settings() {
         setActive(option)
     }
 
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+
+        const formErrors = []
+
+        // bloco de condições de erros
+        // services não tem nenhuma verificação inicial
+
+        if (formErrors.length > 0) return console.log(formErrors)
+
+        try {
+            await update(`/user/settings`, settings)
+            toast.success('Configurações salvas com sucesso')
+        } catch (error) {
+            toast.error(error)
+        }
+
+    }
+
     return (
         <div>
             <Header />
@@ -34,7 +61,10 @@ export default function Settings() {
                 </section>
 
                 <section >
-                    <div className='container-settings'>
+                    <form
+                        className='container-settings'
+                        onSubmit={handleSubmit}
+                    >
                         <NavBudget>
                             {options.map((item) => (
                                 <Button.Root
@@ -57,7 +87,20 @@ export default function Settings() {
                                 </div>
                             ))}
                         </FormBudget.Root>
-                    </div>
+
+                        <Button.Container>
+                            <Button.Root
+                                className='btn-save'
+                                type='submit'
+                                disabled={isLoading}
+                                onClick={() => {
+
+                                }} >
+                                <Button.Icon icon={SaveIcon} />
+                                {isLoading ? 'Salvando...' : 'Salvar'}
+                            </Button.Root>
+                        </Button.Container>
+                    </form>
                 </section>
             </main>
         </div>

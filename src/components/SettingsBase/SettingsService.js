@@ -1,11 +1,11 @@
 import { FormBudget } from '../FormBudget'
 import { useEffect, useMemo, useState } from 'react'
 import '../../components/FormBudget/style.css'
-import { Button } from '../Button'
-import { SaveIcon } from 'lucide-react'
 import { useSettings } from '../SettingsContext'
-// import { useParams } from 'react-router-dom'
-import { useSelector } from 'react-redux'
+import { show } from '../../services/axiosRoutes'
+import { DatePicker } from '@mui/x-date-pickers'
+import { validateDay } from '../../utils/schedule'
+import dayjs from 'dayjs'
 
 const weekDays = [
     'D',
@@ -17,21 +17,14 @@ const weekDays = [
     'S',
 ]
 
-export const SettingsServicve = () => {
-    const { updateSettings, settings } = useSettings()
-    const [priceHour, setPriceHour] = useState(settings.priceHour || 0)
-    const [workDays, setWorkDays] = useState(settings.workDays || [])
-    const [startHour, setStartHour] = useState(settings.startHour || '00:00')
-    const [endHour, setEndHour] = useState(settings.endHour || '00:00')
-    const [stepHour, setStepHour] = useState(settings.stepHour || 30)
-    const [minTimeService, setMinTimeService] = useState(settings.minTimeService || '00:00')
-    // const { id } = useParams()
-    const { isLoading } = useSelector(state => state.auth || {})
+export const SettingsService = () => {
+    const { updateSubSettings, settings, initialState, setSettings } = useSettings()
+    const [date, setDate] = useState(null)
 
     const times = useMemo(() => {
         const result = []
         for (let h = 0; h < 24; h++) {
-            for (let m = 0; m < 60; m += Number(stepHour)) {
+            for (let m = 0; m < 60; m += Number(settings.services.stepHour)) {
                 result.push(
                     `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}`
                 )
@@ -39,7 +32,7 @@ export const SettingsServicve = () => {
 
         }
         return result
-    }, [stepHour])
+    }, [settings.services.stepHour])
 
     const timesHour = []
     for (let m = 10; m <= 60; m += 10) {
@@ -47,11 +40,16 @@ export const SettingsServicve = () => {
     }
 
     useEffect(() => {
-
-        console.log(settings)
-    }, [
-        settings
-    ])
+        async function fetchData() {
+            try {
+                const response = await show('/user/settings')
+                setSettings(response.data)
+            } catch (error) {
+                setSettings(initialState)
+            }
+        }
+        fetchData()
+    }, [setSettings, initialState])
 
     return (
         <>
@@ -59,15 +57,15 @@ export const SettingsServicve = () => {
                 <FormBudget.Label text='Preço/h (R$)' />
                 <FormBudget.Input
                     typeInput='number'
-                    value={priceHour}
-                    onChange={(e) => setPriceHour(Number(e.target.value))}
+                    value={settings.services.priceHour}
+                    onChange={(e) => updateSubSettings('services', 'priceHour', e.target.value)}
                 />
             </FormBudget.ContainerInput>
 
             <FormBudget.ContainerInput>
                 <FormBudget.Label text='Tempo min. atendimento (h)' />
 
-                <select value={minTimeService} onChange={(e) => setMinTimeService(e.target.value)} >
+                <select value={settings.services.minTimeService} onChange={(e) => updateSubSettings('services', 'minTimeService', e.target.value)} >
                     {times.map((option, index) =>
                         <option key={index} >
                             {option}
@@ -79,7 +77,7 @@ export const SettingsServicve = () => {
             <FormBudget.ContainerInput>
                 <FormBudget.Label text='Horário de Atendimento' />
                 <div className='opening-hours'>
-                    <select value={startHour} onChange={(e) => setStartHour(e.target.value)}>
+                    <select value={settings.services.startHour} onChange={(e) => updateSubSettings('services', 'startHour', e.target.value)}>
                         {times.map((option, index) =>
                             <option key={index}>
                                 {option}
@@ -87,7 +85,7 @@ export const SettingsServicve = () => {
                         )}
                     </select>
                     {'às'}
-                    <select value={endHour} onChange={(e) => setEndHour(e.target.value)}>
+                    <select value={settings.services.endHour} onChange={(e) => updateSubSettings('services', 'endHour', e.target.value)}>
                         {times.map((option, index) =>
                             <option key={index}>
                                 {option}
@@ -104,9 +102,12 @@ export const SettingsServicve = () => {
 
                     {weekDays.map((item, index) =>
                         <div
-                            className={`date ${workDays.includes(index) ? 'date-active' : 'date-inactive'}`}
+                            className={`date ${settings.services.workDays.includes(index)
+                                ? 'date-active'
+                                : 'date-inactive'
+                                }`}
                             key={index}
-                            onClick={() => setWorkDays(prev => prev.includes(index)
+                            onClick={() => updateSubSettings('services', 'workDays', prev => prev.includes(index)
                                 ? prev.filter(day => day !== index)
                                 : [...prev, index])}>
                             {item}
@@ -117,7 +118,7 @@ export const SettingsServicve = () => {
 
             <FormBudget.ContainerInput>
                 <FormBudget.Label text={'Intervalo entre horários (min)'} />
-                <select value={stepHour} onChange={(e) => setStepHour(Number(e.target.value))} >
+                <select value={settings.services.stepHour} onChange={(e) => updateSubSettings(Number('services', 'stepHour', e.target.value))} >
                     {timesHour.map((option, index) =>
                         <option key={index} >
                             {option}
@@ -125,24 +126,15 @@ export const SettingsServicve = () => {
                     )}
                 </select>
             </FormBudget.ContainerInput>
+            <FormBudget.ContainerInput>
+                <DatePicker
+                    label='Selecione uma data'
+                    onChange={setDate}
+                    value={date}
+                    shouldDisableDate={!settings.services.workDays}
+                />
+            </FormBudget.ContainerInput>
 
-            <Button.Container>
-                <Button.Root className='btn-save'
-                    disabled={isLoading}
-                    onClick={() => {
-                        updateSettings('services', {
-                            workDays,
-                            priceHour,
-                            endHour,
-                            startHour,
-                            minTimeService
-                        })
-
-                    }} >
-                    <Button.Icon icon={SaveIcon} />
-                    {isLoading ? 'Salvando...' : 'Salvar'}
-                </Button.Root>
-            </Button.Container>
         </>
     )
 }

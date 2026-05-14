@@ -1,17 +1,50 @@
-const { createContext, useContext, useState } = require('react')
+import { show } from '../../services/axiosRoutes'
+
+const { createContext, useContext, useState, useCallback } = require('react')
 
 const SettingsContext = createContext()
 
 const initialState = {
+    services: {
+        workDays: [],
+        priceHour: 0,
+        endHour: '00:00',
+        startHour: '00:00',
+        stepHour: 30,
+        minTimeService: '00:00'
+    }
 }
 
 export function SettingsProvider({ children }) {
     const [settings, setSettings] = useState(initialState)
 
+    const fetchSettings = useCallback(async () => {
+        try {
+            const { data } = await show('/user/settings')
+            return data
+        } catch (error) {
+            console.log(error)
+            // setSettings(initialState)
+
+        }
+    }, [])
+
     function updateSettings(field, settings) {
         setSettings(prev => ({
             ...prev,
             [field]: settings
+        }))
+    }
+    function updateSubSettings(field, subfield, settings) {
+        setSettings(prev => ({
+            ...prev,
+            [field]: {
+                ...[field],
+                [subfield]:
+                    typeof settings === 'function'
+                        ? settings(prev[field][subfield])
+                        : settings
+            }
         }))
     }
 
@@ -21,6 +54,9 @@ export function SettingsProvider({ children }) {
                 settings,
                 setSettings,
                 updateSettings,
+                updateSubSettings,
+
+                fetchSettings
             }
         }
         >
