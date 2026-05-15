@@ -56,7 +56,7 @@ export const SettingsService = () => {
                 <FormBudget.Input
                     typeInput='number'
                     value={settings.services.priceHour}
-                    onChange={(e) => updateSubSettings('services', 'priceHour', e.target.value)}
+                    onChange={(e) => updateSubSettings('services', 'priceHour', Number(e.target.value))}
                 />
             </FormBudget.ContainerInput>
 
