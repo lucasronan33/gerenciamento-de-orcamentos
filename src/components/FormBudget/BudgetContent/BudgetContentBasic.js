@@ -5,8 +5,12 @@ import { ChevronDown } from 'lucide-react';
 import { FormBudget } from '..';
 import { DivContainerFilter, InptSearch } from '../../HeaderFilter/styles';
 import { useBudget } from '../../BudgetContext';
+import { sanitizeTime } from '../../../utils/times';
+import { useSettings } from '../../SettingsContext';
+import { DatePicker, TimePicker } from '@mui/x-date-pickers';
 
 export function BudgetContentBasic() {
+    const { settings, fetchSettings } = useSettings()
     const { budget, updateBudget } = useBudget()
 
     const ref = useRef()
@@ -21,16 +25,27 @@ export function BudgetContentBasic() {
         'Rejeitado',
         'Finalizado',
     ]
-    const times = []
+    const [startHour, setStartHour] = useState()
+    const [endHour, setEndHour] = useState()
 
-    for (let h = 0; h < 24; h++) {
-        for (let m = 0; m < 60; m += 15) {
-            times.push(
-                `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}`
-            )
-        }
 
-    }
+    useEffect(() => {
+        fetchSettings()
+    }, [fetchSettings])
+    useEffect(() => {
+        if (!settings.services.startHour) return
+        if (!settings.services.endHour) return
+
+        const [startH, startM] = sanitizeTime(settings.services.startHour)
+        const [endH, endM] = sanitizeTime(settings.services.endHour)
+
+        setStartHour({ startH, startM })
+        setEndHour({ endH, endM })
+    }, [
+        settings.services.startHour,
+        settings.services.endHour,
+    ])
+
     useEffect(() => {
         if (!budget.basic.code) {
             const code = Math.floor(Math.random() * 999999)
@@ -125,51 +140,80 @@ export function BudgetContentBasic() {
             <div className='budget-container-items'>
                 <FormBudget.ContainerInput>
                     <FormBudget.Label text='Data *' />
-                    <FormBudget.Input
-                        typeInput='date'
-                        name='date'
+                    <DatePicker
+                        className='datePicker'
+                        format='DD/MM/YYYY'
                         value={budget.basic.date}
-                        onChange={(e) => updateBudget('basic', 'date', e.target.value)}
+                        onChange={(date) => {
+                            const formatedDate = date.format('DD/MM/YYYY')
+                            console.log(formatedDate)
+                            updateBudget('basic', 'date', formatedDate)
+                        }}
+                        disablePast
+                        shouldDisableDate={(date) => {
+                            const day = date.day()
+
+                            return !settings.services.workDays.includes(day)
+                        }}
                     />
                 </FormBudget.ContainerInput>
 
                 <FormBudget.ContainerInput>
                     <FormBudget.Label text='Valido até *' />
-                    <FormBudget.Input
-                        typeInput='date'
-                        name='validUntil'
+                    <DatePicker
+                        className='datePicker'
+                        format='DD/MM/YYYY'
                         value={budget.basic.validUntil}
-                        onChange={(e) => updateBudget('basic', 'validUntil', e.target.value)}
+                        onChange={(date) => {
+                            const formatedDate = date.format('DD/MM/YYYY')
+                            console.log(formatedDate)
+                            updateBudget('basic', 'validUntil', formatedDate)
+                        }}
+                        disablePast
+                        shouldDisableDate={(date) => {
+                            const day = date.day()
+
+                            return !settings.services.workDays.includes(day)
+                        }}
                     />
                 </FormBudget.ContainerInput>
 
                 <FormBudget.ContainerInput>
                     <FormBudget.Label text='Horário *' />
-                    <select
+                    <TimePicker
+                        className='datePicker'
                         value={budget.basic.time}
-                        onChange={(e) => updateBudget('basic', 'time', e.target.value)}
-                    >
-                        {times.map((option, index) =>
-                            <option key={index}>
-                                {option}
-                            </option>)
-                        }
-                    </select>
+                        onChange={(date) => {
+                            const formatedTime = date.format('HH:mm')
+                            updateBudget('basic', 'time', formatedTime)
+                        }}
+                        minutesStep={settings.services.stepHour}
+                        shouldDisableTime={(value, view) => {
+                            const hour = value.hour()
+                            const minute = value.minute()
+                            if (view === 'hours') return hour < startHour.startH || hour > endHour.endH
+
+                            if (view === 'minutes') {
+                                if (hour <= startHour.startH) return minute < startHour.startM
+                                if (hour >= endHour.endH) return minute > endHour.endM
+                            }
+
+                            return false
+                        }}
+                    />
+
                 </FormBudget.ContainerInput>
 
                 <FormBudget.ContainerInput>
                     <FormBudget.Label text='Duração do Serviço' />
-
-                    <select
+                    <TimePicker
+                        className='datePicker'
                         value={budget.basic.timeService}
-                        onChange={(e) => updateBudget('basic', 'timeService', e.target.value)}
-                    >
-                        {times.map((option, index) =>
-                            <option key={index}>
-                                {option}m
-                            </option>
-                        )}
-                    </select>
+                        onChange={(date) => {
+                            const formatedTime = date.format('HH:mm')
+                            updateBudget('basic', 'timeService', formatedTime)
+                        }}
+                    />
                 </FormBudget.ContainerInput>
             </div>
         </>

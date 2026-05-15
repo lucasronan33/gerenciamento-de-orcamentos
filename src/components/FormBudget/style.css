@@ -18,7 +18,8 @@ select {
 
 input:not(input[type='checkbox']),
 textarea,
-select {
+select,
+.datePicker>div:first-child {
     width: 100%;
     font-size: medium;
     background: #f5f5f5;
@@ -32,9 +33,18 @@ select {
 
 input:not(input[type='checkbox']):focus,
 textarea:focus,
-select:focus {
+select:focus,
+.datePicker:focus {
     outline: #555 1px solid;
     box-shadow: 0px 0px 10px #aaa;
+}
+
+.datePicker fieldset {
+    border: none;
+}
+
+.datePicker>div>div {
+    padding: 0;
 }
 
 select {

@@ -21,9 +21,9 @@ export function SettingsProvider({ children }) {
     const fetchSettings = useCallback(async () => {
         try {
             const { data } = await show('/user/settings')
-            return data
+            setSettings(data)
         } catch (error) {
-            return error
+            setSettings(initialState)
         }
     }, [])
 

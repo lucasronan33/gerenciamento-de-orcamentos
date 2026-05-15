@@ -1,11 +1,8 @@
 import { FormBudget } from '../FormBudget'
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, } from 'react'
 import '../../components/FormBudget/style.css'
 import { useSettings } from '../SettingsContext'
 import { show } from '../../services/axiosRoutes'
-import { DatePicker } from '@mui/x-date-pickers'
-// import { validateDay } from '../../utils/schedule'
-// import dayjs from 'dayjs'
 
 const weekDays = [
     'D',
@@ -19,7 +16,6 @@ const weekDays = [
 
 export const SettingsService = () => {
     const { updateSubSettings, settings, initialState, setSettings } = useSettings()
-    const [date, setDate] = useState(null)
 
     const workTimes = useMemo(() => {
         const result = []
@@ -34,8 +30,9 @@ export const SettingsService = () => {
         return result
     }, [settings.services.stepHour])
 
+    const minTimeStep = 5
     const timeStep = []
-    for (let m = 10; m <= 60; m += 10) {
+    for (let m = minTimeStep; m <= 60; m += minTimeStep) {
         timeStep.push(m)
     }
 
@@ -126,14 +123,6 @@ export const SettingsService = () => {
                         </option>
                     )}
                 </select>
-            </FormBudget.ContainerInput>
-            <FormBudget.ContainerInput>
-                <DatePicker
-                    label='Selecione uma data'
-                    onChange={setDate}
-                    value={date}
-                    shouldDisableDate={!settings.services.workDays}
-                />
             </FormBudget.ContainerInput>
 
         </>

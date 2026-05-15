@@ -9,6 +9,7 @@ import validator from 'validator'
 import { store, update } from '../../services/axiosRoutes';
 import { useBudget } from '../BudgetContext';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 export default function NewBudget({
   isVisible,
@@ -41,35 +42,35 @@ export default function NewBudget({
     e.preventDefault();
 
     const formErrors = []
+    console.log(budget)
 
-    if (!budget.basic.name || budget.basic.name === '') formErrors.push({ name: 'Nome é um campo obrigatório' })
-    if (!budget.basic.date || !validator.isDate(budget.basic.date)) formErrors.push({ date: 'Data ou formato da data invalido' })
-    if (!budget.basic.validUntil || !validator.isDate(budget.basic.validUntil)) formErrors.push({ validUntil: 'Data ou formato da data invalido' })
-    if (!budget.basic.time || !validator.isTime(budget.basic.time)) formErrors.push({ time: 'Horario ou formato do horario invalido' })
-    if (budget.client.email && !validator.isEmail(budget.client.email)) formErrors.push({ email: 'email invalido' })
+    if (!budget.basic.name || budget.basic.name === '') formErrors.push(<div><strong>NOME:</strong> Nome é um campo obrigatório</div>)
+    if (!budget.basic.date || !validator.isDate(budget.basic.date, 'DD/MM/YYYY')) formErrors.push(<div><strong>DATA:</strong> Data ou formato da data invalido</div>)
+    if (!budget.basic.validUntil || !validator.isDate(budget.basic.validUntil, 'DD/MM/YYYY')) formErrors.push(<div><strong>VALIDO ATÉ:</strong> Data ou formato da data invalido</div>)
+    if (!budget.basic.time || !validator.isTime(budget.basic.time)) formErrors.push(<div><strong>HORÁRIO:</strong> Horario ou formato do horario invalido</div>)
+    if (budget.client.email && !validator.isEmail(budget.client.email)) formErrors.push(<div><strong>EMAIL:</strong> email invalido</div>)
 
     if (formErrors.length > 0) {
-      setBudget(prev => ({
-        ...prev,
-        formErrors
-      }))
+      formErrors.map(value => {
+        toast.error(value)
+        return console.log(value)
+      })
       return
     }
     try {
       if (budgetData) {
-        await update(`/budgets/${id}`, budget)
+        const response = await update(`/budgets/${id}`, budget)
+        toast.success(<div>Orçamento <strong>{response.data.basic.code}</strong> atualizado com sucesso!</div>)
       } else {
-        await store(`/budgets`, budget)
+        const response = await store(`/budgets`, budget)
+        toast.success(<div>Orçamento <strong>{response.data.basic.code}</strong> criado com sucesso!</div>)
       }
       fetchBudgets()
       navigate('/')
       handleIsVisible(false)
 
     } catch (err) {
-      setBudget(prev => ({
-        ...prev,
-        formErrors: [{ api: err.response?.data?.message || 'Nao foi possivel salvar o orcamento' }]
-      }))
+      toast.error(err.message)
     }
   };
 

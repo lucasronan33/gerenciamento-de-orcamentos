@@ -13,6 +13,7 @@ import { authMeRequest } from "./store/modules/auth/actions";
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import 'dayjs/locale/pt-br'
 
 function AuthInitializer() {
   const dispatch = useDispatch()
@@ -26,7 +27,10 @@ function AuthInitializer() {
 
 function App() {
   return (
-    <LocalizationProvider dateAdapter={AdapterDayjs}>
+    <LocalizationProvider
+      dateAdapter={AdapterDayjs}
+      adapterLocale='pt-br'
+    >
       <GoogleOAuthProvider clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID} >
         <Provider store={store}>
           <PersistGate persistor={persistor}>
