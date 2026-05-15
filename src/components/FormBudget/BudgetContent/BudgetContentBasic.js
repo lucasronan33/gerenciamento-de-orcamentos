@@ -8,6 +8,7 @@ import { useBudget } from '../../BudgetContext';
 import { sanitizeTime } from '../../../utils/times';
 import { useSettings } from '../../SettingsContext';
 import { DatePicker, TimePicker } from '@mui/x-date-pickers';
+import dayjs from 'dayjs';
 
 export function BudgetContentBasic() {
     const { settings, fetchSettings } = useSettings()
@@ -25,8 +26,8 @@ export function BudgetContentBasic() {
         'Rejeitado',
         'Finalizado',
     ]
-    const [startHour, setStartHour] = useState()
-    const [endHour, setEndHour] = useState()
+    const [startHour, setStartHour] = useState({ startH: 0, startM: 0 })
+    const [endHour, setEndHour] = useState({ endH: 0, endM: 0 })
 
 
     useEffect(() => {
@@ -89,7 +90,7 @@ export function BudgetContentBasic() {
                     typeInput='text'
                     placeholder='Nome do Cliente'
                     name='clientName'
-                    value={budget.basic.name}
+                    value={budget.basic.name || ''}
                     onChange={(e) => updateBudget('basic', 'name', e.target.value)}
                 />
             </FormBudget.ContainerInput>
@@ -103,6 +104,7 @@ export function BudgetContentBasic() {
                             type='text'
                             name='budgetStatus'
                             placeholder='Filtrar por status do Orçamento'
+                            aria-controls='controlled'
                             value={budget.basic.status || search}
                             onMouseDown={(e) => {
                                 setOpen(true)
@@ -143,9 +145,10 @@ export function BudgetContentBasic() {
                     <DatePicker
                         className='datePicker'
                         format='DD/MM/YYYY'
-                        value={budget.basic.date}
+                        defaultValue={null}
+                        value={dayjs(budget.basic.date, 'DD-MM-YYYY')}
                         onChange={(date) => {
-                            const formatedDate = date.format('DD/MM/YYYY')
+                            const formatedDate = date.format('DD-MM-YYYY')
                             console.log(formatedDate)
                             updateBudget('basic', 'date', formatedDate)
                         }}
@@ -163,9 +166,10 @@ export function BudgetContentBasic() {
                     <DatePicker
                         className='datePicker'
                         format='DD/MM/YYYY'
-                        value={budget.basic.validUntil}
+                        defaultValue={null}
+                        value={dayjs(budget.basic.validUntil, 'DD-MM-YYYY')}
                         onChange={(date) => {
-                            const formatedDate = date.format('DD/MM/YYYY')
+                            const formatedDate = date.format('DD-MM-YYYY')
                             console.log(formatedDate)
                             updateBudget('basic', 'validUntil', formatedDate)
                         }}
@@ -182,7 +186,8 @@ export function BudgetContentBasic() {
                     <FormBudget.Label text='Horário *' />
                     <TimePicker
                         className='datePicker'
-                        value={budget.basic.time}
+                        defaultValue={null}
+                        value={dayjs(budget.basic.time, 'HH:mm')}
                         onChange={(date) => {
                             const formatedTime = date.format('HH:mm')
                             updateBudget('basic', 'time', formatedTime)
@@ -208,7 +213,8 @@ export function BudgetContentBasic() {
                     <FormBudget.Label text='Duração do Serviço' />
                     <TimePicker
                         className='datePicker'
-                        value={budget.basic.timeService}
+                        defaultValue={null}
+                        value={dayjs(budget.basic.timeService, 'HH:mm')}
                         onChange={(date) => {
                             const formatedTime = date.format('HH:mm')
                             updateBudget('basic', 'timeService', formatedTime)

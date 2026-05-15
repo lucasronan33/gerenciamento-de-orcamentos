@@ -36,7 +36,6 @@ export default function Header(props) {
         async function getData() {
 
             try {
-                if (location() !== '/') return setBudgetData(null)
                 if (id) {
                     const { data } = await axios.get(`/budgets/${id}`)
                     setBudgetData(data)

@@ -38,7 +38,7 @@ export default function CardBudget({ budget }) {
             <InfoCardBudget>
                 <div>
                     <p>Data: </p>
-                    <p>{budget.basic.date} </p>
+                    <p>{budget.basic.date.replaceAll('-', ' / ')} </p>
                 </div>
 
                 <div>
@@ -114,9 +114,8 @@ export default function CardBudget({ budget }) {
                     <div className='confirm-delete-content'>
                         <h2>Excluir orcamento?</h2>
                         <p>
-                            Esta acao vai remover o orçamento {' '}
-                            <strong>{budget.basic.name}</strong>
-                            {' '}
+                            Esta acao vai remover o orçamento
+                            <strong> {budget.basic.name} </strong>
                             do historico.
                         </p>
                         <div className='confirm-delete-actions'>

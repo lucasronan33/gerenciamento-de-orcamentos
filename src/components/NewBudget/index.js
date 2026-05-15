@@ -44,17 +44,54 @@ export default function NewBudget({
     const formErrors = []
     console.log(budget)
 
-    if (!budget.basic.name || budget.basic.name === '') formErrors.push(<div><strong>NOME:</strong> Nome é um campo obrigatório</div>)
-    if (!budget.basic.date || !validator.isDate(budget.basic.date, 'DD/MM/YYYY')) formErrors.push(<div><strong>DATA:</strong> Data ou formato da data invalido</div>)
-    if (!budget.basic.validUntil || !validator.isDate(budget.basic.validUntil, 'DD/MM/YYYY')) formErrors.push(<div><strong>VALIDO ATÉ:</strong> Data ou formato da data invalido</div>)
-    if (!budget.basic.time || !validator.isTime(budget.basic.time)) formErrors.push(<div><strong>HORÁRIO:</strong> Horario ou formato do horario invalido</div>)
-    if (budget.client.email && !validator.isEmail(budget.client.email)) formErrors.push(<div><strong>EMAIL:</strong> email invalido</div>)
+    if (!budget.basic.date || !validator.isDate(budget.basic.date, {
+      format: 'DD-MM-YYYY',
+      strictMode: true,
+    })) formErrors.push(
+      <div>
+        <strong>
+          DATA:
+        </strong>
+        Data ou formato da data invalido
+      </div>
+    )
+    if (!budget.basic.validUntil || !validator.isDate(budget.basic.validUntil, {
+      format: 'DD-MM-YYYY',
+      strictMode: true,
+    })) formErrors.push(
+      <div>
+        <strong>
+          VALIDO ATÉ:
+        </strong>
+        Data ou formato da data invalido
+      </div>
+    )
+    if (!budget.basic.name || budget.basic.name === '') formErrors.push(
+      <div>
+        <strong>
+          NOME:
+        </strong>
+        Nome é um campo obrigatório
+      </div>
+    )
+    if (!budget.basic.time || !validator.isTime(budget.basic.time)) formErrors.push(
+      <div>
+        <strong>
+          HORÁRIO:
+        </strong>
+        Horario ou formato do horario invalido
+      </div>)
+    if (budget.client.email && !validator.isEmail(budget.client.email)) formErrors.push(
+      <div>
+        <strong>
+          EMAIL:
+        </strong>
+        email invalido
+      </div>
+    )
 
     if (formErrors.length > 0) {
-      formErrors.map(value => {
-        toast.error(value)
-        return console.log(value)
-      })
+      formErrors.map(value => toast.error(value))
       return
     }
     try {
@@ -70,6 +107,7 @@ export default function NewBudget({
       handleIsVisible(false)
 
     } catch (err) {
+      console.log(err)
       toast.error(err.message)
     }
   };

@@ -41,6 +41,9 @@ a{
 ul{
     list-style: none;
 }
+p{
+    display: block !important;
+}
 `
 
 export const Container = styled.section`

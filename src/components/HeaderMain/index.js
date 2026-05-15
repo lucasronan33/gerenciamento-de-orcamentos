@@ -21,7 +21,7 @@ export default function HeaderMain() {
             const value = Number(currentValue.totals.total)
 
             return prevValue + value
-        }, 0)
+        }, 0).toFixed(2)
     }
 
     return (
