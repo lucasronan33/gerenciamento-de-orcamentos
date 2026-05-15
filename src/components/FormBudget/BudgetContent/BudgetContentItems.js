@@ -6,6 +6,7 @@ import { Title } from '../../Header/styles';
 import { Button } from '../../Button';
 import CardItem from '../../CardItem/CardItem';
 import { useBudget } from '../../BudgetContext';
+import { useSettings } from '../../SettingsContext';
 
 export function BudgetContentItems() {
     const [open, setOpen] = useState(false)
@@ -19,6 +20,7 @@ export function BudgetContentItems() {
         'FOB (por conta do cliente)',
         'Valor Customizado',
     ]
+    const { settings } = useSettings()
     const { budget, setBudget, updateTotals, updateBudget, updateItem, calcTotal } = useBudget()
 
     function addItem() {
@@ -38,11 +40,19 @@ export function BudgetContentItems() {
     }
 
     const subtotal = useMemo(() => {
-        return budget.items.reduce((acc, item) => {
+        const totals = Number(budget.items.reduce((acc, item) => {
             const value = Number(item.total) || 0
             return acc + value
-        }, 0).toFixed(2)
-    }, [budget.items])
+        }, 0))
+        const priceService = Number(budget.totals.priceService)
+
+        const result = totals + priceService
+
+        return result.toFixed(2)
+    }, [
+        budget.items,
+        budget.totals.priceService,
+    ])
 
     const total = useMemo(() => {
         let value = Number(subtotal) + Number(budget.totals.shipping)
@@ -56,7 +66,6 @@ export function BudgetContentItems() {
         budget.totals.taxes,
         budget.totals.shipping,
     ])
-
 
     function changeValueInput({ itemId, field, value, minValue }) {
         const valueInput = value
@@ -84,6 +93,21 @@ export function BudgetContentItems() {
 
         return valueDiscount.toFixed(2)
     }
+    useEffect(() => {
+
+        const priceHour = settings.services.priceHour
+        const [hours, minutes] = budget.basic.timeService.split(':')
+
+        const DecimalHourMinutes = Number(hours) + (Number(minutes) / 60)
+
+        const price = priceHour * DecimalHourMinutes
+
+        updateBudget('totals', 'priceService', price.toFixed(2))
+    }, [
+        budget.basic.timeService,
+        settings.services.priceHour,
+        updateBudget,
+    ])
 
     useEffect(() => {
         if (budget.totals.shippingType) {
@@ -261,6 +285,12 @@ export function BudgetContentItems() {
                     <span>Subtotal</span>
                     <span>R$ {subtotal} </span>
                 </div>
+                {budget.totals.priceService > 0 && (
+                    <div className='budget-subtotal-container'>
+                        <span>Preço/h{` (${budget.basic.timeService})`}</span>
+                        <span>  R$ {budget.totals.priceService} </span>
+                    </div>
+                )}
                 {budget.totals.shipping > 0 && (
                     <div className='budget-subtotal-container'>
                         <span>Frete</span>

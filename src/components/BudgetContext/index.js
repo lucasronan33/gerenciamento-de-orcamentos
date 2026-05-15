@@ -5,7 +5,9 @@ const { createContext, useState, useContext, useCallback } = require('react');
 const BudgetContext = createContext()
 
 const initialState = {
-    basic: {},
+    basic: {
+        timeService: '00:00'
+    },
     client: {},
     items: [],
     conditions: {},

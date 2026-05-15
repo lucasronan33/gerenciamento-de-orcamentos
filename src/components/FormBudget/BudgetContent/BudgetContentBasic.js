@@ -28,7 +28,7 @@ export function BudgetContentBasic() {
     ]
     const [startHour, setStartHour] = useState({ startH: 0, startM: 0 })
     const [endHour, setEndHour] = useState({ endH: 0, endM: 0 })
-
+    const [minTimeService, setMinTimeService] = useState('00:00')
 
     useEffect(() => {
         fetchSettings()
@@ -42,9 +42,12 @@ export function BudgetContentBasic() {
 
         setStartHour({ startH, startM })
         setEndHour({ endH, endM })
+        updateBudget('basic', 'timeService', settings.services.minTimeService)
     }, [
         settings.services.startHour,
         settings.services.endHour,
+        settings.services.minTimeService,
+        updateBudget,
     ])
 
     useEffect(() => {
@@ -213,7 +216,6 @@ export function BudgetContentBasic() {
                     <FormBudget.Label text='Duração do Serviço' />
                     <TimePicker
                         className='datePicker'
-                        defaultValue={null}
                         value={dayjs(budget.basic.timeService, 'HH:mm')}
                         onChange={(date) => {
                             const formatedTime = date.format('HH:mm')
