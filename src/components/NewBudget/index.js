@@ -10,6 +10,7 @@ import { store, update } from '../../services/axiosRoutes';
 import { useBudget } from '../BudgetContext';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import dayjs from 'dayjs';
 
 export default function NewBudget({
   isVisible,
@@ -42,17 +43,13 @@ export default function NewBudget({
     e.preventDefault();
 
     const formErrors = []
-    console.log(budget)
 
     if (!budget.basic.date || !validator.isDate(budget.basic.date, {
       format: 'DD-MM-YYYY',
       strictMode: true,
     })) formErrors.push(
       <div>
-        <strong>
-          DATA:
-        </strong>
-        Data ou formato da data invalido
+        <strong>DATA: </strong>Data ou formato da data invalido
       </div>
     )
     if (!budget.basic.validUntil || !validator.isDate(budget.basic.validUntil, {
@@ -60,38 +57,31 @@ export default function NewBudget({
       strictMode: true,
     })) formErrors.push(
       <div>
-        <strong>
-          VALIDO ATÉ:
-        </strong>
-        Data ou formato da data invalido
+        <strong>VALIDO ATÉ: </strong>Data ou formato da data invalido
+      </div>
+    )
+    if (!dayjs(budget.basic.date, 'DD-MM-YYYY').isBefore(dayjs(budget.basic.validUntil, 'DD-MM-YYYY'))) formErrors.push(
+      <div>
+        <strong>VALIDO ATÉ: </strong>A data não pode ser anterior a data agendada!
       </div>
     )
     if (!budget.basic.name || budget.basic.name === '') formErrors.push(
       <div>
-        <strong>
-          NOME:
-        </strong>
-        Nome é um campo obrigatório
+        <strong>NOME: </strong>Nome é um campo obrigatório
       </div>
     )
     if (!budget.basic.time || !validator.isTime(budget.basic.time)) formErrors.push(
       <div>
-        <strong>
-          HORÁRIO:
-        </strong>
-        Horario ou formato do horario invalido
+        <strong>HORÁRIO: </strong>Horario ou formato do horario invalido
       </div>)
     if (budget.client.email && !validator.isEmail(budget.client.email)) formErrors.push(
       <div>
-        <strong>
-          EMAIL:
-        </strong>
-        email invalido
+        <strong>EMAIL: </strong>email invalido
       </div>
     )
 
     if (formErrors.length > 0) {
-      formErrors.map(value => toast.error(value))
+      formErrors.map(value => toast.error(value, { autoClose: 5000, hideProgressBar: true }))
       return
     }
     try {

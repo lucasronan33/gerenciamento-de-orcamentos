@@ -26,26 +26,15 @@ export function BudgetContentBasic() {
         'Rejeitado',
         'Finalizado',
     ]
-    const [startHour, setStartHour] = useState({ startH: 0, startM: 0 })
-    const [endHour, setEndHour] = useState({ endH: 0, endM: 0 })
-    const [minTimeService, setMinTimeService] = useState('00:00')
 
     useEffect(() => {
         fetchSettings()
     }, [fetchSettings])
     useEffect(() => {
-        if (!settings.services.startHour) return
-        if (!settings.services.endHour) return
+        if (!settings.services.minTimeService) return
 
-        const [startH, startM] = sanitizeTime(settings.services.startHour)
-        const [endH, endM] = sanitizeTime(settings.services.endHour)
-
-        setStartHour({ startH, startM })
-        setEndHour({ endH, endM })
         updateBudget('basic', 'timeService', settings.services.minTimeService)
     }, [
-        settings.services.startHour,
-        settings.services.endHour,
         settings.services.minTimeService,
         updateBudget,
     ])
@@ -177,6 +166,7 @@ export function BudgetContentBasic() {
                             updateBudget('basic', 'validUntil', formatedDate)
                         }}
                         disablePast
+                        minDate={budget.basic.date ? dayjs(budget.basic.date, 'DD-MM-YYYY') : null}
                         shouldDisableDate={(date) => {
                             const day = date.day()
 
@@ -196,18 +186,8 @@ export function BudgetContentBasic() {
                             updateBudget('basic', 'time', formatedTime)
                         }}
                         minutesStep={settings.services.stepHour}
-                        shouldDisableTime={(value, view) => {
-                            const hour = value.hour()
-                            const minute = value.minute()
-                            if (view === 'hours') return hour < startHour.startH || hour > endHour.endH
-
-                            if (view === 'minutes') {
-                                if (hour <= startHour.startH) return minute < startHour.startM
-                                if (hour >= endHour.endH) return minute > endHour.endM
-                            }
-
-                            return false
-                        }}
+                        minTime={dayjs(settings.services.startHour, 'HH:mm')}
+                        maxTime={dayjs(settings.services.endHour, 'HH:mm')}
                     />
 
                 </FormBudget.ContainerInput>
@@ -221,6 +201,7 @@ export function BudgetContentBasic() {
                             const formatedTime = date.format('HH:mm')
                             updateBudget('basic', 'timeService', formatedTime)
                         }}
+                        minTime={dayjs(budget.basic.timeService, 'HH:mm')}
                     />
                 </FormBudget.ContainerInput>
             </div>
