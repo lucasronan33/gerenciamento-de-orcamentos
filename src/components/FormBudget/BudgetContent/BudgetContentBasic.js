@@ -5,7 +5,6 @@ import { ChevronDown } from 'lucide-react';
 import { FormBudget } from '..';
 import { DivContainerFilter, InptSearch } from '../../HeaderFilter/styles';
 import { useBudget } from '../../BudgetContext';
-import { sanitizeTime } from '../../../utils/times';
 import { useSettings } from '../../SettingsContext';
 import { DatePicker, TimePicker } from '@mui/x-date-pickers';
 import dayjs from 'dayjs';
@@ -72,15 +71,24 @@ export function BudgetContentBasic() {
     return (
         <>
             <FormBudget.ContainerInput>
-                <FormBudget.Label text='Numero do Orçamento *' />
-                <FormBudget.LockedLabel placeholder='Numero do Orçamento' name='budgetNumber' text={budget.basic?.code || ''} />
+                <FormBudget.Label
+                    text='Numero do Orçamento *'
+                    htmlFor='budgetNumber' />
+                <FormBudget.LockedLabel
+                    placeholder='Numero do Orçamento'
+                    id='budgetNumber'
+                    name='budgetNumber'
+                    text={budget.basic?.code || ''} />
             </FormBudget.ContainerInput>
 
             <FormBudget.ContainerInput>
-                <FormBudget.Label text='Nome do Cliente *' />
+                <FormBudget.Label
+                    text='Nome do Cliente *'
+                    htmlFor={'clientName'} />
                 <FormBudget.Input
                     typeInput='text'
                     placeholder='Nome do Cliente'
+                    id='clientName'
                     name='clientName'
                     value={budget.basic.name || ''}
                     onChange={(e) => updateBudget('basic', 'name', e.target.value)}
@@ -88,15 +96,17 @@ export function BudgetContentBasic() {
             </FormBudget.ContainerInput>
 
             <FormBudget.ContainerInput size='meidum'>
-                <FormBudget.Label text='Status do Orçamento' />
+                <FormBudget.Label
+                    text='Status do Orçamento'
+                    htmlFor='budgetStatus' />
                 <DivContainerFilter ref={ref}>
                     <InptSearch>
                         <ChevronDown className='chevronDown-icon' />
                         <input
                             type='text'
+                            id='budgetStatus'
                             name='budgetStatus'
                             placeholder='Filtrar por status do Orçamento'
-                            aria-controls='controlled'
                             value={budget.basic.status || search}
                             onMouseDown={(e) => {
                                 setOpen(true)
@@ -133,15 +143,23 @@ export function BudgetContentBasic() {
 
             <div className='budget-container-items'>
                 <FormBudget.ContainerInput>
-                    <FormBudget.Label text='Data *' />
+                    <FormBudget.Label
+                        text='Data *'
+                        htmlFor='date' />
                     <DatePicker
                         className='datePicker'
                         format='DD/MM/YYYY'
+                        slotProps={{
+                            textField: {
+                                id: 'date'
+                            }
+                        }}
+                        name='date'
                         defaultValue={null}
                         value={dayjs(budget.basic.date, 'DD-MM-YYYY')}
                         onChange={(date) => {
+                            if (!date) return
                             const formatedDate = date.format('DD-MM-YYYY')
-                            console.log(formatedDate)
                             updateBudget('basic', 'date', formatedDate)
                         }}
                         disablePast
@@ -154,15 +172,23 @@ export function BudgetContentBasic() {
                 </FormBudget.ContainerInput>
 
                 <FormBudget.ContainerInput>
-                    <FormBudget.Label text='Valido até *' />
+                    <FormBudget.Label
+                        text='Valido até *'
+                        htmlFor='validUntil' />
                     <DatePicker
                         className='datePicker'
                         format='DD/MM/YYYY'
+                        slotProps={{
+                            textField: {
+                                id: 'validUntil'
+                            }
+                        }}
+                        name='validUntil'
                         defaultValue={null}
                         value={dayjs(budget.basic.validUntil, 'DD-MM-YYYY')}
                         onChange={(date) => {
+                            if (!date) return
                             const formatedDate = date.format('DD-MM-YYYY')
-                            console.log(formatedDate)
                             updateBudget('basic', 'validUntil', formatedDate)
                         }}
                         disablePast
@@ -176,12 +202,21 @@ export function BudgetContentBasic() {
                 </FormBudget.ContainerInput>
 
                 <FormBudget.ContainerInput>
-                    <FormBudget.Label text='Horário *' />
+                    <FormBudget.Label
+                        htmlFor='time'
+                        text='Horário *' />
                     <TimePicker
                         className='datePicker'
                         defaultValue={null}
+                        slotProps={{
+                            textField: {
+                                id: 'time'
+                            }
+                        }}
+                        name='time'
                         value={dayjs(budget.basic.time, 'HH:mm')}
                         onChange={(date) => {
+                            if (!date) return
                             const formatedTime = date.format('HH:mm')
                             updateBudget('basic', 'time', formatedTime)
                         }}
@@ -193,11 +228,20 @@ export function BudgetContentBasic() {
                 </FormBudget.ContainerInput>
 
                 <FormBudget.ContainerInput>
-                    <FormBudget.Label text='Duração do Serviço' />
+                    <FormBudget.Label
+                        htmlFor='timeService'
+                        text='Duração do Serviço' />
                     <TimePicker
                         className='datePicker'
+                        slotProps={{
+                            textField: {
+                                id: 'timeService'
+                            }
+                        }}
+                        name='timeService'
                         value={dayjs(budget.basic.timeService, 'HH:mm')}
                         onChange={(date) => {
+                            if (!date) return
                             const formatedTime = date.format('HH:mm')
                             updateBudget('basic', 'timeService', formatedTime)
                         }}
