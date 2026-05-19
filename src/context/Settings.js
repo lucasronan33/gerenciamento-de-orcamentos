@@ -1,4 +1,4 @@
-import { show } from '../../services/axiosRoutes'
+import { show } from '../services/axiosRoutes'
 
 const { createContext, useContext, useState, useCallback } = require('react')
 
