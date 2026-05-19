@@ -1,5 +1,5 @@
 import { FormBudget } from '..';
-import { useBudget } from '../../BudgetContext';
+import { useBudget } from '../../../context/Budget'
 
 export function BudgetContentClient() {
     const { budget, updateBudget, setBudget } = useBudget()

@@ -6,7 +6,7 @@ import HeaderMain from '../../components/HeaderMain';
 import HeaderFilter from '../../components/HeaderFilter';
 import Header from '../../components/Header';
 import CardBudget from '../../components/CardBudget/CardBudget';
-import { useBudget } from '../../components/BudgetContext';
+import { useBudget } from '../../context/Budget'
 import { Card } from '../../components/HeaderMain/styles';
 import { FileText, Plus } from 'lucide-react';
 import { Button } from '../../components/Button';

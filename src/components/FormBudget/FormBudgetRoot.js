@@ -2,6 +2,7 @@ import propTypes from 'prop-types';
 import styled from 'styled-components';
 
 const FormBudget = styled.div`
+    width: 100%;
     display: grid;
     padding: 0.5vh;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));

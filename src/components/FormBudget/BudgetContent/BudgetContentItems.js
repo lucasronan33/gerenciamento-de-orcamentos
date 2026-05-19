@@ -5,8 +5,8 @@ import { ChevronDown, Plus } from 'lucide-react';
 import { Title } from '../../Header/styles';
 import { Button } from '../../Button';
 import CardItem from '../../CardItem/CardItem';
-import { useBudget } from '../../BudgetContext';
-import { useSettings } from '../../SettingsContext';
+import { useSettings } from '../../../context/Settings'
+import { useBudget } from '../../../context/Budget'
 
 export function BudgetContentItems() {
     const [open, setOpen] = useState(false)

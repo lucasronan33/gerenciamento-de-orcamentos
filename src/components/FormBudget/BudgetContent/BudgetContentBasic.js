@@ -4,8 +4,8 @@ import '../style.css'
 import { ChevronDown } from 'lucide-react';
 import { FormBudget } from '..';
 import { DivContainerFilter, InptSearch } from '../../HeaderFilter/styles';
-import { useBudget } from '../../BudgetContext';
-import { useSettings } from '../../SettingsContext';
+import { useSettings } from '../../../context/Settings'
+import { useBudget } from '../../../context/Budget'
 import { DatePicker, TimePicker } from '@mui/x-date-pickers';
 import dayjs from 'dayjs';
 

@@ -2,7 +2,7 @@ import { ChevronDown } from 'lucide-react';
 import { FormBudget } from '..';
 import { DivContainerFilter, InptSearch } from '../../HeaderFilter/styles';
 import { useEffect, useRef, useState } from 'react';
-import { useBudget } from '../../BudgetContext';
+import { useBudget } from '../../../context/Budget'
 
 export function BudgetContentConditions() {
     const { budget, updateBudget } = useBudget()

@@ -7,7 +7,7 @@ import { Button } from '../Button';
 import { FormBudget } from '../FormBudget';
 import validator from 'validator'
 import { store, update } from '../../services/axiosRoutes';
-import { useBudget } from '../BudgetContext';
+import { useBudget } from '../../context/Budget'
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import dayjs from 'dayjs';

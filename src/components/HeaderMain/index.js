@@ -4,7 +4,7 @@ import { CircleCheck, FileText, TrendingUp } from 'lucide-react';
 import * as colors from '../../config/colors';
 import { Card, CardInfo } from './styles';
 import { Container } from '../../styles/GlobalStyles';
-import { useBudget } from '../BudgetContext';
+import { useBudget } from '../../context/Budget'
 
 
 export default function HeaderMain() {

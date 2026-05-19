@@ -6,7 +6,7 @@ import { ChevronDown, Search } from 'lucide-react';
 import { useState } from 'react';
 import { useRef } from 'react';
 import { useEffect } from 'react';
-import { useBudget } from '../BudgetContext';
+import { useBudget } from '../../context/Budget'
 
 export default function HeaderFilter() {
     const { inputFilterBudgets, filterBudgets, filterSelected, setFilterSelected } = useBudget()

@@ -3,7 +3,7 @@ import { BudgetCardItem } from '../FormBudget/BudgetContent/styled'
 import { FormBudget } from '../FormBudget'
 import { useEffect, useRef, useState } from 'react'
 import { DivContainerFilter, InptSearch } from '../HeaderFilter/styles'
-import { useBudget } from '../BudgetContext'
+import { useBudget } from '../../context/Budget'
 
 export default function CardItem({
     item,

@@ -1,7 +1,7 @@
 import { FormBudget } from '../FormBudget'
 import { useEffect, useMemo, } from 'react'
 import '../../components/FormBudget/style.css'
-import { useSettings } from '../SettingsContext'
+import { useSettings } from '../../context/Settings'
 import { show } from '../../services/axiosRoutes'
 
 const weekDays = [

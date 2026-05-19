@@ -3,8 +3,8 @@ import { useNavigate } from 'react-router-dom'
 import { CardIcons, ConfirmDeleteModal, ContainerCardBudget, DivTitle, InfoCardBudget, StatusBudget } from './CardBudgetStyles';
 import { Copy, Edit, Eye, Trash2 } from 'lucide-react';
 import { destroy, store } from '../../services/axiosRoutes';
-import { useBudget } from '../BudgetContext';
 import { Button } from '../Button';
+import { useBudget } from '../../context/Budget';
 
 export default function CardBudget({ budget }) {
     const navigate = useNavigate()

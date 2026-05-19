@@ -8,9 +8,10 @@ import { Button } from '../../components/Button'
 import { SettingsBase } from '../../components/SettingsBase'
 import { SaveIcon } from 'lucide-react'
 import { useSelector } from 'react-redux'
-import { useSettings } from '../../components/SettingsContext'
+import { useSettings } from '../../context/Settings'
 import { update } from '../../services/axiosRoutes'
 import { toast } from 'react-toastify'
+import { UserSettings } from '../../components/User'
 
 export default function Settings() {
     const { isLoading } = useSelector(state => state.auth || {})
@@ -102,6 +103,9 @@ export default function Settings() {
                         </Button.Container>
                     </form>
                 </section>
+
+                <UserSettings />
+
             </main>
         </div>
     )
