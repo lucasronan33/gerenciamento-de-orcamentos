@@ -5,7 +5,7 @@ export default function persistedReducers(reducers) {
     const persistedReducers = persistReducer({
         key: 'NOME_DA_APLICACAO',
         storage,
-        whitelist: ['example']
+        whitelist: ['auth']
     },
         reducers
     )

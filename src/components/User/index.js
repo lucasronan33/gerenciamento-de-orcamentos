@@ -2,7 +2,7 @@ import { toast } from 'react-toastify';
 import { UserAddress } from './UserAddress';
 import { UserBasic } from './UserBasic';
 import { UserPrivacy } from './UserPrivacy';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { SaveIcon } from 'lucide-react';
 import { Button } from '../Button';
@@ -15,7 +15,8 @@ import { useUser } from '../../context/User';
 export const UserSettings = () => {
     const { isLoading } = useSelector(state => state.auth || {})
     const { settings } = useSettings()
-    const { user } = useUser()
+    const { user, fetchUser } = useUser()
+    const [userConfig, setUserConfig] = useState({})
 
     const [active, setActive] = useState('Básico')
     const options = [
@@ -24,7 +25,7 @@ export const UserSettings = () => {
         'Privacidade',
     ]
     const tabs = [
-        { key: 'Básico', component: <UserBasic user={user} /> },
+        { key: 'Básico', component: <UserBasic /> },
         { key: 'Endereço', component: <UserAddress /> },
         { key: 'Privacidade', component: <UserPrivacy /> },
     ]

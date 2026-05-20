@@ -10,6 +10,8 @@ import { GoogleLogin } from '@react-oauth/google'
 import { toast } from 'react-toastify'
 
 export default function Login() {
+    const googleClientId = process.env.REACT_APP_GOOGLE_CLIENT_ID
+    const hasGoogleClientId = Boolean(googleClientId?.trim())
 
     const [showPassword, setShowPassword] = useState(false)
     const [formData, setFormData] = useState({
@@ -98,14 +100,20 @@ export default function Login() {
                             </div>
                         </div>
 
-                        <GoogleLogin
-                            onSuccess={(credentialResponse) => {
-                                dispatch(googleLoginRequest({
-                                    credential: credentialResponse.credential
-                                }))
-                            }}
-                            onError={(error) => toast.error(error)}
-                        />
+                        {hasGoogleClientId ? (
+                            <GoogleLogin
+                                onSuccess={(credentialResponse) => {
+                                    dispatch(googleLoginRequest({
+                                        credential: credentialResponse.credential
+                                    }))
+                                }}
+                                onError={() => toast.error('Nao foi possivel iniciar o login com Google.')}
+                            />
+                        ) : (
+                            <span className='field-helper error'>
+                                Login com Google indisponivel no momento.
+                            </span>
+                        )}
 
                         <div className='container-ButtonsLogin'>
                             <Button.Root className='btn-cancel' onClick={() => navigate('/register')} >

@@ -1,7 +1,18 @@
+import { useEffect } from 'react';
 import { FormBudget } from '../FormBudget';
+import { useUser } from '../../context/User';
 
-export const UserBasic = ({ user }) => {
+export const UserBasic = () => {
+    const { user, fetchUser, setUser, updateUser } = useUser()
 
+    useEffect(() => {
+        async function getData() {
+            const data = await fetchUser()
+            console.log(data)
+            setUser(data)
+        }
+        getData()
+    }, [fetchUser, setUser])
     return (
         <>
             <FormBudget.ContainerInput size='xx-large' >
@@ -15,7 +26,7 @@ export const UserBasic = ({ user }) => {
                     typeInput={'text'}
                     id={'name'}
                     value={user?.name || ''}
-                    onChange={(e) => { }}
+                    onChange={(e) => updateUser('name', e.target.value)}
                 />
             </FormBudget.ContainerInput>
 
@@ -30,7 +41,7 @@ export const UserBasic = ({ user }) => {
                     typeInput={'phone'}
                     id={'phone'}
                     value={user?.phone || ''}
-                    onChange={(e) => { }}
+                    onChange={(e) => updateUser('phone', e.target.value)}
                 />
             </FormBudget.ContainerInput>
 
@@ -45,7 +56,7 @@ export const UserBasic = ({ user }) => {
                     typeInput={'phone'}
                     id={'whatsapp'}
                     value={user?.whatsapp || ''}
-                    onChange={(e) => { }}
+                    onChange={(e) => updateUser('whatsapp', e.target.value)}
                 />
             </FormBudget.ContainerInput>
 
@@ -60,7 +71,7 @@ export const UserBasic = ({ user }) => {
                     typeInput={'text'}
                     id={'cpf_cnpj'}
                     value={user?.cpf_cnpj || ''}
-                    onChange={(e) => { }}
+                    onChange={(e) => updateUser('cpf_cnpj', e.target.value)}
                 />
             </FormBudget.ContainerInput>
 

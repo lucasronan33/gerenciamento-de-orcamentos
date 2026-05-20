@@ -10,14 +10,15 @@ export const UserProvider = ({ children }) => {
 
     const fetchUser = useCallback(async () => {
         try {
-            const { data } = await show('/auth/me')
-            setUser(data)
+            const { data } = await show('/user')
+            return data.user
         } catch (err) {
             toast.error(err.message)
         }
     }, [])
 
     function updateUser(field, settings) {
+        console.log(settings)
         setUser(prev => ({
             ...prev,
             [field]: settings
