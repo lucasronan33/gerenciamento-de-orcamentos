@@ -20,7 +20,7 @@ export const SettingsService = () => {
     const workTimes = useMemo(() => {
         const result = []
         for (let h = 0; h < 24; h++) {
-            for (let m = 0; m < 60; m += Number(settings.services.stepHour)) {
+            for (let m = 0; m < 60; m += Number(settings?.services?.stepHour)) {
                 result.push(
                     `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}`
                 )
@@ -28,7 +28,7 @@ export const SettingsService = () => {
 
         }
         return result
-    }, [settings.services.stepHour])
+    }, [settings?.services?.stepHour])
 
     const minTimeStep = 5
     const timeStep = []
@@ -55,7 +55,7 @@ export const SettingsService = () => {
                 <FormBudget.Label text='Preço/h (R$)' />
                 <FormBudget.Input
                     typeInput='number'
-                    value={settings.services.priceHour}
+                    value={settings?.services?.priceHour}
                     onChange={(e) => updateSubSettings('services', 'priceHour', Number(e.target.value))}
                 />
             </FormBudget.ContainerInput>
@@ -63,7 +63,7 @@ export const SettingsService = () => {
             <FormBudget.ContainerInput>
                 <FormBudget.Label text='Tempo min. atendimento (h)' />
 
-                <select value={settings.services.minTimeService} onChange={(e) => updateSubSettings('services', 'minTimeService', e.target.value)} >
+                <select value={settings?.services?.minTimeService} onChange={(e) => updateSubSettings('services', 'minTimeService', e.target.value)} >
                     {workTimes.map((option, index) =>
                         <option key={index} >
                             {option}
@@ -75,7 +75,7 @@ export const SettingsService = () => {
             <FormBudget.ContainerInput>
                 <FormBudget.Label text='Horário de Atendimento' />
                 <div className='opening-hours'>
-                    <select value={settings.services.startHour} onChange={(e) => updateSubSettings('services', 'startHour', e.target.value)}>
+                    <select value={settings?.services?.startHour} onChange={(e) => updateSubSettings('services', 'startHour', e.target.value)}>
                         {workTimes.map((option, index) =>
                             <option key={index}>
                                 {option}
@@ -83,7 +83,7 @@ export const SettingsService = () => {
                         )}
                     </select>
                     {'às'}
-                    <select value={settings.services.endHour} onChange={(e) => updateSubSettings('services', 'endHour', e.target.value)}>
+                    <select value={settings?.services?.endHour} onChange={(e) => updateSubSettings('services', 'endHour', e.target.value)}>
                         {workTimes.map((option, index) =>
                             <option key={index}>
                                 {option}
@@ -100,7 +100,7 @@ export const SettingsService = () => {
 
                     {weekDays.map((item, index) =>
                         <div
-                            className={`date ${settings.services.workDays?.includes(index)
+                            className={`date ${settings?.services?.workDays?.includes(index)
                                 ? 'date-active'
                                 : 'date-inactive'
                                 }`}
@@ -116,7 +116,7 @@ export const SettingsService = () => {
 
             <FormBudget.ContainerInput>
                 <FormBudget.Label text={'Intervalo entre horários (min)'} />
-                <select value={settings.services.stepHour} onChange={(e) => updateSubSettings('services', 'stepHour', Number(e.target.value))} >
+                <select value={settings?.services?.stepHour} onChange={(e) => updateSubSettings('services', 'stepHour', Number(e.target.value))} >
                     {timeStep.map((option, index) =>
                         <option key={index} >
                             {option}

@@ -2,7 +2,7 @@ import { toast } from 'react-toastify';
 import { UserAddress } from './UserAddress';
 import { UserBasic } from './UserBasic';
 import { UserPrivacy } from './UserPrivacy';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { SaveIcon } from 'lucide-react';
 import { Button } from '../Button';
@@ -10,13 +10,10 @@ import { FormBudget } from '../FormBudget';
 import { NavBudget } from '../NewBudget/styles';
 import { update } from '../../services/axiosRoutes';
 import { useSettings } from '../../context/Settings'
-import { useUser } from '../../context/User';
 
 export const UserSettings = () => {
     const { isLoading } = useSelector(state => state.auth || {})
     const { settings } = useSettings()
-    const { user, fetchUser } = useUser()
-    const [userConfig, setUserConfig] = useState({})
 
     const [active, setActive] = useState('Básico')
     const options = [
