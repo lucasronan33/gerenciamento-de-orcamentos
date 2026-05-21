@@ -33,21 +33,6 @@ export const RegisterContent = styled.div`
             width: 100%;
             flex-direction: column;
 
-            .containerCheckbox{
-                width: fit-content;
-                align-self: flex-end;
-                flex-direction: row;
-                gap: 1vh;
-                justify-content: flex-end;
-
-                label {
-                    place-items: center;
-                    gap: 3vh;
-                    font-size: medium;
-                    font-weight: bold;
-                }
-            }
-
             .container-ButtonsRegister{
                 flex-direction: row;
                 justify-content: space-between;

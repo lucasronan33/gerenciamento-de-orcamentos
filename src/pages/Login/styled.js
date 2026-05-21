@@ -67,19 +67,6 @@ export const LoginContent = styled.div`
                     color: #aaa;
                     font-size: medium;
                 }
-                .containerCheckbox{
-                    width: fit-content;
-                    flex-direction: row;
-                    gap: 1vh;
-                    justify-content: flex-end;
-
-                    label {
-                        place-items: center;
-                        gap: 3vh;
-                        font-size: medium;
-                        font-weight: bold;
-                    }
-                }
             }
             .container-ButtonsLogin{
                 flex-direction: row;

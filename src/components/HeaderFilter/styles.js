@@ -49,9 +49,10 @@ export const InptSearch = styled.div`
         width: auto;
         height: 2.5vh;
         padding-inline: 2.5vh;
-        z-index: 1;
+        z-index: 3;
         position: absolute;
         stroke: #aaa;
+        pointer-events: none;
 
         &.search-icon{
             left: 0;
@@ -75,6 +76,7 @@ export const InptSearch = styled.div`
 
         &.filter{
             font-weight: bold;
+            padding-right: 7.5vh;
         }
         
         &.input-search{

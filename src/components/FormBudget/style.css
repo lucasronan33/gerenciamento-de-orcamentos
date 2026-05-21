@@ -16,6 +16,34 @@ select {
     height: 5vh;
 }
 
+.form-budget-input-with-icon {
+    width: 100%;
+    position: relative;
+}
+
+.form-budget-input-with-icon input {
+    padding-right: 7.5vh;
+}
+
+.form-budget-input-icon-button {
+    width: fit-content;
+    position: absolute;
+    right: 1.5vh;
+    top: 50%;
+    transform: translateY(-50%);
+    border: 0;
+    background: transparent;
+    color: #777;
+    padding: 0;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+}
+
+.form-budget-input-icon-button:hover {
+    color: #222;
+}
+
 input:not(input[type='checkbox']),
 textarea,
 select,
