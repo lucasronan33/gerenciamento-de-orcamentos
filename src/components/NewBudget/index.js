@@ -52,7 +52,7 @@ export default function NewBudget({
         <strong>DATA: </strong>Data ou formato da data invalido
       </div>
     )
-    if (!budget.basic.validUntil || !validator.isDate(budget.basic.validUntil, {
+    if (budget.basic.validUntil && !validator.isDate(budget.basic.validUntil, {
       format: 'DD-MM-YYYY',
       strictMode: true,
     })) formErrors.push(
@@ -70,7 +70,7 @@ export default function NewBudget({
         <strong>NOME: </strong>Nome é um campo obrigatório
       </div>
     )
-    if (!budget.basic.time || !validator.isTime(budget.basic.time)) formErrors.push(
+    if (budget.basic.time && !validator.isTime(budget.basic.time)) formErrors.push(
       <div>
         <strong>HORÁRIO: </strong>Horario ou formato do horario invalido
       </div>)

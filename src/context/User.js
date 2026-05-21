@@ -18,14 +18,12 @@ export const UserProvider = ({ children }) => {
     }, [])
 
     function updateUser(field, settings) {
-        console.log(settings)
         setUser(prev => ({
             ...prev,
             [field]: settings
         }))
     }
     function updateSubUser(field, subfield, setting) {
-        console.log(setting)
         setUser(prev => ({
             ...prev,
             [field]: {

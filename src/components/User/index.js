@@ -99,7 +99,6 @@ export const UserSettings = () => {
     useEffect(() => {
         async function getData() {
             const data = await fetchUser()
-            console.log('render')
             setUser(data)
         }
         getData()

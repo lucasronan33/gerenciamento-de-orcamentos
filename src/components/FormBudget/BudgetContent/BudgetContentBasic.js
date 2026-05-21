@@ -173,7 +173,7 @@ export function BudgetContentBasic() {
 
                 <FormBudget.ContainerInput>
                     <FormBudget.Label
-                        text='Valido até *'
+                        text='Valido até'
                         htmlFor='validUntil' />
                     <DatePicker
                         className='datePicker'
@@ -204,7 +204,7 @@ export function BudgetContentBasic() {
                 <FormBudget.ContainerInput>
                     <FormBudget.Label
                         htmlFor='time'
-                        text='Horário *' />
+                        text='Horário' />
                     <TimePicker
                         className='datePicker'
                         defaultValue={null}

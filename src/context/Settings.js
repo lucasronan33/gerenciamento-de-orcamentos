@@ -6,9 +6,9 @@ const SettingsContext = createContext()
 
 const initialState = {
     services: {
-        workDays: [],
+        workDays: [1, 2, 3, 4, 5, 6],
         priceHour: 0,
-        endHour: '00:00',
+        endHour: '23:59',
         startHour: '00:00',
         stepHour: 30,
         minTimeService: '00:00'
@@ -21,7 +21,14 @@ export function SettingsProvider({ children }) {
     const fetchSettings = useCallback(async () => {
         try {
             const { data } = await show('/user/settings')
-            setSettings(data)
+            setSettings({
+                ...initialState,
+                ...(data || {}),
+                services: {
+                    ...initialState.services,
+                    ...(data?.services || {}),
+                },
+            })
         } catch (error) {
             setSettings(initialState)
         }
@@ -34,7 +41,6 @@ export function SettingsProvider({ children }) {
         }))
     }
     function updateSubSettings(field, subfield, setting) {
-        console.log(settings)
         setSettings(prev => ({
             ...prev,
             [field]: {
@@ -54,6 +60,7 @@ export function SettingsProvider({ children }) {
                 setSettings,
                 updateSettings,
                 updateSubSettings,
+                initialState,
 
                 fetchSettings
             }
