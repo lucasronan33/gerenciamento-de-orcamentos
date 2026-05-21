@@ -1,18 +1,9 @@
-import { useEffect } from 'react';
 import { FormBudget } from '../FormBudget';
 import { useUser } from '../../context/User';
+import { maskZipCode } from '../../utils/masks';
 
-export const UserAddress = () => {
-    const { user, fetchUser, setUser, updateSubUser } = useUser()
-
-    useEffect(() => {
-        async function getData() {
-            const data = await fetchUser()
-            console.log(data)
-            setUser(data)
-        }
-        getData()
-    }, [fetchUser, setUser])
+export const UserAddress = ({ user }) => {
+    const { updateSubUser } = useUser()
     return (
         <>
             <FormBudget.ContainerInput size='xx-large' >
@@ -86,7 +77,7 @@ export const UserAddress = () => {
                     typeInput={'number'}
                     id={'zipCode'}
                     value={user?.address?.zipCode || ''}
-                    onChange={(e) => updateSubUser('address', 'zipCode', e.target.value)}
+                    onChange={(e) => updateSubUser('address', 'zipCode', maskZipCode(e.target.value))}
                 />
             </FormBudget.ContainerInput>
 

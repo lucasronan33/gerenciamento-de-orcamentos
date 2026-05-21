@@ -1,19 +1,12 @@
-import { useEffect, useState } from 'react';
 import { FormBudget } from '../FormBudget';
 import { useUser } from '../../context/User';
+import { useState } from 'react';
+import { Eye, EyeOff } from 'lucide-react';
 
-export const UserPrivacy = () => {
-    const { user, fetchUser, setUser, updateUser } = useUser()
+export const UserPrivacy = ({ user }) => {
+    const { updateUser } = useUser()
     const [showPassword, setShowPassword] = useState(false)
-
-    useEffect(() => {
-        async function getData() {
-            const data = await fetchUser()
-            console.log(data)
-            setUser(data)
-        }
-        getData()
-    }, [fetchUser, setUser])
+    const [showCurrentPassword, setShowCurrentPassword] = useState(false)
     return (
         <>
             <FormBudget.ContainerInput size='xx-large' >
@@ -32,22 +25,35 @@ export const UserPrivacy = () => {
             </FormBudget.ContainerInput>
 
             <FormBudget.ContainerInput >
+                <FormBudget.Label name='currentPassword' text='Senha atual' />
+                <FormBudget.Input
+                    id='currentPassword'
+                    typeInput={showCurrentPassword ? 'text' : 'password'}
+                    placeholder='Digite sua senha atual'
+                    value={user?.currentPassword || ''}
+                    onChange={(e) => updateUser('currentPassword', e.target.value)}
+                    endIcon={showCurrentPassword ? <Eye size={18} /> : <EyeOff size={18} />}
+                    onEndIconClick={() => setShowCurrentPassword((prevState) => !prevState)}
+                    aria-label={showCurrentPassword ? 'Ocultar senha atual' : 'Mostrar senha atual'}
+                    title={showCurrentPassword ? 'Ocultar senha atual' : 'Mostrar senha atual'}
+                />
+            </FormBudget.ContainerInput>
+
+            <FormBudget.ContainerInput >
                 <FormBudget.Label name='password' text='Senha' />
                 <FormBudget.Input
                     id='password'
                     typeInput={showPassword ? 'text' : 'password'}
                     placeholder='Digite sua senha'
-                    value={user?.password}
+                    value={user?.password || ''}
                     onChange={(e) => updateUser('password', e.target.value)}
+
+                    endIcon={showPassword ? <Eye size={18} /> : <EyeOff size={18} />}
+                    onEndIconClick={() => setShowPassword((prevState) => !prevState)}
+                    aria-label={showPassword ? 'Ocultar senha' : 'Mostrar senha'}
+                    title={showPassword ? 'Ocultar senha' : 'Mostrar senha'}
                 />
             </FormBudget.ContainerInput>
-
-            <div className='container-LinksLogin'>
-                <div className='containerCheckbox'>
-                    <input type='checkbox' id='handlePassword' onChange={(e) => setShowPassword(e.target.checked)} />
-                    <label htmlFor='handlePassword'>Mostrar senha</label>
-                </div>
-            </div>
 
         </>
     )

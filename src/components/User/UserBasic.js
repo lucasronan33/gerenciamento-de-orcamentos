@@ -1,18 +1,10 @@
-import { useEffect } from 'react';
 import { FormBudget } from '../FormBudget';
 import { useUser } from '../../context/User';
+import { maskCpfCnpj, maskPhone, onlyDigits } from '../../utils/masks';
 
-export const UserBasic = () => {
-    const { user, fetchUser, setUser, updateUser } = useUser()
+export const UserBasic = ({ user }) => {
+    const { updateUser } = useUser()
 
-    useEffect(() => {
-        async function getData() {
-            const data = await fetchUser()
-            console.log(data)
-            setUser(data)
-        }
-        getData()
-    }, [fetchUser, setUser])
     return (
         <>
             <FormBudget.ContainerInput size='xx-large' >
@@ -40,8 +32,8 @@ export const UserBasic = () => {
                     placeholder={'(00) 9 0000-0000'}
                     typeInput={'phone'}
                     id={'phone'}
-                    value={user?.phone || ''}
-                    onChange={(e) => updateUser('phone', e.target.value)}
+                    value={maskPhone(user?.phone || '')}
+                    onChange={(e) => updateUser('phone', onlyDigits(e.target.value).slice(0, 11))}
                 />
             </FormBudget.ContainerInput>
 
@@ -55,8 +47,8 @@ export const UserBasic = () => {
                     placeholder={'(00) 9 0000-0000'}
                     typeInput={'phone'}
                     id={'whatsapp'}
-                    value={user?.whatsapp || ''}
-                    onChange={(e) => updateUser('whatsapp', e.target.value)}
+                    value={maskPhone(user?.whatsapp || '')}
+                    onChange={(e) => updateUser('whatsapp', onlyDigits(e.target.value).slice(0, 11))}
                 />
             </FormBudget.ContainerInput>
 
@@ -70,8 +62,8 @@ export const UserBasic = () => {
                     placeholder={'000.000.000-00'}
                     typeInput={'text'}
                     id={'cpf_cnpj'}
-                    value={user?.cpf_cnpj || ''}
-                    onChange={(e) => updateUser('cpf_cnpj', e.target.value)}
+                    value={maskCpfCnpj(user?.cpf_cnpj || '')}
+                    onChange={(e) => updateUser('cpf_cnpj', onlyDigits(e.target.value).slice(0, 14))}
                 />
             </FormBudget.ContainerInput>
 

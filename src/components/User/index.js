@@ -3,7 +3,7 @@ import { toast } from 'react-toastify';
 import { UserAddress } from './UserAddress';
 import { UserBasic } from './UserBasic';
 import { UserPrivacy } from './UserPrivacy';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { SaveIcon } from 'lucide-react';
 import { Button } from '../Button';
@@ -11,10 +11,11 @@ import { FormBudget } from '../FormBudget';
 import { NavBudget } from '../NewBudget/styles';
 import { useUser } from '../../context/User';
 import { updateUserRequest } from '../../store/modules/auth/actions';
+import { isValidCpfCnpj } from '../../utils/documents';
 
 export const UserSettings = () => {
     const { isLoading, isLoggedIn } = useSelector((state) => state.auth || {})
-    const { user } = useUser()
+    const { user, fetchUser, setUser } = useUser()
     const dispatch = useDispatch()
 
     const [active, setActive] = useState('Básico')
@@ -24,9 +25,9 @@ export const UserSettings = () => {
         'Privacidade',
     ]
     const tabs = [
-        { key: 'Básico', component: <UserBasic /> },
-        { key: 'Endereço', component: <UserAddress /> },
-        { key: 'Privacidade', component: <UserPrivacy /> },
+        { key: 'Básico', component: <UserBasic user={user} /> },
+        { key: 'Endereço', component: <UserAddress user={user} /> },
+        { key: 'Privacidade', component: <UserPrivacy user={user} /> },
     ]
 
     const handleButtonActive = (option) => {
@@ -44,16 +45,32 @@ export const UserSettings = () => {
             errors.push(<div><strong> Email: </strong>deve ser um e-mail valido.</div>)
         }
 
-        if (data.password && !validator.isLength(data.password, { min: 6, max: 72 })) {
-            errors.push(<div><strong> Senha: </strong>deve ter entre 6 e 72 caracteres.</div>)
+        if (data.password && !validator.isLength(data.password, { min: 8, max: 50 })) {
+            errors.push(<div><strong> Senha: </strong>deve ter entre 8 e 50 caracteres.</div>)
+        }
+
+        if (data.password && !data.currentPassword) {
+            errors.push(<div><strong> Senha atual: </strong>obrigatoria para alterar senha.</div>)
+        }
+
+        if (data.currentPassword && !data.password) {
+            errors.push(<div><strong> Nova senha: </strong>obrigatoria ao informar a senha atual.</div>)
         }
 
         // if (data.senha !== data.confirmarSenha) {
         //     errors.push(<div><strong> Senha: </strong>e confirmar senha devem ser iguais.</div>)
         // }
 
-        if (data.phone && !validator.isLength(data.phone, { min: 10, max: 11 })) {
-            errors.push(<div><strong> Telefone: </strong>deve conter DDD e ter 10 ou 11 digitos.</div>)
+        if (data.phone && !validator.matches(data.phone, /^\d{11}$/)) {
+            errors.push(<div><strong> Telefone: </strong>deve estar no formato (DD) 9 XXXX-XXXX.</div>)
+        }
+
+        if (data.cpf_cnpj && !/^\d+$/.test(data.cpf_cnpj)) {
+            errors.push(<div><strong> CPF/CNPJ: </strong>deve conter apenas numeros.</div>)
+        }
+
+        if (data.cpf_cnpj && !isValidCpfCnpj(data.cpf_cnpj)) {
+            errors.push(<div><strong> CPF/CNPJ: </strong>o cpf ou cnpj inserido nao e valido.</div>)
         }
 
         return errors
@@ -71,8 +88,22 @@ export const UserSettings = () => {
 
         if (isLoggedIn) {
             dispatch(updateUserRequest(user))
+            setUser((prev) => ({
+                ...prev,
+                password: '',
+                currentPassword: '',
+            }))
         }
     }
+
+    useEffect(() => {
+        async function getData() {
+            const data = await fetchUser()
+            console.log('render')
+            setUser(data)
+        }
+        getData()
+    }, [fetchUser, setUser])
 
     return (
 
