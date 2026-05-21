@@ -7,7 +7,11 @@ export default function MyRoute({ children, isClosed, isPublicOnly, ...rest }) {
     const { isCheckingAuth, isLoggedIn } = useSelector((state) => state.auth || {})
 
     if (isCheckingAuth && isClosed) {
-        return null
+        return (
+            <div style={{ minHeight: '40vh', display: 'grid', placeItems: 'center', fontWeight: 600 }}>
+                Carregando sessao...
+            </div>
+        )
     }
 
     if (isClosed && !isLoggedIn) {

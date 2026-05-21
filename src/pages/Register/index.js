@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import validator from 'validator'
 import { Button } from '../../components/Button'
 import { FormBudget } from '../../components/FormBudget'
 import { registerRequest, registerReset } from '../../store/modules/auth/actions'
 import { ContainerRegister, Main, RegisterContent } from './styled'
+import { Eye, EyeOff } from 'lucide-react'
 
 export default function Register() {
     const [showPassword, setShowPassword] = useState(false)
@@ -20,6 +21,8 @@ export default function Register() {
     const dispatch = useDispatch()
     const { isLoading, isRegistered, isLoggedIn } = useSelector((state) => state.auth || {})
     const navigate = useNavigate()
+    const location = useLocation()
+    const redirectTo = location.state?.prevPath
 
     const handleChange = (e) => {
         const { name, value } = e.target
@@ -91,10 +94,11 @@ export default function Register() {
 
     useEffect(() => {
         if (isRegistered || isLoggedIn) {
-            navigate('/')
+            const nextPath = typeof redirectTo === 'string' && redirectTo.startsWith('/') ? redirectTo : '/'
+            navigate(nextPath, { replace: true })
             dispatch(registerReset())
         }
-    }, [dispatch, isLoggedIn, isRegistered, navigate])
+    }, [dispatch, isLoggedIn, isRegistered, navigate, redirectTo])
 
     return (
         <ContainerRegister>
@@ -136,6 +140,10 @@ export default function Register() {
                                 placeholder='Digite sua senha'
                                 value={formData.senha}
                                 onChange={handleChange}
+                                endIcon={showPassword ? <Eye size={18} /> : <EyeOff size={18} />}
+                                onEndIconClick={() => setShowPassword((prevState) => !prevState)}
+                                aria-label={showPassword ? 'Ocultar senha' : 'Mostrar senha'}
+                                title={showPassword ? 'Ocultar senha' : 'Mostrar senha'}
                             />
                             {formErrors.senha && <span className='field-helper error'>{formErrors.senha}</span>}
                         </FormBudget.ContainerInput>
@@ -148,6 +156,10 @@ export default function Register() {
                                 placeholder='Confirme sua senha'
                                 value={formData.confirmarSenha}
                                 onChange={handleChange}
+                                endIcon={showPassword ? <Eye size={18} /> : <EyeOff size={18} />}
+                                onEndIconClick={() => setShowPassword((prevState) => !prevState)}
+                                aria-label={showPassword ? 'Ocultar senha' : 'Mostrar senha'}
+                                title={showPassword ? 'Ocultar senha' : 'Mostrar senha'}
                             />
                             {formErrors.confirmarSenha && <span className='field-helper error'>{formErrors.confirmarSenha}</span>}
                         </FormBudget.ContainerInput>
@@ -163,11 +175,6 @@ export default function Register() {
                             />
                             {formErrors.telefone && <span className='field-helper error'>{formErrors.telefone}</span>}
                         </FormBudget.ContainerInput>
-
-                        <div className='containerCheckbox'>
-                            <input type='checkbox' id='handlePassword' onChange={(e) => setShowPassword(e.target.checked)} />
-                            <label htmlFor='handlePassword'>Mostrar senha</label>
-                        </div>
 
                         <div className='container-ButtonsRegister'>
                             <Button.Root className='btn-cancel' onClick={() => navigate('/login')}>

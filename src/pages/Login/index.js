@@ -1,13 +1,14 @@
 import { useEffect, useState } from 'react'
 import { FormBudget } from '../../components/FormBudget'
 import { ContainerLogin, LoginContent, Main } from './styled'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { Button } from '../../components/Button'
 import { useDispatch, useSelector } from 'react-redux'
 import validator from 'validator'
 import { googleLoginRequest, loginRequest } from '../../store/modules/auth/actions'
 import { GoogleLogin } from '@react-oauth/google'
 import { toast } from 'react-toastify'
+import { Eye, EyeOff } from 'lucide-react'
 
 export default function Login() {
     const googleClientId = process.env.REACT_APP_GOOGLE_CLIENT_ID
@@ -22,6 +23,8 @@ export default function Login() {
     const dispatch = useDispatch()
     const { isLoading, isLoggedIn } = useSelector((state) => state.auth || {})
     const navigate = useNavigate()
+    const location = useLocation()
+    const redirectTo = location.state?.prevPath
 
     const handleChange = (e) => {
         const { name, value } = e.target
@@ -53,9 +56,10 @@ export default function Login() {
 
     useEffect(() => {
         if (isLoggedIn) {
-            navigate('/')
+            const nextPath = typeof redirectTo === 'string' && redirectTo.startsWith('/') ? redirectTo : '/'
+            navigate(nextPath, { replace: true })
         }
-    }, [isLoggedIn, navigate])
+    }, [isLoggedIn, navigate, redirectTo])
 
     return (
         <ContainerLogin>
@@ -87,6 +91,10 @@ export default function Login() {
                                 placeholder='Digite sua senha para fazer login'
                                 value={formData.password}
                                 onChange={handleChange}
+                                endIcon={showPassword ? <Eye size={18} /> : <EyeOff size={18} />}
+                                onEndIconClick={() => setShowPassword((prevState) => !prevState)}
+                                aria-label={showPassword ? 'Ocultar senha' : 'Mostrar senha'}
+                                title={showPassword ? 'Ocultar senha' : 'Mostrar senha'}
                             />
                             {formErrors.password && <span className='field-helper error'>{formErrors.password}</span>}
                         </FormBudget.ContainerInput>
@@ -94,10 +102,6 @@ export default function Login() {
                             <Link className='forgotPassword' to='forgot-password' >
                                 Esqueci minha senha
                             </Link>
-                            <div className='containerCheckbox'>
-                                <input type='checkbox' id='handlePassword' onChange={(e) => setShowPassword(e.target.checked)} />
-                                <label htmlFor='handlePassword'>Mostrar senha</label>
-                            </div>
                         </div>
 
                         {hasGoogleClientId ? (

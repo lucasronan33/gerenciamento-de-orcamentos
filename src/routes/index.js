@@ -29,12 +29,6 @@ export default function Routers() {
                 } path='/register' />
 
                 <Route element={
-                    <MyRoute isPublicOnly>
-                        <Register />
-                    </MyRoute>
-                } path='/register' />
-
-                <Route element={
                     <MyRoute isClosed>
                         <Home />
                     </MyRoute>
@@ -56,7 +50,7 @@ export default function Routers() {
                     <MyRoute isClosed>
                         <Settings />
                     </MyRoute>
-                } path='user/settings' />
+                } path='/user/settings' />
 
                 <Route element={
                     <MyRoute isClosed>
