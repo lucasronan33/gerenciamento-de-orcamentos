@@ -81,7 +81,7 @@ export default function NewBudget({
     )
 
     if (formErrors.length > 0) {
-      formErrors.map(value => toast.error(value, { autoClose: 5000, hideProgressBar: true }))
+      formErrors.forEach(value => toast.error(value, { autoClose: 5000, hideProgressBar: true }))
       return
     }
     try {
