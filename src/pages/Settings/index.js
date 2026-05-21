@@ -12,6 +12,7 @@ import { useSettings } from '../../context/Settings'
 import { update } from '../../services/axiosRoutes'
 import { toast } from 'react-toastify'
 import { UserSettings } from '../../components/User'
+import { normalizeErrors } from '../../store/modules/auth/sagas'
 
 export default function Settings() {
     const { isLoading } = useSelector(state => state.auth || {})
@@ -47,7 +48,7 @@ export default function Settings() {
             await update(`/user/settings`, settings)
             toast.success('Configurações salvas com sucesso')
         } catch (error) {
-            toast.error(error)
+            normalizeErrors(error).forEach((message) => toast.error(message))
         }
 
     }

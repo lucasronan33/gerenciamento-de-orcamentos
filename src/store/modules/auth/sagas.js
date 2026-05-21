@@ -80,9 +80,22 @@ function* logoutRequest() {
     }
 }
 
+function* updateUserRequest({ payload }) {
+    try {
+        const response = yield call(store, '/user/profile', payload);
+        yield put(actions.updateUserSuccess(response.data));
+        toast.success('Dados de usuario atualizados com sucesso.');
+    } catch (error) {
+        const errors = normalizeErrors(error);
+        errors.forEach((message) => toast.error(message));
+        yield put(actions.updateUserFailure(errors));
+    }
+}
+
 export default all([
     takeLatest(types.LOGIN_REQUEST, loginRequest),
     takeLatest(types.REGISTER_REQUEST, registerRequest),
     takeLatest(types.AUTH_ME_REQUEST, authMeRequest),
     takeLatest(types.LOGOUT_REQUEST, logoutRequest),
+    takeLatest(types.UPDATE_USER_REQUEST, updateUserRequest),
 ]);

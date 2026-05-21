@@ -28,6 +28,7 @@ export default function reducer(state = initialState, action) {
 
         case types.LOGIN_REQUEST:
         case types.REGISTER_REQUEST:
+        case types.UPDATE_USER_REQUEST:
             return {
                 ...state,
                 isLoading: true,
@@ -72,13 +73,22 @@ export default function reducer(state = initialState, action) {
             };
 
         case types.AUTH_ME_SUCCESS:
+        case types.UPDATE_USER_SUCCESS:
             return {
                 ...state,
+                isLoading: false,
                 isCheckingAuth: false,
                 isLoggedIn: true,
                 user: action.payload.user,
                 accessToken: action.payload.accessToken || state.accessToken,
                 errors: [],
+            };
+
+        case types.UPDATE_USER_FAILURE:
+            return {
+                ...state,
+                isLoading: false,
+                errors: action.payload,
             };
 
         case types.AUTH_ME_FAILURE:
