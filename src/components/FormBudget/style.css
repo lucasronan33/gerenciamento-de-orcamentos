@@ -44,6 +44,13 @@ select {
     color: #222;
 }
 
+input:not(input[type='checkbox']):hover,
+textarea:hover,
+select:hover,
+.datePicker>div:first-child:hover {
+    background: #e0e0e0;
+}
+
 input:not(input[type='checkbox']),
 textarea,
 select,

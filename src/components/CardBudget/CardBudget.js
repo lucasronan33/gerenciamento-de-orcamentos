@@ -11,6 +11,12 @@ export default function CardBudget({ budget }) {
     const { fetchBudgets } = useBudget()
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
     const [isDeleting, setIsDeleting] = useState(false)
+    const statusClasses = {
+        enviado: 'sentStatus',
+        aprovado: 'approvedStatus',
+        rejeitado: 'rejectedStatus',
+        finalizado: 'finishedStatus',
+    }
 
     const id = budget._id
 
@@ -31,7 +37,9 @@ export default function CardBudget({ budget }) {
         <ContainerCardBudget>
             <DivTitle>
                 <h2>{budget.basic.name} </h2>
-                <StatusBudget>{budget.basic.status} </StatusBudget>
+                <StatusBudget className={statusClasses[budget.basic.status.toLowerCase()]} >
+                    {budget.basic.status}
+                </StatusBudget>
             </DivTitle>
             <p className='clientName'>{budget.basic.code} </p>
 
@@ -59,21 +67,21 @@ export default function CardBudget({ budget }) {
             </InfoCardBudget>
             <CardIcons>
                 <div
-                    className='viewOrc'
+                    className='card-icon viewOrc'
                     onClick={() => { navigate(`/budget/${id}`) }}
                 >
                     <Eye /> Ver
                 </div>
 
                 <div
-                    className='links'
+                    className='card-icon links'
                     onClick={() => { navigate(`/budget/${id}`) }}
                 >
                     <Edit />
                 </div>
 
                 <div
-                    className='links'
+                    className='card-icon links'
                     onClick={async () => {
                         try {
 
@@ -96,7 +104,7 @@ export default function CardBudget({ budget }) {
                     <Copy />
                 </div>
                 <div
-                    className='links'
+                    className='trash-icon links'
                     onClick={() => setIsDeleteModalOpen(true)}
                 >
                     <Trash2 className='trashIco' />

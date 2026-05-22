@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import * as color from '../../config/colors';
 
 export const ContainerCardBudget = styled.div`
     padding: 3vh;
@@ -8,6 +9,10 @@ export const ContainerCardBudget = styled.div`
     justify-content: space-between;
     border-radius: 1.5vh;
     border: 1px solid #ccc;
+
+    &:hover{
+        box-shadow: -0.2vh 0.2vh 1vh #ddd;
+    }
 
     *{
         display: flex;
@@ -30,6 +35,30 @@ export const StatusBudget = styled.div`
     border: 1px solid #ccc;
     border-radius: 10px;
     font-size: small;
+
+    &.sentStatus{
+        background: ${color.sentColor};
+        border-color: ${color.sentDarkColor};
+        color: ${color.sentDarkColor};
+    }
+
+    &.approvedStatus{
+        background: ${color.approvedColor};
+        border-color: ${color.approvedDarkColor};
+        color: ${color.approvedDarkColor};
+    }
+
+    &.rejectedStatus{
+        background: ${color.rejectedColor};
+        border-color: ${color.rejectedDarkColor};
+        color: ${color.rejectedDarkColor};
+    }
+
+    &.finishedStatus{
+        background: ${color.finishedColor};
+        border-color: ${color.finishedDarkColor};
+        color: ${color.finishedDarkColor};
+    }
 `
 
 export const InfoCardBudget = styled.div`
@@ -66,6 +95,25 @@ export const CardIcons = styled.div`
     width: 100%;
     justify-content: space-between;
     gap: 1vh;
+
+    .card-icon:hover{
+        background: #fafafa;
+        box-shadow: inset 0.1vh 0.3vh 0.5vh #dadada;
+    }
+
+    .trash-icon{
+        background: rgba(255, 200, 200, 0.1);
+        border-color: rgba(255, 0, 0, 0.2) !important;
+    }
+
+    .trash-icon:hover{
+        background: #ff8a7d;
+        box-shadow: inset 0.1vh 0.3vh 0.5vh #c23e2f;
+
+        svg{
+            color: #c23e2f;
+        }
+    }
 
     .viewOrc{
         width: 45%;
