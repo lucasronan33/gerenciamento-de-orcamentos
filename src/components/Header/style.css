@@ -5,7 +5,7 @@
     align-items: center;
     justify-content: space-around;
     padding-block: 2.5vh;
-    border-bottom: 1px solid #ccc;
+    border-bottom: 1px solid var(--borderDarkColor);
 }
 
 .header * {

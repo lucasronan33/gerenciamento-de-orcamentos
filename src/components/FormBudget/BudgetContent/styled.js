@@ -1,14 +1,15 @@
 import styled from 'styled-components';
-import { errorColor, succesColor } from '../../../config/colors';
+import { errorColor, successColor } from '../../../config/colors';
 
 export const BudgetCardItem = styled.div`
     width: 100%;
     padding: 2vh;
     gap: 3vh;
-    border: #ddd 1px solid;
+    background: var(--secondaryDarkColor);
+    border: 1px solid var(--borderDarkColor);
     border-radius: 2vh;
     flex-wrap: wrap;
-    color: initial;
+    color: white;
 
     header{
         width: 100%;
@@ -23,7 +24,7 @@ export const BudgetCardItem = styled.div`
             place-items: center;
 
             svg{
-                color: darkred;
+                color: var(--errorColor);
                 
             }
             &:hover{
@@ -38,7 +39,7 @@ export const BudgetCardItem = styled.div`
     }
 
     .discount-card-item{
-        color: ${succesColor};
+        color: ${successColor};
     }
 
     .taxes-card-item{

@@ -80,7 +80,7 @@ export function BudgetContentItems() {
     }
 
     const calValueTaxes = () => {
-        let valueTaxes = Number(budget.totals.subtotal) + Number(budget.totals.shipping)
+        let valueTaxes = Number(subtotal) + Number(budget.totals.shipping)
         valueTaxes -= (valueTaxes * (budget.totals.discount / 100))
         valueTaxes *= (budget.totals.taxes / 100)
 
@@ -88,7 +88,7 @@ export function BudgetContentItems() {
     }
 
     const calValueDiscount = () => {
-        let valueDiscount = Number(budget.totals.subtotal) + Number(budget.totals.shipping)
+        let valueDiscount = Number(subtotal) + Number(budget.totals.shipping)
         valueDiscount *= (budget.totals.discount / 100)
 
         return valueDiscount.toFixed(2)

@@ -62,7 +62,7 @@ export default function CardBudget({ budget }) {
             <InfoCardBudget>
                 <div >
                     <h3>Total: </h3>
-                    <h3>R$ {budget.totals.total} </h3>
+                    <h3>R$ {String(budget.totals.total).replace('.', ',')} </h3>
                 </div>
             </InfoCardBudget>
             <CardIcons>

@@ -25,30 +25,11 @@ select {
     padding-right: 7.5vh;
 }
 
-.form-budget-input-icon-button {
-    width: fit-content;
-    position: absolute;
-    right: 1.5vh;
-    top: 50%;
-    transform: translateY(-50%);
-    border: 0;
-    background: transparent;
-    color: #777;
-    padding: 0;
-    cursor: pointer;
-    align-items: center;
-    justify-content: center;
-}
-
-.form-budget-input-icon-button:hover {
-    color: #222;
-}
-
 input:not(input[type='checkbox']):hover,
 textarea:hover,
 select:hover,
 .datePicker>div:first-child:hover {
-    background: #e0e0e0;
+    background: var(--secondaryDarkColor);
 }
 
 input:not(input[type='checkbox']),
@@ -57,11 +38,12 @@ select,
 .datePicker>div:first-child {
     width: 100%;
     font-size: medium;
-    background: #f5f5f5;
+    background: var(--primaryDarkColor);
     padding: 1vh 2.5vh;
     border-radius: 1vh;
     align-items: center;
-    border: none;
+    outline: 1px solid var(--borderDarkColor);
+    color: white;
     resize: none;
     font-family: inherit;
 }
@@ -70,8 +52,9 @@ input:not(input[type='checkbox']):focus,
 textarea:focus,
 select:focus,
 .datePicker:focus {
-    outline: #555 1px solid;
-    box-shadow: 0px 0px 10px #aaa;
+    background: var(--blueHover);
+    outline: var(--blueDocument) 1px solid;
+    box-shadow: 0px 0px 10px var(--blueHover);
 }
 
 .datePicker fieldset {
@@ -134,7 +117,7 @@ header,
     justify-content: center;
     align-items: center;
     color: #555;
-    border-bottom: #ddd solid 1px;
+    border-bottom: var(--borderDarkColor) solid 1px;
 }
 
 .budget-total-subtotal-container {
@@ -153,15 +136,15 @@ header,
 }
 
 .budget-total-subtotal-container .budget-subtotal-container.last {
-    border-bottom: #ddd solid 1px;
+    border-bottom: var(--borderDarkColor) solid 1px;
 }
 
 .budget-subtotal-container.discount {
-    color: #07bc0c;
+    color: var(--successColor);
 }
 
 .budget-subtotal-container.taxes {
-    color: #e74d3c;
+    color: var(--errorColor);
 }
 
 .budget-subtotal-container span {
@@ -170,6 +153,7 @@ header,
 
 .budget-total-container span {
     font-size: x-large;
+    font-weight: bold;
 }
 
 @media (width < 500px) {

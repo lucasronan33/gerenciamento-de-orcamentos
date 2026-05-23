@@ -2,16 +2,17 @@ import styled from 'styled-components';
 import * as color from '../../config/colors';
 
 export const ContainerCardBudget = styled.div`
+    background: ${color.secondaryDarkColor};
     padding: 3vh;
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
     border-radius: 1.5vh;
-    border: 1px solid #ccc;
+    border: 1px solid ${color.borderDarkColor};
 
     &:hover{
-        box-shadow: -0.2vh 0.2vh 1vh #ddd;
+        box-shadow: -0.2vh 0.2vh 2vh ${color.blueHover};
     }
 
     *{
@@ -65,7 +66,6 @@ export const InfoCardBudget = styled.div`
     width: 100%;
     padding-block: 1vh;
     row-gap: 1vh;
-    /* border-bottom:1px solid #ccc; */
 
     div{
         width: 100%;
@@ -97,17 +97,18 @@ export const CardIcons = styled.div`
     gap: 1vh;
 
     .card-icon:hover{
-        background: #fafafa;
-        box-shadow: inset 0.1vh 0.3vh 0.5vh #dadada;
+        background: ${color.blueHover};
+        box-shadow: inset 0.1vh 0.3vh 0.5vh ${color.primaryDarkColor};
+        border-color: ${color.blueHover};
     }
 
     .trash-icon{
-        background: rgba(255, 200, 200, 0.1);
+        background: rgba(70, 20, 20, 0.3) !important;
         border-color: rgba(255, 0, 0, 0.2) !important;
     }
 
     .trash-icon:hover{
-        background: #ff8a7d;
+        background: #ff8a7d !important;
         box-shadow: inset 0.1vh 0.3vh 0.5vh #c23e2f;
 
         svg{
@@ -120,9 +121,10 @@ export const CardIcons = styled.div`
     }
 
     .links,.viewOrc{
+        background: ${color.primaryDarkColor};
         flex-grow: 1;
         padding: 1vh;
-        border: 1px solid #ccc;
+        border: 1px solid ${color.borderDarkColor};
         border-radius: 10px;
         gap: 1vh;
 

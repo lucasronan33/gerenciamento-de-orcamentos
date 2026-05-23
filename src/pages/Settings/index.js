@@ -67,7 +67,7 @@ export default function Settings() {
                         className='container-settings'
                         onSubmit={handleSubmit}
                     >
-                        <NavBudget>
+                        <NavBudget className='nav-settings'>
                             {options.map((item) => (
                                 <Button.Root
                                     key={item}

@@ -1,6 +1,8 @@
 import styled from "styled-components";
+import * as color from '../../config/colors'
 
 export const Card = styled.div`
+    background: ${color.secondaryDarkColor};
     min-width: 200px;
     flex-grow: 1;
     padding: 3vh;
@@ -10,7 +12,7 @@ export const Card = styled.div`
     align-items: center;
     justify-content: space-between;
     border-radius: 1.5vh;
-    border: 1px solid #ccc;
+    border: 1px solid ${color.borderDarkColor};
 
     *{
         display: flex;

@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { secondaryDarkColor } from '../../config/colors';
 
 export const NavBudget = styled.div`
     max-width: 100%;
@@ -10,6 +11,6 @@ export const NavBudget = styled.div`
     border-radius: 2vh;
     justify-content: center;
     align-items: center;
-    background: #eee;
+    background: ${secondaryDarkColor};
 
 `

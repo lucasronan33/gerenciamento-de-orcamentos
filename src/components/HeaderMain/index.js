@@ -1,5 +1,5 @@
 import React from 'react';
-import { CircleCheck, FileText, TrendingUp } from 'lucide-react';
+import { Calendar, CircleCheck, DollarSign, TrendingUp } from 'lucide-react';
 
 import * as colors from '../../config/colors';
 import { Card, CardInfo } from './styles';
@@ -28,29 +28,29 @@ export default function HeaderMain() {
         <Container>
             <Card>
                 <CardInfo>
-                    <p>Total de Orçamentos</p>
+                    <p>Orçamentos</p>
                     <p>{budgets.length}</p>
                 </CardInfo>
 
                 <CardInfo $color={colors.blueDocument}>
-                    <FileText />
+                    <Calendar />
                 </CardInfo>
             </Card>
 
             <Card>
-                <CardInfo $color={colors.succesColor}>
+                <CardInfo $color={colors.successColor}>
                     <p>Aprovados</p>
                     <p>{totalApproved()}</p>
                 </CardInfo>
 
-                <CardInfo $color={colors.succesColor}>
+                <CardInfo $color={colors.successColor}>
                     <CircleCheck />
                 </CardInfo>
             </Card>
 
             <Card>
                 <CardInfo >
-                    <p>Valor Total</p>
+                    <p>Total Orçado</p>
                     <p>R$ {calcTotalBudgets()} </p>
                 </CardInfo>
 
@@ -60,13 +60,13 @@ export default function HeaderMain() {
             </Card>
 
             <Card>
-                <CardInfo $color={colors.succesColor}>
-                    <p>Valor Aprovado</p>
+                <CardInfo $color={colors.successColor}>
+                    <p>Receita</p>
                     <p>R$ {totalApprovedValue()}</p>
                 </CardInfo>
 
-                <CardInfo $color={colors.succesColor}>
-                    <TrendingUp />
+                <CardInfo $color={colors.successColor}>
+                    <DollarSign />
                 </CardInfo>
             </Card>
         </Container>
