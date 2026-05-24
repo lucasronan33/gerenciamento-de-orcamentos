@@ -11,6 +11,7 @@ import FAQ from '../pages/FAQ';
 import PresetItems from '../pages/PresetItems';
 import About from '../pages/About';
 import { Providers } from '../providers';
+import { Clients } from '../pages/Clients';
 
 export default function Routers() {
     return (
@@ -39,6 +40,12 @@ export default function Routers() {
                         <Home />
                     </MyRoute>
                 } path='/budget/:id' />
+
+                <Route element={
+                    <MyRoute isClosed>
+                        <Clients />
+                    </MyRoute>
+                } path='/clients' />
 
                 <Route element={
                     <MyRoute isClosed>

@@ -1,0 +1,66 @@
+.title-list-clients {
+    color: slategray;
+}
+
+/* ====================
+ CLIENT BOX 
+ ==================== */
+.container-clients {
+    width: 100%;
+}
+
+.box-client:last-child {
+    border: none;
+}
+
+
+.box-client {
+    width: 100%;
+    padding-block: 2vh;
+    display: flex;
+    gap: 2vh 3vh;
+    flex-direction: row;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--borderDarkColor);
+}
+
+.initials-client-name {
+    width: fit-content;
+    padding: 1.5vh;
+    color: var(--blueDocument);
+    background: var(--blueHover);
+    border-radius: 50%;
+}
+
+.container-client-infos {
+    flex-grow: 1;
+    flex-direction: column;
+    gap: 0.5vh;
+    align-items: start !important;
+}
+
+
+.container-contact-client {
+    flex-direction: row;
+    gap: 1.5vh 5vh;
+}
+
+.phone-client {
+    gap: 1vh;
+    font-size: small;
+}
+
+.contact-icon {
+    height: 1.5em;
+}
+
+.whatsapp-icon path {
+    fill: slategray;
+}
+
+
+.icons-clients-list {
+    flex-grow: 1;
+}
+
+/* ==================== */
