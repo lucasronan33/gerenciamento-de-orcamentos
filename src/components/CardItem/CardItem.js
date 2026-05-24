@@ -2,7 +2,7 @@ import { ChevronDown, Trash2 } from 'lucide-react'
 import { BudgetCardItem } from '../FormBudget/BudgetContent/styled'
 import { FormBudget } from '../FormBudget'
 import { useEffect, useRef, useState } from 'react'
-import { DivContainerFilter, InptSearch } from '../HeaderFilter/styles'
+import { DivContainerFilter, InptSearch } from '../BudgetStatusFilter/styles'
 import { useBudget } from '../../context/Budget'
 
 export default function CardItem({

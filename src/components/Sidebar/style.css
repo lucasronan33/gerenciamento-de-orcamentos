@@ -82,7 +82,7 @@
 }
 
 .sidebar-section h2 {
-    color: var(--blueHover);
+    color: var(--blueDocument);
     font-size: small;
     font-weight: 700;
     text-transform: uppercase;

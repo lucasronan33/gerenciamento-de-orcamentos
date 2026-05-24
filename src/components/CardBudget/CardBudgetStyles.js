@@ -96,6 +96,14 @@ export const CardIcons = styled.div`
     justify-content: space-between;
     gap: 1vh;
 
+    &.icons-clients-list{
+        width: auto;
+    }
+
+    .card-icon{
+        align-items: center;
+        justify-content: center;
+    }
     .card-icon:hover{
         background: ${color.blueHover};
         box-shadow: inset 0.1vh 0.3vh 0.5vh ${color.primaryDarkColor};

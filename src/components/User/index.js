@@ -138,10 +138,7 @@ export const UserSettings = () => {
                     <Button.Root
                         className='btn-save'
                         type='submit'
-                        disabled={isLoading}
-                        onClick={() => {
-
-                        }} >
+                        disabled={isLoading} >
                         <Button.Icon icon={SaveIcon} />
                         {isLoading ? 'Salvando...' : 'Salvar'}
                     </Button.Root>

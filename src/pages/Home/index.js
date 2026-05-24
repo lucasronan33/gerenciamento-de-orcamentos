@@ -2,12 +2,12 @@ import React, { useEffect } from 'react';
 
 import './style.css'
 
-import HeaderMain from '../../components/HeaderMain';
-import HeaderFilter from '../../components/HeaderFilter';
+import DashboardsHeader from '../../components/DashboardsHeader';
+import BudgetStatusFilter from '../../components/BudgetStatusFilter';
 import Header from '../../components/Header';
 import CardBudget from '../../components/CardBudget/CardBudget';
 import { useBudget } from '../../context/Budget'
-import { Card } from '../../components/HeaderMain/styles';
+import { Card } from '../../components/DashboardsHeader/styles';
 import { FileText, Plus } from 'lucide-react';
 import { Button } from '../../components/Button';
 import { useNavigate } from 'react-router-dom';
@@ -23,8 +23,8 @@ export default function Home() {
     return (
         <div>
             <Header />
-            <HeaderMain />
-            <HeaderFilter />
+            <DashboardsHeader />
+            <BudgetStatusFilter />
             <div className='content'>
                 {budgets.length < 1 ?
                     <Card className='cardHomeNewBudget'>

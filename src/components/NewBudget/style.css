@@ -32,12 +32,12 @@
 
 .tab-budget-content {
     width: 100%;
-    display: none;
+    display: none !important;
     gap: 3vh;
 }
 
 .content-budget-active {
-    display: flex;
+    display: flex !important;
     align-items: end;
     flex-wrap: wrap;
 }

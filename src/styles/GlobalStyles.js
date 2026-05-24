@@ -77,7 +77,8 @@ p{
 
 export const Container = styled.section`
     max-width: 90%;
-    margin: 30px auto;
+    margin: auto;
+    padding-block: 30px;
     justify-content: center;
     display: flex;
     flex-wrap: wrap;
