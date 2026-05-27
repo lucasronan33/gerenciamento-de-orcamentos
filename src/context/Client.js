@@ -20,6 +20,7 @@ const initialState = {
 
 export const ClientProvider = ({ children }) => {
     const [client, setClient] = useState(initialState)
+    const [clients, setClients] = useState([])
 
     const fetchClient = useCallback(async () => {
         try {
@@ -53,7 +54,9 @@ export const ClientProvider = ({ children }) => {
         <ClientContext.Provider value={
             {
                 client,
+                clients,
                 setClient,
+                setClients,
                 fetchClient,
                 updateClient,
                 updateSubClient,

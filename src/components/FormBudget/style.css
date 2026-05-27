@@ -19,11 +19,31 @@ select {
 
 .form-budget-input-with-icon {
     width: 100%;
+    display: flex;
     position: relative;
+    flex-direction: row !important;
+    outline: 1px solid var(--borderDarkColor);
+    border-radius: 1vh;
+    overflow: visible;
+    background: var(--primaryDarkColor);
 }
 
 .form-budget-input-with-icon input {
+    background: none !important;
     padding-right: 7.5vh;
+    outline: none !important;
+}
+
+.form-budget-input-with-icon:focus-within {
+    background: var(--blueHover);
+    outline: var(--blueDocument) 1px solid;
+    box-shadow: 0px 0px 10px var(--blueHover);
+}
+
+.form-budget-input-icon-button {
+    width: fit-content;
+    border-radius: 1vh;
+    padding-inline: 2vh;
 }
 
 input:not(input[type='checkbox']):hover,
@@ -64,6 +84,10 @@ select:focus,
 
 .datePicker>div>div {
     padding: 0;
+}
+
+.datePicker svg {
+    fill: var(--blueDocument);
 }
 
 select {
