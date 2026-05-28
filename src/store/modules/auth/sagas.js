@@ -38,7 +38,6 @@ function* loginRequest({ payload }) {
         toast.success('Login realizado com sucesso.');
     } catch (error) {
         const errors = normalizeErrors(error);
-        console.log(error)
         errors.forEach((message) => toast.error(message));
         yield put(actions.loginFailure(errors));
     }

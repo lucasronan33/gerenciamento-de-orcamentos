@@ -2,7 +2,7 @@ import { FormBudget } from '..';
 import { useClient } from '../../../context/Client';
 import { maskZipCode } from '../../../utils/masks';
 
-export function CLientAddress() {
+export function ClientAddress() {
     const { client, updateSubClient } = useClient()
     return (
         <>

@@ -22,6 +22,10 @@ export const ClientProvider = ({ children }) => {
     const [client, setClient] = useState(initialState)
     const [clients, setClients] = useState([])
 
+    function resetClientState() {
+        setClient(initialState)
+    }
+
     const fetchClient = useCallback(async () => {
         try {
             const { data } = await show('/client')
@@ -60,6 +64,7 @@ export const ClientProvider = ({ children }) => {
                 fetchClient,
                 updateClient,
                 updateSubClient,
+                resetClientState,
             }
         }>
             {children}
