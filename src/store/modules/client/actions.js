@@ -1,5 +1,25 @@
 import * as types from '../types';
 
+export function fetchClientsRequest() {
+    return {
+        type: types.FETCH_CLIENTS_REQUEST,
+    };
+}
+
+export function fetchClientsSuccess(payload) {
+    return {
+        type: types.FETCH_CLIENTS_SUCCESS,
+        payload,
+    };
+}
+
+export function fetchClientsFailure(payload) {
+    return {
+        type: types.FETCH_CLIENTS_FAILURE,
+        payload,
+    };
+}
+
 export function registerClientRequest(payload) {
     return {
         type: types.REGISTER_CLIENT_REQUEST,

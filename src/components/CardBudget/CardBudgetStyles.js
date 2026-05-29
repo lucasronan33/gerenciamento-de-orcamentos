@@ -97,7 +97,8 @@ export const CardIcons = styled.div`
     gap: 1vh;
 
     &.icons-clients-list{
-        width: auto;
+        width: 40vh;
+        flex-grow: 0;
     }
 
     .card-icon{

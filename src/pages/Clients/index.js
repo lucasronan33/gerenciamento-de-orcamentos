@@ -9,19 +9,7 @@ export function Clients() {
             <Header />
             <Container>
                 <Client.Register />
-                <Client.List clients={[
-                    {
-                        name: 'Teste abc',
-                        whatsapp: '47991369625',
-                        phone: '47992327910',
-                    },
-                    {
-                        name: 'Lucas Ronan Torres Castao',
-                        whatsapp: '47991369625',
-                        phone: '47992327910',
-                        email: 'teste@teste.com'
-                    },
-                ]} />
+                <Client.List />
             </Container>
         </>
     )

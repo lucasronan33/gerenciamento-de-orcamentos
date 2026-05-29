@@ -2,9 +2,20 @@ import { all, call, put, takeLatest } from 'redux-saga/effects';
 import { toast } from 'react-toastify';
 import * as actions from './actions';
 import * as types from '../types';
-import { store } from '../../../services/axiosRoutes';
+import { show, store } from '../../../services/axiosRoutes';
 import { normalizeErrors } from '../auth/sagas';
 
+function* fetchClients() {
+    try {
+        const response = yield call(show, '/client')
+        yield put(actions.fetchClientsSuccess(response.data))
+    } catch (error) {
+        const errors = normalizeErrors(error);
+
+        errors.forEach((message) => toast.error(message));
+        yield put(actions.fetchClientsFailure(errors));
+    }
+}
 
 function* registerRequest({ payload }) {
     try {
@@ -35,6 +46,8 @@ function* updateRequest({ payload }) {
 }
 
 export default all([
+    takeLatest(types.FETCH_CLIENTS_REQUEST, fetchClients),
     takeLatest(types.REGISTER_CLIENT_REQUEST, registerRequest),
+    takeLatest(types.REGISTER_CLIENT_REQUEST, updateRequest),
     takeLatest(types.UPDATE_CLIENT_REQUEST, updateRequest),
 ]);

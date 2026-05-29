@@ -1,7 +1,4 @@
-import { toast } from 'react-toastify';
-import { show } from '../services/axiosRoutes';
-
-const { createContext, useState, useContext, useCallback } = require('react');
+const { createContext, useState, useContext } = require('react');
 
 const ClientContext = createContext()
 const initialState = {
@@ -25,15 +22,6 @@ export const ClientProvider = ({ children }) => {
     function resetClientState() {
         setClient(initialState)
     }
-
-    const fetchClient = useCallback(async () => {
-        try {
-            const { data } = await show('/client')
-            return data.Client
-        } catch (err) {
-            toast.error(err.message)
-        }
-    }, [])
 
     function updateClient(field, settings) {
         setClient(prev => ({
@@ -61,7 +49,6 @@ export const ClientProvider = ({ children }) => {
                 clients,
                 setClient,
                 setClients,
-                fetchClient,
                 updateClient,
                 updateSubClient,
                 resetClientState,

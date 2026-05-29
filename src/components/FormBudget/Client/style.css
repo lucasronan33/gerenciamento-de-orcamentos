@@ -13,6 +13,14 @@
     border: none;
 }
 
+.box-client>span {
+    margin: auto;
+    display: flex;
+    gap: 2vh;
+    color: slategray;
+    font-size: x-large;
+}
+
 
 .box-client {
     width: 100%;
@@ -25,7 +33,9 @@
 }
 
 .initials-client-name {
-    width: fit-content;
+    width: 6vh;
+    aspect-ratio: 1 / 1;
+    place-content: center;
     padding: 1.5vh;
     color: var(--blueDocument);
     background: var(--blueHover);

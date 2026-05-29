@@ -7,13 +7,13 @@ import { useEffect, useState } from 'react';
 import { ClientAddress } from './ClientAddress';
 import { ClientInfo } from './ClientInfo';
 import validator from 'validator'
-import { clientReset, registerClientRequest } from '../../../store/modules/client/actions';
+import { clientReset, fetchClientsRequest, registerClientRequest } from '../../../store/modules/client/actions';
 import { isValidCpfCnpj } from '../../../utils/documents';
 import { toast } from 'react-toastify';
 import { useClient } from '../../../context/Client';
 
 export function ClientRegister() {
-    const { client, resetClientState } = useClient()
+    const { client } = useClient()
     const { isLoggedIn } = useSelector(state => state.auth || {})
     const { isLoading, success } = useSelector(state => state.client || {})
     const dispatch = useDispatch()
@@ -75,7 +75,6 @@ export function ClientRegister() {
     const handleSubmit = (e) => {
         e.preventDefault()
 
-
         const errors = validateClientData(client)
 
         if (errors.length > 0) {
@@ -86,17 +85,17 @@ export function ClientRegister() {
         }
 
         if (!isLoggedIn) {
-            return toast.error('Você precisa estar logado para cadastrar/atualizar um cliente!')
+            toast.error('Você precisa estar logado para cadastrar/atualizar um cliente!')
+            return
         }
         dispatch(registerClientRequest(client))
     }
 
     useEffect(() => {
         if (success) {
-            resetClientState()
             dispatch(clientReset())
         }
-    }, [success, resetClientState, dispatch])
+    }, [success, dispatch])
 
     useEffect(() => {
         return () => {

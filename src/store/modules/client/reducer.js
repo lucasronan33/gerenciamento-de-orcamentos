@@ -3,12 +3,20 @@ import * as types from '../types';
 
 const initialState = {
     isLoading: false,
+    isLoadingClients: false,
     success: false,
     client: null,
+    clients: [],
     errors: [],
 };
 export default function reducer(state = initialState, action) {
     switch (action.type) {
+        case types.FETCH_CLIENTS_REQUEST:
+            return {
+                ...state,
+                isLoadingClients: true,
+                errors: [],
+            };
         case types.REGISTER_CLIENT_REQUEST:
         case types.UPDATE_CLIENT_REQUEST:
             return {
@@ -16,6 +24,14 @@ export default function reducer(state = initialState, action) {
                 isLoading: true,
                 errors: [],
             };
+        case types.FETCH_CLIENTS_SUCCESS:
+            return {
+                ...state,
+                isLoadingClients: false,
+                success: false,
+                clients: action.payload,
+                errors: []
+            }
         case types.REGISTER_CLIENT_SUCCESS:
         case types.UPDATE_CLIENT_SUCCESS:
             return {
@@ -24,6 +40,12 @@ export default function reducer(state = initialState, action) {
                 success: true,
                 client: action.payload.client,
                 errors: []
+            }
+        case types.FETCH_CLIENTS_FAILURE:
+            return {
+                ...state,
+                isLoadingClients: false,
+                errors: action.payload || [],
             }
         case types.REGISTER_CLIENT_FAILURE:
         case types.UPDATE_CLIENT_FAILURE:
