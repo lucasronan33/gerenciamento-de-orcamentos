@@ -17,13 +17,6 @@ export default function reducer(state = initialState, action) {
                 isLoadingClients: true,
                 errors: [],
             };
-        case types.REGISTER_CLIENT_REQUEST:
-        case types.UPDATE_CLIENT_REQUEST:
-            return {
-                ...state,
-                isLoading: true,
-                errors: [],
-            };
         case types.FETCH_CLIENTS_SUCCESS:
             return {
                 ...state,
@@ -32,7 +25,22 @@ export default function reducer(state = initialState, action) {
                 clients: action.payload,
                 errors: []
             }
-        case types.REGISTER_CLIENT_SUCCESS:
+        case types.FETCH_CLIENTS_FAILURE:
+            return {
+                ...state,
+                isLoadingClients: false,
+                errors: action.payload || [],
+            }
+
+        case types.CREATE_CLIENT_REQUEST:
+        case types.UPDATE_CLIENT_REQUEST:
+        case types.DELETE_CLIENT_REQUEST:
+            return {
+                ...state,
+                isLoading: true,
+                errors: [],
+            };
+        case types.CREATE_CLIENT_SUCCESS:
         case types.UPDATE_CLIENT_SUCCESS:
             return {
                 ...state,
@@ -41,18 +49,22 @@ export default function reducer(state = initialState, action) {
                 client: action.payload.client,
                 errors: []
             }
-        case types.FETCH_CLIENTS_FAILURE:
-            return {
-                ...state,
-                isLoadingClients: false,
-                errors: action.payload || [],
-            }
-        case types.REGISTER_CLIENT_FAILURE:
+        case types.CREATE_CLIENT_FAILURE:
         case types.UPDATE_CLIENT_FAILURE:
+        case types.DELETE_CLIENT_FAILURE:
             return {
                 ...state,
                 isLoading: false,
+                success: false,
                 errors: action.payload || [],
+            }
+
+        case types.DELETE_CLIENT_SUCCESS:
+            return {
+                ...state,
+                isLoading: false,
+                success: true,
+                errors: [],
             }
 
         case types.CLIENT_RESET:

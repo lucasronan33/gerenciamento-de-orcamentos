@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import { CircleHelp, Home, Info, LogOut, Menu, PackagePlus, Settings, /*Users,*/ X } from 'lucide-react'
+import { CircleHelp, Home, Info, LogOut, Menu, PackagePlus, Settings, Users, X } from 'lucide-react'
 import { logoutRequest } from '../../store/modules/auth/actions'
 import './style.css'
 
@@ -19,11 +19,11 @@ const getMenuSections = (userId) => [
     {
         title: 'Cadastros',
         items: [
-            // {
-            //     label: 'Cadastro de clientes',
-            //     icon: Users,
-            //     path: '/clients',
-            // },
+            {
+                label: 'Cadastro de clientes',
+                icon: Users,
+                path: '/clients',
+            },
             {
                 label: 'Cadastro de itens predefinidos (em desenvolvimento)',
                 icon: PackagePlus,

@@ -1,4 +1,4 @@
-import { SaveIcon } from 'lucide-react';
+import { SaveIcon, X } from 'lucide-react';
 import { FormBudget } from '..';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button } from '../../Button';
@@ -7,13 +7,13 @@ import { useEffect, useState } from 'react';
 import { ClientAddress } from './ClientAddress';
 import { ClientInfo } from './ClientInfo';
 import validator from 'validator'
-import { clientReset, registerClientRequest } from '../../../store/modules/client/actions';
+import { clientReset, createClientRequest, updateClientRequest } from '../../../store/modules/client/actions';
 import { isValidCpfCnpj } from '../../../utils/documents';
 import { toast } from 'react-toastify';
 import { useClient } from '../../../context/Client';
 
 export function ClientRegister() {
-    const { client } = useClient()
+    const { client, resetClientState } = useClient()
     const { isLoggedIn } = useSelector(state => state.auth || {})
     const { isLoading, success } = useSelector(state => state.client || {})
     const dispatch = useDispatch()
@@ -88,7 +88,9 @@ export function ClientRegister() {
             toast.error('Você precisa estar logado para cadastrar/atualizar um cliente!')
             return
         }
-        dispatch(registerClientRequest(client))
+        client._id
+            ? dispatch(updateClientRequest(client))
+            : dispatch(createClientRequest(client))
     }
 
     useEffect(() => {
@@ -131,13 +133,31 @@ export function ClientRegister() {
                 ))}
             </FormBudget.Root>
 
-            <Button.Container>
+            <Button.Container className='buttons-register'>
+                <Button.Root
+                    className='btn-cancel btn-save'
+                    type='reset'
+                    onClick={() => resetClientState()}
+                >
+                    <Button.Icon icon={X} />
+                    Limpar
+                </Button.Root>
+
                 <Button.Root
                     className='btn-save'
                     type='submit'
                     disabled={isLoading} >
                     <Button.Icon icon={SaveIcon} />
-                    {isLoading ? 'Cadastrando...' : 'Cadastrar'}
+                    {client._id
+                        ? (!isLoading
+                            ? 'Atualizar'
+                            : 'Atualizando...'
+                        )
+                        : (!isLoading
+                            ? 'Cadastrar'
+                            : 'Cadastrando...'
+                        )
+                    }
                 </Button.Root>
             </Button.Container>
         </form>

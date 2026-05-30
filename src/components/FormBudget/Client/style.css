@@ -2,6 +2,10 @@
     color: slategray;
 }
 
+.buttons-register {
+    display: flex !important;
+}
+
 /* ====================
  CLIENT BOX 
  ==================== */
@@ -33,7 +37,8 @@
 }
 
 .box-client:hover .icons-clients-list {
-    display: flex;
+    height: fit-content;
+    scale: 1;
 }
 
 .initials-client-name {

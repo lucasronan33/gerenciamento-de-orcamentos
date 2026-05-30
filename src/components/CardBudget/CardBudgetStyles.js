@@ -97,14 +97,17 @@ export const CardIcons = styled.div`
     gap: 1vh;
 
     &.icons-clients-list{
-        display: none;
+        height: 0;
+        scale: 0;
         width: 20vh;
         flex-grow: 0;
+        transition: 300ms;  
     }
 
     .card-icon{
         align-items: center;
         justify-content: center;
+        transition: 300ms;  
     }
     .card-icon:hover{
         background: ${color.blueHover};

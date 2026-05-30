@@ -10,8 +10,8 @@ const ContainerButton = styled.div`
 `
 
 
-export function ButtonContainer({ children }) {
-  return <ContainerButton >{children}</ContainerButton>
+export function ButtonContainer({ children, ...rest }) {
+  return <ContainerButton {...rest} >{children}</ContainerButton>
 }
 
 ButtonContainer.propTypes = {
