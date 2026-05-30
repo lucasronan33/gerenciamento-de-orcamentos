@@ -7,7 +7,7 @@ import { useEffect, useState } from 'react';
 import { ClientAddress } from './ClientAddress';
 import { ClientInfo } from './ClientInfo';
 import validator from 'validator'
-import { clientReset, fetchClientsRequest, registerClientRequest } from '../../../store/modules/client/actions';
+import { clientReset, registerClientRequest } from '../../../store/modules/client/actions';
 import { isValidCpfCnpj } from '../../../utils/documents';
 import { toast } from 'react-toastify';
 import { useClient } from '../../../context/Client';

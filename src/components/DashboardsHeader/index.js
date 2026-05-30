@@ -1,14 +1,18 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Calendar, DollarSign, Users } from 'lucide-react';
 
 import * as colors from '../../config/colors';
 import { Card, CardInfo } from './styles';
 import { Container } from '../../styles/GlobalStyles';
 import { useBudget } from '../../context/Budget'
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchClientsRequest } from '../../store/modules/client/actions';
 
 
 export default function DashboardsHeader() {
-    const { budgets, calcTotalBudgets, approvedBudgets } = useBudget()
+    const { budgets, approvedBudgets } = useBudget()
+    const { clients } = useSelector(state => state.client || [])
+    const dispatch = useDispatch()
 
     const totalApprovedValue = () => {
         const total = approvedBudgets()
@@ -19,40 +23,46 @@ export default function DashboardsHeader() {
         }, 0).toFixed(2)
     }
 
+    useEffect(() => {
+        dispatch(fetchClientsRequest())
+    }, [dispatch])
+
     return (
-        <Container>
-            <Card>
-                <CardInfo>
-                    <p>Agendamentos</p>
-                    <p>{budgets.length}</p>
-                </CardInfo>
+        <>
+            <Container>
+                <Card>
+                    <CardInfo $color1={colors.blueDocument}>
+                        <Calendar />
+                        <p>{budgets.length}</p>
+                        <p className='subtitle-card'>Agendamentos</p>
+                    </CardInfo>
+                </Card>
+                <Card>
+                    <CardInfo
+                        $color1={colors.successColor}
+                    >
+                        <DollarSign />
+                        <p>R$ {totalApprovedValue()}</p>
+                        <p className='subtitle-card'>Receita</p>
+                    </CardInfo>
+                </Card>
 
-                <CardInfo $color={colors.blueDocument}>
-                    <Calendar />
-                </CardInfo>
-            </Card>
+                <Card>
+                    <CardInfo $color1={colors.purpleHover}>
+                        <Users />
+                        <p>{clients?.length || 0} </p>
+                        <p className='subtitle-card'>Clientes</p>
+                    </CardInfo>
+                </Card>
 
-            <Card>
-                <CardInfo >
-                    <p>Clientes</p>
-                    <p>R$ {calcTotalBudgets()} </p>
-                </CardInfo>
+                <Card className='weekly-recipe'>
+                    <p className='title-card'>Receita semanal</p>
+                </Card>
+                <Card className='weekly-recipe'>
+                    <p className='title-card'>Próximos atendimentos</p>
+                </Card>
 
-                <CardInfo $color={colors.purpleHover}>
-                    <Users />
-                </CardInfo>
-            </Card>
-
-            <Card>
-                <CardInfo $color={colors.successColor}>
-                    <p>Receita</p>
-                    <p>R$ {totalApprovedValue()}</p>
-                </CardInfo>
-
-                <CardInfo $color={colors.successColor}>
-                    <DollarSign />
-                </CardInfo>
-            </Card>
-        </Container>
+            </Container>
+        </>
     )
 }

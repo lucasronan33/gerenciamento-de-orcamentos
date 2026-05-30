@@ -17,7 +17,6 @@ const initialState = {
 
 export const ClientProvider = ({ children }) => {
     const [client, setClient] = useState(initialState)
-    const [clients, setClients] = useState([])
 
     function resetClientState() {
         setClient(initialState)
@@ -46,9 +45,7 @@ export const ClientProvider = ({ children }) => {
         <ClientContext.Provider value={
             {
                 client,
-                clients,
                 setClient,
-                setClients,
                 updateClient,
                 updateSubClient,
                 resetClientState,

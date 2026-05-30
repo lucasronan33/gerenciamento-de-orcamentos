@@ -28,8 +28,12 @@
     display: flex;
     gap: 2vh 3vh;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: flex-end;
     border-bottom: 1px solid var(--borderDarkColor);
+}
+
+.box-client:hover .icons-clients-list {
+    display: flex;
 }
 
 .initials-client-name {

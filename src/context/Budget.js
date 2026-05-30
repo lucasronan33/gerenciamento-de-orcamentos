@@ -78,8 +78,12 @@ export function BudgetProvider({ children }) {
     }
 
     function approvedBudgets() {
+        const approvedStatus = [
+            'aprovado',
+            'finalizado',
+        ]
         const approvedBudgets = budgets.filter(
-            item => item.basic.status.toLowerCase().trim() === 'aprovado'
+            item => approvedStatus.includes(item.basic.status.toLowerCase().trim())
         )
         return approvedBudgets
     }

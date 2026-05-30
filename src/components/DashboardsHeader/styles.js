@@ -19,6 +19,15 @@ export const Card = styled.div`
         align-items: center;
         flex-wrap: wrap
     }
+    &.weekly-recipe{
+        width: 100%;
+        
+        .title-card{
+            color: slategray;
+            font-weight: normal;
+            font-size: 1.75vh;
+        }
+}
 
     &.card-filter{
         display: grid;
@@ -32,24 +41,23 @@ export const Card = styled.div`
 `
 export const CardInfo = styled.div`
     width: fit-content;
-    height: 5vh;
     flex-direction: column;
     align-items: start;
     flex-wrap: nowrap;
     gap: 0.5vh;
 
     p{
-        font-size: 1.5vh;
-    }
-    p+p{
         font-size: x-large;
         font-weight: bolder;
-        color: ${(props) => props.$color};
+        color: ${(props) => props.$color2};
+    }
+    .subtitle-card{
+        color: slategray;
+        font-weight: normal;
+        font-size: 1.5vh;
     }
     
     svg{
-        width: 80%;
-        height: 100%;
-        color: ${(props) => props.$color}
+        color: ${(props) => props.$color1}
     }
 `
