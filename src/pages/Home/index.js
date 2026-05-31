@@ -8,9 +8,23 @@ import Header from '../../components/Header';
 import CardBudget from '../../components/CardBudget/CardBudget';
 import { useBudget } from '../../context/Budget'
 import { Card } from '../../components/DashboardsHeader/styles';
-import { FileText, Plus } from 'lucide-react';
+import { Calendar, FileText, Plus, Users } from 'lucide-react';
 import { Button } from '../../components/Button';
 import { useNavigate } from 'react-router-dom';
+
+
+const iconsMenu = [
+    {
+        title: 'Novo agendamento',
+        icon: Calendar,
+        path: '/clients'
+    },
+    {
+        title: 'Novo cliente',
+        icon: Users,
+        path: '/clients'
+    },
+]
 
 export default function Home() {
     const navigate = useNavigate()
@@ -56,6 +70,8 @@ export default function Home() {
                         ))}
 
             </div>
+
+            <Button.FixedMenu children={iconsMenu} />
         </div>
     );
 }

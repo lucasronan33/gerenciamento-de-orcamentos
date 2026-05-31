@@ -6,13 +6,26 @@ import { FormBudget } from '../../components/FormBudget'
 import { NavBudget } from '../../components/NewBudget/styles'
 import { Button } from '../../components/Button'
 import { SettingsBase } from '../../components/SettingsBase'
-import { SaveIcon } from 'lucide-react'
+import { Calendar, SaveIcon, Users } from 'lucide-react'
 import { useSelector } from 'react-redux'
 import { useSettings } from '../../context/Settings'
 import { update } from '../../services/axiosRoutes'
 import { toast } from 'react-toastify'
 import { UserSettings } from '../../components/User'
 import { normalizeErrors } from '../../store/modules/auth/sagas'
+
+const iconsMenu = [
+    {
+        title: 'Novo agendamento',
+        icon: Calendar,
+        path: '/clients'
+    },
+    {
+        title: 'Novo cliente',
+        icon: Users,
+        path: '/clients'
+    },
+]
 
 export default function Settings() {
     const { isLoading } = useSelector(state => state.auth || {})
@@ -108,6 +121,7 @@ export default function Settings() {
                 <UserSettings />
 
             </main>
+            <Button.FixedMenu children={iconsMenu} />
         </div>
     )
 }
