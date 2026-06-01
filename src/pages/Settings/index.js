@@ -6,7 +6,7 @@ import { FormBudget } from '../../components/FormBudget'
 import { NavBudget } from '../../components/NewBudget/styles'
 import { Button } from '../../components/Button'
 import { SettingsBase } from '../../components/SettingsBase'
-import { Calendar, SaveIcon, Users } from 'lucide-react'
+import { FileText, Home, SaveIcon, Users } from 'lucide-react'
 import { useSelector } from 'react-redux'
 import { useSettings } from '../../context/Settings'
 import { update } from '../../services/axiosRoutes'
@@ -16,9 +16,14 @@ import { normalizeErrors } from '../../store/modules/auth/sagas'
 
 const iconsMenu = [
     {
-        title: 'Novo agendamento',
-        icon: Calendar,
-        path: '/clients'
+        title: 'Home',
+        icon: Home,
+        path: '/'
+    },
+    {
+        title: 'Novo orçamento',
+        icon: FileText,
+        path: '/budget/new'
     },
     {
         title: 'Novo cliente',

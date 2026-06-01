@@ -5,14 +5,13 @@ import * as colors from '../../config/colors';
 import { Card } from './styles';
 import { Container } from '../../styles/GlobalStyles';
 import { useBudget } from '../../context/Budget'
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { fetchClientsRequest } from '../../store/modules/client/actions';
 import { CardDashboard } from '../Cards/CardDashboard';
 
 
 export default function DashboardsHeader() {
     const { budgets, getBudgetsByStatus } = useBudget()
-    const { clients } = useSelector(state => state.client || [])
     const dispatch = useDispatch()
 
     const sumValueByStatus = (status = []) => {
@@ -25,7 +24,14 @@ export default function DashboardsHeader() {
     }
 
     const approvedPercent = () => {
-        const approvedTotal = getBudgetsByStatus(['aprovado', 'finalizado'])
+        const totalBudgets = budgets.length
+        const totalApprovedBudgets = getBudgetsByStatus(['aprovado', 'finalizado']).length
+
+        function calcTotal() {
+            let total = totalApprovedBudgets / totalBudgets * 100
+            return total.toFixed(1)
+        }
+        return calcTotal()
     }
 
     const cards = [
@@ -59,7 +65,7 @@ export default function DashboardsHeader() {
         },
         {
             title: 'Taxa de aprovação',
-            content: `${getBudgetsByStatus(['aprovado']).length} aprovadas`,
+            content: `${approvedPercent()}%`,
             icon: CircleCheckBig,
             colorIcon: colors.successColor,
             colorText: 'unset',

@@ -83,15 +83,15 @@ export function BudgetContentBasic() {
 
             <FormBudget.ContainerInput>
                 <FormBudget.Label
-                    text='Nome do Cliente *'
-                    htmlFor={'clientName'} />
+                    text='Título do orçamento *'
+                    htmlFor={'titleBudget'} />
                 <FormBudget.Input
                     typeInput='text'
-                    placeholder='Nome do Cliente'
-                    id='clientName'
-                    name='clientName'
-                    value={budget.basic.name || ''}
-                    onChange={(e) => updateBudget('basic', 'name', e.target.value)}
+                    placeholder='ex.: Nome do serviço'
+                    id='titleBudget'
+                    name='titleBudget'
+                    value={budget.basic.title || ''}
+                    onChange={(e) => updateBudget('basic', 'title', e.target.value)}
                 />
             </FormBudget.ContainerInput>
 
