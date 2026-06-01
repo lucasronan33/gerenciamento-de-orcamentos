@@ -64,7 +64,6 @@ const ContainerFixedMenu = styled.div`
 export function ButtonFixedMenu({ children }) {
     const [menuOpen, setMenuOpen] = useState(false)
     const navigate = useNavigate()
-    console.log(menuOpen)
 
     return (
         <ContainerFixedMenu

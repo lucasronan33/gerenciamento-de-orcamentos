@@ -1,4 +1,4 @@
-import { Calendar, NotebookPen, Users } from 'lucide-react';
+import { Calendar, NotebookPen } from 'lucide-react';
 import { Button } from '../../components/Button';
 import { Client } from '../../components/FormBudget/Client';
 import Header from '../../components/Header';

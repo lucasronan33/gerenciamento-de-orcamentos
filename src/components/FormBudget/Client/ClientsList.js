@@ -1,7 +1,6 @@
 import './style.css'
 import { Card } from '../../DashboardsHeader/styles';
 import { Subtitle } from '../../Header/styles';
-import { CardIcons, ConfirmDeleteModal } from '../../CardBudget/CardBudgetStyles';
 import { Contact, Edit, Mail, Phone, RefreshCcw, Trash2 } from 'lucide-react';
 import { maskPhone } from '../../../utils/masks';
 import { WhatsAppIcon } from '../../Icons/WhatsAppIcon';
@@ -10,6 +9,7 @@ import { deleteClientRequest, fetchClientsRequest } from '../../../store/modules
 import { useDispatch, useSelector } from 'react-redux';
 import { useClient } from '../../../context/Client';
 import { Button } from '../../Button';
+import { CardIcons, ConfirmDeleteModal } from '../../Cards/styled';
 
 export function ClientsList() {
     const { success, clients, isLoadingClients } = useSelector(state => state.client || {})

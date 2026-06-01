@@ -77,15 +77,11 @@ export function BudgetProvider({ children }) {
         return total
     }
 
-    function approvedBudgets() {
-        const approvedStatus = [
-            'aprovado',
-            'finalizado',
-        ]
-        const approvedBudgets = budgets.filter(
-            item => approvedStatus.includes(item.basic.status.toLowerCase().trim())
+    function getBudgetsByStatus(status) {
+        const total = budgets.filter(
+            item => status.includes(item.basic.status.toLowerCase().trim())
         )
-        return approvedBudgets
+        return total
     }
 
     const updateBudget = useCallback((field, subfield, value) => {
@@ -154,7 +150,7 @@ export function BudgetProvider({ children }) {
                     budgets,
                     setBudgets,
                     calcTotalBudgets,
-                    approvedBudgets,
+                    getBudgetsByStatus,
 
                     filterSelected,
                     setFilterSelected,

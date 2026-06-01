@@ -5,7 +5,7 @@ import { CircleHelp, Home, Info, LogOut, Menu, PackagePlus, Settings, Users, X }
 import { logoutRequest } from '../../store/modules/auth/actions'
 import './style.css'
 
-const getMenuSections = (userId) => [
+const getMenuSections = () => [
     {
         title: 'Principal',
         items: [

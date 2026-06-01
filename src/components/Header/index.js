@@ -8,7 +8,7 @@ import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import axios from '../../services/axios'
 import Sidebar from '../Sidebar'
 
-export default function Header(props) {
+export default function Header() {
     const [newBudget, setNewBudget] = useState(false)
     const [budgetData, setBudgetData] = useState(null)
     const { id } = useParams()
@@ -58,8 +58,7 @@ export default function Header(props) {
                 budgetData={budgetData}
                 isNew={isNew}
                 id={id}
-                key={id}
-                {...props} />
+                key={id} />
             <div className='container'>
                 <div className='container-logo-title'>
                     <Sidebar />

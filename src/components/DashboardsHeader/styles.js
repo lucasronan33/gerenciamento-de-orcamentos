@@ -39,25 +39,3 @@ export const Card = styled.div`
         box-shadow: -0.2vh 0.2vh 2vh ${color.blueHover};
     }
 `
-export const CardInfo = styled.div`
-    width: fit-content;
-    flex-direction: column;
-    align-items: start;
-    flex-wrap: nowrap;
-    gap: 0.5vh;
-
-    p{
-        font-size: x-large;
-        font-weight: bolder;
-        color: ${(props) => props.$color2};
-    }
-    .subtitle-card{
-        color: slategray;
-        font-weight: normal;
-        font-size: 1.5vh;
-    }
-    
-    svg{
-        color: ${(props) => props.$color1}
-    }
-`

@@ -5,7 +5,7 @@ import './style.css'
 import DashboardsHeader from '../../components/DashboardsHeader';
 import BudgetStatusFilter from '../../components/BudgetStatusFilter';
 import Header from '../../components/Header';
-import CardBudget from '../../components/CardBudget/CardBudget';
+import CardBudget from '../../components/Cards/CardBudget';
 import { useBudget } from '../../context/Budget'
 import { Card } from '../../components/DashboardsHeader/styles';
 import { Calendar, FileText, Plus, Users } from 'lucide-react';

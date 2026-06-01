@@ -1,21 +1,22 @@
 import React, { useEffect } from 'react';
-import { Calendar, DollarSign, Users } from 'lucide-react';
+import { CircleCheckBig, Clock, DollarSign, FileText, Users } from 'lucide-react';
 
 import * as colors from '../../config/colors';
-import { Card, CardInfo } from './styles';
+import { Card } from './styles';
 import { Container } from '../../styles/GlobalStyles';
 import { useBudget } from '../../context/Budget'
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchClientsRequest } from '../../store/modules/client/actions';
+import { CardDashboard } from '../Cards/CardDashboard';
 
 
 export default function DashboardsHeader() {
-    const { budgets, approvedBudgets } = useBudget()
+    const { budgets, getBudgetsByStatus } = useBudget()
     const { clients } = useSelector(state => state.client || [])
     const dispatch = useDispatch()
 
-    const totalApprovedValue = () => {
-        const total = approvedBudgets()
+    const sumValueByStatus = (status = []) => {
+        const total = getBudgetsByStatus(status)
         return total.reduce((prevValue, currentValue) => {
             const value = Number(currentValue.totals.total)
 
@@ -23,6 +24,47 @@ export default function DashboardsHeader() {
         }, 0).toFixed(2)
     }
 
+    const approvedPercent = () => {
+        const approvedTotal = getBudgetsByStatus(['aprovado', 'finalizado'])
+    }
+
+    const cards = [
+        {
+            title: 'Receita',
+            content: `R$ ${sumValueByStatus(['finalizado'])}`,
+            icon: DollarSign,
+            colorIcon: colors.successColor,
+            colorText: colors.successColor,
+        },
+        {
+            title: 'A receber',
+            content: `R$ ${sumValueByStatus(['aprovado'])}`,
+            icon: Clock,
+            colorIcon: colors.warningColor,
+            colorText: 'white',
+        },
+        {
+            title: 'Propostas',
+            content: `${budgets.length} emitidas`,
+            icon: FileText,
+            colorIcon: colors.blueDocument,
+            colorText: 'unset',
+        },
+        {
+            title: 'Propostas',
+            content: `${getBudgetsByStatus(['aprovado']).length} aprovadas`,
+            icon: CircleCheckBig,
+            colorIcon: colors.successColor,
+            colorText: 'unset',
+        },
+        {
+            title: 'Taxa de aprovação',
+            content: `${getBudgetsByStatus(['aprovado']).length} aprovadas`,
+            icon: CircleCheckBig,
+            colorIcon: colors.successColor,
+            colorText: 'unset',
+        },
+    ]
     useEffect(() => {
         dispatch(fetchClientsRequest())
     }, [dispatch])
@@ -30,14 +72,14 @@ export default function DashboardsHeader() {
     return (
         <>
             <Container>
-                <Card>
-                    <CardInfo $color1={colors.blueDocument}>
-                        <Calendar />
-                        <p>{budgets.length}</p>
-                        <p className='subtitle-card'>Agendamentos</p>
-                    </CardInfo>
-                </Card>
-                <Card>
+                {cards.map(item =>
+                    <Card>
+                        <CardDashboard
+                            data={item}
+                        />
+                    </Card>
+                )}
+                {/* <Card>
                     <CardInfo
                         $color1={colors.successColor}
                     >
@@ -60,7 +102,7 @@ export default function DashboardsHeader() {
                 </Card>
                 <Card className='weekly-recipe'>
                     <p className='title-card'>Próximos atendimentos</p>
-                </Card>
+                </Card> */}
 
             </Container>
         </>

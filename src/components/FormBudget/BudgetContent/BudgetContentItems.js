@@ -4,7 +4,7 @@ import { DivContainerFilter, InptSearch } from '../../HeaderFilter/styles';
 import { ChevronDown, Plus } from 'lucide-react';
 import { Title } from '../../Header/styles';
 import { Button } from '../../Button';
-import CardItem from '../../CardItem/CardItem';
+import CardItem from '../../Cards/CardItem';
 import { useSettings } from '../../../context/Settings'
 import { useBudget } from '../../../context/Budget'
 
