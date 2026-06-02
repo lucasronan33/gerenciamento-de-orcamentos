@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { CircleCheckBig, Clock, DollarSign, FileText, Users } from 'lucide-react';
+import { CircleCheckBig, Clock, DollarSign, FileText } from 'lucide-react';
 
 import * as colors from '../../config/colors';
 import { Card } from './styles';

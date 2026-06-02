@@ -1,143 +1,156 @@
-import { FormBudget } from '..';
-import { useBudget } from '../../../context/Budget'
+import { useEffect, useState } from 'react';
+// import { useBudget } from '../../../context/Budget'
+import { Client } from '../Client';
+import { Button } from '../../Button';
+import { Contact, Mail, Minus, Phone, Plus, RefreshCcw, X } from 'lucide-react';
+import { useDispatch, useSelector } from 'react-redux';
+// import { useClient } from '../../../context/Client';
+import { fetchClientsRequest } from '../../../store/modules/client/actions';
+import { Subtitle } from '../../Header/styles';
+import { Card } from '../../DashboardsHeader/styles';
+import { maskPhone } from '../../../utils/masks';
+import { WhatsAppIcon } from '../../Icons/WhatsAppIcon';
+import { CardIcons } from '../../Cards/styled';
 
 export function BudgetContentClient() {
-    const { budget, updateBudget, setBudget } = useBudget()
+    const { isLoggedIn } = useSelector(state => state.auth)
+    // const { budget, updateBudget, setBudget } = useBudget()
+    const [isRegister, setIsRegister] = useState(false)
+    const { success, clients, isLoadingClients } = useSelector(state => state.client || {})
+    const dispatch = useDispatch()
+    // const { setClient } = useClient()
+    const [clientSelected, setClientSelected] = useState(false)
+
+    useEffect(() => {
+        if (!isLoggedIn) return
+        dispatch(fetchClientsRequest())
+    }, [isLoggedIn, isRegister, success, dispatch])
     return (
         <>
-            <FormBudget.ContainerInput size='large'>
-                <FormBudget.Label text='Nome da Empresa' />
-                <FormBudget.Input typeInput='text'
-                    placeholder='Razão Social'
-                    name='enterpriseName'
-                    value={budget.client?.enterpriseName}
-                    onChange={(e) => updateBudget('client', 'enterpriseName', e.target.value)}
-                />
-            </FormBudget.ContainerInput>
+            {!isRegister
+                ? (!clientSelected && (
 
-            <FormBudget.ContainerInput>
-                <FormBudget.Label text='CNPJ / CPF' />
-                <FormBudget.Input typeInput='text'
-                    placeholder='000.000.000-00'
-                    name='cpf_cnpj'
-                    value={budget.client?.cpf_cnpj}
-                    onChange={(e) => updateBudget('client', 'cpf_cnpj', e.target.value)}
-                />
-            </FormBudget.ContainerInput>
-
-            <FormBudget.ContainerInput size='large'>
-                <FormBudget.Label text='Rua' />
-                <FormBudget.Input typeInput='text'
-                    placeholder='Rua'
-                    name='street'
-                    value={budget.client?.address?.street}
-                    onChange={(e) => setBudget(prev => ({
-                        ...prev,
-                        client: {
-                            ...prev.client,
-                            address: {
-                                ...prev.client.address,
-                                'street': e.target.value
-                            }
+                    <Button.Container>
+                        <Button.Root onClick={() => setIsRegister(true)}  >Cadastrar novo Cliente</Button.Root>
+                    </Button.Container>)
+                ) : (<>
+                    <Button.Container>
+                        <Button.Root
+                            className='btn-cancel'
+                            onClick={() => setIsRegister(false)}
+                        >
+                            <Button.Icon icon={X} />
+                            Cancelar
+                        </Button.Root>
+                    </Button.Container>
+                    <Client.Register /></>
+                )}
+            {clientSelected
+                && <div className='box-client'>
+                    <label className='initials-client-name'>
+                        {clientSelected.name
+                            .split(' ', 3)
+                            .map(i => i[0].toUpperCase())
+                            .join('')
                         }
-                    }))}
-                />
-            </FormBudget.ContainerInput>
+                    </label>
+                    <div className='container-client-infos'>
+                        <h3>
+                            {clientSelected.name}
+                        </h3>
+                        <div className='container-contact-client'>
+                            {clientSelected.whatsapp && (
+                                <Subtitle className='title-list-clients phone-client'>
+                                    <WhatsAppIcon className='contact-icon whatsapp-icon' />
+                                    {maskPhone(clientSelected?.whatsapp)}
+                                </Subtitle>)}
+                            {clientSelected.phone && (
+                                <Subtitle className='title-list-clients phone-client'>
+                                    <Phone className='contact-icon' />
+                                    {maskPhone(clientSelected?.phone)}
+                                </Subtitle>)}
+                            {clientSelected.email && (
+                                <Subtitle className='title-list-clients phone-client'>
+                                    <Mail className='contact-icon' />
+                                    {clientSelected.email}
+                                </Subtitle>)}
+                        </div>
+                    </div>
+                    <CardIcons className='icons-clients-list'>
+                        <div
+                            className='card-icon links'
+                            onClick={() => setClientSelected(false)}
+                        >
+                            <Minus />
+                        </div>
+                    </CardIcons>
+                </div>
+            }
+            {!clientSelected &&
+                <Card className='hover-container'>
+                    <Subtitle className='title-list-clients'>Clientes cadastrados</Subtitle>
+                    <div className='container-clients'>
+                        {isLoadingClients
+                            ? <div className='box-client'>
+                                <div className='box-client'>
+                                    <span >
+                                        <RefreshCcw size={30} />
+                                        Carregando clientes...
+                                    </span>
+                                </div>
+                            </div>
+                            : clients.length > 0 ? clients.map((client, index) =>
+                                <div className='box-client' key={index}>
+                                    <label className='initials-client-name'>
+                                        {client.name
+                                            .split(' ', 3)
+                                            .map(i => i[0].toUpperCase())
+                                            .join('')
+                                        }
+                                    </label>
+                                    <div className='container-client-infos'>
+                                        <h3>
+                                            {client.name}
+                                        </h3>
+                                        <div className='container-contact-client'>
+                                            {client.whatsapp && (
+                                                <Subtitle className='title-list-clients phone-client'>
+                                                    <WhatsAppIcon className='contact-icon whatsapp-icon' />
+                                                    {maskPhone(client?.whatsapp)}
+                                                </Subtitle>)}
+                                            {client.phone && (
+                                                <Subtitle className='title-list-clients phone-client'>
+                                                    <Phone className='contact-icon' />
+                                                    {maskPhone(client?.phone)}
+                                                </Subtitle>)}
+                                            {client.email && (
+                                                <Subtitle className='title-list-clients phone-client'>
+                                                    <Mail className='contact-icon' />
+                                                    {client.email}
+                                                </Subtitle>)}
+                                        </div>
+                                    </div>
+                                    <CardIcons className='icons-clients-list'>
+                                        <div
+                                            className='card-icon links'
+                                            onClick={() => setClientSelected(client)}
+                                        >
+                                            <Plus />
+                                        </div>
+                                    </CardIcons>
+                                </div>
+                            ) : (
+                                <div className='box-client'>
+                                    <span >
+                                        <Contact size={30} />
+                                        Nenhum cliente registrado ainda
+                                    </span>
+                                </div>
+                            )}
+                    </div>
 
-            <FormBudget.ContainerInput>
-                <FormBudget.Label text='Número' />
-                <FormBudget.Input typeInput='number'
-                    placeholder='Número'
-                    name='number'
-                    value={budget.client?.address?.number}
-                    onChange={(e) => setBudget(prev => ({
-                        ...prev,
-                        client: {
-                            ...prev.client,
-                            address: {
-                                ...prev.client.address,
-                                'number': e.target.value
-                            }
-                        }
-                    }))}
-                />
-            </FormBudget.ContainerInput>
 
-            <FormBudget.ContainerInput>
-                <FormBudget.Label text='Cidade' />
-                <FormBudget.Input typeInput='text'
-                    name='city'
-                    value={budget.client?.address?.city}
-                    onChange={(e) => setBudget(prev => ({
-                        ...prev,
-                        client: {
-                            ...prev.client,
-                            address: {
-                                ...prev.client.address,
-                                'city': e.target.value
-                            }
-                        }
-                    }))}
-                />
-            </FormBudget.ContainerInput>
-
-            <FormBudget.ContainerInput size='small'>
-                <FormBudget.Label text='Estado' />
-                <FormBudget.Input typeInput='text'
-                    placeholder='UF'
-                    name='state'
-                    value={budget.client?.address?.state}
-                    onChange={(e) => setBudget(prev => ({
-                        ...prev,
-                        client: {
-                            ...prev.client,
-                            address: {
-                                ...prev.client.address,
-                                'state': e.target.value
-                            }
-                        }
-                    }))}
-                />
-            </FormBudget.ContainerInput>
-
-            <FormBudget.ContainerInput size='small'>
-                <FormBudget.Label text='CEP' />
-                <FormBudget.Input typeInput='text'
-                    placeholder='0000-000'
-                    name='zipCode'
-                    value={budget.client?.address?.zipCode}
-                    onChange={(e) => setBudget(prev => ({
-                        ...prev,
-                        client: {
-                            ...prev.client,
-                            address: {
-                                ...prev.client.address,
-                                'zipCode': e.target.value
-                            }
-                        }
-                    }))}
-                />
-            </FormBudget.ContainerInput>
-
-            <FormBudget.ContainerInput size='medium'>
-                <FormBudget.Label text='Telefone' />
-                <FormBudget.Input typeInput='tel'
-                    placeholder='(00) 0 0000-0000'
-                    name='phone'
-                    value={budget.client?.phone}
-                    onChange={(e) => updateBudget('client', 'phone', e.target.value)}
-                />
-            </FormBudget.ContainerInput>
-
-            <FormBudget.ContainerInput>
-                <FormBudget.Label text='E-mail' />
-                <FormBudget.Input typeInput='email'
-                    placeholder='contato@empresa.com'
-                    name='email'
-                    value={budget.client?.email}
-                    onChange={(e) => updateBudget('client', 'email', e.target.value)}
-                />
-            </FormBudget.ContainerInput>
+                </Card>}
         </>
     )
 }
