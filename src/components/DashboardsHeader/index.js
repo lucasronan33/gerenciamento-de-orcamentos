@@ -1,16 +1,17 @@
 import React, { useEffect } from 'react';
-import { CircleCheckBig, Clock, DollarSign, FileText, Users } from 'lucide-react';
+import { CircleCheckBig, Clock, DollarSign, FileText } from 'lucide-react';
 
 import * as colors from '../../config/colors';
 import { Card } from './styles';
 import { Container } from '../../styles/GlobalStyles';
 import { useBudget } from '../../context/Budget'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { fetchClientsRequest } from '../../store/modules/client/actions';
 import { CardDashboard } from '../Cards/CardDashboard';
 
 
 export default function DashboardsHeader() {
+    const { isLoggedIn } = useSelector(state => state.auth)
     const { budgets, getBudgetsByStatus } = useBudget()
     const dispatch = useDispatch()
 
@@ -72,8 +73,9 @@ export default function DashboardsHeader() {
         },
     ]
     useEffect(() => {
+        if (!isLoggedIn) return
         dispatch(fetchClientsRequest())
-    }, [dispatch])
+    }, [isLoggedIn, dispatch])
 
     return (
         <>

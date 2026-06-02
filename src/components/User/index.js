@@ -79,6 +79,7 @@ export const UserSettings = () => {
     const handleSubmit = (e) => {
         e.preventDefault()
 
+        if (!isLoggedIn) return
         const errors = validateUserData(user)
 
         if (errors.length > 0) {
@@ -86,23 +87,22 @@ export const UserSettings = () => {
             return
         }
 
-        if (isLoggedIn) {
-            dispatch(updateUserRequest(user))
-            setUser((prev) => ({
-                ...prev,
-                password: '',
-                currentPassword: '',
-            }))
-        }
+        dispatch(updateUserRequest(user))
+        setUser((prev) => ({
+            ...prev,
+            password: '',
+            currentPassword: '',
+        }))
     }
 
     useEffect(() => {
+        if (!isLoggedIn) return
         async function getData() {
             const data = await fetchUser()
             setUser(data)
         }
         getData()
-    }, [fetchUser, setUser])
+    }, [isLoggedIn, fetchUser, setUser])
 
     return (
 

@@ -54,6 +54,7 @@ const getMenuSections = () => [
 ]
 
 export default function Sidebar() {
+    const { isLoggedIn } = useSelector(state => state.auth)
     const [isOpen, setIsOpen] = useState(false)
     const dispatch = useDispatch()
     const navigate = useNavigate()
@@ -68,6 +69,7 @@ export default function Sidebar() {
     }
 
     const handleLogout = () => {
+        if (!isLoggedIn) return
         dispatch(logoutRequest())
         document.activeElement.blur()
         setIsOpen(false)
