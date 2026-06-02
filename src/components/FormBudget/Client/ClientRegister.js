@@ -94,16 +94,17 @@ export function ClientRegister() {
     }
 
     useEffect(() => {
-        if (success) {
+        if (success && isLoggedIn) {
             dispatch(clientReset())
         }
-    }, [success, dispatch])
+    }, [isLoggedIn, success, dispatch])
 
     useEffect(() => {
+        if (!isLoggedIn) return
         return () => {
             dispatch(clientReset())
         }
-    }, [dispatch])
+    }, [isLoggedIn, dispatch])
     return (
         <form
             onSubmit={handleSubmit}

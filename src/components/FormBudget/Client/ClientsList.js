@@ -12,6 +12,7 @@ import { Button } from '../../Button';
 import { CardIcons, ConfirmDeleteModal } from '../../Cards/styled';
 
 export function ClientsList() {
+    const { isLoggedIn } = useSelector(state => state.auth)
     const { success, clients, isLoadingClients } = useSelector(state => state.client || {})
     const dispatch = useDispatch()
     const { setClient } = useClient()
@@ -19,6 +20,7 @@ export function ClientsList() {
     const [isDeleting, setIsDeleting] = useState(false)
 
     function handleDelete(client) {
+        if (!isLoggedIn) return
         setIsDeleting(true)
         dispatch(deleteClientRequest(client))
         setIsDeleting(false)
@@ -26,8 +28,9 @@ export function ClientsList() {
     }
 
     useEffect(() => {
+        if (!isLoggedIn) return
         dispatch(fetchClientsRequest())
-    }, [success, dispatch])
+    }, [success, isLoggedIn, dispatch])
 
     return (
         <Card className='hover-container'>
