@@ -8,16 +8,16 @@ import Header from '../../components/Header';
 import CardBudget from '../../components/Cards/CardBudget';
 import { useBudget } from '../../context/Budget'
 import { Card } from '../../components/DashboardsHeader/styles';
-import { Calendar, FileText, Plus, Users } from 'lucide-react';
+import { FileText, Plus, Users } from 'lucide-react';
 import { Button } from '../../components/Button';
 import { useNavigate } from 'react-router-dom';
 
 
 const iconsMenu = [
     {
-        title: 'Novo agendamento',
-        icon: Calendar,
-        path: '/clients'
+        title: 'Novo orçamento',
+        icon: FileText,
+        path: '/budget/new'
     },
     {
         title: 'Novo cliente',

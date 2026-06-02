@@ -22,7 +22,7 @@ export const ContainerCardBudget = styled.div`
         flex-wrap: wrap
     }
 
-    .clientName{
+    .titleBudget{
         padding-bottom: 3vh;
     }
 `

@@ -36,12 +36,12 @@ export default function CardBudget({ budget }) {
     return (
         <ContainerCardBudget>
             <DivTitle>
-                <h2>{budget.basic.name} </h2>
+                <h2>{budget.basic.title} </h2>
                 <StatusBudget className={statusClasses[budget.basic.status.toLowerCase()]} >
                     {budget.basic.status}
                 </StatusBudget>
             </DivTitle>
-            <p className='clientName'>{budget.basic.code} </p>
+            <p className='titleBudget'>{budget.basic.code} </p>
 
             <InfoCardBudget>
                 <div>
@@ -123,7 +123,7 @@ export default function CardBudget({ budget }) {
                         <h2>Excluir orcamento?</h2>
                         <p>
                             Esta acao vai remover o orçamento
-                            <strong> {budget.basic.name} </strong>
+                            <strong> {budget.basic.title} </strong>
                             do historico.
                         </p>
                         <div className='confirm-delete-actions'>

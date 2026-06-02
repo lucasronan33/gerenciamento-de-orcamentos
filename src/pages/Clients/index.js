@@ -1,4 +1,4 @@
-import { Calendar, NotebookPen } from 'lucide-react';
+import { FileText, Home } from 'lucide-react';
 import { Button } from '../../components/Button';
 import { Client } from '../../components/FormBudget/Client';
 import Header from '../../components/Header';
@@ -6,13 +6,13 @@ import { Container } from '../../styles/GlobalStyles';
 
 const iconsMenu = [
     {
-        title: 'Novo agendamento',
-        icon: Calendar,
-        path: '/clients'
+        title: 'Home',
+        icon: Home,
+        path: '/'
     },
     {
         title: 'Novo orçamento',
-        icon: NotebookPen,
+        icon: FileText,
         path: '/budget/new'
     },
 ]
