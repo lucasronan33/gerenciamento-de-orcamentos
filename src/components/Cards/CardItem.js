@@ -1,6 +1,6 @@
 import { ChevronDown, Trash2 } from 'lucide-react'
-import { BudgetCardItem } from '../FormBudget/BudgetContent/styled'
-import { FormBudget } from '../FormBudget'
+import { BudgetCardItem } from '../Form/BudgetContent/styled'
+import { Form } from '../Form'
 import { useEffect, useRef, useState } from 'react'
 import { DivContainerFilter, InptSearch } from '../BudgetStatusFilter/styles'
 import { useBudget } from '../../context/Budget'
@@ -58,31 +58,31 @@ export default function CardItem({
             </header>
 
             <div className='budget-container-items'>
-                <FormBudget.ContainerInput>
-                    <FormBudget.Label text='Categoria' />
-                    <FormBudget.Input
+                <Form.ContainerInput>
+                    <Form.Label text='Categoria' />
+                    <Form.Input
                         typeInput='text'
                         placeholder='Ex.: Limpeza'
                         name='category'
                         value={item.category}
                         onChange={(e) => updateItem(item.id, 'category', e.target.value)}
                     />
-                </FormBudget.ContainerInput>
+                </Form.ContainerInput>
 
-                <FormBudget.ContainerInput>
-                    <FormBudget.Label text='Código/ID' />
-                    <FormBudget.Input
+                <Form.ContainerInput>
+                    <Form.Label text='Código/ID' />
+                    <Form.Input
                         typeInput='text'
                         placeholder='Código do produto'
                         name='productCode'
                         value={item.code}
                         onChange={(e) => updateItem(item.id, 'code', e.target.value)}
                     />
-                </FormBudget.ContainerInput>
+                </Form.ContainerInput>
 
 
-                <FormBudget.ContainerInput size='small' >
-                    <FormBudget.Label text='Unidade' />
+                <Form.ContainerInput size='small' >
+                    <Form.Label text='Unidade' />
                     <DivContainerFilter ref={ref}>
                         <InptSearch>
                             <ChevronDown className='chevronDown-icon' />
@@ -122,22 +122,22 @@ export default function CardItem({
                             </div>
                         )}
                     </DivContainerFilter>
-                </FormBudget.ContainerInput>
+                </Form.ContainerInput>
 
-                <FormBudget.ContainerInput size='xx-large' >
-                    <FormBudget.Label text='Obs. do item' />
-                    <FormBudget.Input
+                <Form.ContainerInput size='xx-large' >
+                    <Form.Label text='Obs. do item' />
+                    <Form.Input
                         typeInput='text'
                         placeholder='Ex.: Usado somente para limpeza'
                         name='obsItem'
                         value={item.obsItem}
                         onChange={(e) => updateItem(item.id, 'obsItem', e.target.value)}
                     />
-                </FormBudget.ContainerInput>
+                </Form.ContainerInput>
 
-                <FormBudget.ContainerInput >
-                    <FormBudget.Label text='Qtd. *' />
-                    <FormBudget.Input typeInput='number'
+                <Form.ContainerInput >
+                    <Form.Label text='Qtd. *' />
+                    <Form.Input typeInput='number'
                         name='quantity'
                         min='1'
                         value={item.quantity}
@@ -150,11 +150,11 @@ export default function CardItem({
                             })
                         }}
                     />
-                </FormBudget.ContainerInput>
+                </Form.ContainerInput>
 
-                <FormBudget.ContainerInput size='small'>
-                    <FormBudget.Label text='Preço Unit. *' />
-                    <FormBudget.Input typeInput='number'
+                <Form.ContainerInput size='small'>
+                    <Form.Label text='Preço Unit. *' />
+                    <Form.Input typeInput='number'
                         name='unityPrice'
                         min='0'
                         value={item.unityPrice}
@@ -167,11 +167,11 @@ export default function CardItem({
                             })
                         }}
                     />
-                </FormBudget.ContainerInput>
+                </Form.ContainerInput>
 
-                <FormBudget.ContainerInput size='small' >
-                    <FormBudget.Label text='Desc. (%)' />
-                    <FormBudget.Input typeInput='number'
+                <Form.ContainerInput size='small' >
+                    <Form.Label text='Desc. (%)' />
+                    <Form.Input typeInput='number'
                         name='itemDiscount'
                         min='0'
                         value={item.discount}
@@ -184,11 +184,11 @@ export default function CardItem({
                             })
                         }}
                     />
-                </FormBudget.ContainerInput>
+                </Form.ContainerInput>
 
-                <FormBudget.ContainerInput size='medium' >
-                    <FormBudget.Label text='Impostos sob produto (%)' />
-                    <FormBudget.Input typeInput='number'
+                <Form.ContainerInput size='medium' >
+                    <Form.Label text='Impostos sob produto (%)' />
+                    <Form.Input typeInput='number'
                         name='itemTaxes'
                         min='0'
                         value={item.taxes}
@@ -201,14 +201,14 @@ export default function CardItem({
                             })
                         }}
                     />
-                </FormBudget.ContainerInput>
+                </Form.ContainerInput>
 
-                <FormBudget.ContainerInput size='medium' >
-                    <FormBudget.Label text='Total' />
-                    <FormBudget.LockedLabel text={'R$ ' + item.total} />
-                </FormBudget.ContainerInput>
+                <Form.ContainerInput size='medium' >
+                    <Form.Label text='Total' />
+                    <Form.LockedLabel text={'R$ ' + item.total} />
+                </Form.ContainerInput>
 
-                <FormBudget.ContainerInput size='medium' >
+                <Form.ContainerInput size='medium' >
                     {item.discount > 0 && (
                         <div className='discount-card-item'>
                             {`Desconto (${item.discount}%)`}
@@ -219,7 +219,7 @@ export default function CardItem({
                             {`Impostos (${item.taxes}%)`}
                         </div>
                     )}
-                </FormBudget.ContainerInput>
+                </Form.ContainerInput>
             </div>
         </BudgetCardItem>
     )

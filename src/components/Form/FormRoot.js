@@ -1,7 +1,7 @@
 import propTypes from 'prop-types';
 import styled from 'styled-components';
 
-const FormBudget = styled.div`
+const Form = styled.div`
     width: 100%;
     display: grid;
     padding: 0.5vh;
@@ -13,14 +13,14 @@ const FormBudget = styled.div`
     }
 `
 
-export function FormBudgetRoot({ children }) {
+export function FormRoot({ children }) {
     return (
-        <FormBudget>
+        <Form>
             {children}
-        </FormBudget>
+        </Form>
     )
 }
 
-FormBudgetRoot.propTypes = {
+FormRoot.propTypes = {
     children: propTypes.node
 }

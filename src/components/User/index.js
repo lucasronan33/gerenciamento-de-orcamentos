@@ -7,7 +7,7 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { SaveIcon } from 'lucide-react';
 import { Button } from '../Button';
-import { FormBudget } from '../FormBudget';
+import { Form } from '../Form';
 import { NavBudget } from '../NewBudget/styles';
 import { useUser } from '../../context/User';
 import { updateUserRequest } from '../../store/modules/auth/actions';
@@ -123,7 +123,7 @@ export const UserSettings = () => {
                     ))}
                 </NavBudget>
 
-                <FormBudget.Root >
+                <Form.Root >
                     {tabs.map((tab) => (
                         <div
                             key={tab.key}
@@ -132,7 +132,7 @@ export const UserSettings = () => {
                             {tab.component}
                         </div>
                     ))}
-                </FormBudget.Root>
+                </Form.Root>
 
                 <Button.Container>
                     <Button.Root

@@ -1,4 +1,4 @@
-import { FormBudget } from '../FormBudget';
+import { Form } from '../Form';
 import { useUser } from '../../context/User';
 import { useState } from 'react';
 import { Eye, EyeOff } from 'lucide-react';
@@ -9,24 +9,24 @@ export const UserPrivacy = ({ user }) => {
     const [showCurrentPassword, setShowCurrentPassword] = useState(false)
     return (
         <>
-            <FormBudget.ContainerInput size='xx-large' >
-                <FormBudget.Label
+            <Form.ContainerInput size='xx-large' >
+                <Form.Label
                     text={'Email *'}
                     htmlFor={'email'}
                 >
-                </FormBudget.Label >
-                <FormBudget.Input
+                </Form.Label >
+                <Form.Input
                     placeholder={'Insira seu nome completo'}
                     typeInput={'text'}
                     id={'email'}
                     value={user?.email || ''}
                     onChange={(e) => updateUser('email', e.target.value)}
                 />
-            </FormBudget.ContainerInput>
+            </Form.ContainerInput>
 
-            <FormBudget.ContainerInput >
-                <FormBudget.Label name='currentPassword' text='Senha atual' />
-                <FormBudget.Input
+            <Form.ContainerInput >
+                <Form.Label name='currentPassword' text='Senha atual' />
+                <Form.Input
                     id='currentPassword'
                     typeInput={showCurrentPassword ? 'text' : 'password'}
                     placeholder='Digite sua senha atual'
@@ -37,11 +37,11 @@ export const UserPrivacy = ({ user }) => {
                     aria-label={showCurrentPassword ? 'Ocultar senha atual' : 'Mostrar senha atual'}
                     title={showCurrentPassword ? 'Ocultar senha atual' : 'Mostrar senha atual'}
                 />
-            </FormBudget.ContainerInput>
+            </Form.ContainerInput>
 
-            <FormBudget.ContainerInput >
-                <FormBudget.Label name='password' text='Senha' />
-                <FormBudget.Input
+            <Form.ContainerInput >
+                <Form.Label name='password' text='Senha' />
+                <Form.Input
                     id='password'
                     typeInput={showPassword ? 'text' : 'password'}
                     placeholder='Digite sua senha'
@@ -53,7 +53,7 @@ export const UserPrivacy = ({ user }) => {
                     aria-label={showPassword ? 'Ocultar senha' : 'Mostrar senha'}
                     title={showPassword ? 'Ocultar senha' : 'Mostrar senha'}
                 />
-            </FormBudget.ContainerInput>
+            </Form.ContainerInput>
 
         </>
     )

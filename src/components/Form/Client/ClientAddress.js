@@ -1,4 +1,4 @@
-import { FormBudget } from '..';
+import { Form } from '..';
 import { useClient } from '../../../context/Client';
 import { maskZipCode } from '../../../utils/masks';
 
@@ -6,12 +6,12 @@ export function ClientAddress() {
     const { client, updateSubClient } = useClient()
     return (
         <>
-            <FormBudget.ContainerInput size='xx-large' >
-                <FormBudget.Label
+            <Form.ContainerInput size='xx-large' >
+                <Form.Label
                     text={'Rua'}
                     htmlFor={'street'}
                 />
-                <FormBudget.Input
+                <Form.Input
                     placeholder={'ex.: Barão do Rio Branco'}
                     typeInput={'text'}
                     id={'street'}
@@ -19,14 +19,14 @@ export function ClientAddress() {
                     value={client?.address?.street || ''}
                     onChange={(e) => updateSubClient('address', 'street', e.target.value)}
                 />
-            </FormBudget.ContainerInput>
+            </Form.ContainerInput>
 
-            <FormBudget.ContainerInput >
-                <FormBudget.Label
+            <Form.ContainerInput >
+                <Form.Label
                     text={'Número'}
                     htmlFor={'number'}
                 />
-                <FormBudget.Input
+                <Form.Input
                     placeholder={'0000'}
                     typeInput={'number'}
                     id={'number'}
@@ -34,14 +34,14 @@ export function ClientAddress() {
                     value={client?.address?.number || ''}
                     onChange={(e) => updateSubClient('address', 'number', e.target.value)}
                 />
-            </FormBudget.ContainerInput>
+            </Form.ContainerInput>
 
-            <FormBudget.ContainerInput size='medium' >
-                <FormBudget.Label
+            <Form.ContainerInput size='medium' >
+                <Form.Label
                     text={'Cidade'}
                     htmlFor={'city'}
                 />
-                <FormBudget.Input
+                <Form.Input
                     placeholder={'ex.: Joinville'}
                     typeInput={'text'}
                     id={'city'}
@@ -49,14 +49,14 @@ export function ClientAddress() {
                     value={client?.address?.city || ''}
                     onChange={(e) => updateSubClient('address', 'city', e.target.value)}
                 />
-            </FormBudget.ContainerInput>
+            </Form.ContainerInput>
 
-            <FormBudget.ContainerInput >
-                <FormBudget.Label
+            <Form.ContainerInput >
+                <Form.Label
                     text={'Estado | UF'}
                     htmlFor={'state'}
                 />
-                <FormBudget.Input
+                <Form.Input
                     placeholder={'ex.: SC'}
                     typeInput={'text'}
                     id={'state'}
@@ -64,14 +64,14 @@ export function ClientAddress() {
                     value={client?.address?.state || ''}
                     onChange={(e) => updateSubClient('address', 'state', e.target.value)}
                 />
-            </FormBudget.ContainerInput >
+            </Form.ContainerInput >
 
-            <FormBudget.ContainerInput >
-                <FormBudget.Label
+            <Form.ContainerInput >
+                <Form.Label
                     text={'CEP'}
                     htmlFor={'zipCode'}
                 />
-                <FormBudget.Input
+                <Form.Input
                     placeholder={'00000-000'}
                     typeInput={'number'}
                     id={'zipCode'}
@@ -79,7 +79,7 @@ export function ClientAddress() {
                     value={client?.address?.zipCode || ''}
                     onChange={(e) => updateSubClient('address', 'zipCode', maskZipCode(e.target.value))}
                 />
-            </FormBudget.ContainerInput>
+            </Form.ContainerInput>
         </>
     )
 }

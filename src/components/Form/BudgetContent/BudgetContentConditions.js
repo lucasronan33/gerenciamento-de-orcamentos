@@ -1,5 +1,5 @@
 import { ChevronDown } from 'lucide-react';
-import { FormBudget } from '..';
+import { Form } from '..';
 import { DivContainerFilter, InptSearch } from '../../HeaderFilter/styles';
 import { useEffect, useRef, useState } from 'react';
 import { useBudget } from '../../../context/Budget'
@@ -49,8 +49,8 @@ export function BudgetContentConditions() {
 
     return (
         <>
-            <FormBudget.ContainerInput>
-                <FormBudget.Label text='Forma de Pagamento' />
+            <Form.ContainerInput>
+                <Form.Label text='Forma de Pagamento' />
                 <DivContainerFilter ref={ref}>
                     <InptSearch>
                         <ChevronDown className='chevronDown-icon' />
@@ -90,11 +90,11 @@ export function BudgetContentConditions() {
                         </div>
                     )}
                 </DivContainerFilter>
-            </FormBudget.ContainerInput>
+            </Form.ContainerInput>
 
-            <FormBudget.ContainerInput size='large'>
-                <FormBudget.Label text='Prazo de entrega' />
-                <FormBudget.Input
+            <Form.ContainerInput size='large'>
+                <Form.Label text='Prazo de entrega' />
+                <Form.Input
                     typeInput='text'
                     placeholder='Ex.: 15 dias úteis'
                     name='shippingTime'
@@ -102,11 +102,11 @@ export function BudgetContentConditions() {
                     onChange={(e) => updateBudget('conditions', 'shippingTime', e.target.value)}
 
                 />
-            </FormBudget.ContainerInput>
+            </Form.ContainerInput>
 
-            <FormBudget.ContainerInput size='xx-large'>
-                <FormBudget.Label text='Condições de Pagamento' />
-                <FormBudget.Input
+            <Form.ContainerInput size='xx-large'>
+                <Form.Label text='Condições de Pagamento' />
+                <Form.Input
                     typeInput='text'
                     placeholder='Ex.: 30% de entrada, 70% na entrega'
                     name='paymentConditions'
@@ -114,11 +114,11 @@ export function BudgetContentConditions() {
                     onChange={(e) => updateBudget('conditions', 'paymentConditions', e.target.value)}
 
                 />
-            </FormBudget.ContainerInput>
+            </Form.ContainerInput>
 
-            <FormBudget.ContainerInput size='xx-large'>
-                <FormBudget.Label text='Garantia' />
-                <FormBudget.Input
+            <Form.ContainerInput size='xx-large'>
+                <Form.Label text='Garantia' />
+                <Form.Input
                     typeInput='text'
                     placeholder='Ex.: 12 meses contra defeitos de fabricação'
                     name='warranty'
@@ -126,29 +126,29 @@ export function BudgetContentConditions() {
                     onChange={(e) => updateBudget('conditions', 'warranty', e.target.value)}
 
                 />
-            </FormBudget.ContainerInput>
+            </Form.ContainerInput>
 
-            <FormBudget.ContainerInput size='xx-large'>
-                <FormBudget.Label text='Observações' />
-                <FormBudget.TextArea
+            <Form.ContainerInput size='xx-large'>
+                <Form.Label text='Observações' />
+                <Form.TextArea
                     placeholder='Observações gerais sobre o orçamento...'
                     rows='3'
                     name='obsBudget'
                     value={budget.conditions.obsBudget}
                     onChange={(e) => updateBudget('conditions', 'obsBudget', e.target.value)}
                 />
-            </FormBudget.ContainerInput>
+            </Form.ContainerInput>
 
-            <FormBudget.ContainerInput size='xx-large'>
-                <FormBudget.Label text='Termos e Condições' />
-                <FormBudget.TextArea
+            <Form.ContainerInput size='xx-large'>
+                <Form.Label text='Termos e Condições' />
+                <Form.TextArea
                     placeholder='Termos e condições gerais, política de cancelamento, etc...'
                     rows='7'
                     name='termsConditions'
                     value={budget.conditions.termsConditions}
                     onChange={(e) => updateBudget('conditions', 'termsConditions', e.target.value)}
                 />
-            </FormBudget.ContainerInput>
+            </Form.ContainerInput>
         </>
     )
 }

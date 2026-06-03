@@ -14,7 +14,7 @@ export const LockedInput = styled.input`
     font-weight: normal;
 `
 
-export function FormBudgetLockedInput({ text, ...rest }) {
+export function FormLockedInput({ text, ...rest }) {
     return (
         <LockedInput readOnly {...rest}>
             {text}
@@ -22,6 +22,6 @@ export function FormBudgetLockedInput({ text, ...rest }) {
     )
 }
 
-FormBudgetLockedInput.propTypes = {
+FormLockedInput.propTypes = {
     text: propTypes.string
 }

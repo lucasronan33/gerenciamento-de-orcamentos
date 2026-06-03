@@ -4,7 +4,7 @@ import './style.css';
 import { Subtitle, Title } from '../Header/styles';
 import { NavBudget } from './styles';
 import { Button } from '../Button';
-import { FormBudget } from '../FormBudget';
+import { Form } from '../Form';
 import validator from 'validator'
 import { store, update } from '../../services/axiosRoutes';
 import { useBudget } from '../../context/Budget'
@@ -28,10 +28,10 @@ export default function NewBudget({
     'Condições',
   ]
   const tabs = [
-    { key: 'Básico', component: <FormBudget.Content.Basic /> },
-    { key: 'Cliente', component: <FormBudget.Content.Client /> },
-    { key: 'Itens', component: <FormBudget.Content.Items /> },
-    { key: 'Condições', component: <FormBudget.Content.Conditions /> },
+    { key: 'Básico', component: <Form.Content.Basic /> },
+    { key: 'Cliente', component: <Form.Content.Client /> },
+    { key: 'Itens', component: <Form.Content.Items /> },
+    { key: 'Condições', component: <Form.Content.Conditions /> },
   ]
 
   const { fetchBudgets, initialState, budget, setBudget } = useBudget()
@@ -133,7 +133,7 @@ export default function NewBudget({
           ))}
         </NavBudget>
 
-        <FormBudget.Root >
+        <Form.Root >
           {tabs.map((tab) => (
             <div
               key={tab.key}
@@ -142,7 +142,7 @@ export default function NewBudget({
               {tab.component}
             </div>
           ))}
-        </FormBudget.Root>
+        </Form.Root>
 
         <div className='container-buttons-budget'>
           <Button.Root onClick={() => handleIsVisible(false)} className='btn-cancel'>Cancelar</Button.Root>

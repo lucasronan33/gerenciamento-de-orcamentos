@@ -3,10 +3,10 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import validator from 'validator'
 import { Button } from '../../components/Button'
-import { FormBudget } from '../../components/FormBudget'
 import { registerRequest, registerReset } from '../../store/modules/auth/actions'
 import { ContainerRegister, Main, RegisterContent } from './styled'
 import { Eye, EyeOff } from 'lucide-react'
+import { Form } from '../../components/Form'
 
 export default function Register() {
     const [showPassword, setShowPassword] = useState(false)
@@ -107,10 +107,10 @@ export default function Register() {
                 <h1>Registro</h1>
 
                 <form onSubmit={handleSubmit}>
-                    <FormBudget.Root>
-                        <FormBudget.ContainerInput>
-                            <FormBudget.Label name='nome' text='Nome' />
-                            <FormBudget.Input
+                    <Form.Root>
+                        <Form.ContainerInput>
+                            <Form.Label name='nome' text='Nome' />
+                            <Form.Input
                                 name='nome'
                                 typeInput='text'
                                 placeholder='Digite seu nome'
@@ -118,11 +118,11 @@ export default function Register() {
                                 onChange={handleChange}
                             />
                             {formErrors.nome && <span className='field-helper error'>{formErrors.nome}</span>}
-                        </FormBudget.ContainerInput>
+                        </Form.ContainerInput>
 
-                        <FormBudget.ContainerInput>
-                            <FormBudget.Label name='email' text='E-mail' />
-                            <FormBudget.Input
+                        <Form.ContainerInput>
+                            <Form.Label name='email' text='E-mail' />
+                            <Form.Input
                                 name='email'
                                 typeInput='email'
                                 placeholder='Digite seu e-mail'
@@ -130,11 +130,11 @@ export default function Register() {
                                 onChange={handleChange}
                             />
                             {formErrors.email && <span className='field-helper error'>{formErrors.email}</span>}
-                        </FormBudget.ContainerInput>
+                        </Form.ContainerInput>
 
-                        <FormBudget.ContainerInput>
-                            <FormBudget.Label name='senha' text='Senha' />
-                            <FormBudget.Input
+                        <Form.ContainerInput>
+                            <Form.Label name='senha' text='Senha' />
+                            <Form.Input
                                 name='senha'
                                 typeInput={showPassword ? 'text' : 'password'}
                                 placeholder='Digite sua senha'
@@ -146,11 +146,11 @@ export default function Register() {
                                 title={showPassword ? 'Ocultar senha' : 'Mostrar senha'}
                             />
                             {formErrors.senha && <span className='field-helper error'>{formErrors.senha}</span>}
-                        </FormBudget.ContainerInput>
+                        </Form.ContainerInput>
 
-                        <FormBudget.ContainerInput>
-                            <FormBudget.Label name='confirmarSenha' text='Confirmar senha' />
-                            <FormBudget.Input
+                        <Form.ContainerInput>
+                            <Form.Label name='confirmarSenha' text='Confirmar senha' />
+                            <Form.Input
                                 name='confirmarSenha'
                                 typeInput={showPassword ? 'text' : 'password'}
                                 placeholder='Confirme sua senha'
@@ -162,11 +162,11 @@ export default function Register() {
                                 title={showPassword ? 'Ocultar senha' : 'Mostrar senha'}
                             />
                             {formErrors.confirmarSenha && <span className='field-helper error'>{formErrors.confirmarSenha}</span>}
-                        </FormBudget.ContainerInput>
+                        </Form.ContainerInput>
 
-                        <FormBudget.ContainerInput>
-                            <FormBudget.Label name='telefone' text='Telefone' />
-                            <FormBudget.Input
+                        <Form.ContainerInput>
+                            <Form.Label name='telefone' text='Telefone' />
+                            <Form.Input
                                 name='telefone'
                                 typeInput='tel'
                                 placeholder='Digite seu telefone (opcional)'
@@ -174,7 +174,7 @@ export default function Register() {
                                 onChange={handleChange}
                             />
                             {formErrors.telefone && <span className='field-helper error'>{formErrors.telefone}</span>}
-                        </FormBudget.ContainerInput>
+                        </Form.ContainerInput>
 
                         <div className='container-ButtonsRegister'>
                             <Button.Root className='btn-cancel' onClick={() => navigate('/login')}>
@@ -184,7 +184,7 @@ export default function Register() {
                                 {isLoading ? 'Registrando...' : 'Registrar'}
                             </Button.Root>
                         </div>
-                    </FormBudget.Root>
+                    </Form.Root>
                 </form>
             </RegisterContent>
         </ContainerRegister>

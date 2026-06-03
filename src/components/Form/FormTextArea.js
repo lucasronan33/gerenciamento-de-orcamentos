@@ -1,7 +1,7 @@
 import './style.css'
 import propTypes from 'prop-types'
 
-export function FormBudgetTextArea({ placeholder, ...rest }) {
+export function FormTextArea({ placeholder, ...rest }) {
     return (
         <textarea
             id={rest.id || rest.name}
@@ -11,6 +11,6 @@ export function FormBudgetTextArea({ placeholder, ...rest }) {
     )
 }
 
-FormBudgetTextArea.propTypes = {
+FormTextArea.propTypes = {
     placeholder: propTypes.string,
 }

@@ -1,7 +1,7 @@
 import './style.css'
 import propTypes from 'prop-types'
 
-export function FormBudgetContainerInput({ size = 'fill', children, placeholder }) {
+export function FormContainerInput({ size = 'fill', children, placeholder }) {
     return (
         <div
             className={`form-budget-container-input input-${size}`}>
@@ -10,7 +10,7 @@ export function FormBudgetContainerInput({ size = 'fill', children, placeholder 
     )
 }
 
-FormBudgetContainerInput.propTypes = {
+FormContainerInput.propTypes = {
     children: propTypes.node,
     size: propTypes.string,
 }

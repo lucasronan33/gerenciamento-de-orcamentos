@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { FormBudget } from '..';
+import { Form } from '..';
 import { DivContainerFilter, InptSearch } from '../../HeaderFilter/styles';
 import { ChevronDown, Plus } from 'lucide-react';
 import { Title } from '../../Header/styles';
@@ -187,9 +187,9 @@ export function BudgetContentItems() {
                 }</div>
 
             <div className='budget-container-items'>
-                <FormBudget.ContainerInput>
-                    <FormBudget.Label text='Desconto Global (%)' />
-                    <FormBudget.Input typeInput='number'
+                <Form.ContainerInput>
+                    <Form.Label text='Desconto Global (%)' />
+                    <Form.Input typeInput='number'
                         name='globalDiscount'
                         min='0'
                         value={budget.totals.discount}
@@ -201,11 +201,11 @@ export function BudgetContentItems() {
                                 updateTotals('discount', value)
                             }
                         } />
-                </FormBudget.ContainerInput>
+                </Form.ContainerInput>
 
-                <FormBudget.ContainerInput>
-                    <FormBudget.Label text='Impostos (%)' />
-                    <FormBudget.Input typeInput='number'
+                <Form.ContainerInput>
+                    <Form.Label text='Impostos (%)' />
+                    <Form.Input typeInput='number'
                         name='taxes'
                         min='0'
                         value={budget.totals.taxes}
@@ -217,10 +217,10 @@ export function BudgetContentItems() {
                                 updateTotals('taxes', value)
                             }
                         } />
-                </FormBudget.ContainerInput>
+                </Form.ContainerInput>
 
-                <FormBudget.ContainerInput size='large'>
-                    <FormBudget.Label text='Tipo do frete' />
+                <Form.ContainerInput size='large'>
+                    <Form.Label text='Tipo do frete' />
                     <DivContainerFilter ref={ref}>
                         <InptSearch>
                             <ChevronDown className='chevronDown-icon' />
@@ -261,11 +261,11 @@ export function BudgetContentItems() {
                         )}
                     </DivContainerFilter>
 
-                </FormBudget.ContainerInput>
+                </Form.ContainerInput>
                 {selected === 'Valor Customizado' && (
-                    <FormBudget.ContainerInput>
-                        <FormBudget.Label text='Valor do Frete' />
-                        <FormBudget.Input typeInput='number'
+                    <Form.ContainerInput>
+                        <Form.Label text='Valor do Frete' />
+                        <Form.Input typeInput='number'
                             name='shippingFee'
                             min='0'
                             value={budget.totals.shipping}
@@ -277,7 +277,7 @@ export function BudgetContentItems() {
                                     updateTotals('shipping', value)
                                 }
                             } />
-                    </FormBudget.ContainerInput>
+                    </Form.ContainerInput>
                 )}
             </div>
             <div className='budget-total-subtotal-container'>

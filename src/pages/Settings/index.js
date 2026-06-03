@@ -1,8 +1,7 @@
 import { useState } from 'react'
 import Header from '../../components/Header'
 import './style.css'
-import '../../components/FormBudget/style.css'
-import { FormBudget } from '../../components/FormBudget'
+import '../../components/Form/style.css'
 import { NavBudget } from '../../components/NewBudget/styles'
 import { Button } from '../../components/Button'
 import { SettingsBase } from '../../components/SettingsBase'
@@ -13,6 +12,7 @@ import { update } from '../../services/axiosRoutes'
 import { toast } from 'react-toastify'
 import { UserSettings } from '../../components/User'
 import { normalizeErrors } from '../../store/modules/auth/sagas'
+import { Form } from '../../components/Form'
 
 const iconsMenu = [
     {
@@ -97,7 +97,7 @@ export default function Settings() {
                             ))}
                         </NavBudget>
 
-                        <FormBudget.Root >
+                        <Form.Root >
                             {tabs.map((tab) => (
                                 <div
                                     key={tab.key}
@@ -106,7 +106,7 @@ export default function Settings() {
                                     {tab.component}
                                 </div>
                             ))}
-                        </FormBudget.Root>
+                        </Form.Root>
 
                         <Button.Container>
                             <Button.Root

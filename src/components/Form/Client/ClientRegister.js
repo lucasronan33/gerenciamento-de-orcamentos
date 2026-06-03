@@ -1,5 +1,5 @@
 import { SaveIcon, X } from 'lucide-react';
-import { FormBudget } from '..';
+import { Form } from '..';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button } from '../../Button';
 import { NavBudget } from '../../NewBudget/styles';
@@ -123,7 +123,7 @@ export function ClientRegister() {
             </NavBudget>
 
 
-            <FormBudget.Root >
+            <Form.Root >
                 {tabs.map((tab) => (
                     <div
                         key={tab.key}
@@ -132,7 +132,7 @@ export function ClientRegister() {
                         {tab.component}
                     </div>
                 ))}
-            </FormBudget.Root>
+            </Form.Root>
 
             <Button.Container className='buttons-register'>
                 <Button.Root

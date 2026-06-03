@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import '../style.css'
 
 import { ChevronDown } from 'lucide-react';
-import { FormBudget } from '..';
+import { Form } from '..';
 import { DivContainerFilter, InptSearch } from '../../HeaderFilter/styles';
 import { useSettings } from '../../../context/Settings'
 import { useBudget } from '../../../context/Budget'
@@ -70,22 +70,22 @@ export function BudgetContentBasic() {
 
     return (
         <>
-            <FormBudget.ContainerInput>
-                <FormBudget.Label
+            <Form.ContainerInput>
+                <Form.Label
                     text='Numero do Orçamento *'
                     htmlFor='budgetNumber' />
-                <FormBudget.LockedLabel
+                <Form.LockedLabel
                     placeholder='Numero do Orçamento'
                     id='budgetNumber'
                     name='budgetNumber'
                     text={budget.basic?.code || ''} />
-            </FormBudget.ContainerInput>
+            </Form.ContainerInput>
 
-            <FormBudget.ContainerInput>
-                <FormBudget.Label
+            <Form.ContainerInput>
+                <Form.Label
                     text='Título do orçamento *'
                     htmlFor={'titleBudget'} />
-                <FormBudget.Input
+                <Form.Input
                     typeInput='text'
                     placeholder='ex.: Nome do serviço'
                     id='titleBudget'
@@ -93,10 +93,10 @@ export function BudgetContentBasic() {
                     value={budget.basic.title || ''}
                     onChange={(e) => updateBudget('basic', 'title', e.target.value)}
                 />
-            </FormBudget.ContainerInput>
+            </Form.ContainerInput>
 
-            <FormBudget.ContainerInput size='meidum'>
-                <FormBudget.Label
+            <Form.ContainerInput size='meidum'>
+                <Form.Label
                     text='Status do Orçamento'
                     htmlFor='budgetStatus' />
                 <DivContainerFilter ref={ref}>
@@ -139,11 +139,11 @@ export function BudgetContentBasic() {
                         </div>
                     )}
                 </DivContainerFilter>
-            </FormBudget.ContainerInput>
+            </Form.ContainerInput>
 
             <div className='budget-container-items'>
-                <FormBudget.ContainerInput>
-                    <FormBudget.Label
+                <Form.ContainerInput>
+                    <Form.Label
                         text='Data *'
                         htmlFor='date' />
                     <DatePicker
@@ -169,10 +169,10 @@ export function BudgetContentBasic() {
                             return !settings.services.workDays.includes(day)
                         }}
                     />
-                </FormBudget.ContainerInput>
+                </Form.ContainerInput>
 
-                <FormBudget.ContainerInput>
-                    <FormBudget.Label
+                <Form.ContainerInput>
+                    <Form.Label
                         text='Valido até'
                         htmlFor='validUntil' />
                     <DatePicker
@@ -199,10 +199,10 @@ export function BudgetContentBasic() {
                             return !settings.services.workDays.includes(day)
                         }}
                     />
-                </FormBudget.ContainerInput>
+                </Form.ContainerInput>
 
-                <FormBudget.ContainerInput>
-                    <FormBudget.Label
+                <Form.ContainerInput>
+                    <Form.Label
                         htmlFor='time'
                         text='Horário' />
                     <TimePicker
@@ -225,10 +225,10 @@ export function BudgetContentBasic() {
                         maxTime={dayjs(settings.services.endHour, 'HH:mm')}
                     />
 
-                </FormBudget.ContainerInput>
+                </Form.ContainerInput>
 
-                <FormBudget.ContainerInput>
-                    <FormBudget.Label
+                <Form.ContainerInput>
+                    <Form.Label
                         htmlFor='timeService'
                         text='Duração do Serviço' />
                     <TimePicker
@@ -247,7 +247,7 @@ export function BudgetContentBasic() {
                         }}
                         minTime={dayjs(budget.basic.timeService, 'HH:mm')}
                     />
-                </FormBudget.ContainerInput>
+                </Form.ContainerInput>
             </div>
         </>
     )

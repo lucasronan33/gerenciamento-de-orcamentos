@@ -1,7 +1,7 @@
 import Header from '../../components/Header'
 import './style.css'
 import { Container } from '../../styles/GlobalStyles'
-import { Items } from '../../components/FormBudget/Items'
+import { Items } from '../../components/Form/Items'
 
 export default function PresetItems() {
     return (

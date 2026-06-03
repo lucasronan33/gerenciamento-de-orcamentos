@@ -1,7 +1,7 @@
 import './style.css'
 import propTypes from 'prop-types'
 
-export function FormBudgetLabel({ htmlFor, text }) {
+export function FormLabel({ htmlFor, text }) {
     if (!htmlFor) {
         return (
             <span className='form-budget-label'>
@@ -17,7 +17,7 @@ export function FormBudgetLabel({ htmlFor, text }) {
     )
 }
 
-FormBudgetLabel.propTypes = {
+FormLabel.propTypes = {
     htmlFor: propTypes.string,
     text: propTypes.string
 }

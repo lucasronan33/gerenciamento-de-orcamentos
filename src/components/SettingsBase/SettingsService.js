@@ -1,6 +1,6 @@
-import { FormBudget } from '../FormBudget'
+import { Form } from '../Form'
 import { useEffect, useMemo, } from 'react'
-import '../../components/FormBudget/style.css'
+import '../../components/Form/style.css'
 import { useSettings } from '../../context/Settings'
 import { show } from '../../services/axiosRoutes'
 
@@ -51,17 +51,17 @@ export const SettingsService = () => {
 
     return (
         <>
-            <FormBudget.ContainerInput>
-                <FormBudget.Label text='Preço/h (R$)' />
-                <FormBudget.Input
+            <Form.ContainerInput>
+                <Form.Label text='Preço/h (R$)' />
+                <Form.Input
                     typeInput='number'
                     value={settings?.services?.priceHour}
                     onChange={(e) => updateSubSettings('services', 'priceHour', Number(e.target.value))}
                 />
-            </FormBudget.ContainerInput>
+            </Form.ContainerInput>
 
-            <FormBudget.ContainerInput>
-                <FormBudget.Label text='Tempo min. atendimento (h)' />
+            <Form.ContainerInput>
+                <Form.Label text='Tempo min. atendimento (h)' />
 
                 <select value={settings?.services?.minTimeService} onChange={(e) => updateSubSettings('services', 'minTimeService', e.target.value)} >
                     {workTimes.map((option, index) =>
@@ -70,10 +70,10 @@ export const SettingsService = () => {
                         </option>
                     )}
                 </select>
-            </FormBudget.ContainerInput>
+            </Form.ContainerInput>
 
-            <FormBudget.ContainerInput>
-                <FormBudget.Label text='Horário de Atendimento' />
+            <Form.ContainerInput>
+                <Form.Label text='Horário de Atendimento' />
                 <div className='opening-hours'>
                     <select value={settings?.services?.startHour} onChange={(e) => updateSubSettings('services', 'startHour', e.target.value)}>
                         {workTimes.map((option, index) =>
@@ -91,11 +91,11 @@ export const SettingsService = () => {
                         )}
                     </select>
                 </div>
-            </FormBudget.ContainerInput>
+            </Form.ContainerInput>
 
 
-            <FormBudget.ContainerInput size='medium' >
-                <FormBudget.Label text={'Dias de atendimento'} />
+            <Form.ContainerInput size='medium' >
+                <Form.Label text={'Dias de atendimento'} />
                 <div className='week-date'>
 
                     {weekDays.map((item, index) =>
@@ -112,10 +112,10 @@ export const SettingsService = () => {
                         </div>
                     )}
                 </div>
-            </FormBudget.ContainerInput>
+            </Form.ContainerInput>
 
-            <FormBudget.ContainerInput>
-                <FormBudget.Label text={'Intervalo entre horários (min)'} />
+            <Form.ContainerInput>
+                <Form.Label text={'Intervalo entre horários (min)'} />
                 <select value={settings?.services?.stepHour} onChange={(e) => updateSubSettings('services', 'stepHour', Number(e.target.value))} >
                     {timeStep.map((option, index) =>
                         <option key={index} >
@@ -123,7 +123,7 @@ export const SettingsService = () => {
                         </option>
                     )}
                 </select>
-            </FormBudget.ContainerInput>
+            </Form.ContainerInput>
 
         </>
     )

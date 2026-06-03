@@ -1,9 +1,9 @@
-import { FormBudget } from '../../components/FormBudget';
+import { Form } from '../../components/Form';
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom'
 import axios from '../../services/axios';
-import { fillCustomSelectMenu, fillDatePicker, fillFormBudgetInput, renderWithProviders } from '../helpers/helpers';
+import { fillCustomSelectMenu, fillDatePicker, fillFormInput, renderWithProviders } from '../helpers/helpers';
 import { makeSettings } from '../factories/settings';
 
 jest.mock('../../services/axios', () => ({
@@ -29,9 +29,9 @@ describe('BudgetBasic - testa inputs', () => {
 
     it('testa o comportamento esperado na edição dos inputs', async () => {
         const user = userEvent.setup()
-        renderWithProviders(<FormBudget.Content.Basic />)
+        renderWithProviders(<Form.Content.Basic />)
 
-        await fillFormBudgetInput(user, /nome do cliente/i, 'cliente teste')
+        await fillFormInput(user, /nome do cliente/i, 'cliente teste')
 
         await fillCustomSelectMenu(user, /status do orçamento/i, 'Finalizado')
 

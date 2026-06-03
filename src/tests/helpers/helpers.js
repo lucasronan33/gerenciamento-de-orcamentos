@@ -20,7 +20,7 @@ export function renderWithProviders(component) {
     )
 }
 
-export async function fillFormBudgetInput(user, labelText, data) {
+export async function fillFormInput(user, labelText, data) {
     const input = screen.getByLabelText(labelText)
     await user.type(input, data)
     expect(input).toHaveValue(data)

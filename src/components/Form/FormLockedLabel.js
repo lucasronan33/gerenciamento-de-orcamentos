@@ -15,7 +15,7 @@ export const LockedLabel = styled.div`
     font-weight: normal;
 `
 
-export function FormBudgetLockedLabel({ text }) {
+export function FormLockedLabel({ text }) {
     return (
         <LockedLabel className='form-budget-label'>
             {text}
@@ -23,6 +23,6 @@ export function FormBudgetLockedLabel({ text }) {
     )
 }
 
-FormBudgetLockedLabel.propTypes = {
+FormLockedLabel.propTypes = {
     text: propTypes.string
 }

@@ -1,7 +1,7 @@
 import './style.css'
 import propTypes from 'prop-types'
 
-export function FormBudgetInput({ typeInput, placeholder, endIcon, onEndIconClick, ...rest }) {
+export function FormInput({ typeInput, placeholder, endIcon, onEndIconClick, ...rest }) {
     if (endIcon) {
         return (
             <div className='form-budget-input-with-icon'>
@@ -34,7 +34,7 @@ export function FormBudgetInput({ typeInput, placeholder, endIcon, onEndIconClic
     )
 }
 
-FormBudgetInput.propTypes = {
+FormInput.propTypes = {
     typeInput: propTypes.string,
     placeholder: propTypes.string,
     endIcon: propTypes.node,

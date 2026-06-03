@@ -1,6 +1,6 @@
 import { FileText, Home } from 'lucide-react';
 import { Button } from '../../components/Button';
-import { Client } from '../../components/FormBudget/Client';
+import { Client } from '../../components/Form/Client';
 import Header from '../../components/Header';
 import { Container } from '../../styles/GlobalStyles';
 

@@ -1,5 +1,5 @@
 import { SaveIcon, X } from 'lucide-react';
-import { FormBudget } from '..';
+import { Form } from '..';
 import { Button } from '../../Button';
 import { useItem } from '../../../context/Item';
 import { useSelector } from 'react-redux';
@@ -23,41 +23,41 @@ export function ItemsRegister() {
             className='container-settings'
         >
 
-            <FormBudget.ContainerInput>
-                <FormBudget.Label text='Código/ID' />
-                <FormBudget.Input
+            <Form.ContainerInput>
+                <Form.Label text='Código/ID' />
+                <Form.Input
                     typeInput='text'
                     placeholder='Código do produto'
                     name='code'
                     value={item.code}
                     onChange={(e) => updateItem('code', e.target.value)}
                 />
-            </FormBudget.ContainerInput>
+            </Form.ContainerInput>
 
-            <FormBudget.ContainerInput>
-                <FormBudget.Label text='Nome do Item/Produto' />
-                <FormBudget.Input
+            <Form.ContainerInput>
+                <Form.Label text='Nome do Item/Produto' />
+                <Form.Input
                     typeInput='text'
                     placeholder='Ex.: Caneta'
                     name='name'
                     value={item.name}
                     onChange={(e) => updateItem('name', e.target.value)}
                 />
-            </FormBudget.ContainerInput>
+            </Form.ContainerInput>
 
-            <FormBudget.ContainerInput>
-                <FormBudget.Label text='Categoria' />
-                <FormBudget.Input
+            <Form.ContainerInput>
+                <Form.Label text='Categoria' />
+                <Form.Input
                     typeInput='text'
                     placeholder='Ex.: Escritório'
                     name='category'
                     value={item.category}
                     onChange={(e) => updateItem('category', e.target.value)}
                 />
-            </FormBudget.ContainerInput>
+            </Form.ContainerInput>
 
-            <FormBudget.ContainerInput size='small' >
-                <FormBudget.Label text='Unidade' />
+            <Form.ContainerInput size='small' >
+                <Form.Label text='Unidade' />
                 <select
                     value={item.unity}
                     onChange={(e) => updateItem('unity', e.target.value)}>
@@ -67,51 +67,51 @@ export function ItemsRegister() {
                         </option>
                     )}
                 </select>
-            </FormBudget.ContainerInput>
-            <FormBudget.ContainerInput size='small'>
-                <FormBudget.Label text='Preço Unit. *' />
-                <FormBudget.Input typeInput='number'
+            </Form.ContainerInput>
+            <Form.ContainerInput size='small'>
+                <Form.Label text='Preço Unit. *' />
+                <Form.Input typeInput='number'
                     name='unityPrice'
                     min='0'
                     value={item.unityPrice}
                     onChange={(e) => updateItem('unityPrice', e.target.value)}
                 />
-            </FormBudget.ContainerInput>
+            </Form.ContainerInput>
 
-            <FormBudget.ContainerInput size='medium' >
-                <FormBudget.Label text='Impostos sob produto (%)' />
-                <FormBudget.Input typeInput='number'
+            <Form.ContainerInput size='medium' >
+                <Form.Label text='Impostos sob produto (%)' />
+                <Form.Input typeInput='number'
                     name='itemTaxes'
                     min='0'
                     value={item.taxes}
                     onChange={(e) => updateItem('taxes', e.target.value)}
                 />
-            </FormBudget.ContainerInput>
+            </Form.ContainerInput>
 
-            <FormBudget.ContainerInput size='xx-large' >
-                <FormBudget.Label text='Obs. do item' />
-                <FormBudget.Input
+            <Form.ContainerInput size='xx-large' >
+                <Form.Label text='Obs. do item' />
+                <Form.Input
                     typeInput='text'
                     placeholder='Ex.: Usado somente para limpeza'
                     name='obsItem'
                     value={item.obsItem}
                     onChange={(e) => updateItem('obsItem', e.target.value)}
                 />
-            </FormBudget.ContainerInput>
+            </Form.ContainerInput>
 
 
-            <FormBudget.ContainerInput size='medium' >
-                <FormBudget.Label text='Total' />
-                <FormBudget.LockedLabel text={'R$ '} />
-            </FormBudget.ContainerInput>
+            <Form.ContainerInput size='medium' >
+                <Form.Label text='Total' />
+                <Form.LockedLabel text={'R$ '} />
+            </Form.ContainerInput>
 
-            <FormBudget.ContainerInput size='medium' >
+            <Form.ContainerInput size='medium' >
                 {item.taxes > 0 && (
                     <div className='taxes-card-item'>
                         {`Impostos (${item.taxes}%)`}
                     </div>
                 )}
-            </FormBudget.ContainerInput>
+            </Form.ContainerInput>
 
             <Button.Container className='buttons-register'>
                 <Button.Root
