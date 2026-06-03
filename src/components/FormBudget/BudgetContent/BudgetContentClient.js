@@ -20,6 +20,7 @@ export function BudgetContentClient() {
     const dispatch = useDispatch()
     // const { setClient } = useClient()
     const [clientSelected, setClientSelected] = useState(false)
+    const [clientActive, setClientActive] = useState(false)
 
     useEffect(() => {
         if (!isLoggedIn) return
@@ -133,10 +134,131 @@ export function BudgetContentClient() {
                                     <CardIcons className='icons-clients-list'>
                                         <div
                                             className='card-icon links'
-                                            onClick={() => {
-                                                setIsRegister(false)
-                                                setClientSelected(client)
-                                            }}
+                                            onClick={() => setClientSelected(client)}
+                                        >
+                                            <Plus />
+                                        </div>
+                                    </CardIcons>
+                                </div>
+                            ) : (
+                                <div className='box-client'>
+                                    <span >
+                                        <Contact size={30} />
+                                        Nenhum cliente registrado ainda
+                                    </span>
+                                </div>
+                            )}
+                    </div>
+
+
+                </Card>}
+            {!isRegister
+                ? (!clientSelected && (
+
+                    <Button.Container>
+                        <Button.Root onClick={() => setIsRegister(true)}  >Cadastrar novo Cliente</Button.Root>
+                    </Button.Container>)
+                ) : (<>
+                    <Button.Container>
+                        <Button.Root
+                            className='btn-cancel'
+                            onClick={() => setIsRegister(false)}
+                        >
+                            <Button.Icon icon={X} />
+                            Cancelar
+                        </Button.Root>
+                    </Button.Container>
+                    <Client.Register /></>
+                )}
+            {clientSelected
+                && <div className='box-client'>
+                    <label className='initials-client-name'>
+                        {clientSelected.name
+                            .split(' ', 3)
+                            .map(i => i[0].toUpperCase())
+                            .join('')
+                        }
+                    </label>
+                    <div className='container-client-infos'>
+                        <h3>
+                            {clientSelected.name}
+                        </h3>
+                        <div className='container-contact-client'>
+                            {clientSelected.whatsapp && (
+                                <Subtitle className='title-list-clients phone-client'>
+                                    <WhatsAppIcon className='contact-icon whatsapp-icon' />
+                                    {maskPhone(clientSelected?.whatsapp)}
+                                </Subtitle>)}
+                            {clientSelected.phone && (
+                                <Subtitle className='title-list-clients phone-client'>
+                                    <Phone className='contact-icon' />
+                                    {maskPhone(clientSelected?.phone)}
+                                </Subtitle>)}
+                            {clientSelected.email && (
+                                <Subtitle className='title-list-clients phone-client'>
+                                    <Mail className='contact-icon' />
+                                    {clientSelected.email}
+                                </Subtitle>)}
+                        </div>
+                    </div>
+                    <CardIcons className='icons-clients-list'>
+                        <div
+                            className='card-icon links'
+                            onClick={() => setClientSelected(false)}
+                        >
+                            <Minus />
+                        </div>
+                    </CardIcons>
+                </div>
+            }
+            {!clientSelected &&
+                <Card className='hover-container'>
+                    <Subtitle className='title-list-clients'>Clientes cadastrados</Subtitle>
+                    <div className='container-clients'>
+                        {isLoadingClients
+                            ? <div className='box-client'>
+                                <div className='box-client'>
+                                    <span >
+                                        <RefreshCcw size={30} />
+                                        Carregando clientes...
+                                    </span>
+                                </div>
+                            </div>
+                            : clients.length > 0 ? clients.map((client, index) =>
+                                <div className='box-client' key={index}>
+                                    <label className='initials-client-name'>
+                                        {client.name
+                                            .split(' ', 3)
+                                            .map(i => i[0].toUpperCase())
+                                            .join('')
+                                        }
+                                    </label>
+                                    <div className='container-client-infos'>
+                                        <h3>
+                                            {client.name}
+                                        </h3>
+                                        <div className='container-contact-client'>
+                                            {client.whatsapp && (
+                                                <Subtitle className='title-list-clients phone-client'>
+                                                    <WhatsAppIcon className='contact-icon whatsapp-icon' />
+                                                    {maskPhone(client?.whatsapp)}
+                                                </Subtitle>)}
+                                            {client.phone && (
+                                                <Subtitle className='title-list-clients phone-client'>
+                                                    <Phone className='contact-icon' />
+                                                    {maskPhone(client?.phone)}
+                                                </Subtitle>)}
+                                            {client.email && (
+                                                <Subtitle className='title-list-clients phone-client'>
+                                                    <Mail className='contact-icon' />
+                                                    {client.email}
+                                                </Subtitle>)}
+                                        </div>
+                                    </div>
+                                    <CardIcons className='icons-clients-list'>
+                                        <div
+                                            className='card-icon links'
+                                            onClick={() => setClientSelected(client)}
                                         >
                                             <Plus />
                                         </div>

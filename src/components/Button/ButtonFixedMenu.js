@@ -73,18 +73,16 @@ export function ButtonFixedMenu({ children }) {
                 ? <>{children?.map((item, index) => {
                     const Icon = item.icon
                     return (
-                        <>
-                            <div
-                                key={index}
-                                className='button-fixed-menu'
-                                onClick={() => {
-                                    setMenuOpen(false)
-                                    navigate(item.path)
-                                }}
-                            >
-                                <Icon />
-                            </div>
-                        </>
+                        <div
+                            key={index}
+                            className='button-fixed-menu'
+                            onClick={() => {
+                                setMenuOpen(false)
+                                navigate(item.path)
+                            }}
+                        >
+                            <Icon />
+                        </div>
                     )
                 }
                 )}

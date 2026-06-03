@@ -6,9 +6,11 @@ export const Providers = ({ children }) => {
         <Context.User>
             <Context.Settings>
                 <Context.Client>
-                    <Context.Budget>
-                        {children}
-                    </Context.Budget>
+                    <Context.Item>
+                        <Context.Budget>
+                            {children}
+                        </Context.Budget>
+                    </Context.Item>
                 </Context.Client>
             </Context.Settings>
         </Context.User>
