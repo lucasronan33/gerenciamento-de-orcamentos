@@ -43,8 +43,8 @@
 .initials-client-name {
     width: 6vh;
     aspect-ratio: 1 / 1;
-    place-content: center;
-    place-items: center;
+    justify-content: center;
+    align-items: center;
     padding: 1.5vh;
     color: var(--blueDocument);
     background: var(--blueHover);
