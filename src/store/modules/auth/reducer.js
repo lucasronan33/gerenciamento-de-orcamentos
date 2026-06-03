@@ -93,6 +93,7 @@ export default function reducer(state = initialState, action) {
 
         case types.AUTH_ME_FAILURE:
         case types.LOGOUT_SUCCESS:
+            console.log('AUTH_ME_FAILURE')
             return {
                 ...initialState,
                 isCheckingAuth: false,

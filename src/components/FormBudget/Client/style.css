@@ -29,23 +29,22 @@
 .box-client {
     width: 100%;
     padding-block: 2vh;
-    display: flex;
+    place-items: center;
     gap: 2vh 3vh;
-    flex-direction: row;
-    justify-content: flex-end;
     border-bottom: 1px solid var(--borderDarkColor);
 }
 
 .box-client:hover .icons-clients-list {
     height: fit-content;
     scale: 1;
+    justify-self: flex-end;
 }
 
 .initials-client-name {
     width: 6vh;
     aspect-ratio: 1 / 1;
-    place-content: center;
-    place-items: center;
+    justify-content: center;
+    align-items: center;
     padding: 1.5vh;
     color: var(--blueDocument);
     background: var(--blueHover);
@@ -61,7 +60,8 @@
 
 
 .container-contact-client {
-    flex-direction: row;
+    display: grid !important;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 1.5vh 5vh;
 }
 
