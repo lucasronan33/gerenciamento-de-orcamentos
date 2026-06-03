@@ -1,5 +1,7 @@
 import axios from "axios";
 import { clearAccessToken, getAccessToken, setAccessToken } from "./authToken";
+import store from '../store/store'
+import { authMeFailure } from '../store/modules/auth/actions';
 
 const api = axios.create({
     baseURL: process.env.REACT_APP_API_URI,
@@ -9,9 +11,7 @@ const api = axios.create({
 api.interceptors.request.use((config) => {
     const accessToken = getAccessToken()
 
-    if (accessToken) {
-        config.headers.Authorization = `Bearer ${accessToken}`
-    }
+    config.headers.Authorization = `Bearer ${accessToken}`
 
     return config
 })
@@ -37,7 +37,9 @@ api.interceptors.response.use(
 
                 return api(originalRequest)
             } catch (refreshError) {
+                console.log('REFRESH FALHOU')
                 clearAccessToken()
+                store.dispatch(authMeFailure())
                 return Promise.reject(refreshError)
             }
         }
