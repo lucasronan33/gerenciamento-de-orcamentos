@@ -13,7 +13,7 @@ function* fetchItems() {
             yield new Error('Usuário não autenticado')
         }
 
-        const response = yield call(show, '/Item')
+        const response = yield call(show, '/items')
         yield put(actions.fetchItemsSuccess(response.data))
     } catch (error) {
         const errors = normalizeErrors(error);
@@ -29,10 +29,12 @@ function* createRequest({ payload }) {
         if (!isLoggedIn) {
             yield new Error('Usuário não autenticado')
         }
-        const response = yield call(store, '/Item', payload);
 
-        yield put(actions.createItemsuccess(response.data));
-        toast.success('Iteme registrado com sucesso.');
+        console.log('payload: ', payload)
+        const response = yield call(store, '/items', payload);
+
+        yield put(actions.createItemSuccess(response.data));
+        toast.success('Item registrado com sucesso.');
         yield put(actions.fetchItemsRequest());
     } catch (error) {
         const errors = normalizeErrors(error);
@@ -48,10 +50,10 @@ function* updateRequest({ payload }) {
         if (!isLoggedIn) {
             yield new Error('Usuário não autenticado')
         }
-        const response = yield call(update, `/Item/${payload._id}`, payload);
+        const response = yield call(update, `/items/${payload._id}`, payload);
 
-        yield put(actions.updateItemsuccess(response.data));
-        toast.success('Iteme atualizado com sucesso.');
+        yield put(actions.updateItemSuccess(response.data));
+        toast.success('Item atualizado com sucesso.');
         yield put(actions.fetchItemsRequest());
     } catch (error) {
         const errors = normalizeErrors(error);
@@ -67,9 +69,9 @@ function* deleteRequest({ payload }) {
         if (!isLoggedIn) {
             yield new Error('Usuário não autenticado')
         }
-        yield call(destroy, `/Item/${payload._id}`);
-        yield put(actions.deleteItemsuccess());
-        toast.success('Iteme deletado com sucesso.');
+        yield call(destroy, `/items/${payload._id}`);
+        yield put(actions.deleteItemSuccess());
+        toast.success('Item deletado com sucesso.');
         yield put(actions.fetchItemsRequest());
     } catch (error) {
         const errors = normalizeErrors(error);
@@ -79,7 +81,7 @@ function* deleteRequest({ payload }) {
 }
 
 export default all([
-    takeLatest(types.FETCH_ITEM_REQUEST, fetchItems),
+    takeLatest(types.FETCH_ITEMS_REQUEST, fetchItems),
     takeLatest(types.CREATE_ITEM_REQUEST, createRequest),
     takeLatest(types.UPDATE_ITEM_REQUEST, updateRequest),
     takeLatest(types.DELETE_ITEM_REQUEST, deleteRequest),

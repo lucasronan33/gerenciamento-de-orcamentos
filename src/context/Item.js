@@ -5,7 +5,7 @@ const initialState = {
     code: '',
     name: '',
     category: '',
-    unity: '',
+    unity: 'Unidade',
     unityPrice: '',
     taxes: '',
     obsItem: '',

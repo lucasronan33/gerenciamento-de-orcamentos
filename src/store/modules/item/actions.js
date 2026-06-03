@@ -95,7 +95,7 @@ export function deleteItemFailure(payload) {
 }
 
 // =============================
-export function ItemReset() {
+export function itemReset() {
     return {
         type: types.ITEM_RESET,
     };

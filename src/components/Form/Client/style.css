@@ -4,6 +4,7 @@
 
 .buttons-register {
     display: flex !important;
+    flex-wrap: wrap;
 }
 
 /* ====================
@@ -60,12 +61,13 @@
 
 
 .container-contact-client {
-    display: grid !important;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    width: 100%;
+    flex-wrap: wrap;
     gap: 1.5vh 5vh;
 }
 
 .phone-client {
+    width: fit-content;
     gap: 1vh;
     font-size: small;
 }

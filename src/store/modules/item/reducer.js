@@ -14,21 +14,21 @@ export default function reducer(state = initialState, action) {
         case types.FETCH_ITEMS_REQUEST:
             return {
                 ...state,
-                isLoadingClients: true,
+                isLoadingItems: true,
                 errors: [],
             };
         case types.FETCH_ITEMS_SUCCESS:
             return {
                 ...state,
-                isLoadingClients: false,
+                isLoadingItems: false,
                 success: false,
-                clients: action.payload,
+                items: action.payload,
                 errors: []
             }
         case types.FETCH_ITEMS_FAILURE:
             return {
                 ...state,
-                isLoadingClients: false,
+                isLoadingItems: false,
                 errors: action.payload || [],
             }
 
@@ -46,7 +46,7 @@ export default function reducer(state = initialState, action) {
                 ...state,
                 isLoading: false,
                 success: true,
-                client: action.payload.client,
+                item: action.payload.item,
                 errors: []
             }
         case types.CREATE_ITEM_FAILURE:

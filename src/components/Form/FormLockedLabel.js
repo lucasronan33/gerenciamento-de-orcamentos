@@ -9,6 +9,7 @@ export const LockedLabel = styled.div`
     font-size: large;
     background: ${blueHover};
     place-items: center;
+    place-content: center;
     padding: 1vh 2.5vh;
     border-radius: 1vh;
     border: none;

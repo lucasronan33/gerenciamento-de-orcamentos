@@ -1,53 +1,52 @@
 import { Card } from '../../DashboardsHeader/styles';
 import { Subtitle } from '../../Header/styles';
-import { Contact, Edit, Mail, Phone, RefreshCcw, Trash2 } from 'lucide-react';
-import { maskPhone } from '../../../utils/masks';
-import { WhatsAppIcon } from '../../Icons/WhatsAppIcon';
+import { Edit, Package, RefreshCcw, Trash2 } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import { deleteClientRequest, fetchClientsRequest } from '../../../store/modules/client/actions';
 import { useDispatch, useSelector } from 'react-redux';
-import { useClient } from '../../../context/Client';
+import { useItem } from '../../../context/Item';
 import { Button } from '../../Button';
 import { CardIcons, ConfirmDeleteModal } from '../../Cards/styled';
+import { deleteItemRequest, fetchItemsRequest } from '../../../store/modules/item/actions';
 
 export function ItemsList() {
     const { isLoggedIn } = useSelector(state => state.auth)
-    const { success, clients, isLoadingClients } = useSelector(state => state.client || {})
+    const { success, items, isLoadingItems } = useSelector(state => state.item || {})
+    console.log('items: ', items)
     const dispatch = useDispatch()
-    const { setClient } = useClient()
+    const { setItem } = useItem()
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
     const [isDeleting, setIsDeleting] = useState(false)
 
     function handleDelete(client) {
         if (!isLoggedIn) return
         setIsDeleting(true)
-        dispatch(deleteClientRequest(client))
+        dispatch(deleteItemRequest(client))
         setIsDeleting(false)
         setIsDeleteModalOpen(false)
     }
 
     useEffect(() => {
         if (!isLoggedIn) return
-        dispatch(fetchClientsRequest())
+        dispatch(fetchItemsRequest())
     }, [success, isLoggedIn, dispatch])
 
     return (
         <Card className='hover-container'>
-            <Subtitle className='title-list-clients'>Clientes cadastrados</Subtitle>
+            <Subtitle className='title-list-clients'>Itens cadastrados</Subtitle>
             <div className='container-clients'>
-                {isLoadingClients
+                {isLoadingItems
                     ? <div className='box-client'>
                         <div className='box-client'>
                             <span >
                                 <RefreshCcw size={30} />
-                                Carregando clientes...
+                                Carregando itens...
                             </span>
                         </div>
                     </div>
-                    : clients.length > 0 ? clients.map((client, index) =>
+                    : items.length > 0 ? items.map((item, index) =>
                         <div className='box-client' key={index}>
                             <label className='initials-client-name'>
-                                {client.name
+                                {item.name
                                     .split(' ', 3)
                                     .map(i => i[0].toUpperCase())
                                     .join('')
@@ -55,30 +54,29 @@ export function ItemsList() {
                             </label>
                             <div className='container-client-infos'>
                                 <h3>
-                                    {client.name}
+                                    {item.name}
                                 </h3>
                                 <div className='container-contact-client'>
-                                    {client.whatsapp && (
+                                    {item.category && (
                                         <Subtitle className='title-list-clients phone-client'>
-                                            <WhatsAppIcon className='contact-icon whatsapp-icon' />
-                                            {maskPhone(client?.whatsapp)}
+                                            {item?.category}
                                         </Subtitle>)}
-                                    {client.phone && (
+                                    {item.unityPrice && (
                                         <Subtitle className='title-list-clients phone-client'>
-                                            <Phone className='contact-icon' />
-                                            {maskPhone(client?.phone)}
+                                            {'| '}
+                                            {`R$ ${item.unityPrice}/${item.unity}`}
                                         </Subtitle>)}
-                                    {client.email && (
+                                    {item.total && (
                                         <Subtitle className='title-list-clients phone-client'>
-                                            <Mail className='contact-icon' />
-                                            {client.email}
+                                            {'| '}
+                                            {`R$ ${item.total}`}
                                         </Subtitle>)}
                                 </div>
                             </div>
                             <CardIcons className='icons-clients-list'>
                                 <div
                                     className='card-icon links'
-                                    onClick={() => setClient(client)}
+                                    onClick={() => setItem(item)}
                                 >
                                     <Edit />
                                 </div>
@@ -101,10 +99,10 @@ export function ItemsList() {
                                         onClick={() => setIsDeleteModalOpen(false)}
                                     />
                                     <div className='confirm-delete-content'>
-                                        <h2>Excluir orcamento?</h2>
+                                        <h2>Excluir item?</h2>
                                         <p>
-                                            Esta ação vai remover o cliente
-                                            <strong> {client.name} </strong>
+                                            Esta ação vai remover o item
+                                            <strong> {item.name} </strong>
                                             da sua lista.
                                         </p>
                                         <div className='confirm-delete-actions'>
@@ -117,7 +115,7 @@ export function ItemsList() {
                                             </Button.Root>
                                             <Button.Root
                                                 className='btn-delete'
-                                                onClick={() => handleDelete(client)}
+                                                onClick={() => handleDelete(item)}
                                                 disabled={isDeleting}
                                             >
                                                 {isDeleting ? 'Excluindo...' : 'Excluir'}
@@ -130,8 +128,8 @@ export function ItemsList() {
                     ) : (
                         <div className='box-client'>
                             <span >
-                                <Contact size={30} />
-                                Nenhum cliente registrado ainda
+                                <Package size={30} />
+                                Nenhum (item, produto ou serviço) registrado ainda
                             </span>
                         </div>
                     )}

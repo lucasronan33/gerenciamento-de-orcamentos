@@ -2,7 +2,10 @@ import { SaveIcon, X } from 'lucide-react';
 import { Form } from '..';
 import { Button } from '../../Button';
 import { useItem } from '../../../context/Item';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { createItemRequest, itemReset } from '../../../store/modules/item/actions';
+import { useEffect } from 'react';
+import { useMemo } from 'react';
 
 const units = [
     'Unidade',
@@ -16,11 +19,42 @@ const units = [
 ]
 export function ItemsRegister() {
     const { item, updateItem } = useItem()
-    const { isLoading } = useSelector(state => state.item || {})
+    const { isLoggedIn } = useSelector(state => state.auth)
+    const { isLoading, success } = useSelector(state => state.item || {})
+    const dispatch = useDispatch()
 
+    const total = useMemo(() => {
+        const taxes = Number(item.taxes / 100) + 1
+        const value = Number(item.unityPrice) * taxes
+
+        return value.toFixed(2)
+    }, [
+        item.taxes,
+        item.unityPrice
+    ])
+
+    const handleSubmit = (e) => {
+        e.preventDefault()
+
+        console.log('item: ', item)
+        dispatch(createItemRequest(item))
+    }
+    useEffect(() => {
+        if (success && isLoggedIn) {
+            dispatch(itemReset())
+        }
+    }, [isLoggedIn, success, dispatch])
+
+    useEffect(() => {
+        if (!isLoggedIn) return
+        return () => {
+            dispatch(itemReset())
+        }
+    }, [isLoggedIn, dispatch])
     return (
         <form
             className='container-settings'
+            onSubmit={handleSubmit}
         >
 
             <Form.ContainerInput>
@@ -56,7 +90,7 @@ export function ItemsRegister() {
                 />
             </Form.ContainerInput>
 
-            <Form.ContainerInput size='small' >
+            <Form.ContainerInput size='xx-large' >
                 <Form.Label text='Unidade' />
                 <select
                     value={item.unity}
@@ -102,7 +136,7 @@ export function ItemsRegister() {
 
             <Form.ContainerInput size='medium' >
                 <Form.Label text='Total' />
-                <Form.LockedLabel text={'R$ '} />
+                <Form.LockedLabel text={`R$ ${total}`} />
             </Form.ContainerInput>
 
             <Form.ContainerInput size='medium' >

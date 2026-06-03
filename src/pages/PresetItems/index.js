@@ -8,7 +8,9 @@ export default function PresetItems() {
         <>
             <Header />
             <Container>
-                <Items.Register />
+                <main className='settings-page'>
+                    <Items.Register />
+                </main>
                 <Items.List />
             </Container>
         </>
