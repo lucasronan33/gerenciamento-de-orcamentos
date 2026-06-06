@@ -57,7 +57,10 @@ export function BudgetContentItems2() {
                 )}
             {budget.items.length > 0
                 && budget.items.map(item => (
-                    <div className='box-client'                    >
+                    <div
+                        key={item._id}
+                        className='box-client'
+                    >
                         <div className='container-client-infos'>
                             <h3>
                                 {item.name}
@@ -116,7 +119,7 @@ export function BudgetContentItems2() {
                         <Form.LockedLabel
                             typeInput='number'
                             name='subtotal'
-                            text={`R$ ${subtotal.toFixed(2)}`}
+                            text={`R$ ${subtotal?.toFixed(2)}`}
                         />
                     </Form.ContainerInput>
                 </Form.Root>
@@ -134,7 +137,7 @@ export function BudgetContentItems2() {
                             </div>
                         </div>
                         : items.length > 0 ? items.map((item, index) => (
-                            <div className='box-client' key={index} >
+                            <div className='box-client' key={item._id} >
                                 <div className='container-client-infos'>
                                     <h3>
                                         {item.name}

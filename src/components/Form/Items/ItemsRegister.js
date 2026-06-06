@@ -3,7 +3,7 @@ import { Form } from '..';
 import { Button } from '../../Button';
 import { useItem } from '../../../context/Item';
 import { useDispatch, useSelector } from 'react-redux';
-import { createItemRequest, itemReset } from '../../../store/modules/item/actions';
+import { createItemRequest, itemReset, updateItemRequest } from '../../../store/modules/item/actions';
 import { useEffect } from 'react';
 import { useMemo } from 'react';
 
@@ -18,7 +18,7 @@ const units = [
     'Hora',
 ]
 export function ItemsRegister() {
-    const { item, updateItem } = useItem()
+    const { item, updateItem, resetItemState } = useItem()
     const { isLoggedIn } = useSelector(state => state.auth)
     const { isLoading, success } = useSelector(state => state.item || {})
     const dispatch = useDispatch()
@@ -36,14 +36,23 @@ export function ItemsRegister() {
     const handleSubmit = (e) => {
         e.preventDefault()
 
-        console.log('item: ', item)
+        if (item._id) {
+            dispatch(updateItemRequest(item))
+            return
+        }
         dispatch(createItemRequest(item))
+    }
+    const handleReset = (e) => {
+        e.preventDefault()
+        dispatch(itemReset())
+        resetItemState()
     }
     useEffect(() => {
         if (success && isLoggedIn) {
             dispatch(itemReset())
         }
-    }, [isLoggedIn, success, dispatch])
+        console.log('item: ', item)
+    }, [isLoggedIn, success, dispatch, item])
 
     useEffect(() => {
         if (!isLoggedIn) return
@@ -151,8 +160,11 @@ export function ItemsRegister() {
                 <Button.Root
                     className='btn-cancel btn-save'
                     type='reset'
+                    onClick={handleReset}
                 >
-                    <Button.Icon icon={X} />
+                    <Button.Icon
+                        icon={X}
+                    />
                     Limpar
                 </Button.Root>
 

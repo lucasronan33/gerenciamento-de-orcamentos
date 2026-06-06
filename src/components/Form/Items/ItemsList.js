@@ -14,7 +14,7 @@ export function ItemsList() {
     console.log('items: ', items)
     const dispatch = useDispatch()
     const { setItem } = useItem()
-    const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
+    const [itemToDelete, setItemToDelete] = useState(false)
     const [isDeleting, setIsDeleting] = useState(false)
 
     function handleDelete(client) {
@@ -22,7 +22,7 @@ export function ItemsList() {
         setIsDeleting(true)
         dispatch(deleteItemRequest(client))
         setIsDeleting(false)
-        setIsDeleteModalOpen(false)
+        setItemToDelete(null)
     }
 
     useEffect(() => {
@@ -44,14 +44,7 @@ export function ItemsList() {
                         </div>
                     </div>
                     : items.length > 0 ? items.map((item, index) =>
-                        <div className='box-client' key={index}>
-                            <label className='initials-client-name'>
-                                {item.name
-                                    .split(' ', 3)
-                                    .map(i => i[0].toUpperCase())
-                                    .join('')
-                                }
-                            </label>
+                        <div className='box-client' key={item._id}>
                             <div className='container-client-infos'>
                                 <h3>
                                     {item.name}
@@ -79,46 +72,13 @@ export function ItemsList() {
                                 <div
                                     className='card-icon trash-icon links'
                                     onClick={() => {
-                                        setIsDeleteModalOpen(true)
+                                        setItemToDelete(item)
                                     }}
                                 >
                                     <Trash2 className='trashIco' />
                                 </div>
                             </CardIcons>
-                            {isDeleteModalOpen && (
-                                <ConfirmDeleteModal>
-                                    <button
-                                        type='button'
-                                        className='confirm-delete-overlay'
-                                        aria-label='Fechar confirmacao'
-                                        onClick={() => setIsDeleteModalOpen(false)}
-                                    />
-                                    <div className='confirm-delete-content'>
-                                        <h2>Excluir item?</h2>
-                                        <p>
-                                            Esta ação vai remover o item
-                                            <strong> {item.name} </strong>
-                                            da sua lista.
-                                        </p>
-                                        <div className='confirm-delete-actions'>
-                                            <Button.Root
-                                                className='btn-cancel'
-                                                onClick={() => setIsDeleteModalOpen(false)}
-                                                disabled={isDeleting}
-                                            >
-                                                Cancelar
-                                            </Button.Root>
-                                            <Button.Root
-                                                className='btn-delete'
-                                                onClick={() => handleDelete(item)}
-                                                disabled={isDeleting}
-                                            >
-                                                {isDeleting ? 'Excluindo...' : 'Excluir'}
-                                            </Button.Root>
-                                        </div>
-                                    </div>
-                                </ConfirmDeleteModal>
-                            )}
+
                         </div>
                     ) : (
                         <div className='box-client'>
@@ -129,6 +89,40 @@ export function ItemsList() {
                         </div>
                     )}
             </div>
+            {itemToDelete && (
+                <ConfirmDeleteModal>
+                    <button
+                        type='button'
+                        className='confirm-delete-overlay'
+                        aria-label='Fechar confirmacao'
+                        onClick={() => setItemToDelete(null)}
+                    />
+                    <div className='confirm-delete-content'>
+                        <h2>Excluir item?</h2>
+                        <p>
+                            Esta ação vai remover o item
+                            <strong> {itemToDelete.name} </strong>
+                            da sua lista.
+                        </p>
+                        <div className='confirm-delete-actions'>
+                            <Button.Root
+                                className='btn-cancel'
+                                onClick={() => setItemToDelete(null)}
+                                disabled={isDeleting}
+                            >
+                                Cancelar
+                            </Button.Root>
+                            <Button.Root
+                                className='btn-delete'
+                                onClick={() => handleDelete(itemToDelete)}
+                                disabled={isDeleting}
+                            >
+                                {isDeleting ? 'Excluindo...' : 'Excluir'}
+                            </Button.Root>
+                        </div>
+                    </div>
+                </ConfirmDeleteModal>
+            )}
 
 
         </Card>

@@ -118,7 +118,7 @@ export default function NewBudget({
   if (!isVisible) return;
   return (
     <div className="span-newBudget" onMouseDown={() => handleIsVisible(false)}>
-      <form className="container-newBudget" onMouseDown={(e) => e.stopPropagation()} onSubmit={handleSubmit}>
+      <div className="container-newBudget" onMouseDown={(e) => e.stopPropagation()}>
         <div className="header-budget">
           <Title>Novo Orçamento</Title>
           <Subtitle>Preencha as informações do orçamento</Subtitle>
@@ -149,10 +149,12 @@ export default function NewBudget({
 
         <div className='container-buttons-budget'>
           <Button.Root onClick={() => handleIsVisible(false)} className='btn-cancel'>Cancelar</Button.Root>
-          <Button.Root type='submit'>Criar Orçamento</Button.Root>
+          <Button.Root
+            onClick={handleSubmit}
+            type='submit'>Criar Orçamento</Button.Root>
         </div>
 
-      </form>
+      </div>
     </div>
   );
 }

@@ -68,7 +68,11 @@ export default function reducer(state = initialState, action) {
             }
 
         case types.ITEM_RESET:
-            return initialState
+            console.log(state.item)
+            return {
+                ...state,
+                item: null
+            }
         default:
             return state
     }
