@@ -1,10 +1,9 @@
-import { useEffect, useState } from 'react';
-// import { useBudget } from '../../../context/Budget'
+import { useEffect, useMemo, useState } from 'react';
+import { useBudget } from '../../../context/Budget'
 import { Items } from '../Items';
 import { Button } from '../../Button';
 import { Minus, Package, Plus, RefreshCcw, X } from 'lucide-react';
 import { useDispatch, useSelector } from 'react-redux';
-// import { useItem } from '../../../context/Item';
 import { fetchItemsRequest } from '../../../store/modules/item/actions';
 import { Subtitle } from '../../Header/styles';
 import { Card } from '../../DashboardsHeader/styles';
@@ -13,12 +12,23 @@ import { Form } from '..';
 
 export function BudgetContentItems2() {
     const { isLoggedIn } = useSelector(state => state.auth)
-    // const { budget, updateBudget, setBudget } = useBudget()
+    const { budget, updateTotals, setBudget, updateItem } = useBudget()
     const [isRegister, setIsRegister] = useState(false)
     const { success, items, isLoadingItems } = useSelector(state => state.item || {})
     const dispatch = useDispatch()
-    // const { setItem } = useItem()
-    const [itemsSelected, setItemsSelected] = useState([])
+
+    const subtotal = useMemo(() => {
+
+        const value = budget.items.reduce(
+            (prev, current) => prev + current.quantity * current.total, 0)
+
+        updateTotals('subtotal', value)
+        return value
+
+    }, [
+        budget.items,
+        updateTotals,
+    ])
 
     useEffect(() => {
         if (!isLoggedIn) return
@@ -45,8 +55,8 @@ export function BudgetContentItems2() {
                     </Button.Container>
                     <Items.Register /></>
                 )}
-            {itemsSelected.length > 0
-                && itemsSelected.map(item => (
+            {budget.items.length > 0
+                && budget.items.map(item => (
                     <div className='box-client'                    >
                         <div className='container-client-infos'>
                             <h3>
@@ -70,7 +80,7 @@ export function BudgetContentItems2() {
                                         typeInput='number'
                                         name='quantity'
                                         value={item.quantity}
-                                        onChange={(e) => item.quantity === Number(e.target.value)}
+                                        onChange={(e) => updateItem(item._id, 'quantity', Number(e.target.value))}
                                     />
                                 </Form.ContainerInput>
                                 <Form.ContainerInput>
@@ -87,7 +97,11 @@ export function BudgetContentItems2() {
                         <CardIcons className='icons-clients-list'>
                             <div
                                 className='card-icon links'
-                                onClick={() => setItemsSelected(itemsSelected.filter(prev => prev !== item))}
+                                onClick={() => setBudget(prev => ({
+                                    ...prev,
+                                    items: prev.items.filter(i => i._id !== item._id)
+                                }))
+                                }
                             >
                                 <Minus />
                             </div>
@@ -102,6 +116,7 @@ export function BudgetContentItems2() {
                         <Form.LockedLabel
                             typeInput='number'
                             name='subtotal'
+                            text={`R$ ${subtotal.toFixed(2)}`}
                         />
                     </Form.ContainerInput>
                 </Form.Root>
@@ -129,10 +144,10 @@ export function BudgetContentItems2() {
                                             <Subtitle className='title-list-clients phone-client'>
                                                 {item?.category}
                                             </Subtitle>)}
-                                        {item.unityPrice && (
+                                        {item.total && (
                                             <Subtitle className='title-list-clients phone-client'>
                                                 {'| '}
-                                                {`R$ ${item.unityPrice}/${item.unity}`}
+                                                {`R$ ${item.total}/${item.unity}`}
                                             </Subtitle>)}
                                     </div>
                                 </div >
@@ -140,10 +155,21 @@ export function BudgetContentItems2() {
                                     <div
                                         className='card-icon links'
                                         onClick={() => {
-                                            setIsRegister(false)
-                                            itemsSelected.includes(item)
-                                                ? item.quantity = Number(item.quantity) + 1
-                                                : setItemsSelected(prev => [...prev, item])
+                                            budget.items.includes(item)
+                                                ? setBudget(prev => ({
+                                                    ...prev,
+                                                    items: prev.items.map(i => {
+                                                        if (i._id === item._id) {
+                                                            i.quantity++
+                                                        }
+                                                        return i
+                                                    })
+                                                }))
+                                                : setBudget(prev => ({
+                                                    ...prev,
+                                                    items: [...prev.items, item]
+                                                })
+                                                )
                                         }}
                                     >
                                         <Plus />

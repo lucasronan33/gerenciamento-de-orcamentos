@@ -125,11 +125,10 @@ export function BudgetProvider({ children }) {
         setBudget(prev => ({
             ...prev,
             items: prev.items.map(item => {
-                if (item.id !== id) {
+                if (item._id !== id) {
                     return item
                 }
                 const updated = { ...item, [field]: value }
-                updated.total = calcTotal(updated)
                 return updated
             })
         }))

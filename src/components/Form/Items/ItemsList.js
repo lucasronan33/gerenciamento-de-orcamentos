@@ -61,15 +61,10 @@ export function ItemsList() {
                                         <Subtitle className='title-list-clients phone-client'>
                                             {item?.category}
                                         </Subtitle>)}
-                                    {item.unityPrice && (
-                                        <Subtitle className='title-list-clients phone-client'>
-                                            {'| '}
-                                            {`R$ ${item.unityPrice}/${item.unity}`}
-                                        </Subtitle>)}
                                     {item.total && (
                                         <Subtitle className='title-list-clients phone-client'>
                                             {'| '}
-                                            {`R$ ${item.total}`}
+                                            {`R$ ${item.total}/${item.unity}`}
                                         </Subtitle>)}
                                 </div>
                             </div>
