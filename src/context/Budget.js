@@ -15,7 +15,7 @@ const initialState = {
         discount: 0,
         taxes: 0,
         shipping: 0,
-        shippingType: 'SN',
+        shippingType: 'SF',
     }
 }
 export function BudgetProvider({ children }) {

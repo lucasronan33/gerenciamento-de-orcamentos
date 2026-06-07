@@ -10,7 +10,6 @@ import { store, update } from '../../services/axiosRoutes';
 import { useBudget } from '../../context/Budget'
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import dayjs from 'dayjs';
 
 export default function NewBudget({
   isVisible,
@@ -47,43 +46,36 @@ export default function NewBudget({
     if (!budget.basic.date || !validator.isDate(budget.basic.date, {
       format: 'DD-MM-YYYY',
       strictMode: true,
-    })) formErrors.push(
-      <div>
-        <strong>DATA: </strong>Data ou formato da data invalido
-      </div>
-    )
+    })) formErrors.push({
+      field: 'DATA',
+      message: 'Data ou formato da data invalido',
+    })
+
     if (budget.basic.validUntil && !validator.isDate(budget.basic.validUntil, {
       format: 'DD-MM-YYYY',
       strictMode: true,
-    })) formErrors.push(
-      <div>
-        <strong>VALIDO ATÉ: </strong>Data ou formato da data invalido
-      </div>
-    )
-    if (!dayjs(budget.basic.date, 'DD-MM-YYYY').isBefore(dayjs(budget.basic.validUntil, 'DD-MM-YYYY'))) formErrors.push(
-      <div>
-        <strong>VALIDO ATÉ: </strong>A data não pode ser anterior a data agendada!
-      </div>
-    )
-    if (!budget.basic.name || budget.basic.name === '') formErrors.push(
-      <div>
-        <strong>NOME: </strong>Nome é um campo obrigatório
-      </div>
-    )
-    if (budget.basic.time && !validator.isTime(budget.basic.time)) formErrors.push(
-      <div>
-        <strong>HORÁRIO: </strong>Horario ou formato do horario invalido
-      </div>)
-    if (budget.client.email && !validator.isEmail(budget.client.email)) formErrors.push(
-      <div>
-        <strong>EMAIL: </strong>email invalido
-      </div>
-    )
+    })) formErrors.push({
+      field: 'VALIDO ATÉ',
+      message: 'Data ou formato da data invalido',
+    })
+
+    if (!budget.basic.name || budget.basic.name === '') formErrors.push({
+      field: 'NOME',
+      message: 'Nome é um campo obrigatório',
+    })
+
+    if (budget.basic.time && !validator.isTime(budget.basic.time)) formErrors.push({
+      field: 'HORÁRIO',
+      message: 'Horario ou formato do horario invalido',
+    })
 
     if (formErrors.length > 0) {
-      formErrors.forEach(value => toast.error(value, { autoClose: 5000, hideProgressBar: true }))
+      formErrors.forEach(value => toast.error(<div>
+        <strong>{value.field}: </strong>{value.message} </div>,
+        { autoClose: 5000, hideProgressBar: true }))
       return
     }
+
     try {
       if (budgetData) {
         const response = await update(`/budgets/${id}`, budget)

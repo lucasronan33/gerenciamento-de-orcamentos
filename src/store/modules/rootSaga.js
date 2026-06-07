@@ -6,5 +6,10 @@ import item from './item/sagas'
 import googleSaga from './auth/googleSaga'
 
 export default function* rootSaga() {
-    return yield all([auth, googleSaga, client, item])
+    return yield all([
+        auth,
+        googleSaga,
+        client,
+        item
+    ])
 }
