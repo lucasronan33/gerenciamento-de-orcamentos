@@ -11,7 +11,6 @@ import { deleteItemRequest, fetchItemsRequest } from '../../../store/modules/ite
 export function ItemsList() {
     const { isLoggedIn } = useSelector(state => state.auth)
     const { success, items, isLoadingItems } = useSelector(state => state.item || {})
-    console.log('items: ', items)
     const dispatch = useDispatch()
     const { setItem } = useItem()
     const [itemToDelete, setItemToDelete] = useState(false)

@@ -30,7 +30,6 @@ function* createRequest({ payload }) {
             yield new Error('Usuário não autenticado')
         }
 
-        console.log('payload: ', payload)
         const response = yield call(store, '/items', payload);
 
         yield put(actions.createItemSuccess(response.data));

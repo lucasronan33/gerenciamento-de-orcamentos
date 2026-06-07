@@ -15,9 +15,7 @@ const initialState = {
         discount: 0,
         taxes: 0,
         shipping: 0,
-        shippingType: 'Sem Frete',
-        subtotal: 0,
-        total: 0,
+        shippingType: 'SN',
     }
 }
 export function BudgetProvider({ children }) {
@@ -94,7 +92,8 @@ export function BudgetProvider({ children }) {
         }))
     }, [])
 
-    function updateTotals(field, value) {
+    const updateTotals = useCallback((field, value) => {
+
         setBudget(prev => {
 
             if (prev.totals[field] === value) return prev
@@ -107,7 +106,7 @@ export function BudgetProvider({ children }) {
                 }
             }
         })
-    }
+    }, [])
 
     function calcTotal(item) {
         let total =

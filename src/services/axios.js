@@ -37,7 +37,6 @@ api.interceptors.response.use(
 
                 return api(originalRequest)
             } catch (refreshError) {
-                console.log('REFRESH FALHOU')
                 clearAccessToken()
                 store.dispatch(authMeFailure())
                 return Promise.reject(refreshError)

@@ -5,7 +5,6 @@ import PropTypes from "prop-types";
 export default function MyRoute({ children, isClosed, isPublicOnly, ...rest }) {
     const location = useLocation()
     const { isCheckingAuth, isLoggedIn } = useSelector((state) => state.auth || {})
-    console.log('isCheckingAuth: ', isCheckingAuth, 'isLoggedIn: ', isLoggedIn)
 
     if (isCheckingAuth && isClosed) {
         return (

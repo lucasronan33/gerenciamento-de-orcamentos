@@ -11,7 +11,6 @@ import { useBudget } from '../../context/Budget'
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import dayjs from 'dayjs';
-import { BudgetContentItems2 } from '../Form/BudgetContent/BudgetContentItems new';
 
 export default function NewBudget({
   isVisible,
@@ -26,14 +25,12 @@ export default function NewBudget({
     'Básico',
     'Cliente',
     'Itens',
-    'Itens2',
     'Condições',
   ]
   const tabs = [
     { key: 'Básico', component: <Form.Content.Basic /> },
     { key: 'Cliente', component: <Form.Content.Client /> },
     { key: 'Itens', component: <Form.Content.Items /> },
-    { key: 'Itens2', component: <BudgetContentItems2 /> },
     { key: 'Condições', component: <Form.Content.Conditions /> },
   ]
 

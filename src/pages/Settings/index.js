@@ -60,7 +60,7 @@ export default function Settings() {
         // bloco de condições de erros
         // services não tem nenhuma verificação inicial
 
-        if (formErrors.length > 0) return console.log(formErrors)
+        if (formErrors.length > 0) return (formErrors)
 
         try {
             await update(`/user/settings`, settings)

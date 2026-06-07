@@ -51,7 +51,6 @@ export function ItemsRegister() {
         if (success && isLoggedIn) {
             dispatch(itemReset())
         }
-        console.log('item: ', item)
     }, [isLoggedIn, success, dispatch, item])
 
     useEffect(() => {

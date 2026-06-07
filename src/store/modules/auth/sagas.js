@@ -30,8 +30,6 @@ export function normalizeErrors(error) {
 
 function* loginRequest({ payload }) {
     try {
-        toast.info('teste')
-        console.log(payload)
         const response = yield call(store, '/auth/login', payload);
         const { accessToken } = response.data;
 

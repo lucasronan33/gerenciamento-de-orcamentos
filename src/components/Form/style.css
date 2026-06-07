@@ -147,7 +147,7 @@ header,
 
 .budget-total-subtotal-container {
     width: 100%;
-    align-items: flex-end;
+    align-items: flex-end !important;
     flex-direction: column;
 }
 

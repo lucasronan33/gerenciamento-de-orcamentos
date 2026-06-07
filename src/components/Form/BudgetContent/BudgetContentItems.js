@@ -1,58 +1,53 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
-import { Form } from '..';
-import { DivContainerFilter, InptSearch } from '../../HeaderFilter/styles';
-import { ChevronDown, Plus } from 'lucide-react';
-import { Title } from '../../Header/styles';
-import { Button } from '../../Button';
-import CardItem from '../../Cards/CardItem';
-import { useSettings } from '../../../context/Settings'
+import { useEffect, useMemo, useState } from 'react';
 import { useBudget } from '../../../context/Budget'
+import { Items } from '../Items';
+import { Button } from '../../Button';
+import { Minus, Package, Plus, RefreshCcw, X } from 'lucide-react';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchItemsRequest } from '../../../store/modules/item/actions';
+import { Subtitle } from '../../Header/styles';
+import { Card } from '../../DashboardsHeader/styles';
+import { CardIcons } from '../../Cards/styled';
+import { Form } from '..';
+import { useSettings } from '../../../context/Settings';
+
+const shippingOptions = [
+    {
+        value: 'SN',
+        text: 'Sem Frete'
+    },
+    {
+        value: 'CIF',
+        text: 'CIF (por nossa conta)'
+    },
+    {
+        value: 'FOB',
+        text: 'FOB (por conta do cliente)'
+    },
+    {
+        value: 'custom',
+        text: 'Valor Customizado'
+    },
+]
 
 export function BudgetContentItems() {
-    const [open, setOpen] = useState(false)
-    const ref = useRef()
-
-    const [search, setSearch] = useState('Sem Frete')
-    const [selected, setSelected] = useState('Sem Frete')
-    const options = [
-        'Sem Frete',
-        'CIF (por nossa conta)',
-        'FOB (por conta do cliente)',
-        'Valor Customizado',
-    ]
+    const { isLoggedIn } = useSelector(state => state.auth)
     const { settings } = useSettings()
-    const { budget, setBudget, updateTotals, updateBudget, updateItem, calcTotal } = useBudget()
-
-    function addItem() {
-        const newItem = {
-            id: budget.items.length + 1,
-            quantity: 1,
-            unityPrice: 0,
-            discount: 0,
-            taxes: 0,
-        }
-        newItem.total = calcTotal(newItem)
-
-        setBudget(prev => ({
-            ...prev,
-            items: [...prev.items, newItem]
-        }))
-    }
+    const { budget, updateTotals, setBudget, updateItem } = useBudget()
+    const [isRegister, setIsRegister] = useState(false)
+    const { success, items, isLoadingItems } = useSelector(state => state.item || {})
+    const dispatch = useDispatch()
 
     const subtotal = useMemo(() => {
-        const totals = Number(budget.items.reduce((acc, item) => {
-            const value = Number(item.total) || 0
-            return acc + value
-        }, 0))
-        const priceService = Number(budget.totals.priceService)
 
-        const result = totals + priceService
+        const value = budget.items.reduce(
+            (prev, current) => prev + current.quantity * current.total, 0)
+        return value
 
-        return result.toFixed(2)
     }, [
         budget.items,
-        budget.totals.priceService,
     ])
+
 
     const total = useMemo(() => {
         let value = Number(subtotal) + Number(budget.totals.shipping)
@@ -66,18 +61,6 @@ export function BudgetContentItems() {
         budget.totals.taxes,
         budget.totals.shipping,
     ])
-
-    function changeValueInput({ itemId, field, value, minValue }) {
-        const valueInput = value
-
-        if (valueInput === '') {
-            updateItem(itemId, field, '')
-            return
-        } else {
-            const num = Number(valueInput)
-            updateItem(itemId, field, num < minValue ? minValue : num)
-        }
-    }
 
     const calValueTaxes = () => {
         let valueTaxes = Number(subtotal) + Number(budget.totals.shipping)
@@ -93,6 +76,7 @@ export function BudgetContentItems() {
 
         return valueDiscount.toFixed(2)
     }
+
     useEffect(() => {
 
         const priceHour = settings.services.priceHour
@@ -102,218 +86,274 @@ export function BudgetContentItems() {
 
         const price = priceHour * DecimalHourMinutes
 
-        updateBudget('totals', 'priceService', price.toFixed(2))
+        updateTotals('priceService', price.toFixed(2))
     }, [
         budget.basic.timeService,
         settings.services.priceHour,
-        updateBudget,
+        updateTotals,
     ])
 
     useEffect(() => {
-        if (budget.totals.shippingType) {
-            setSearch(budget.totals.shippingType)
-            setSelected(budget.totals.shippingType)
-        }
-    }, [budget.totals.shippingType])
+        if (!isLoggedIn) return
+        dispatch(fetchItemsRequest())
+    }, [isLoggedIn, isRegister, success, dispatch])
 
-    useEffect(() => {
-
-        if (selected !== 'Valor Customizado' && budget.totals.shipping !== 0) updateTotals('shipping', 0)
-
-        if (!open) return
-        function handleClickOutside(e) {
-            if (ref.current && !ref.current.contains(e.target)) {
-                setOpen(false)
-                setSearch(selected)
-                updateBudget('totals', 'shippingType', selected)
-            }
-        }
-
-        document.addEventListener('mousedown', handleClickOutside)
-        if (budget.totals.shippingType === selected) return
-        if (budget.totals.shippingType !== selected) updateBudget('totals', 'shippingType', selected)
-
-        return () => {
-            document.removeEventListener('mousedown', handleClickOutside)
-        }
-
-    }, [
-        open,
-        selected,
-        budget.totals.shipping,
-        budget.totals.shippingType,
-        updateBudget,
-        updateTotals
-    ])
-
-    const filteredOptions = options.filter(option => option.toLowerCase().includes(search.toLowerCase()))
     return (
         <>
-            <header>
-                <Title>Itens do Orçamento</Title>
+            {!isRegister
+                ? (
 
-                <Button.Root
-                    onClick={addItem}
-                >
-                    <Plus />
-                    Adicionar Item
-                </Button.Root>
-            </header>
-
-            <div className='budget-content-items'>
-                {budget.items.length === 0 ? (
-                    'Nenhum item adicionado. Clique em "Adicionar Item" para começar'
-                ) : (
-                    <div className='budget-container-items'>
-                        {budget.items.map((item, index) => (
-                            <CardItem
-                                item={item}
-                                key={item.id = index + 1}
-                                onChange={changeValueInput}
-                                onDelete={(id) => {
-                                    setBudget(
-                                        prev => ({
-                                            ...prev,
-                                            items: prev.items.filter(i => i.id !== item.id)
-                                        })
-                                    )
-
-                                }}
-                            />
-                        )
-                        )}
-                    </div>
-                )
-                }</div>
-
-            <div className='budget-container-items'>
-                <Form.ContainerInput>
-                    <Form.Label text='Desconto Global (%)' />
-                    <Form.Input typeInput='number'
-                        name='globalDiscount'
-                        min='0'
-                        value={budget.totals.discount}
-                        onChange={
-                            (e) => {
-                                let value = e.target.value
-                                if (value < 0) value = ''
-
-                                updateTotals('discount', value)
-                            }
-                        } />
-                </Form.ContainerInput>
-
-                <Form.ContainerInput>
-                    <Form.Label text='Impostos (%)' />
-                    <Form.Input typeInput='number'
-                        name='taxes'
-                        min='0'
-                        value={budget.totals.taxes}
-                        onChange={
-                            (e) => {
-                                let value = e.target.value
-                                if (value < 0) value = ''
-
-                                updateTotals('taxes', value)
-                            }
-                        } />
-                </Form.ContainerInput>
-
-                <Form.ContainerInput size='large'>
-                    <Form.Label text='Tipo do frete' />
-                    <DivContainerFilter ref={ref}>
-                        <InptSearch>
-                            <ChevronDown className='chevronDown-icon' />
-                            <input
-                                type='text'
-                                name='shippingType'
-                                placeholder='Tipo de frete'
-                                value={search}
-                                onMouseDown={(e) => {
-                                    setOpen(true)
-                                    setSearch('')
-                                }}
-                                onChange={(e) => setSearch(e.target.value)}
-                            />
-                        </InptSearch>
-
-                        {open && (
-                            <div className='dropDownMenu budget-menu'>
-                                {filteredOptions.length > 0 ? (
-                                    filteredOptions.map((option, index) => (
-                                        <div
-                                            key={index}
-                                            className={`option ${option === selected ? 'selected' : ''}`}
-                                            onMouseDown={() => {
-                                                setSelected(option)
-                                                setSearch(option)
-                                                updateBudget('totals', 'shippingType', option)
-                                                setOpen(false)
-                                            }}
-                                        >
-                                            {option}
-                                        </div>
-                                    ))
-                                ) : (
-                                    <div> Nenhum resultado</div>
-                                )}
+                    <Button.Container>
+                        <Button.Root onClick={() => setIsRegister(true)}  >Cadastrar novo Item</Button.Root>
+                    </Button.Container>
+                ) : (<>
+                    <Button.Container>
+                        <Button.Root
+                            className='btn-cancel'
+                            onClick={() => setIsRegister(false)}
+                        >
+                            <Button.Icon icon={X} />
+                            Cancelar
+                        </Button.Root>
+                    </Button.Container>
+                    <Items.Register /></>
+                )}
+            {budget.items.length > 0
+                && budget.items.map(item => (
+                    <div
+                        key={item._id}
+                        className='box-client'
+                    >
+                        <div className='container-client-infos'>
+                            <h3>
+                                {item.name}
+                            </h3>
+                            <div className='container-contact-client column-client-list'>
+                                {item.category && (
+                                    <Subtitle className='title-list-clients phone-client'>
+                                        {item?.category}
+                                    </Subtitle>)}
+                                {item.unityPrice && (
+                                    <Subtitle className='title-list-clients phone-client'>
+                                        {'| '}
+                                        {`R$ ${item.unityPrice}/${item.unity}`}
+                                    </Subtitle>)}
                             </div>
-                        )}
-                    </DivContainerFilter>
+                            <Form.Root >
+                                <Form.ContainerInput>
+                                    <Form.Label text='Quant.' />
+                                    <Form.Input
+                                        typeInput='number'
+                                        name='quantity'
+                                        value={item.quantity}
+                                        onChange={(e) => updateItem(item._id, 'quantity', Number(e.target.value))}
+                                    />
+                                </Form.ContainerInput>
+                                <Form.ContainerInput>
+                                    <Form.Label text='Total' />
+                                    <Form.LockedLabel
+                                        typeInput='number'
+                                        name='total'
+                                        text={`R$ ${(item.quantity * item.unityPrice).toFixed(2)}`}
+                                    />
+                                </Form.ContainerInput>
+                            </Form.Root>
+                        </div>
 
-                </Form.ContainerInput>
-                {selected === 'Valor Customizado' && (
+                        <CardIcons className='icons-clients-list'>
+                            <div
+                                className='card-icon links'
+                                onClick={() => setBudget(prev => ({
+                                    ...prev,
+                                    items: prev.items.filter(i => i._id !== item._id)
+                                }))
+                                }
+                            >
+                                <Minus />
+                            </div>
+                        </CardIcons>
+                    </div>
+                ))
+            }
+            <Card className='hover-container'>
+                <Form.Root>
                     <Form.ContainerInput>
-                        <Form.Label text='Valor do Frete' />
+                        <Form.Label text='Subtotal' />
+                        <Form.LockedLabel
+                            typeInput='number'
+                            name='subtotal'
+                            text={`R$ ${subtotal?.toFixed(2)}`}
+                        />
+                    </Form.ContainerInput>
+                </Form.Root>
+
+
+                <div className='budget-container-items'>
+                    <Form.ContainerInput>
+                        <Form.Label text='Desconto Global (%)' />
                         <Form.Input typeInput='number'
-                            name='shippingFee'
+                            name='globalDiscount'
                             min='0'
-                            value={budget.totals.shipping}
+                            value={budget.totals.discount}
                             onChange={
                                 (e) => {
                                     let value = e.target.value
                                     if (value < 0) value = ''
 
-                                    updateTotals('shipping', value)
+                                    updateTotals('discount', Number(value))
                                 }
                             } />
                     </Form.ContainerInput>
-                )}
-            </div>
-            <div className='budget-total-subtotal-container'>
-                <div className='budget-subtotal-container'>
-                    <span>Subtotal</span>
-                    <span>R$ {subtotal} </span>
+
+                    <Form.ContainerInput>
+                        <Form.Label text='Impostos (%)' />
+                        <Form.Input typeInput='number'
+                            name='taxes'
+                            min='0'
+                            value={budget.totals.taxes}
+                            onChange={
+                                (e) => {
+                                    let value = e.target.value
+                                    if (value < 0) value = ''
+
+                                    updateTotals('taxes', Number(value))
+                                }
+                            } />
+                    </Form.ContainerInput>
+
+                    <Form.ContainerInput size='large'>
+                        <Form.Label text='Tipo do frete' />
+                        <select
+                            value={budget.totals.shippingType}
+                            onChange={(e) => {
+                                updateTotals('shippingType', e.target.value)
+                            }}
+                        >
+                            {shippingOptions.map(value => (
+                                <option value={value.value}>{value.text} </option>
+                            ))}
+                        </select>
+
+                    </Form.ContainerInput>
+                    {budget.totals.shippingType === 'custom' && (
+                        <Form.ContainerInput>
+                            <Form.Label text='Valor do Frete' />
+                            <Form.Input typeInput='number'
+                                name='shippingFee'
+                                min='0'
+                                value={budget.totals.shipping}
+                                onChange={
+                                    (e) => {
+                                        let value = e.target.value
+                                        if (value < 0) value = ''
+
+                                        updateTotals('shipping', Number(value))
+                                    }
+                                } />
+                        </Form.ContainerInput>
+                    )}
                 </div>
-                {budget.totals.priceService > 0 && (
+
+                <div className='budget-total-subtotal-container'>
                     <div className='budget-subtotal-container'>
-                        <span>Preço/h{` (${budget.basic.timeService})`}</span>
-                        <span>  R$ {budget.totals.priceService} </span>
+                        <span>Subtotal</span>
+                        <span>R$ {subtotal} </span>
                     </div>
-                )}
-                {budget.totals.shipping > 0 && (
-                    <div className='budget-subtotal-container'>
-                        <span>Frete</span>
-                        <span>R$ {budget.totals.shipping} </span>
+                    {budget.totals.shipping > 0 && (
+                        <div className='budget-subtotal-container'>
+                            <span>Frete</span>
+                            <span>R$ {budget.totals.shipping} </span>
+                        </div>
+                    )}
+                    {budget.totals.discount > 0 && (
+                        <div className='budget-subtotal-container discount'>
+                            <span>{`Desconto (${budget.totals.discount}%)`}</span>
+                            <span> - R$ {calValueDiscount()} </span>
+                        </div>
+                    )}
+                    {budget.totals.taxes > 0 && (
+                        <div className='budget-subtotal-container taxes'>
+                            <span>{`Impostos (${budget.totals.taxes}%)`}</span>
+                            <span>R$ {calValueTaxes()} </span>
+                        </div>
+                    )}
+                    <div className='budget-total-container'>
+                        <span>Total</span>
+                        <span> R$ {total}</span>
                     </div>
-                )}
-                {budget.totals.discount > 0 && (
-                    <div className='budget-subtotal-container discount'>
-                        <span>{`Desconto (${budget.totals.discount}%)`}</span>
-                        <span> - R$ {calValueDiscount()} </span>
-                    </div>
-                )}
-                {budget.totals.taxes > 0 && (
-                    <div className='budget-subtotal-container taxes'>
-                        <span>{`Impostos (${budget.totals.taxes}%)`}</span>
-                        <span>R$ {calValueTaxes()} </span>
-                    </div>
-                )}
-                <div className='budget-total-container'>
-                    <span>Total</span>
-                    <span> R$ {total}</span>
                 </div>
-            </div>
-        </ >
+            </Card>
+            <Card className='hover-container'>
+                <Subtitle className='title-list-clients'>Items/Serviços cadastrados</Subtitle>
+                <div className='container-clients'>
+                    {isLoadingItems
+                        ? <div className='box-client'>
+                            <div className='box-client'>
+                                <span >
+                                    <RefreshCcw size={30} />
+                                    Carregando itens...
+                                </span>
+                            </div>
+                        </div>
+                        : items.length > 0 ? items.map((item, index) => (
+                            <div className='box-client' key={item._id} >
+                                <div className='container-client-infos'>
+                                    <h3>
+                                        {item.name}
+                                    </h3>
+                                    <div className='container-contact-client column-client-list'>
+                                        {item.category && (
+                                            <Subtitle className='title-list-clients phone-client'>
+                                                {item?.category}
+                                            </Subtitle>)}
+                                        {item.total && (
+                                            <Subtitle className='title-list-clients phone-client'>
+                                                {'| '}
+                                                {`R$ ${item.total}/${item.unity}`}
+                                            </Subtitle>)}
+                                    </div>
+                                </div >
+                                <CardIcons className='icons-clients-list'>
+                                    <div
+                                        className='card-icon links'
+                                        onClick={() => {
+                                            budget.items.includes(item)
+                                                ? setBudget(prev => ({
+                                                    ...prev,
+                                                    items: prev.items.map(i => {
+                                                        if (i._id === item._id) {
+                                                            i.quantity++
+                                                        }
+                                                        return i
+                                                    })
+                                                }))
+                                                : setBudget(prev => ({
+                                                    ...prev,
+                                                    items: [...prev.items, item]
+                                                })
+                                                )
+                                        }}
+                                    >
+                                        <Plus />
+                                    </div>
+                                </CardIcons>
+                            </div >
+                        )
+                        ) : (
+                            <div className='box-client'>
+                                <span >
+                                    <Package size={30} />
+                                    Nenhum (item, produto ou serviço) registrado ainda
+                                </span>
+                            </div>
+                        )
+                    }
+                </div >
+
+
+            </Card >
+
+
+        </>
     )
 }
