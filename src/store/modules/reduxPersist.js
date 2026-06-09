@@ -3,7 +3,7 @@ import storage from 'redux-persist/lib/storage'
 
 export default function persistedReducers(reducers) {
     const persistedReducers = persistReducer({
-        key: 'ATEND.IA',
+        key: 'ORCAMENTOS',
         storage,
         whitelist: ['auth']
     },

@@ -10,7 +10,6 @@ const initialState = {
         title: '',
         date: dayjs().format('DD-MM-YYYY'),
     },
-    client: {},
     items: [],
     conditions: {
         paymentMethod: 'À vista'

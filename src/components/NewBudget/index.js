@@ -6,19 +6,20 @@ import { NavBudget } from './styles';
 import { Button } from '../Button';
 import { Form } from '../Form';
 import validator from 'validator'
-import { store, update } from '../../services/axiosRoutes';
 import { useBudget } from '../../context/Budget'
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { useDispatch } from 'react-redux';
+import { createBudgetRequest, updateBudgetRequest } from '../../store/modules/budget/actions';
 
 export default function NewBudget({
   isVisible,
   handleIsVisible,
   budgetData,
   isNew,
-  id,
 }) {
   const navigate = useNavigate()
+  const dispatch = useDispatch()
   const [active, setActive] = useState('Básico')
   const options = [
     'Básico',
@@ -33,7 +34,7 @@ export default function NewBudget({
     { key: 'Condições', component: <Form.Content.Conditions /> },
   ]
 
-  const { fetchBudgets, initialState, budget, setBudget } = useBudget()
+  const { initialState, budget, setBudget } = useBudget()
 
   const handleButtonActive = (option) => {
     setActive(option)
@@ -79,13 +80,10 @@ export default function NewBudget({
 
     try {
       if (budgetData) {
-        const response = await update(`/budgets/${id}`, budget)
-        toast.success(<div>Orçamento <strong>{response.data.basic.code}</strong> atualizado com sucesso!</div>)
+        dispatch(updateBudgetRequest(budget))
       } else {
-        const response = await store(`/budgets`, budget)
-        toast.success(<div>Orçamento <strong>{response.data.basic.code}</strong> criado com sucesso!</div>)
+        dispatch(createBudgetRequest(budget))
       }
-      fetchBudgets()
       navigate('/')
       handleIsVisible(false)
 

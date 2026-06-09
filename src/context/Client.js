@@ -3,10 +3,10 @@ const { createContext, useState, useContext } = require('react');
 const ClientContext = createContext()
 
 export const ClientProvider = ({ children }) => {
-    const [client, setClient] = useState({})
+    const [client, setClient] = useState()
 
     function resetClientState() {
-        setClient({})
+        setClient()
     }
 
     function updateClient(field, settings) {

@@ -9,7 +9,6 @@ import { Subtitle } from '../../Header/styles';
 import { Card } from '../../DashboardsHeader/styles';
 import { CardIcons } from '../../Cards/styled';
 import { Form } from '..';
-import { useSettings } from '../../../context/Settings';
 
 const shippingOptions = [
     {
@@ -32,7 +31,6 @@ const shippingOptions = [
 
 export function BudgetContentItems() {
     const { isLoggedIn } = useSelector(state => state.auth)
-    const { settings } = useSettings()
     const { budget, updateTotals, setBudget, updateItem } = useBudget()
     const [isRegister, setIsRegister] = useState(false)
     const { success, items, isLoadingItems } = useSelector(state => state.item || {})

@@ -14,12 +14,10 @@ import { CardIcons } from '../../Cards/styled';
 
 export function BudgetContentClient() {
     const { isLoggedIn } = useSelector(state => state.auth)
-    const { budget, updateBudget, setBudget } = useBudget()
+    const { budget, setBudget } = useBudget()
     const [isRegister, setIsRegister] = useState(false)
     const { success, clients, isLoadingClients } = useSelector(state => state.client || {})
     const dispatch = useDispatch()
-    // const { setClient } = useClient()
-    const [clientSelected, setClientSelected] = useState(false)
     const [clientActive, setClientActive] = useState(false)
 
     useEffect(() => {
@@ -29,7 +27,7 @@ export function BudgetContentClient() {
     return (
         <>
             {!isRegister
-                ? (!clientSelected && (
+                ? (!budget.client && (
 
                     <Button.Container>
                         <Button.Root onClick={() => setIsRegister(true)}  >Cadastrar novo Cliente</Button.Root>
@@ -46,14 +44,15 @@ export function BudgetContentClient() {
                     </Button.Container>
                     <Client.Register /></>
                 )}
-            {clientSelected
+            {budget.client
                 && (
                     <div
                         className='box-client'
-                        onClick={() => !clientActive ? setClientActive(clientSelected) : setClientActive(false)}
+                        onClick={() => !clientActive ? setClientActive(budget.client) : setClientActive(false)}
                     >
                         <label className='initials-client-name'>
-                            {clientSelected.name
+                            {console.log(budget.client)}
+                            {budget.client?.name && budget.client.name
                                 .split(' ', 3)
                                 .map(i => i[0].toUpperCase())
                                 .join('')
@@ -61,24 +60,24 @@ export function BudgetContentClient() {
                         </label>
                         <div className='container-client-infos'>
                             <h3>
-                                {clientSelected.name}
+                                {budget.client.name}
                             </h3>
-                            {clientActive._id === clientSelected._id && (
+                            {budget.client && clientActive._id === budget.client._id && (
                                 <div className='container-contact-client column-client-list'>
-                                    {clientSelected.whatsapp && (
+                                    {budget.client.whatsapp && (
                                         <Subtitle className='title-list-clients phone-client'>
                                             <WhatsAppIcon className='contact-icon whatsapp-icon' />
-                                            {maskPhone(clientSelected?.whatsapp)}
+                                            {maskPhone(budget.client?.whatsapp)}
                                         </Subtitle>)}
-                                    {clientSelected.phone && (
+                                    {budget.client.phone && (
                                         <Subtitle className='title-list-clients phone-client'>
                                             <Phone className='contact-icon' />
-                                            {maskPhone(clientSelected?.phone)}
+                                            {maskPhone(budget.client?.phone)}
                                         </Subtitle>)}
-                                    {clientSelected.email && (
+                                    {budget.client.email && (
                                         <Subtitle className='title-list-clients phone-client'>
                                             <Mail className='contact-icon' />
-                                            {clientSelected.email}
+                                            {budget.client.email}
                                         </Subtitle>)}
                                 </div>
                             )}
@@ -87,14 +86,17 @@ export function BudgetContentClient() {
                         <CardIcons className='icons-clients-list'>
                             <div
                                 className='card-icon links'
-                                onClick={() => setClientSelected(false)}
+                                onClick={() => setBudget(prev => {
+                                    delete prev.client
+                                    return prev
+                                })}
                             >
                                 <Minus />
                             </div>
                         </CardIcons>
                     </div>
                 )}
-            {!clientSelected &&
+            {!budget.client &&
                 <Card className='hover-container'>
                     <Subtitle className='title-list-clients'>Clientes cadastrados</Subtitle>
                     <div className='container-clients'>
@@ -123,7 +125,7 @@ export function BudgetContentClient() {
                                         <h3>
                                             {client.name}
                                         </h3>
-                                        {clientActive._id === client._id && (
+                                        {budget.client && clientActive._id === client._id && (
                                             <div className='container-contact-client column-client-list'>
                                                 {client.whatsapp && (
                                                     <Subtitle className='title-list-clients phone-client'>
@@ -148,7 +150,6 @@ export function BudgetContentClient() {
                                             className='card-icon links'
                                             onClick={() => {
                                                 setIsRegister(false)
-                                                setClientSelected(client)
                                                 setBudget(prev => ({
                                                     ...prev,
                                                     client: client
