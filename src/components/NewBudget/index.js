@@ -59,7 +59,7 @@ export default function NewBudget({
       message: 'Data ou formato da data invalido',
     })
 
-    if (!budget.basic.name || budget.basic.name === '') formErrors.push({
+    if (!budget.basic.title || budget.basic.title === '') formErrors.push({
       field: 'NOME',
       message: 'Nome é um campo obrigatório',
     })
@@ -69,6 +69,7 @@ export default function NewBudget({
       message: 'Horario ou formato do horario invalido',
     })
 
+    console.log(budget)
     if (formErrors.length > 0) {
       formErrors.forEach(value => toast.error(<div>
         <strong>{value.field}: </strong>{value.message} </div>,

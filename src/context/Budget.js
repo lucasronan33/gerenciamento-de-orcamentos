@@ -1,3 +1,4 @@
+import dayjs from 'dayjs';
 import { show } from '../services/axiosRoutes';
 
 const { createContext, useState, useContext, useCallback } = require('react');
@@ -6,11 +7,14 @@ const BudgetContext = createContext()
 
 const initialState = {
     basic: {
-        timeService: '00:00'
+        title: '',
+        date: dayjs().format('DD-MM-YYYY'),
     },
     client: {},
     items: [],
-    conditions: {},
+    conditions: {
+        paymentMethod: 'À vista'
+    },
     totals: {
         discount: 0,
         taxes: 0,

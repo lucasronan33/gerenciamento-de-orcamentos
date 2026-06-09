@@ -13,7 +13,7 @@ import { useSettings } from '../../../context/Settings';
 
 const shippingOptions = [
     {
-        value: 'SN',
+        value: 'SF',
         text: 'Sem Frete'
     },
     {
@@ -76,22 +76,6 @@ export function BudgetContentItems() {
 
         return valueDiscount.toFixed(2)
     }
-
-    useEffect(() => {
-
-        const priceHour = settings.services.priceHour
-        const [hours, minutes] = budget.basic.timeService.split(':')
-
-        const DecimalHourMinutes = Number(hours) + (Number(minutes) / 60)
-
-        const price = priceHour * DecimalHourMinutes
-
-        updateTotals('priceService', price.toFixed(2))
-    }, [
-        budget.basic.timeService,
-        settings.services.priceHour,
-        updateTotals,
-    ])
 
     useEffect(() => {
         if (!isLoggedIn) return
@@ -176,16 +160,6 @@ export function BudgetContentItems() {
                 ))
             }
             <Card className='hover-container'>
-                <Form.Root>
-                    <Form.ContainerInput>
-                        <Form.Label text='Subtotal' />
-                        <Form.LockedLabel
-                            typeInput='number'
-                            name='subtotal'
-                            text={`R$ ${subtotal?.toFixed(2)}`}
-                        />
-                    </Form.ContainerInput>
-                </Form.Root>
 
 
                 <div className='budget-container-items'>
@@ -230,7 +204,11 @@ export function BudgetContentItems() {
                             }}
                         >
                             {shippingOptions.map(value => (
-                                <option value={value.value}>{value.text} </option>
+                                <option
+                                    key={value.value}
+                                    value={value.value}>
+                                    {value.text}
+                                </option>
                             ))}
                         </select>
 

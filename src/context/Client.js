@@ -1,25 +1,12 @@
 const { createContext, useState, useContext } = require('react');
 
 const ClientContext = createContext()
-const initialState = {
-    name: '',
-    cpf_cnpj: '',
-    phone: '',
-    whatsapp: '',
-    address: {
-        street: '',
-        number: '',
-        city: '',
-        state: '',
-        zipCode: '',
-    },
-}
 
 export const ClientProvider = ({ children }) => {
-    const [client, setClient] = useState(initialState)
+    const [client, setClient] = useState({})
 
     function resetClientState() {
-        setClient(initialState)
+        setClient({})
     }
 
     function updateClient(field, settings) {

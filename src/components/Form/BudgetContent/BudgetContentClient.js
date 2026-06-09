@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-// import { useBudget } from '../../../context/Budget'
+import { useBudget } from '../../../context/Budget'
 import { Client } from '../Client';
 import { Button } from '../../Button';
 import { Contact, Mail, Minus, Phone, Plus, RefreshCcw, X } from 'lucide-react';
@@ -14,7 +14,7 @@ import { CardIcons } from '../../Cards/styled';
 
 export function BudgetContentClient() {
     const { isLoggedIn } = useSelector(state => state.auth)
-    // const { budget, updateBudget, setBudget } = useBudget()
+    const { budget, updateBudget, setBudget } = useBudget()
     const [isRegister, setIsRegister] = useState(false)
     const { success, clients, isLoadingClients } = useSelector(state => state.client || {})
     const dispatch = useDispatch()
@@ -149,6 +149,10 @@ export function BudgetContentClient() {
                                             onClick={() => {
                                                 setIsRegister(false)
                                                 setClientSelected(client)
+                                                setBudget(prev => ({
+                                                    ...prev,
+                                                    client: client
+                                                }))
                                             }}
                                         >
                                             <Plus />

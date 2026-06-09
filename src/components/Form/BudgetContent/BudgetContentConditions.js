@@ -1,95 +1,49 @@
-import { ChevronDown } from 'lucide-react';
 import { Form } from '..';
-import { DivContainerFilter, InptSearch } from '../../HeaderFilter/styles';
-import { useEffect, useRef, useState } from 'react';
 import { useBudget } from '../../../context/Budget'
+
+const options = [
+    {
+        value: 'À vista',
+        text: 'À vista',
+    },
+    {
+        value: 'Boleto',
+        text: 'Boleto',
+    },
+    {
+        value: 'Pix',
+        text: 'Pix',
+    },
+    {
+        value: 'Cartão de Débito',
+        text: 'Cartão de Débito',
+    },
+    {
+        value: 'Cartão de Crédito',
+        text: 'Cartão de Crédito',
+    },
+]
 
 export function BudgetContentConditions() {
     const { budget, updateBudget } = useBudget()
-
-    const [open, setOpen] = useState(false)
-    const ref = useRef()
-
-    const [search, setSearch] = useState('À vista')
-    const [selected, setSelected] = useState('À vista')
-    const options = [
-        'À vista',
-        'Boleto',
-        'Pix',
-        'Cartão de Débito',
-        'Cartão de Crédito',
-    ]
-
-    useEffect(() => {
-        updateBudget('conditions', 'paymentMethod', selected)
-        if (!open) return
-
-        function handleClickOutside(e) {
-
-            if (ref.current && !ref.current.contains(e.target)) {
-                setOpen(false)
-
-                setSearch(selected)
-                updateBudget('conditions', 'paymentMethod', selected)
-            }
-        }
-
-        document.addEventListener('click', handleClickOutside)
-
-        return () => {
-            document.removeEventListener('click', handleClickOutside)
-        }
-    }, [
-        open,
-        selected,
-        updateBudget
-    ])
-
-    const filteredOptions = options.filter(option => option.toLowerCase().includes(search.toLowerCase()))
 
     return (
         <>
             <Form.ContainerInput>
                 <Form.Label text='Forma de Pagamento' />
-                <DivContainerFilter ref={ref}>
-                    <InptSearch>
-                        <ChevronDown className='chevronDown-icon' />
-                        <input
-                            type='text'
-                            name='paymentMethod'
-                            placeholder='Filtrar por Forma de Pagamento'
-                            value={search}
-                            onMouseDown={(e) => {
-                                setOpen(true)
-                                setSearch('')
-                            }}
-                            onChange={(e) => setSearch(e.target.value)}
-                        />
-                    </InptSearch>
 
-                    {open && (
-                        <div className='dropDownMenu budget-menu'>
-                            {filteredOptions.length > 0 ? (
-                                filteredOptions.map((item, index) => (
-                                    <div
-                                        key={index}
-                                        className={`option ${item === selected ? 'selected' : ''}`}
-                                        onMouseDown={() => {
-                                            setSelected(item)
-                                            setSearch(item)
-                                            updateBudget('conditions', 'paymentMethod', item)
-                                            setOpen(false)
-                                        }}
-                                    >
-                                        {item}
-                                    </div>
-                                ))
-                            ) : (
-                                <div> Nenhum resultado</div>
-                            )}
-                        </div>
-                    )}
-                </DivContainerFilter>
+                <select
+                    value={budget.conditions.paymentMethod}
+                    onChange={(e) => updateBudget('conditions', 'paymentMethod', e.target.value)}
+                >
+                    {options.map(value => (
+                        <option
+                            key={value.value}
+                            value={value.value}>
+                            {value.text}
+                        </option>
+                    ))}
+                </select>
             </Form.ContainerInput>
 
             <Form.ContainerInput size='large'>

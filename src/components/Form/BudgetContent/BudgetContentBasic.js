@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import '../style.css'
 
 import { Form } from '..';
@@ -32,10 +32,15 @@ const options = [
 export function BudgetContentBasic() {
     const { budget, updateBudget } = useBudget()
 
-    if (!budget.basic.code) {
-        const code = Math.floor(Math.random() * 999999)
-        updateBudget('basic', 'code', code)
-    }
+    useEffect(() => {
+        if (!budget.basic.code) {
+            const code = Math.floor(Math.random() * 999999)
+            updateBudget('basic', 'code', code)
+        }
+    }, [
+        updateBudget,
+        budget.basic.code
+    ])
 
     return (
         <>
@@ -76,7 +81,11 @@ export function BudgetContentBasic() {
                     }}
                 >
                     {options.map(value => (
-                        <option value={value.value}>{value.text} </option>
+                        <option
+                            key={value.value}
+                            value={value.value}>
+                            {value.text}
+                        </option>
                     ))}
                 </select>
             </Form.ContainerInput>

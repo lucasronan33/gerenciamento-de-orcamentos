@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { CircleCheckBig, Clock, DollarSign, FileText } from 'lucide-react';
+import { CircleCheckBig, Clock, DollarSign, FileText, TrendingUp } from 'lucide-react';
 
 import * as colors from '../../config/colors';
 import { Card } from './styles';
@@ -51,15 +51,15 @@ export default function DashboardsHeader() {
             colorText: 'white',
         },
         {
-            title: 'Propostas',
-            content: `${budgets.length} emitidas`,
+            title: 'Orçamentos',
+            content: `${budgets.length} emitidos`,
             icon: FileText,
             colorIcon: colors.blueDocument,
             colorText: 'unset',
         },
         {
-            title: 'Propostas',
-            content: `${getBudgetsByStatus(['aprovado']).length} aprovadas`,
+            title: 'Orçamentos',
+            content: `${getBudgetsByStatus(['aprovado']).length} aprovados`,
             icon: CircleCheckBig,
             colorIcon: colors.successColor,
             colorText: 'unset',
@@ -67,7 +67,7 @@ export default function DashboardsHeader() {
         {
             title: 'Taxa de aprovação',
             content: `${approvedPercent()}%`,
-            icon: CircleCheckBig,
+            icon: TrendingUp,
             colorIcon: colors.successColor,
             colorText: 'unset',
         },
@@ -80,8 +80,8 @@ export default function DashboardsHeader() {
     return (
         <>
             <Container>
-                {cards.map(item =>
-                    <Card>
+                {cards.map((item, index) =>
+                    <Card key={index}>
                         <CardDashboard
                             data={item}
                         />
