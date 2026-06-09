@@ -149,7 +149,7 @@ export function ClientRegister() {
                     type='submit'
                     disabled={isLoading} >
                     <Button.Icon icon={SaveIcon} />
-                    {client._id
+                    {client?._id
                         ? (!isLoading
                             ? 'Atualizar'
                             : 'Atualizando...'

@@ -11,6 +11,8 @@ import { Card } from '../../components/DashboardsHeader/styles';
 import { FileText, Plus, Users } from 'lucide-react';
 import { Button } from '../../components/Button';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { fetchBudgetsRequest } from '../../store/modules/budget/actions';
 
 
 const iconsMenu = [
@@ -28,11 +30,15 @@ const iconsMenu = [
 
 export default function Home() {
     const navigate = useNavigate()
-    const { budgets, filteredBudgets, fetchBudgets } = useBudget()
+    const dispatch = useDispatch()
+    const { budgets, filteredBudgets } = useBudget()
 
     useEffect(() => {
-        fetchBudgets()
-    }, [fetchBudgets])
+        const data = dispatch(fetchBudgetsRequest())
+        console.log(data)
+    }, [
+        dispatch
+    ])
 
     return (
         <div>

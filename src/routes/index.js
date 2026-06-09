@@ -37,12 +37,6 @@ export default function Routers() {
 
                 <Route element={
                     <MyRoute isClosed>
-                        <Home />
-                    </MyRoute>
-                } path='/budget/:id' />
-
-                <Route element={
-                    <MyRoute isClosed>
                         <Clients />
                     </MyRoute>
                 } path='/clients' />

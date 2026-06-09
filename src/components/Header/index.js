@@ -1,64 +1,36 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import './style.css'
 import { Plus } from 'lucide-react'
 import NewBudget from '../NewBudget'
 import { Subtitle, Title } from './styles'
 import { Button } from '../Button'
-import { useLocation, useNavigate, useParams } from 'react-router-dom'
-import axios from '../../services/axios'
 import Sidebar from '../Sidebar'
+import { useDispatch } from 'react-redux'
+import { useBudget } from '../../context/Budget'
 
 export default function Header() {
-    const [newBudget, setNewBudget] = useState(false)
-    const [budgetData, setBudgetData] = useState(null)
-    const { id } = useParams()
-    const isNew = id === 'new'
-    const isView = id === 'view'
-    const location = useLocation()
-
-    const navigate = useNavigate()
-
-    const handleIsVisible = () => {
-        setNewBudget(false)
-        setBudgetData(null)
-        navigate('/')
-        document.body.removeAttribute('style')
-    }
+    const dispatch = useDispatch()
+    const { modalOpen, setModalOpen } = useBudget()
     useEffect(() => {
 
-        if (isNew) {
-            setNewBudget(true)
-            setBudgetData(null)
+        if (!modalOpen) {
+            document.body.removeAttribute('style')
+            return
+        }
+        if (modalOpen) {
             document.body.style.overflow = 'hidden'
             return
         }
-
-        async function getData() {
-
-            try {
-                if (id) {
-                    const { data } = await axios.get(`/budgets/${id}`)
-                    setBudgetData(data)
-                    setNewBudget(true)
-                }
-            } catch {
-                setBudgetData(null)
-            }
-        }
-        getData()
-
-        if (!id) return
-    }, [id, isNew, isView, location])
+    }, [
+        modalOpen
+    ])
+    console.log(modalOpen)
 
     return (
         <div className='header'>
-            <NewBudget
-                isVisible={newBudget}
-                handleIsVisible={handleIsVisible}
-                budgetData={budgetData}
-                isNew={isNew}
-                id={id}
-                key={id} />
+            {modalOpen && (
+                <NewBudget />
+            )}
             <div className='container'>
                 <div className='container-logo-title'>
                     <Sidebar />
@@ -72,7 +44,9 @@ export default function Header() {
                         </Subtitle>
                     </div>
                 </div>
-                <Button.Root className='button-header' onClick={() => navigate('/budget/new')}>
+                <Button.Root className='button-header' onClick={() => {
+                    setModalOpen(true)
+                }}>
                     <Plus />
                     Novo Orçamento
                 </Button.Root>

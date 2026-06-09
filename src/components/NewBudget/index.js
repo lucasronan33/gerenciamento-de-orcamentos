@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
+import React, { useState } from 'react';
 import './style.css';
 import { Subtitle, Title } from '../Header/styles';
 import { NavBudget } from './styles';
@@ -12,14 +11,9 @@ import { toast } from 'react-toastify';
 import { useDispatch } from 'react-redux';
 import { createBudgetRequest, updateBudgetRequest } from '../../store/modules/budget/actions';
 
-export default function NewBudget({
-  isVisible,
-  handleIsVisible,
-  budgetData,
-  isNew,
-}) {
-  const navigate = useNavigate()
+export default function NewBudget() {
   const dispatch = useDispatch()
+  const { budget, modalOpen, setModalOpen } = useBudget()
   const [active, setActive] = useState('Básico')
   const options = [
     'Básico',
@@ -33,8 +27,6 @@ export default function NewBudget({
     { key: 'Itens', component: <Form.Content.Items /> },
     { key: 'Condições', component: <Form.Content.Conditions /> },
   ]
-
-  const { initialState, budget, setBudget } = useBudget()
 
   const handleButtonActive = (option) => {
     setActive(option)
@@ -79,33 +71,23 @@ export default function NewBudget({
     }
 
     try {
-      if (budgetData) {
+      if (budget) {
         dispatch(updateBudgetRequest(budget))
       } else {
         dispatch(createBudgetRequest(budget))
       }
-      navigate('/')
-      handleIsVisible(false)
-
+      if (modalOpen) {
+        setModalOpen(false)
+      }
     } catch (err) {
       console.log(err)
       toast.error(err.message)
     }
   };
 
-  useEffect(() => {
-    if (isNew) {
-      setBudget(initialState)
-      return
-    }
-    if (budgetData) {
-      setBudget(budgetData)
-    }
-  }, [budgetData, isNew, setBudget, initialState])
-
-  if (!isVisible) return;
+  if (!modalOpen) return;
   return (
-    <div className="span-newBudget" onMouseDown={() => handleIsVisible(false)}>
+    <div className="span-newBudget" onMouseDown={() => setModalOpen(false)}>
       <div className="container-newBudget" onMouseDown={(e) => e.stopPropagation()}>
         <div className="header-budget">
           <Title>Novo Orçamento</Title>
@@ -136,7 +118,7 @@ export default function NewBudget({
         </Form.Root>
 
         <div className='container-buttons-budget'>
-          <Button.Root onClick={() => handleIsVisible(false)} className='btn-cancel'>Cancelar</Button.Root>
+          <Button.Root onClick={() => setModalOpen(false)} className='btn-cancel'>Cancelar</Button.Root>
           <Button.Root
             onClick={handleSubmit}
             type='submit'>Criar Orçamento</Button.Root>
@@ -146,11 +128,3 @@ export default function NewBudget({
     </div>
   );
 }
-
-NewBudget.defaultProps = {
-  isVisible: false,
-};
-
-NewBudget.propTypes = {
-  isVisible: PropTypes.bool,
-};
