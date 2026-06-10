@@ -29,3 +29,7 @@ export function maskZipCode(value = '') {
     const digits = onlyDigits(value).slice(0, 8);
     return digits.replace(/^(\d{5})(\d)/, '$1-$2');
 }
+
+export function isEmptyObject(obj) {
+    return !Boolean(Object.keys(obj).length > 0)
+}

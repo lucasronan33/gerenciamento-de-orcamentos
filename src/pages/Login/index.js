@@ -106,6 +106,7 @@ export default function Login() {
 
                         {hasGoogleClientId ? (
                             <GoogleLogin
+                                theme='filled_blue'
                                 onSuccess={(credentialResponse) => {
                                     dispatch(googleLoginRequest({
                                         credential: credentialResponse.credential

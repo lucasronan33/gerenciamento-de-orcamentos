@@ -5,11 +5,9 @@ import NewBudget from '../NewBudget'
 import { Subtitle, Title } from './styles'
 import { Button } from '../Button'
 import Sidebar from '../Sidebar'
-import { useDispatch } from 'react-redux'
 import { useBudget } from '../../context/Budget'
 
 export default function Header() {
-    const dispatch = useDispatch()
     const { budgetOpen, setBudgetOpen } = useBudget()
     useEffect(() => {
 

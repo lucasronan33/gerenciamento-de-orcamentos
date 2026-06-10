@@ -25,6 +25,7 @@ const initialState = {
 export function BudgetProvider({ children }) {
     const [budget, setBudget] = useState(initialState)
     const [budgetOpen, setBudgetOpen] = useState(false)
+    const [viewBudget, setViewBudget] = useState(false)
     const [filterSelected, setFilterSelected] = useState('all states')
     const [searchBudget, setSearchBudget] = useState('')
     const [filteredBudgets, setFilteredBudgets] = useState([])
@@ -159,6 +160,8 @@ export function BudgetProvider({ children }) {
 
                     budgetOpen,
                     setBudgetOpen,
+                    viewBudget,
+                    setViewBudget,
 
                     budgets,
                     calcTotalBudgets,
