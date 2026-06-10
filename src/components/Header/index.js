@@ -10,25 +10,24 @@ import { useBudget } from '../../context/Budget'
 
 export default function Header() {
     const dispatch = useDispatch()
-    const { modalOpen, setModalOpen } = useBudget()
+    const { budgetOpen, setBudgetOpen } = useBudget()
     useEffect(() => {
 
-        if (!modalOpen) {
+        if (!budgetOpen) {
             document.body.removeAttribute('style')
             return
         }
-        if (modalOpen) {
+        if (budgetOpen) {
             document.body.style.overflow = 'hidden'
             return
         }
     }, [
-        modalOpen
+        budgetOpen
     ])
-    console.log(modalOpen)
 
     return (
         <div className='header'>
-            {modalOpen && (
+            {budgetOpen && (
                 <NewBudget />
             )}
             <div className='container'>
@@ -45,7 +44,7 @@ export default function Header() {
                     </div>
                 </div>
                 <Button.Root className='button-header' onClick={() => {
-                    setModalOpen(true)
+                    setBudgetOpen(true)
                 }}>
                     <Plus />
                     Novo Orçamento

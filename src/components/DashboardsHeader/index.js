@@ -26,7 +26,7 @@ export default function DashboardsHeader() {
 
     const approvedPercent = () => {
         const totalBudgets = budgets.length
-        const totalApprovedBudgets = getBudgetsByStatus(['aprovado', 'finalizado']).length
+        const totalApprovedBudgets = getBudgetsByStatus(['approved', 'finished']).length
 
         function calcTotal() {
             let total = totalApprovedBudgets / totalBudgets * 100
@@ -38,14 +38,14 @@ export default function DashboardsHeader() {
     const cards = [
         {
             title: 'Receita',
-            content: `R$ ${sumValueByStatus(['finalizado'])}`,
+            content: `R$ ${sumValueByStatus(['finished'])}`,
             icon: DollarSign,
             colorIcon: colors.successColor,
             colorText: colors.successColor,
         },
         {
             title: 'A receber',
-            content: `R$ ${sumValueByStatus(['aprovado'])}`,
+            content: `R$ ${sumValueByStatus(['approved'])}`,
             icon: Clock,
             colorIcon: colors.warningColor,
             colorText: 'white',
@@ -59,7 +59,7 @@ export default function DashboardsHeader() {
         },
         {
             title: 'Orçamentos',
-            content: `${getBudgetsByStatus(['aprovado']).length} aprovados`,
+            content: `${getBudgetsByStatus(['approved']).length} aprovados`,
             icon: CircleCheckBig,
             colorIcon: colors.successColor,
             colorText: 'unset',

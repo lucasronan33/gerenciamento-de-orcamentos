@@ -1,16 +1,39 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'
 import { CardIcons, ConfirmDeleteModal, ContainerCardBudget, DivTitle, InfoCardBudget, StatusBudget } from './styled';
 import { Copy, Edit, Eye, Trash2 } from 'lucide-react';
-import { destroy, store } from '../../services/axiosRoutes';
 import { Button } from '../Button';
 import { useBudget } from '../../context/Budget';
+import { useDispatch } from 'react-redux';
+import { createBudgetRequest, deleteBudgetRequest } from '../../store/modules/budget/actions';
+
+const status = [
+    {
+        value: 'sketch',
+        text: 'Rascunho',
+    },
+    {
+        value: 'sent',
+        text: 'Enviado',
+    },
+    {
+        value: 'approved',
+        text: 'Aprovado',
+    },
+    {
+        value: 'finished',
+        text: 'Finalizado',
+    },
+    {
+        value: 'rejected',
+        text: 'Rejeitado',
+    },
+]
 
 export default function CardBudget({ budget }) {
-    const navigate = useNavigate()
-    const { fetchBudgets } = useBudget()
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
     const [isDeleting, setIsDeleting] = useState(false)
+    const { setBudgetOpen, setBudget } = useBudget()
+    const dispatch = useDispatch()
     const statusClasses = {
         enviado: 'sentStatus',
         aprovado: 'approvedStatus',
@@ -18,13 +41,16 @@ export default function CardBudget({ budget }) {
         finalizado: 'finishedStatus',
     }
 
-    const id = budget._id
+    const handleCopy = () => {
+        const copy = { ...budget }
+        copy.basic.code = Math.floor(Math.random() * 999999)
 
+        dispatch(createBudgetRequest(copy))
+    }
     const handleDelete = async () => {
         try {
             setIsDeleting(true)
-            await destroy(`/budgets/${id}`)
-            fetchBudgets()
+            dispatch(deleteBudgetRequest(budget))
             setIsDeleteModalOpen(false)
         } catch {
             setIsDeleteModalOpen(false)
@@ -32,13 +58,17 @@ export default function CardBudget({ budget }) {
             setIsDeleting(false)
         }
     }
+    const budgetStatus = status.reduce((obj, item) => {
+        if (item.value === budget.basic.status) obj = item.text
+        return obj
+    }, {})
 
     return (
         <ContainerCardBudget>
             <DivTitle>
                 <h2>{budget.basic.title} </h2>
-                <StatusBudget className={statusClasses[budget.basic.status.toLowerCase()]} >
-                    {budget.basic.status}
+                <StatusBudget className={statusClasses[budgetStatus.toLowerCase()]} >
+                    {budgetStatus}
                 </StatusBudget>
             </DivTitle>
             <p className='titleBudget'>{budget.basic.code} </p>
@@ -62,44 +92,33 @@ export default function CardBudget({ budget }) {
             <InfoCardBudget>
                 <div >
                     <h3>Total: </h3>
-                    <h3>R$ {String(budget.totals.total).replace('.', ',')} </h3>
+                    <h3>R$ {String(budget.totals.total)} </h3>
                 </div>
             </InfoCardBudget>
             <CardIcons>
                 <div
                     className='card-icon viewOrc'
-                    onClick={() => { navigate(`/budget/${id}`) }}
+                    onClick={() => {
+                        setBudgetOpen(true)
+                        setBudget(budget)
+                    }}
                 >
                     <Eye /> Ver
                 </div>
 
                 <div
                     className='card-icon links'
-                    onClick={() => { navigate(`/budget/${id}`) }}
+                    onClick={() => {
+                        setBudgetOpen(true)
+                        setBudget(budget)
+                    }}
                 >
                     <Edit />
                 </div>
 
                 <div
                     className='card-icon links'
-                    onClick={async () => {
-                        try {
-
-                            const newCode = Math.floor(Math.random() * 999999)
-                            const newBudget = {
-                                ...budget,
-                                _id: undefined,
-                                basic: {
-                                    ...budget.basic,
-                                    code: newCode,
-                                }
-                            }
-
-                            await store('/budgets', newBudget)
-                            fetchBudgets()
-                        } catch {
-                        }
-                    }}
+                    onClick={() => handleCopy()}
                 >
                     <Copy />
                 </div>

@@ -4,7 +4,6 @@ import { Client } from '../Client';
 import { Button } from '../../Button';
 import { Contact, Mail, Minus, Phone, Plus, RefreshCcw, X } from 'lucide-react';
 import { useDispatch, useSelector } from 'react-redux';
-// import { useClient } from '../../../context/Client';
 import { fetchClientsRequest } from '../../../store/modules/client/actions';
 import { Subtitle } from '../../Header/styles';
 import { Card } from '../../DashboardsHeader/styles';
@@ -51,7 +50,6 @@ export function BudgetContentClient() {
                         onClick={() => !clientActive ? setClientActive(budget.client) : setClientActive(false)}
                     >
                         <label className='initials-client-name'>
-                            {console.log(budget.client)}
                             {budget.client?.name && budget.client.name
                                 .split(' ', 3)
                                 .map(i => i[0].toUpperCase())

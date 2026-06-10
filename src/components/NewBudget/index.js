@@ -6,14 +6,13 @@ import { Button } from '../Button';
 import { Form } from '../Form';
 import validator from 'validator'
 import { useBudget } from '../../context/Budget'
-import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { useDispatch } from 'react-redux';
-import { createBudgetRequest, updateBudgetRequest } from '../../store/modules/budget/actions';
+import { budgetReset, createBudgetRequest, updateBudgetRequest } from '../../store/modules/budget/actions';
 
 export default function NewBudget() {
   const dispatch = useDispatch()
-  const { budget, modalOpen, setModalOpen } = useBudget()
+  const { budget, setBudget, initialState, budgetOpen, setBudgetOpen } = useBudget()
   const [active, setActive] = useState('Básico')
   const options = [
     'Básico',
@@ -30,6 +29,11 @@ export default function NewBudget() {
 
   const handleButtonActive = (option) => {
     setActive(option)
+  }
+  const handleCancel = () => {
+    dispatch(budgetReset())
+    setBudgetOpen(false)
+    setBudget(initialState)
   }
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -62,7 +66,6 @@ export default function NewBudget() {
       message: 'Horario ou formato do horario invalido',
     })
 
-    console.log(budget)
     if (formErrors.length > 0) {
       formErrors.forEach(value => toast.error(<div>
         <strong>{value.field}: </strong>{value.message} </div>,
@@ -71,13 +74,13 @@ export default function NewBudget() {
     }
 
     try {
-      if (budget) {
+      if (budget._id) {
         dispatch(updateBudgetRequest(budget))
       } else {
         dispatch(createBudgetRequest(budget))
       }
-      if (modalOpen) {
-        setModalOpen(false)
+      if (budgetOpen) {
+        setBudgetOpen(false)
       }
     } catch (err) {
       console.log(err)
@@ -85,9 +88,9 @@ export default function NewBudget() {
     }
   };
 
-  if (!modalOpen) return;
+  if (!budgetOpen) return;
   return (
-    <div className="span-newBudget" onMouseDown={() => setModalOpen(false)}>
+    <div className="span-newBudget" onMouseDown={handleCancel}>
       <div className="container-newBudget" onMouseDown={(e) => e.stopPropagation()}>
         <div className="header-budget">
           <Title>Novo Orçamento</Title>
@@ -118,7 +121,7 @@ export default function NewBudget() {
         </Form.Root>
 
         <div className='container-buttons-budget'>
-          <Button.Root onClick={() => setModalOpen(false)} className='btn-cancel'>Cancelar</Button.Root>
+          <Button.Root onClick={handleCancel} className='btn-cancel'>Cancelar</Button.Root>
           <Button.Root
             onClick={handleSubmit}
             type='submit'>Criar Orçamento</Button.Root>

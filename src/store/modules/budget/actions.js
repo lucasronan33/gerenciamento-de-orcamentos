@@ -95,7 +95,7 @@ export function deleteBudgetFailure(payload) {
 }
 
 // =============================
-export function itemReset() {
+export function budgetReset() {
     return {
         type: types.BUDGET_RESET,
     };

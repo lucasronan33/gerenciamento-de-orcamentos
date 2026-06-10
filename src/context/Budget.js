@@ -1,7 +1,8 @@
 import dayjs from 'dayjs';
-import { show } from '../services/axiosRoutes';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchBudgetsRequest } from '../store/modules/budget/actions';
 
-const { createContext, useState, useContext, useCallback } = require('react');
+const { createContext, useState, useContext, useCallback, useEffect, useMemo } = require('react');
 
 const BudgetContext = createContext()
 
@@ -23,61 +24,32 @@ const initialState = {
 }
 export function BudgetProvider({ children }) {
     const [budget, setBudget] = useState(initialState)
-    const [budgets, setBudgets] = useState([])
-    const [modalOpen, setModalOpen] = useState(false)
-    const [filterSelected, setFilterSelected] = useState('')
+    const [budgetOpen, setBudgetOpen] = useState(false)
+    const [filterSelected, setFilterSelected] = useState('all states')
+    const [searchBudget, setSearchBudget] = useState('')
     const [filteredBudgets, setFilteredBudgets] = useState([])
-
-    const fetchBudgets = useCallback(async () => {
-        const response = await show('/budgets')
-        setBudgets(response.data)
-        setFilteredBudgets(response.data)
-    }, [])
+    const { budgets, success, loadedBudgets } = useSelector(state => state.budget)
+    const { isLoggedIn } = useSelector(state => state.auth)
+    const dispatch = useDispatch()
 
     function inputFilterBudgets(value) {
-        if (value === 'Todos os status') {
-            setFilteredBudgets(budgets)
-            return
-        }
-        const filtered = budgets.filter(
-            item => {
-                const normalizeValue = String(value).toLowerCase()
-                if (item.basic.status !== filterSelected) return false
-
-                if (item.basic.code.includes(normalizeValue)) return true
-                if (item.basic.name.includes(normalizeValue)) return true
-                if (item.client?.enterpriseName?.includes(normalizeValue)) return true
-                if (item.client?.email?.includes(normalizeValue)) return true
-                return false
-            }
-        )
-        setFilteredBudgets(filtered)
+        setSearchBudget(value)
     }
 
     function filterBudgets(filterValue) {
-        if (filterValue === 'Todos os status') {
-            setFilteredBudgets(budgets)
-            return
-        }
-
-        const filtered = budgets.filter(
-            item => {
-                if (item.basic.status === filterValue) return item
-                return null
-            }
-        )
-        setFilteredBudgets(filtered)
+        setFilterSelected(filterValue)
     }
 
-    function calcTotalBudgets() {
-
+    const calcTotalBudgets = useMemo(() => {
         const total = budgets.reduce((prevValue, currentValue) => {
             const value = Number(currentValue.totals.total) || 0
             return prevValue + value
         }, 0).toFixed(2)
 
         return total
-    }
+    }, [
+        budgets
+    ])
 
     function getBudgetsByStatus(status) {
         const total = budgets.filter(
@@ -137,6 +109,42 @@ export function BudgetProvider({ children }) {
         }))
     }, [])
 
+    useEffect(() => {
+        if (!isLoggedIn) return
+        dispatch(fetchBudgetsRequest())
+    }, [
+        dispatch,
+        success,
+        isLoggedIn,
+        loadedBudgets
+    ])
+
+    useEffect(() => {
+        const normalizeValue = String(searchBudget).toLowerCase().trim()
+
+        const filtered = budgets.filter(item => {
+            if (filterSelected !== 'all states' && item.basic.status !== filterSelected) {
+                return false
+            }
+
+            if (!normalizeValue) return true
+
+            const code = String(item.basic.code || '').toLowerCase()
+            const name = String(item.basic.name || '').toLowerCase()
+            const enterpriseName = String(item.client?.enterpriseName || '').toLowerCase()
+            const email = String(item.client?.email || '').toLowerCase()
+
+            return (
+                code.includes(normalizeValue) ||
+                name.includes(normalizeValue) ||
+                enterpriseName.includes(normalizeValue) ||
+                email.includes(normalizeValue)
+            )
+        })
+
+        setFilteredBudgets(filtered)
+    }, [budgets, filterSelected, searchBudget])
+
     return (
         <BudgetContext.Provider
             value={
@@ -149,11 +157,10 @@ export function BudgetProvider({ children }) {
                     updateTotals,
                     calcTotal,
 
-                    modalOpen,
-                    setModalOpen,
+                    budgetOpen,
+                    setBudgetOpen,
 
                     budgets,
-                    setBudgets,
                     calcTotalBudgets,
                     getBudgetsByStatus,
 
@@ -162,7 +169,6 @@ export function BudgetProvider({ children }) {
                     inputFilterBudgets,
                     filterBudgets,
                     filteredBudgets,
-                    fetchBudgets,
                 }
             }>
             {children}

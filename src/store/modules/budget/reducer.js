@@ -3,7 +3,8 @@ import * as types from '../types';
 
 const initialState = {
     isLoading: false,
-    isLoadingItems: false,
+    isLoadingBudgets: false,
+    loadedBudgets: false,
     success: false,
     budget: null,
     budgets: [],
@@ -14,13 +15,14 @@ export default function reducer(state = initialState, action) {
         case types.FETCH_BUDGETS_REQUEST:
             return {
                 ...state,
-                isLoadingItems: true,
+                isLoadingBudgets: true,
                 errors: [],
             };
         case types.FETCH_BUDGETS_SUCCESS:
             return {
                 ...state,
-                isLoadingItems: false,
+                isLoadingBudgets: false,
+                loadedBudgets: true,
                 success: false,
                 budgets: action.payload,
                 errors: []
@@ -28,7 +30,8 @@ export default function reducer(state = initialState, action) {
         case types.FETCH_BUDGETS_FAILURE:
             return {
                 ...state,
-                isLoadingItems: false,
+                isLoadingBudgets: false,
+                loadedBudgets: true,
                 errors: action.payload || [],
             }
 
