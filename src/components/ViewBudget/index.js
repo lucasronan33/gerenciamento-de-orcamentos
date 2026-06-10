@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { useSelector } from 'react-redux';
 import {
     BriefcaseBusiness,
@@ -11,6 +11,7 @@ import {
     MapPin,
     PackageOpen,
     Phone,
+    Printer,
     ShieldCheck,
     Truck,
     UserRound,
@@ -20,6 +21,7 @@ import {
 import { useBudget } from '../../context/Budget';
 import { maskCpfCnpj, maskPhone, maskZipCode } from '../../utils/masks';
 import './style.css'
+import generatePDF from 'react-to-pdf';
 
 const statusLabels = {
     sketch: 'Rascunho',
@@ -35,6 +37,29 @@ const shippingLabels = {
     FOB: 'FOB',
     custom: 'Personalizado',
 }
+
+const paymentMethod = [
+    {
+        value: 'at sight',
+        text: 'À vista',
+    },
+    {
+        value: 'ticket',
+        text: 'Boleto',
+    },
+    {
+        value: 'pix',
+        text: 'Pix',
+    },
+    {
+        value: 'debit card',
+        text: 'Cartão de Débito',
+    },
+    {
+        value: 'credit card',
+        text: 'Cartão de Crédito',
+    },
+]
 
 function formatDate(value) {
     if (!value) return '-'
@@ -92,12 +117,14 @@ function SectionTitle({ icon: Icon, children }) {
 export function ViewBudget() {
     const { budget, setBudget, initialState, setViewBudget } = useBudget()
     const { user = {} } = useSelector(state => state.auth || {})
+    const targetRef = useRef()
 
     const handleCancel = () => {
         setViewBudget(false)
         setBudget(initialState)
     }
 
+    const basic = budget.basic || {}
     const client = budget.client || {}
     const userAddress = getAddressLine(user.address)
     const clientAddress = client.address || {}
@@ -117,12 +144,31 @@ export function ViewBudget() {
     const total = Number(totals.total) || calculatedTotal + shipping - discount + taxes
     const status = statusLabels[budget.basic?.status] || budget.basic?.status || 'Rascunho'
 
+    const paymentMethodBudget = paymentMethod.reduce((obj, item) => {
+        if (item.value === budget.conditions.paymentMethod) obj = item.text
+        return obj
+    }, {})
+
     return (
         <div className="span-viewBudget" onMouseDown={handleCancel}>
-            <article className="container-viewBudget" onMouseDown={(e) => e.stopPropagation()}>
-                <button className='budget-close-button' type='button' onClick={handleCancel} aria-label='Fechar orçamento'>
-                    <X size={20} />
-                </button>
+            <button className='budget-close-button' type='button' onClick={handleCancel} aria-label='Fechar orçamento'
+                onMouseDown={(e) => e.stopPropagation()}>
+                <X size={20} />
+            </button>
+            <button
+                className='budget-print-button'
+                type='button'
+                onClick={() => generatePDF(targetRef, {
+                    filename: `${basic.code}_${basic.title}_${client.name}.pdf`
+                })}
+                aria-label='Imprimir orçamento'
+                onMouseDown={(e) => e.stopPropagation()}>
+                <Printer size={20} />
+            </button>
+            <article
+                ref={targetRef}
+                className="container-viewBudget"
+                onMouseDown={(e) => e.stopPropagation()}>
 
                 <header className='budget-header'>
                     <div className='budget-company'>
@@ -131,7 +177,9 @@ export function ViewBudget() {
                         </div>
                         <div>
                             <h1>{user.name || 'Sua empresa'}</h1>
-                            <p>{user.slogan || 'Seu slogan aqui'}</p>
+                            {user.slogan
+                                ? (<p>{user.slogan}</p>)
+                                : (<p>Seu slogan aqui</p>)}
                         </div>
                     </div>
 
@@ -243,7 +291,7 @@ export function ViewBudget() {
                 <section className='budget-box budget-conditions'>
                     <div>
                         <SectionTitle icon={BriefcaseBusiness}>Condições Comerciais</SectionTitle>
-                        <InfoLine label={<><WalletCards size={16} /> Forma de Pagamento:</>} value={conditions.paymentMethod} />
+                        <InfoLine label={<><WalletCards size={16} /> Forma de Pagamento:</>} value={paymentMethodBudget} />
                         <InfoLine label={<><CalendarDays size={16} /> Condições de Pagamento:</>} value={conditions.paymentConditions} />
                         <InfoLine label={<><Truck size={16} /> Prazo de Entrega:</>} value={conditions.shippingTime} />
                         <InfoLine label={<><MapPin size={16} /> Tipo do Frete:</>} value={shippingLabels[totals.shippingType] || totals.shippingType} />
