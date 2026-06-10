@@ -74,9 +74,9 @@ export const UserAddress = ({ user }) => {
                 </Form.Label >
                 <Form.Input
                     placeholder={'00000-000'}
-                    typeInput={'number'}
+                    typeInput={'text'}
                     id={'zipCode'}
-                    value={user?.address?.zipCode || ''}
+                    value={maskZipCode(user?.address?.zipCode) || ''}
                     onChange={(e) => updateSubUser('address', 'zipCode', maskZipCode(e.target.value))}
                 />
             </Form.ContainerInput>

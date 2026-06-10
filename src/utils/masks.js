@@ -27,7 +27,8 @@ export function maskCpfCnpj(value = '') {
 
 export function maskZipCode(value = '') {
     const digits = onlyDigits(value).slice(0, 8);
-    return digits.replace(/^(\d{5})(\d)/, '$1-$2');
+    if (digits.length <= 5) return digits;
+    return `${digits.slice(0, 5)}-${digits.slice(5)}`;
 }
 
 export function isEmptyObject(obj) {

@@ -76,7 +76,7 @@ export function ClientAddress() {
                     typeInput={'number'}
                     id={'zipCode'}
                     name={'zipCode'}
-                    value={client?.address?.zipCode || ''}
+                    value={maskZipCode(client?.address?.zipCode) || ''}
                     onChange={(e) => updateSubClient('address', 'zipCode', maskZipCode(e.target.value))}
                 />
             </Form.ContainerInput>
