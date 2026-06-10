@@ -3,23 +3,23 @@ import { useBudget } from '../../../context/Budget'
 
 const options = [
     {
-        value: 'À vista',
+        value: 'at sight',
         text: 'À vista',
     },
     {
-        value: 'Boleto',
+        value: 'ticket',
         text: 'Boleto',
     },
     {
-        value: 'Pix',
+        value: 'pix',
         text: 'Pix',
     },
     {
-        value: 'Cartão de Débito',
+        value: 'debit card',
         text: 'Cartão de Débito',
     },
     {
-        value: 'Cartão de Crédito',
+        value: 'credit card',
         text: 'Cartão de Crédito',
     },
 ]
