@@ -101,9 +101,9 @@ export function BudgetContentItems() {
                     <Items.Register /></>
                 )}
             {budget.items.length > 0
-                && budget.items.map(item => (
+                && budget.items.map((item, index) => (
                     <div
-                        key={item._id}
+                        key={item._id + index}
                         className='box-client'
                     >
                         <div className='container-client-infos'>
@@ -272,7 +272,7 @@ export function BudgetContentItems() {
                             </div>
                         </div>
                         : items.length > 0 ? items.map((item, index) => (
-                            <div className='box-client' key={item._id} >
+                            <div className='box-client' key={item._id + index} >
                                 <div className='container-client-infos'>
                                     <h3>
                                         {item.name}
