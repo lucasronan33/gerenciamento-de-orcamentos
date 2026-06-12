@@ -22,6 +22,36 @@ export const UserBasic = ({ user }) => {
                 />
             </Form.ContainerInput>
 
+            <Form.ContainerInput size='xx-large' >
+                <Form.Label
+                    text={'Razão social'}
+                    htmlFor={'enterpriseName'}
+                >
+                </Form.Label >
+                <Form.Input
+                    placeholder={'Insira o nome da sua empresa'}
+                    typeInput={'text'}
+                    id={'enterpriseName'}
+                    value={user?.enterpriseName || ''}
+                    onChange={(e) => updateUser('enterpriseName', e.target.value)}
+                />
+            </Form.ContainerInput>
+
+            <Form.ContainerInput size='xx-large' >
+                <Form.Label
+                    text={'Slogan'}
+                    htmlFor={'slogan'}
+                >
+                </Form.Label >
+                <Form.Input
+                    placeholder={'Insira o slogan da sua marca/empresa'}
+                    typeInput={'text'}
+                    id={'slogan'}
+                    value={user?.slogan || ''}
+                    onChange={(e) => updateUser('slogan', e.target.value)}
+                />
+            </Form.ContainerInput>
+
             <Form.ContainerInput >
                 <Form.Label
                     text={'Telefone *'}
