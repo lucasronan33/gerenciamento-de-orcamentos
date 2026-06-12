@@ -1,6 +1,4 @@
-import { show } from '../services/axiosRoutes'
-
-const { createContext, useContext, useState, useCallback } = require('react')
+const { createContext, useContext, useState } = require('react')
 
 const SettingsContext = createContext()
 
@@ -17,22 +15,6 @@ const initialState = {
 
 export function SettingsProvider({ children }) {
     const [settings, setSettings] = useState(initialState)
-
-    const fetchSettings = useCallback(async () => {
-        try {
-            const { data } = await show('/user/settings')
-            setSettings({
-                ...initialState,
-                ...(data || {}),
-                services: {
-                    ...initialState.services,
-                    ...(data?.services || {}),
-                },
-            })
-        } catch (error) {
-            setSettings(initialState)
-        }
-    }, [])
 
     function updateSettings(field, settings) {
         setSettings(prev => ({
@@ -61,8 +43,6 @@ export function SettingsProvider({ children }) {
                 updateSettings,
                 updateSubSettings,
                 initialState,
-
-                fetchSettings
             }
         }
         >

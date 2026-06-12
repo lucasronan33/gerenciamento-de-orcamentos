@@ -1,21 +1,9 @@
-import { toast } from 'react-toastify';
-import { show } from '../services/axiosRoutes';
-
-const { createContext, useState, useContext, useCallback } = require('react');
+const { createContext, useState, useContext } = require('react');
 
 const UserContext = createContext()
 
 export const UserProvider = ({ children }) => {
     const [user, setUser] = useState({})
-
-    const fetchUser = useCallback(async () => {
-        try {
-            const { data } = await show('/user')
-            return data.user
-        } catch (err) {
-            toast.error(err.message)
-        }
-    }, [])
 
     function updateUser(field, settings) {
         setUser(prev => ({
@@ -41,7 +29,6 @@ export const UserProvider = ({ children }) => {
             {
                 user,
                 setUser,
-                fetchUser,
                 updateUser,
                 updateSubUser,
             }
