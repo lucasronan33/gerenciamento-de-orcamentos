@@ -8,15 +8,6 @@ const UserContext = createContext()
 export const UserProvider = ({ children }) => {
     const [user, setUser] = useState({})
 
-    const fetchUser = useCallback(async () => {
-        try {
-            const { data } = await show('/user')
-            return data.user
-        } catch (err) {
-            toast.error(err.message)
-        }
-    }, [])
-
     function updateUser(field, settings) {
         setUser(prev => ({
             ...prev,
@@ -41,7 +32,6 @@ export const UserProvider = ({ children }) => {
             {
                 user,
                 setUser,
-                fetchUser,
                 updateUser,
                 updateSubUser,
             }

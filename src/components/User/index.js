@@ -14,8 +14,8 @@ import { updateUserRequest } from '../../store/modules/auth/actions';
 import { isValidCpfCnpj } from '../../utils/documents';
 
 export const UserSettings = () => {
-    const { isLoading, isLoggedIn } = useSelector((state) => state.auth || {})
-    const { user, fetchUser, setUser } = useUser()
+    const { isLoading, isLoggedIn, user: dataUser } = useSelector((state) => state.auth || {})
+    const { user, setUser } = useUser()
     const dispatch = useDispatch()
 
     const [active, setActive] = useState('Básico')
@@ -119,12 +119,8 @@ export const UserSettings = () => {
 
     useEffect(() => {
         if (!isLoggedIn) return
-        async function getData() {
-            const data = await fetchUser()
-            setUser(data)
-        }
-        getData()
-    }, [isLoggedIn, fetchUser, setUser])
+        setUser(dataUser)
+    }, [isLoggedIn, dataUser, setUser])
 
     return (
 
