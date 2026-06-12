@@ -5,6 +5,7 @@ import { Form } from '..';
 import { useBudget } from '../../../context/Budget'
 import { DatePicker, TimePicker } from '@mui/x-date-pickers';
 import dayjs from 'dayjs';
+import { generateBudgetCode } from '../../../utils/masks';
 
 const options = [
     {
@@ -34,7 +35,7 @@ export function BudgetContentBasic() {
 
     useEffect(() => {
         if (!budget.basic.code) {
-            const code = Math.floor(Math.random() * 999999)
+            const code = generateBudgetCode()
             updateBudget('basic', 'code', code)
         }
     }, [

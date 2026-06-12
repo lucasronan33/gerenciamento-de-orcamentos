@@ -6,7 +6,7 @@ import { useBudget } from '../../context/Budget';
 import { useDispatch } from 'react-redux';
 import { createBudgetRequest, deleteBudgetRequest } from '../../store/modules/budget/actions';
 import { ViewBudget } from '../ViewBudget';
-import { isEmptyObject } from '../../utils/masks';
+import { generateBudgetCode, isEmptyObject } from '../../utils/masks';
 
 const status = [
     {
@@ -45,7 +45,7 @@ export default function CardBudget({ budget }) {
 
     const handleCopy = () => {
         const copy = { ...budget }
-        copy.basic.code = Math.floor(Math.random() * 999999)
+        copy.basic.code = generateBudgetCode()
 
         dispatch(createBudgetRequest(copy))
     }
