@@ -10,29 +10,34 @@ import { useBudget } from '../../context/Budget'
 import { Card } from '../../components/DashboardsHeader/styles';
 import { FileText, Plus, Users } from 'lucide-react';
 import { Button } from '../../components/Button';
+import TableContent from '../../components/TableContent';
+import { useNavigate } from 'react-router-dom';
 
 
-const iconsMenu = [
-    {
-        title: 'Novo orçamento',
-        icon: FileText,
-        path: '/budget/new'
-    },
-    {
-        title: 'Novo cliente',
-        icon: Users,
-        path: '/clients'
-    },
-]
 
 export default function Home() {
-    const { budgets, setBudgetOpen, filteredBudgets } = useBudget()
+    const { budgets, setBudgetOpen, filteredBudgets, } = useBudget()
+    const navigate = useNavigate()
+
+    const iconsMenu = [
+        {
+            title: 'Novo orçamento',
+            icon: FileText,
+            action: () => setBudgetOpen(true)
+        },
+        {
+            title: 'Novo cliente',
+            icon: Users,
+            action: () => navigate('/clients')
+        },
+    ]
 
     return (
         <div>
             <Header />
             <DashboardsHeader />
             <BudgetStatusFilter />
+            <TableContent />
             <div className='content'>
                 {budgets.length < 1 ?
                     <Card className='cardHomeNewBudget'>

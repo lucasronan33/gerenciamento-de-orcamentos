@@ -87,30 +87,6 @@ export default function DashboardsHeader() {
                         />
                     </Card>
                 )}
-                {/* <Card>
-                    <CardInfo
-                        $color1={colors.successColor}
-                    >
-                        <DollarSign />
-                        <p>R$ {totalApprovedValue()}</p>
-                        <p className='subtitle-card'>Receita</p>
-                    </CardInfo>
-                </Card>
-
-                <Card>
-                    <CardInfo $color1={colors.purpleHover}>
-                        <Users />
-                        <p>{clients?.length || 0} </p>
-                        <p className='subtitle-card'>Clientes</p>
-                    </CardInfo>
-                </Card>
-
-                <Card className='weekly-recipe'>
-                    <p className='title-card'>Receita semanal</p>
-                </Card>
-                <Card className='weekly-recipe'>
-                    <p className='title-card'>Próximos atendimentos</p>
-                </Card> */}
 
             </Container>
         </>

@@ -40,6 +40,16 @@ export default function NewBudget() {
 
     const formErrors = []
 
+    if (!budget.client || !Object.keys(budget.client).length > 0) formErrors.push({
+      field: 'CLIENTE',
+      message: 'Nenhum cliente selecionado!'
+    })
+
+    if (!budget.items || !budget.items.length > 0) formErrors.push({
+      field: 'ITENS',
+      message: 'Nenhum item selecionado!'
+    })
+
     if (!budget.basic.date || !validator.isDate(budget.basic.date, {
       format: 'DD-MM-YYYY',
       strictMode: true,
@@ -83,7 +93,6 @@ export default function NewBudget() {
         setBudgetOpen(false)
       }
     } catch (err) {
-      console.log(err)
       toast.error(err.message)
     }
   };
@@ -124,7 +133,15 @@ export default function NewBudget() {
           <Button.Root onClick={handleCancel} className='btn-cancel'>Cancelar</Button.Root>
           <Button.Root
             onClick={handleSubmit}
-            type='submit'>Criar Orçamento</Button.Root>
+            type='submit'>
+            {budget._id
+              ? (
+                'Atualizar Orçamento'
+              )
+              : (
+                'Criar Orçamento'
+              )}
+          </Button.Root>
         </div>
 
       </div>

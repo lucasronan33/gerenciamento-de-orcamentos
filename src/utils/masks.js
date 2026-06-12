@@ -36,5 +36,9 @@ export function isEmptyObject(obj) {
 }
 
 export function generateBudgetCode() {
-    return Math.floor(Math.random() * 999999)
+    return String(
+        Math.floor(
+            Math.random() * 999999
+        )
+    )
 }

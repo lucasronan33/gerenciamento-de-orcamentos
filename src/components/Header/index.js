@@ -6,13 +6,19 @@ import { Subtitle, Title } from './styles'
 import { Button } from '../Button'
 import Sidebar from '../Sidebar'
 import { useBudget } from '../../context/Budget'
+import { useDispatch } from 'react-redux'
+import { budgetReset } from '../../store/modules/budget/actions'
 
 export default function Header() {
-    const { budgetOpen, setBudgetOpen } = useBudget()
+    const { budgetOpen, setBudgetOpen, setBudget, initialState } = useBudget()
+    const dispatch = useDispatch()
+
     useEffect(() => {
 
         if (!budgetOpen) {
             document.body.removeAttribute('style')
+            dispatch(budgetReset())
+            setBudget(initialState)
             return
         }
         if (budgetOpen) {
@@ -20,7 +26,10 @@ export default function Header() {
             return
         }
     }, [
-        budgetOpen
+        budgetOpen,
+        initialState,
+        dispatch,
+        setBudget
     ])
 
     return (

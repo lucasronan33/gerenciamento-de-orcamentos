@@ -14,7 +14,7 @@ import { updateUserRequest } from '../../store/modules/auth/actions';
 import { isValidCpfCnpj } from '../../utils/documents';
 
 export const UserSettings = () => {
-    const { isLoading, isLoggedIn, dataUser } = useSelector((state) => state.auth || {})
+    const { isLoading, isLoggedIn, user: dataUser } = useSelector((state) => state.auth || {})
     const { user, setUser } = useUser()
     const dispatch = useDispatch()
 

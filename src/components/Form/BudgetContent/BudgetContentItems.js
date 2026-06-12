@@ -37,7 +37,7 @@ export function BudgetContentItems() {
     const dispatch = useDispatch()
 
     const subtotal = useMemo(() => {
-
+        if (!budget.items || !budget.items.length > 0) return
         const value = budget.items.reduce(
             (prev, current) => prev + current.quantity * current.total, 0)
         return value

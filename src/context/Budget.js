@@ -13,7 +13,7 @@ const initialState = {
     },
     items: [],
     conditions: {
-        paymentMethod: 'À vista'
+        paymentMethod: 'at sight'
     },
     totals: {
         discount: 0,

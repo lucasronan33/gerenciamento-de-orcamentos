@@ -3,21 +3,26 @@ import { Button } from '../../components/Button';
 import { Client } from '../../components/Form/Client';
 import Header from '../../components/Header';
 import { Container } from '../../styles/GlobalStyles';
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useBudget } from '../../context/Budget';
 
-const iconsMenu = [
-    {
-        title: 'Home',
-        icon: Home,
-        path: '/'
-    },
-    {
-        title: 'Novo orçamento',
-        icon: FileText,
-        path: '/budget/new'
-    },
-]
 export function Clients() {
+    const { setBudgetOpen } = useBudget()
+    const navigate = useNavigate()
 
+    const iconsMenu = [
+        {
+            title: 'Home',
+            icon: Home,
+            action: () => navigate('/')
+        },
+        {
+            title: 'Novo orçamento',
+            icon: FileText,
+            action: () => setBudgetOpen(true)
+        },
+    ]
     return (
         <>
             <Header />

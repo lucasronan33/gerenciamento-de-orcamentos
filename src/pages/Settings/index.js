@@ -4,27 +4,32 @@ import '../../components/Form/style.css'
 import { Button } from '../../components/Button'
 import { FileText, Home, Users } from 'lucide-react'
 import { UserSettings } from '../../components/User'
+import React from 'react'
+import { useNavigate } from 'react-router-dom'
+import { useBudget } from '../../context/Budget'
 
-const iconsMenu = [
-    {
-        title: 'Home',
-        icon: Home,
-        path: '/'
-    },
-    {
-        title: 'Novo orçamento',
-        icon: FileText,
-        path: '/budget/new'
-    },
-    {
-        title: 'Novo cliente',
-        icon: Users,
-        path: '/clients'
-    },
-]
 
 export default function Settings() {
+    const { setBudgetOpen } = useBudget()
+    const navigate = useNavigate()
 
+    const iconsMenu = [
+        {
+            title: 'Home',
+            icon: Home,
+            action: () => navigate('/')
+        },
+        {
+            title: 'Novo orçamento',
+            icon: FileText,
+            action: () => setBudgetOpen(true)
+        },
+        {
+            title: 'Novo cliente',
+            icon: Users,
+            action: () => navigate('/clients')
+        },
+    ]
     return (
         <div>
             <Header />

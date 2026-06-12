@@ -78,7 +78,7 @@ export function ButtonFixedMenu({ children }) {
                             className='button-fixed-menu'
                             onClick={() => {
                                 setMenuOpen(false)
-                                navigate(item.path)
+                                item.action()
                             }}
                         >
                             <Icon />
