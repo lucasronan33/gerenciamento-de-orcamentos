@@ -1,6 +1,6 @@
 import { all, call, put, takeLatest } from 'redux-saga/effects';
 import { toast } from 'react-toastify';
-import { show, store } from '../../../services/axiosRoutes';
+import { show, store, update } from '../../../services/axiosRoutes';
 import { clearAccessToken, setAccessToken } from '../../../services/authToken';
 import * as actions from './actions';
 import * as types from '../types';
@@ -81,7 +81,7 @@ function* logoutRequest() {
 
 function* updateUserRequest({ payload }) {
     try {
-        const response = yield call(store, '/user/profile', payload);
+        const response = yield call(update, '/user/profile', payload);
         yield put(actions.updateUserSuccess(response.data));
         toast.success('Dados de usuario atualizados com sucesso.');
     } catch (error) {

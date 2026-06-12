@@ -34,7 +34,7 @@ export default function Register() {
     }
 
     const sanitizeRegisterData = () => {
-        const nome = validator.escape(validator.trim(formData.nome))
+        const nome = validator.trim(formData.nome)
         const email = validator.normalizeEmail(validator.trim(formData.email)) || ''
         const telefone = validator.trim(formData.telefone).replace(/\D/g, '')
 
