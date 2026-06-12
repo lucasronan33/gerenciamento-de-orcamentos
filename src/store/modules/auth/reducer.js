@@ -98,6 +98,27 @@ export default function reducer(state = initialState, action) {
                 isCheckingAuth: false,
             };
 
+        case types.FETCH_USER_REQUEST:
+            return {
+                ...state,
+                isLoading: true,
+            }
+
+        case types.FETCH_USER_SUCCESS:
+            return {
+                ...state,
+                isLoading: false,
+                user: action.payload.user,
+                errors: []
+            }
+
+        case types.FETCH_USER_FAILURE:
+            return {
+                ...state,
+                isLoading: false,
+                errors: action.payload,
+            }
+
         default:
             return state;
     }

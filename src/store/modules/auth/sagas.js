@@ -4,6 +4,7 @@ import { show, store, update } from '../../../services/axiosRoutes';
 import { clearAccessToken, setAccessToken } from '../../../services/authToken';
 import * as actions from './actions';
 import * as types from '../types';
+import state from '../../store'
 
 export function normalizeErrors(error) {
     const data = error.response?.data;
@@ -79,6 +80,23 @@ function* logoutRequest() {
     }
 }
 
+function* fetchUserRequest() {
+    try {
+        const { isLoggedIn } = state.getState().auth
+        if (!isLoggedIn) {
+            yield new Error('Usuário não autenticado')
+        }
+
+        const response = yield call(show, '/client')
+        yield put(actions.fetchUserSuccess(response.data))
+    } catch (error) {
+        const errors = normalizeErrors(error);
+
+        errors.forEach((message) => toast.error(message));
+        yield put(actions.fetchUserFailure(errors));
+    }
+}
+
 function* updateUserRequest({ payload }) {
     try {
         const response = yield call(update, '/user/profile', payload);
@@ -96,5 +114,6 @@ export default all([
     takeLatest(types.REGISTER_REQUEST, registerRequest),
     takeLatest(types.AUTH_ME_REQUEST, authMeRequest),
     takeLatest(types.LOGOUT_REQUEST, logoutRequest),
+    takeLatest(types.FETCH_USER_REQUEST, fetchUserRequest),
     takeLatest(types.UPDATE_USER_REQUEST, updateUserRequest),
 ]);

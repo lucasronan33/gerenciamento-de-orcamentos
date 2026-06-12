@@ -100,6 +100,27 @@ export function googleLoginFailure(payload) {
     };
 }
 
+export function fetchUserRequest(payload) {
+    return {
+        type: types.FETCH_USER_REQUEST,
+        payload,
+    };
+}
+
+export function fetchUserSuccess(payload) {
+    return {
+        type: types.FETCH_USER_SUCCESS,
+        payload,
+    };
+}
+
+export function fetchUserFailure(payload) {
+    return {
+        type: types.FETCH_USER_FAILURE,
+        payload,
+    };
+}
+
 export function updateUserRequest(payload) {
     return {
         type: types.UPDATE_USER_REQUEST,
