@@ -1,6 +1,5 @@
 import { Plus } from 'lucide-react'
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 import * as colors from '../../config/colors'
 
@@ -63,7 +62,6 @@ const ContainerFixedMenu = styled.div`
 
 export function ButtonFixedMenu({ children }) {
     const [menuOpen, setMenuOpen] = useState(false)
-    const navigate = useNavigate()
 
     return (
         <ContainerFixedMenu

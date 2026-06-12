@@ -1,15 +1,13 @@
 .sidebar-menu-button,
 .sidebar-close-button {
-    width: 44px;
-    height: 44px;
-    padding: 0;
+    padding: 1vh 1vh;
     border-radius: 1vh;
 }
 
 .sidebar-menu-button svg,
 .sidebar-close-button svg {
-    width: 22px;
-    height: 22px;
+    width: 5vh;
+    aspect-ratio: 1/ 1;
 }
 
 .sidebar-overlay {

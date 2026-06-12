@@ -32,15 +32,9 @@
 .logo {
     min-width: 10vh;
     height: 10vh;
-    aspect-ratio: 1 / 1;
-}
-
-.cls-1 {
-    fill: #000;
-}
-
-.cls-2 {
-    fill: #fff;
+    background-image: url(../../images/logo.svg);
+    background-repeat: no-repeat;
+    background-size: contain;
 }
 
 /*----------------------------------------*/

@@ -10,7 +10,7 @@ import { useBudget } from '../../context/Budget'
 import { Card } from '../../components/DashboardsHeader/styles';
 import { FileText, Plus, Users } from 'lucide-react';
 import { Button } from '../../components/Button';
-import TableContent from '../../components/TableContent';
+// import TableContent from '../../components/TableContent';
 import { useNavigate } from 'react-router-dom';
 
 
@@ -37,7 +37,7 @@ export default function Home() {
             <Header />
             <DashboardsHeader />
             <BudgetStatusFilter />
-            <TableContent />
+            {/* <TableContent /> */}
             <div className='content'>
                 {budgets.length < 1 ?
                     <Card className='cardHomeNewBudget'>
