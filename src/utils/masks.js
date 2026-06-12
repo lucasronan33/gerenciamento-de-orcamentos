@@ -34,3 +34,7 @@ export function maskZipCode(value = '') {
 export function isEmptyObject(obj) {
     return !Boolean(Object.keys(obj).length > 0)
 }
+
+export function generateBudgetCode() {
+    return Math.floor(Math.random() * 999999)
+}
