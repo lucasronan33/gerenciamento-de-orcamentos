@@ -120,7 +120,7 @@ export const UserSettings = () => {
     useEffect(() => {
         if (!isLoggedIn) return
         setUser(dataUser)
-    }, [isLoggedIn, setUser])
+    }, [isLoggedIn, dataUser, setUser])
 
     return (
 
