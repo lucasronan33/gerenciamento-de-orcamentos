@@ -104,6 +104,7 @@
 }
 
 .budget-title-block {
+    width: 100%;
     display: grid;
     gap: 4px;
     text-align: right;
@@ -169,7 +170,7 @@
 .budget-info-line {
     display: grid;
     grid-template-columns: minmax(150px, 250px) 1fr;
-    align-items: center;
+    align-items: baseline;
     gap: 12px;
     min-height: 25px;
     font-size: 15px;
@@ -248,10 +249,13 @@
     color: #374151;
 }
 
+.container-viewBudget section {
+    width: 100%;
+}
+
 .budget-table-wrap {
     width: 100%;
     margin-top: 10px;
-    overflow-x: auto;
 }
 
 .budget-items-table {
@@ -409,46 +413,9 @@
 }
 
 @media (max-width: 900px) {
-    .container-viewBudget {
-        padding: 28px 18px;
-    }
-
-    .budget-header,
-    .budget-top-grid,
-    .budget-client-grid,
-    .budget-summary-grid,
-    .budget-conditions,
-    .budget-signatures {
-        grid-template-columns: 1fr;
-    }
 
     .budget-header {
-        display: grid;
-    }
-
-    .budget-title-block {
-        text-align: left;
-    }
-
-    .budget-title-block strong {
-        font-size: 34px;
-    }
-
-    .budget-title-block span {
-        font-size: 22px;
-    }
-
-    .budget-company h1 {
-        font-size: 26px;
-    }
-
-    .budget-info-line {
-        grid-template-columns: 150px 1fr;
-    }
-
-    .budget-signatures>div+div {
-        border-left: 0;
-        border-top: 1px solid #b7c9df;
+        flex-direction: initial;
     }
 }
 

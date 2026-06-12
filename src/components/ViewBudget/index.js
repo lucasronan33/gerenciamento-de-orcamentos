@@ -22,6 +22,7 @@ import { useBudget } from '../../context/Budget';
 import { maskCpfCnpj, maskPhone, maskZipCode } from '../../utils/masks';
 import './style.css'
 import generatePDF from 'react-to-pdf';
+import { calcValueDiscount, calcValueTaxes } from '../../utils/documents';
 
 const statusLabels = {
     sketch: 'Rascunho',
@@ -176,16 +177,16 @@ export function ViewBudget() {
                             <Building2 size={42} />
                         </div>
                         <div>
-                            <h1>{user.name || 'Sua empresa'}</h1>
-                            {user.slogan
-                                ? (<p>{user.slogan}</p>)
-                                : (<p>Seu slogan aqui</p>)}
+                            <h1>{user.enterpriseName || user.name || 'Sua empresa'}</h1>
+                            {user.slogan &&
+                                (<p>{user.slogan}</p>)
+                            }
                         </div>
                     </div>
 
                     <div className='budget-title-block'>
-                        <strong>Orçamento</strong>
-                        <span>#{budget.basic?.code || '00000-000'}</span>
+                        <strong>{budget.basic?.title}</strong>
+                        <span>{budget.basic?.code || '00000-000'}</span>
                     </div>
                 </header>
 
@@ -278,8 +279,16 @@ export function ViewBudget() {
 
                     <div className='budget-totals'>
                         <InfoLine label='Subtotal:' value={formatCurrency(subtotal)} />
-                        <InfoLine label='Impostos:' value={formatCurrency(taxes)} />
-                        <InfoLine label='Desconto:' value={formatCurrency(discount)} />
+                        <InfoLine label='Impostos:' value={
+                            Number(taxes) > 0
+                                ? `(${taxes}%) ${formatCurrency(calcValueTaxes(budget, subtotal))}`
+                                : formatCurrency(calcValueTaxes(budget, subtotal))
+                        } />
+                        <InfoLine label='Desconto:' value={
+                            Number(discount) > 0
+                                ? `(${discount}%) ${formatCurrency(calcValueDiscount(budget, subtotal))}`
+                                : formatCurrency(calcValueDiscount(budget, subtotal))
+                        } />
                         <InfoLine label={`Frete (Tipo: ${shippingLabels[totals.shippingType] || totals.shippingType || 'SF'}):`} value={formatCurrency(shipping)} />
                         <div className='budget-total-line'>
                             <strong>Total:</strong>
