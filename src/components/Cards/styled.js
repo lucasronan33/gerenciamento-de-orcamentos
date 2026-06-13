@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import * as color from '../../config/colors';
 
 export const ContainerCardBudget = styled.div`
+    height: 100%;
     background: ${color.secondaryDarkColor};
     padding: 3vh;
     display: flex;
@@ -21,15 +22,38 @@ export const ContainerCardBudget = styled.div`
         align-items: center;
         flex-wrap: wrap
     }
-
-    .titleBudget{
-        padding-bottom: 3vh;
-    }
 `
 
 export const DivTitle = styled.div`
     width: 100%;
-    justify-content: space-between;
+
+    .container-title-budget{
+        width: 100%;
+        justify-content: space-between;
+        padding-block: 1vh 2vh;
+
+        p{
+            color: ${color.secodaryTextDarkColor};
+        }
+        
+    }
+    h4{
+        font-weight: normal;
+        padding-top: 1vh;
+        color: ${color.secodaryTextDarkColor};
+    }
+    h2,h4{
+        width: 100%;
+        text-align: left;
+        justify-content: flex-start;
+    }
+    .line-clamp-2{
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
 `
 export const StatusBudget = styled.div`
     padding: 5px 20px;

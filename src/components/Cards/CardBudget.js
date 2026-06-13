@@ -72,14 +72,17 @@ export default function CardBudget({ budget }) {
             )}
             <ContainerCardBudget>
                 <DivTitle>
-                    <h2>{budget.basic.title} </h2>
-                    <StatusBudget className={!isEmptyObject(budgetStatus)
-                        ? statusClasses[budgetStatus.toLowerCase()]
-                        : ''} >
-                        {!isEmptyObject(budgetStatus) ? budgetStatus : ''}
-                    </StatusBudget>
+                    <h2 className='line-clamp-2'>{budget.basic.title} </h2>
+                    <h4 className='line-clamp-2'>{budget.client.name} </h4>
+                    <div className='container-title-budget'>
+                        <p className='titleBudget'>{budget.basic.code} </p>
+                        <StatusBudget className={!isEmptyObject(budgetStatus)
+                            ? statusClasses[budgetStatus.toLowerCase()]
+                            : ''} >
+                            {!isEmptyObject(budgetStatus) ? budgetStatus : ''}
+                        </StatusBudget>
+                    </div>
                 </DivTitle>
-                <p className='titleBudget'>{budget.basic.code} </p>
 
                 <InfoCardBudget>
                     <div>
