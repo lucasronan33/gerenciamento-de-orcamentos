@@ -16,6 +16,7 @@ api.interceptors.request.use((config) => {
     return config
 })
 
+let refreshTokenPromise = null
 api.interceptors.response.use(
     (response) => response,
     async (error) => {
@@ -23,17 +24,29 @@ api.interceptors.response.use(
         const isUnauthorized = error.response?.status === 401
         const isRefreshRequest = originalRequest?.url?.includes('/auth/refresh')
 
-        if (isUnauthorized && originalRequest && !originalRequest._retry && !isRefreshRequest) {
+        if (isUnauthorized
+            && originalRequest
+            && !originalRequest._retry
+            && !isRefreshRequest) {
             originalRequest._retry = true
 
             try {
-                const response = await api.post('/auth/refresh', null, { _skipAuthRefresh: true })
-                const accessToken = response.data?.accessToken
+                if (!refreshTokenPromise) {
+                    refreshTokenPromise = api
+                        .post('/auth/refresh', null, { _skipAuthRefresh: true })
+                        .then(response => {
+                            const token = response.data?.accessToken
 
-                if (accessToken) {
-                    setAccessToken(accessToken)
-                    originalRequest.headers.Authorization = `Bearer ${accessToken}`
+                            if (token) {
+                                setAccessToken(token)
+                            }
+                            return token
+                        })
+                        .finally(() => { refreshTokenPromise = null })
                 }
+
+                const accessToken = await refreshTokenPromise
+                originalRequest.headers.Authorization = `Bearer ${accessToken}`
 
                 return api(originalRequest)
             } catch (refreshError) {
