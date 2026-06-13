@@ -85,8 +85,9 @@ export function BudgetContentClient() {
                             <div
                                 className='card-icon links'
                                 onClick={() => setBudget(prev => {
-                                    delete prev.client
-                                    return prev
+                                    const copy = { ...prev }
+                                    delete copy.client
+                                    return copy
                                 })}
                             >
                                 <Minus />

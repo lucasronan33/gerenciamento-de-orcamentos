@@ -143,7 +143,7 @@ export function BudgetProvider({ children }) {
             )
         })
 
-        setFilteredBudgets(filtered)
+        setFilteredBudgets(structuredClone(filtered))
     }, [budgets, filterSelected, searchBudget])
 
     return (

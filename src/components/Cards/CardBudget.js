@@ -94,7 +94,7 @@ export default function CardBudget({ budget }) {
 
                         ? (<div>
                             <p>Validade: </p>
-                            <p>{budget.basic.validUntil} </p>
+                            <p>{budget.basic.validUntil.replaceAll('-', ' / ')} </p>
                         </div>)
                         : budget.basic.time
                         && (<div>
