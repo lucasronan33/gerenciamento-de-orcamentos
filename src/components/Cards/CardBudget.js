@@ -72,8 +72,8 @@ export default function CardBudget({ budget }) {
             )}
             <ContainerCardBudget>
                 <DivTitle>
-                    <h2 className='line-clamp-2'>{budget.basic.title} </h2>
-                    <h4 className='line-clamp-2'>{budget.client.name} </h4>
+                    <h2 className='line-clamp-2' title={budget.basic.title} >{budget.basic.title} </h2>
+                    <h4 className='line-clamp-2' title={budget.client.name} >{budget.client.name} </h4>
                     <div className='container-title-budget'>
                         <p className='titleBudget'>{budget.basic.code} </p>
                         <StatusBudget className={!isEmptyObject(budgetStatus)
@@ -90,10 +90,18 @@ export default function CardBudget({ budget }) {
                         <p>{budget.basic.date.replaceAll('-', ' / ')} </p>
                     </div>
 
-                    <div>
-                        <p>Horario: </p>
-                        <p>{budget.basic.time} </p>
-                    </div>
+                    {budget.basic.validUntil
+
+                        ? (<div>
+                            <p>Validade: </p>
+                            <p>{budget.basic.validUntil} </p>
+                        </div>)
+                        : budget.basic.time
+                        && (<div>
+                            <p>Horário: </p>
+                            <p>{budget.basic.time} </p>
+                        </div>)
+                    }
 
                     <div>
                         <p>Itens: </p>
