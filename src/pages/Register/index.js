@@ -104,7 +104,7 @@ export default function Register() {
         <ContainerRegister>
             <Main></Main>
             <RegisterContent>
-                <h1>Registro</h1>
+                <h1>Cadastro</h1>
 
                 <form onSubmit={handleSubmit}>
                     <Form.Root>
@@ -181,7 +181,7 @@ export default function Register() {
                                 Voltar
                             </Button.Root>
                             <Button.Root type='submit' disabled={isLoading}>
-                                {isLoading ? 'Registrando...' : 'Registrar'}
+                                {isLoading ? 'Cadastrando...' : 'Cadastrar-se'}
                             </Button.Root>
                         </div>
                     </Form.Root>

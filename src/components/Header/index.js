@@ -8,11 +8,13 @@ import Sidebar from '../Sidebar'
 import { useBudget } from '../../context/Budget'
 import { useDispatch, useSelector } from 'react-redux'
 import { budgetReset } from '../../store/modules/budget/actions'
+import { useNavigate } from 'react-router-dom'
 
 export default function Header() {
     const { budgetOpen, setBudgetOpen, setBudget, initialState } = useBudget()
     const { user } = useSelector(state => state.auth)
     const dispatch = useDispatch()
+    const navigate = useNavigate()
 
     useEffect(() => {
 
@@ -41,7 +43,10 @@ export default function Header() {
             <div className='container'>
                 <div className='container-logo-title'>
                     <Sidebar />
-                    <div className='logo' ></div>
+                    <div
+                        className='logo'
+                        onClick={() => navigate('/')}
+                    />
                     <div className='container-title'>
                         <Subtitle>
                             Bem-vindo ao ORCAmentos

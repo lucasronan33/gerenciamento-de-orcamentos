@@ -30,11 +30,12 @@
 
 /*----------------------------------------*/
 .logo {
-    min-width: 10vh;
+    width: 10vh !important;
     height: 10vh;
     background-image: url(../../images/logo.svg);
     background-repeat: no-repeat;
     background-size: contain;
+    cursor: pointer;
 }
 
 /*----------------------------------------*/
