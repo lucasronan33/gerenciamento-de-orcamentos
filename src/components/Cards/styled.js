@@ -252,6 +252,20 @@ export const StyledCardDashboard = styled.div`
     flex-wrap: nowrap;
     gap: 0.5vh;
 
+    .background-icon{
+        position: relative;
+    }
+    .background-icon::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 1vh;
+    background: ${(props) => props.$color2};
+    opacity: 0.3;
+    border-radius: inherit;
+}
+
+
     p{
         font-size: x-large;
         font-weight: bolder;

@@ -49,7 +49,7 @@ export default function Header() {
                     />
                     <div className='container-title'>
                         <Subtitle>
-                            Bem-vindo ao ORCAmentos
+                            Bem-vindo ao ORCA
                         </Subtitle>
                         <Title>
                             {user.name}

@@ -48,28 +48,28 @@ export default function DashboardsHeader() {
             content: `R$ ${sumValueByStatus(['approved'])}`,
             icon: Clock,
             colorIcon: colors.warningColor,
-            colorText: 'white',
+            colorText: colors.warningColor,
         },
         {
             title: 'Orçamentos',
             content: `${budgets.length} emitidos`,
             icon: FileText,
             colorIcon: colors.blueDocument,
-            colorText: 'unset',
+            colorText: colors.blueDocument,
         },
         {
             title: 'Orçamentos',
             content: `${getBudgetsByStatus(['approved']).length} aprovados`,
             icon: CircleCheckBig,
             colorIcon: colors.successColor,
-            colorText: 'unset',
+            colorText: colors.successColor,
         },
         {
             title: 'Taxa de aprovação',
             content: `${approvedPercent()}%`,
             icon: TrendingUp,
-            colorIcon: colors.successColor,
-            colorText: 'unset',
+            colorIcon: colors.blueDocument,
+            colorText: colors.blueDocument,
         },
     ]
     useEffect(() => {

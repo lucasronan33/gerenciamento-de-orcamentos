@@ -5,7 +5,9 @@ export const CardDashboard = ({ data }) => {
     return (
 
         <StyledCardDashboard $color1={data.colorIcon} $color2={data.colorText}>
-            <Icon />
+            <div className='background-icon'>
+                <Icon />
+            </div>
             <p className='subtitle-card'>{data.title}</p>
             <p>{data.content}</p>
         </StyledCardDashboard>
