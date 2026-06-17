@@ -1,3 +1,5 @@
+import { Regex } from 'lucide-react';
+
 export function onlyDigits(value = '') {
     return String(value).replace(/\D/g, '');
 }
@@ -41,4 +43,11 @@ export function generateBudgetCode() {
             Math.random() * 999999
         )
     )
+}
+
+export function formatCurrency(num) {
+    return Number(num).toLocaleString('pt-BR', {
+        style: 'currency',
+        currency: 'BRL'
+    })
 }

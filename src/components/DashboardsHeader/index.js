@@ -8,6 +8,7 @@ import { useBudget } from '../../context/Budget'
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchClientsRequest } from '../../store/modules/client/actions';
 import { CardDashboard } from '../Cards/CardDashboard';
+import { formatCurrency } from '../../utils/masks';
 
 
 export default function DashboardsHeader() {
@@ -38,14 +39,14 @@ export default function DashboardsHeader() {
     const cards = [
         {
             title: 'Receita',
-            content: `R$ ${sumValueByStatus(['finished'])}`,
+            content: formatCurrency(sumValueByStatus(['finished'])),
             icon: DollarSign,
             colorIcon: colors.successColor,
             colorText: colors.successColor,
         },
         {
             title: 'A receber',
-            content: `R$ ${sumValueByStatus(['approved'])}`,
+            content: formatCurrency(sumValueByStatus(['approved', 'producing'])),
             icon: Clock,
             colorIcon: colors.warningColor,
             colorText: colors.warningColor,
@@ -59,7 +60,7 @@ export default function DashboardsHeader() {
         },
         {
             title: 'Orçamentos',
-            content: `${getBudgetsByStatus(['approved']).length} aprovados`,
+            content: `${getBudgetsByStatus(['approved', 'producing']).length} aprovados`,
             icon: CircleCheckBig,
             colorIcon: colors.successColor,
             colorText: colors.successColor,

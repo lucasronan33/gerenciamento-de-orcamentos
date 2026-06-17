@@ -7,6 +7,7 @@ export const CardDashboard = ({ data }) => {
         <StyledCardDashboard $color1={data.colorIcon} $color2={data.colorText}>
             <div className='background-icon'>
                 <Icon />
+                <div />
             </div>
             <p className='subtitle-card'>{data.title}</p>
             <p>{data.content}</p>
