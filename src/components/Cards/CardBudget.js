@@ -6,7 +6,7 @@ import { useBudget } from '../../context/Budget';
 import { useDispatch } from 'react-redux';
 import { createBudgetRequest, deleteBudgetRequest } from '../../store/modules/budget/actions';
 import { ViewBudget } from '../ViewBudget';
-import { generateBudgetCode, isEmptyObject } from '../../utils/masks';
+import { formatCurrency, generateBudgetCode, isEmptyObject } from '../../utils/masks';
 
 const status = [
     {
@@ -20,6 +20,10 @@ const status = [
     {
         value: 'approved',
         text: 'Aprovado',
+    },
+    {
+        value: 'producing',
+        text: 'Produzindo',
     },
     {
         value: 'finished',
@@ -37,8 +41,10 @@ export default function CardBudget({ budget }) {
     const { setBudgetOpen, setBudget, setViewBudget, viewBudget } = useBudget()
     const dispatch = useDispatch()
     const statusClasses = {
+        rascunho: 'sketchStatus',
         enviado: 'sentStatus',
         aprovado: 'approvedStatus',
+        produzindo: 'producingStatus',
         rejeitado: 'rejectedStatus',
         finalizado: 'finishedStatus',
     }
@@ -111,7 +117,7 @@ export default function CardBudget({ budget }) {
                 <InfoCardBudget>
                     <div >
                         <h3>Total: </h3>
-                        <h3>R$ {String(budget.totals.total)} </h3>
+                        <h3>{formatCurrency(budget.totals.total)} </h3>
                     </div>
                 </InfoCardBudget>
                 <CardIcons>

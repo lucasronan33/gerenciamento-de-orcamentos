@@ -21,6 +21,10 @@ const options = [
         text: 'Aprovado',
     },
     {
+        value: 'producing',
+        text: 'Produzindo',
+    },
+    {
         value: 'finished',
         text: 'Finalizado',
     },

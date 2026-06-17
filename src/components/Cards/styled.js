@@ -9,7 +9,7 @@ export const ContainerCardBudget = styled.div`
     flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
-    border-radius: 1.5vh;
+    border-radius: 2vh;
     border: 1px solid ${color.borderDarkColor};
 
     &:hover{
@@ -57,31 +57,36 @@ export const DivTitle = styled.div`
 `
 export const StatusBudget = styled.div`
     padding: 5px 20px;
-    border: 1px solid #ccc;
     border-radius: 10px;
     font-size: small;
 
+    &.sketchStatus{
+        background: ${color.sketchDarkColor};
+        color: ${color.sketchColor};
+    }
+
     &.sentStatus{
-        background: ${color.sentColor};
-        border-color: ${color.sentDarkColor};
-        color: ${color.sentDarkColor};
+        background: ${color.sentDarkColor};
+        color: ${color.sentColor};
     }
 
     &.approvedStatus{
         background: ${color.approvedColor};
-        border-color: ${color.approvedDarkColor};
         color: ${color.approvedDarkColor};
+    }
+
+    &.producingStatus{
+        background: ${color.producingColor};
+        color: ${color.producingDarkColor};
     }
 
     &.rejectedStatus{
         background: ${color.rejectedColor};
-        border-color: ${color.rejectedDarkColor};
         color: ${color.rejectedDarkColor};
     }
 
     &.finishedStatus{
         background: ${color.finishedColor};
-        border-color: ${color.finishedDarkColor};
         color: ${color.finishedDarkColor};
     }
 `
@@ -254,16 +259,21 @@ export const StyledCardDashboard = styled.div`
 
     .background-icon{
         position: relative;
+        padding-block: 1vh;
     }
-    .background-icon::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: 1vh;
-    background: ${(props) => props.$color2};
-    opacity: 0.3;
-    border-radius: inherit;
-}
+    .background-icon svg+div {
+        width: 100%;
+        height: 100%;
+        padding-inline: 2vh;
+        top: 50%;
+        left: 50%;
+        translate: -50% -50%;
+        offset-anchor: auto;
+        position: absolute;
+        border-radius: 1vh;
+        background: ${(props) => props.$color2};
+        opacity: 0.15;
+    }
 
 
     p{
