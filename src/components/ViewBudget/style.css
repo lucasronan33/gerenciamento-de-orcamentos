@@ -167,6 +167,10 @@
     gap: 6px;
 }
 
+.budget-meta .viewBudget-status {
+    border: none;
+}
+
 .budget-info-line {
     display: grid;
     grid-template-columns: minmax(150px, 250px) 1fr;

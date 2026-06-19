@@ -1,5 +1,3 @@
-import { Regex } from 'lucide-react';
-
 export function onlyDigits(value = '') {
     return String(value).replace(/\D/g, '');
 }

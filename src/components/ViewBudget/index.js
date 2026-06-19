@@ -19,18 +19,12 @@ import {
     X,
 } from 'lucide-react';
 import { useBudget } from '../../context/Budget';
-import { maskCpfCnpj, maskPhone, maskZipCode } from '../../utils/masks';
+import { isEmptyObject, maskCpfCnpj, maskPhone, maskZipCode } from '../../utils/masks';
 import './style.css'
 import generatePDF from 'react-to-pdf';
 import { calcValueDiscount, calcValueTaxes } from '../../utils/documents';
-
-const statusLabels = {
-    sketch: 'Rascunho',
-    sent: 'Enviado',
-    approved: 'Aprovado',
-    rejected: 'Rejeitado',
-    finished: 'Finalizado',
-}
+import { budgetStatus } from '../../utils/budget';
+import { StatusBudget } from '../Cards/styled';
 
 const shippingLabels = {
     SF: 'Sem frete',
@@ -61,6 +55,15 @@ const paymentMethod = [
         text: 'Cartão de Crédito',
     },
 ]
+
+const statusClasses = {
+    rascunho: 'sketchStatus',
+    enviado: 'sentStatus',
+    aprovado: 'approvedStatus',
+    produzindo: 'producingStatus',
+    rejeitado: 'rejectedStatus',
+    finalizado: 'finishedStatus',
+}
 
 function formatDate(value) {
     if (!value) return '-'
@@ -143,7 +146,11 @@ export function ViewBudget() {
     const shipping = Number(totals.shipping) || 0
     const calculatedTotal = items.reduce((sum, item) => sum + getItemTotal(item), 0)
     const total = Number(totals.total) || calculatedTotal + shipping - discount + taxes
-    const status = statusLabels[budget.basic?.status] || budget.basic?.status || 'Rascunho'
+
+    const status = budgetStatus.reduce((obj, item) => {
+        if (item.value === budget.basic.status) obj = item.text
+        return obj
+    }, {})
 
     const paymentMethodBudget = paymentMethod.reduce((obj, item) => {
         if (item.value === budget.conditions.paymentMethod) obj = item.text
@@ -203,7 +210,13 @@ export function ViewBudget() {
                         <InfoLine label='Data:' value={formatDate(budget.basic?.date)} />
                         <InfoLine label='Hora:' value={budget.basic?.time} />
                         <InfoLine label='Validade da proposta:' value={formatDate(budget.basic?.validUntil)} />
-                        <InfoLine label='Status:' value={<span className={`budget-status budget-status-${budget.basic?.status || 'sketch'}`}>{status}</span>} />
+                        <InfoLine label='Status:' value={
+                            <StatusBudget className={`${!isEmptyObject(status)
+                                ? statusClasses[status.toLowerCase()]
+                                : ''} viewBudget-status`} >
+                                {!isEmptyObject(status) ? status : ''}
+                            </StatusBudget>
+                        } />
                         <InfoLine label='Responsável:' value={user.name} />
                         <InfoLine label='E-mail:' value={user.email} />
                     </div>
