@@ -8,7 +8,7 @@ export const primaryDarkColor = 'rgba(16, 26, 34, 1)'
 export const secondaryDarkColor = 'rgba(21, 31, 40, 1)'
 export const buttonDarkColor = 'rgba(16, 26, 34, 1)'
 export const borderDarkColor = 'rgba(35, 47, 53, 1)'
-export const secodaryTextDarkColor = 'rgba(70, 90, 100, 1)'
+export const secondaryTextDarkColor = 'rgba(150,150,160)'
 export const inputHoverColor = 'rgba(200, 224, 224, 1)'
 
 export const blueDocument = 'rgba(38, 178, 242, 1)'

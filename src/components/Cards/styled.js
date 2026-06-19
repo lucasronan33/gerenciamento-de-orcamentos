@@ -33,14 +33,14 @@ export const DivTitle = styled.div`
         padding-block: 1vh 2vh;
 
         p{
-            color: ${color.secodaryTextDarkColor};
+            color: ${color.secondaryTextDarkColor};
         }
         
     }
     h4{
         font-weight: normal;
         padding-top: 1vh;
-        color: ${color.secodaryTextDarkColor};
+        color: ${color.secondaryTextDarkColor};
     }
     h2,h4{
         width: 100%;
@@ -59,6 +59,7 @@ export const StatusBudget = styled.div`
     padding: 5px 20px;
     border-radius: 10px;
     font-size: small;
+    border: 1px solid;
 
     &.sketchStatus{
         background: ${color.sketchDarkColor};

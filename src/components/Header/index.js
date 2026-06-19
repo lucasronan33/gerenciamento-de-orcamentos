@@ -48,7 +48,7 @@ export default function Header() {
                         onClick={() => navigate('/')}
                     />
                     <div className='container-title'>
-                        <Subtitle>
+                        <Subtitle className='subtitle-header'>
                             Bem-vindo ao ORCA
                         </Subtitle>
                         <Title>
