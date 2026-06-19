@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { CircleCheckBig, Clock, DollarSign, FileText, TrendingUp } from 'lucide-react';
 
 import * as colors from '../../config/colors';
@@ -25,16 +25,19 @@ export default function DashboardsHeader() {
         }, 0).toFixed(2)
     }
 
-    const approvedPercent = () => {
+    const approvedPercent = useMemo(() => {
         const totalBudgets = budgets.length
-        const totalApprovedBudgets = getBudgetsByStatus(['approved', 'finished']).length
+        const totalApprovedBudgets = getBudgetsByStatus(['approved', 'producing', 'finished']).length
 
         function calcTotal() {
             let total = totalApprovedBudgets / totalBudgets * 100
             return total.toFixed(1)
         }
         return calcTotal()
-    }
+    }, [
+        budgets,
+        getBudgetsByStatus
+    ])
 
     const cards = [
         {
@@ -67,7 +70,7 @@ export default function DashboardsHeader() {
         },
         {
             title: 'Taxa de aprovação',
-            content: `${approvedPercent()}%`,
+            content: `${approvedPercent}%`,
             icon: TrendingUp,
             colorIcon: colors.blueDocument,
             colorText: colors.blueDocument,

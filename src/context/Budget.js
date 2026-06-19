@@ -52,12 +52,14 @@ export function BudgetProvider({ children }) {
         budgets
     ])
 
-    function getBudgetsByStatus(status) {
+    const getBudgetsByStatus = useCallback((status) => {
         const total = budgets.filter(
             item => status.includes(item.basic.status.toLowerCase().trim())
         )
         return total
-    }
+    }, [
+        budgets
+    ])
 
     const updateBudget = useCallback((field, subfield, value) => {
         setBudget(prev => ({
