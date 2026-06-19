@@ -6,33 +6,7 @@ import { useBudget } from '../../../context/Budget'
 import { DatePicker, TimePicker } from '@mui/x-date-pickers';
 import dayjs from 'dayjs';
 import { generateBudgetCode } from '../../../utils/masks';
-
-const options = [
-    {
-        value: 'sketch',
-        text: 'Rascunho',
-    },
-    {
-        value: 'sent',
-        text: 'Enviado',
-    },
-    {
-        value: 'approved',
-        text: 'Aprovado',
-    },
-    {
-        value: 'producing',
-        text: 'Produzindo',
-    },
-    {
-        value: 'finished',
-        text: 'Finalizado',
-    },
-    {
-        value: 'rejected',
-        text: 'Rejeitado',
-    },
-]
+import { budgetStatus } from '../../../utils/budget';
 
 export function BudgetContentBasic() {
     const { budget, updateBudget } = useBudget()
@@ -85,7 +59,7 @@ export function BudgetContentBasic() {
                         updateBudget('basic', 'status', e.target.value)
                     }}
                 >
-                    {options.map(value => (
+                    {budgetStatus.map(value => (
                         <option
                             key={value.value}
                             value={value.value}>

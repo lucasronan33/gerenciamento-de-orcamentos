@@ -4,35 +4,16 @@ import { DivContainerFilter, InptSearch } from './styles'
 import { Search } from 'lucide-react';
 import { useBudget } from '../../context/Budget'
 import { Card } from '../DashboardsHeader/styles';
+import { budgetStatus } from '../../utils/budget';
+
+budgetStatus.push(
+    {
+        value: 'all states',
+        text: 'Todos os status',
+    })
 
 export default function BudgetStatusFilter() {
     const { inputFilterBudgets, filterBudgets, filterSelected } = useBudget()
-    const options = [
-        {
-            value: 'all states',
-            text: 'Todos os status',
-        },
-        {
-            value: 'sketch',
-            text: 'Rascunho',
-        },
-        {
-            value: 'sent',
-            text: 'Enviado',
-        },
-        {
-            value: 'approved',
-            text: 'Aprovado',
-        },
-        {
-            value: 'finished',
-            text: 'Finalizado',
-        },
-        {
-            value: 'rejected',
-            text: 'Rejeitado',
-        },
-    ]
 
     return (
         <Container>
@@ -60,7 +41,7 @@ export default function BudgetStatusFilter() {
                                 filterBudgets(e.target.value)
                             }}
                         >
-                            {options.map(value => (
+                            {budgetStatus.map(value => (
                                 <option
                                     key={value.value}
                                     value={value.value}>

@@ -4,31 +4,10 @@ import { Card } from '../HeaderMain/styles';
 import { DivContainerFilter, InptSearch } from './styles'
 import { Search } from 'lucide-react';
 import { useBudget } from '../../context/Budget'
+import { budgetStatus } from '../../utils/budget';
 
 export default function HeaderFilter() {
     const { inputFilterBudgets, filterBudgets, filterSelected } = useBudget()
-    const options = [
-        {
-            value: 'sketch',
-            text: 'Rascunho',
-        },
-        {
-            value: 'sent',
-            text: 'Enviado',
-        },
-        {
-            value: 'approved',
-            text: 'Aprovado',
-        },
-        {
-            value: 'finished',
-            text: 'Finalizado',
-        },
-        {
-            value: 'rejected',
-            text: 'Rejeitado',
-        },
-    ]
 
     return (
         <Container>
@@ -56,7 +35,7 @@ export default function HeaderFilter() {
                                 filterBudgets(e.target.value)
                             }}
                         >
-                            {options.map(value => (
+                            {budgetStatus.map(value => (
                                 <option
                                     key={value.value}
                                     value={value.value}>

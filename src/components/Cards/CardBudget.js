@@ -7,33 +7,7 @@ import { useDispatch } from 'react-redux';
 import { createBudgetRequest, deleteBudgetRequest } from '../../store/modules/budget/actions';
 import { ViewBudget } from '../ViewBudget';
 import { formatCurrency, generateBudgetCode, isEmptyObject } from '../../utils/masks';
-
-const status = [
-    {
-        value: 'sketch',
-        text: 'Rascunho',
-    },
-    {
-        value: 'sent',
-        text: 'Enviado',
-    },
-    {
-        value: 'approved',
-        text: 'Aprovado',
-    },
-    {
-        value: 'producing',
-        text: 'Produzindo',
-    },
-    {
-        value: 'finished',
-        text: 'Finalizado',
-    },
-    {
-        value: 'rejected',
-        text: 'Rejeitado',
-    },
-]
+import { budgetStatus } from '../../utils/budget';
 
 export default function CardBudget({ budget }) {
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
@@ -66,7 +40,7 @@ export default function CardBudget({ budget }) {
             setIsDeleting(false)
         }
     }
-    const budgetStatus = status.reduce((obj, item) => {
+    const currentBudgetStatus = budgetStatus.reduce((obj, item) => {
         if (item.value === budget.basic.status) obj = item.text
         return obj
     }, {})
@@ -82,10 +56,10 @@ export default function CardBudget({ budget }) {
                     <h4 className='line-clamp-2' title={budget.client.name} >{budget.client.name} </h4>
                     <div className='container-title-budget'>
                         <p className='titleBudget'>{budget.basic.code} </p>
-                        <StatusBudget className={!isEmptyObject(budgetStatus)
-                            ? statusClasses[budgetStatus.toLowerCase()]
+                        <StatusBudget className={!isEmptyObject(currentBudgetStatus)
+                            ? statusClasses[currentBudgetStatus.toLowerCase()]
                             : ''} >
-                            {!isEmptyObject(budgetStatus) ? budgetStatus : ''}
+                            {!isEmptyObject(currentBudgetStatus) ? currentBudgetStatus : ''}
                         </StatusBudget>
                     </div>
                 </DivTitle>
