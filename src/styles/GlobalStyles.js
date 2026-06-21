@@ -37,7 +37,7 @@ export default createGlobalStyle`
 }
 body{
         min-height: 100dvh;
-        font-family: sans-serif;
+        font-family: 'Inter';
         background-color: ${color.primaryDarkColor};
         color: white;
     }

@@ -9,6 +9,47 @@ import { googleLoginRequest, loginRequest } from '../../store/modules/auth/actio
 import { GoogleLogin } from '@react-oauth/google'
 import { toast } from 'react-toastify'
 import { Eye, EyeOff } from 'lucide-react'
+import BudgetMockup from '../../components/BudgetMockup'
+
+const budgets = [
+    {
+        basic: {
+            code: 123456,
+            title: 'teste 1',
+            status: 'approved',
+            date: '01/01/2026',
+            validUntil: '01/01/2026',
+        },
+        client: {
+            name: 'Cliente Teste'
+        },
+        items: [
+            {},
+        ],
+        totals: {
+            total: 32.78,
+        }
+    },
+    {
+        basic: {
+            code: 123456,
+            title: 'teste 3',
+            status: 'producing',
+            date: '01/01/2026',
+            validUntil: '01/01/2026',
+        },
+        client: {
+            name: 'Cliente Teste'
+        },
+        items: [
+            {},
+            {},
+        ],
+        totals: {
+            total: 108.79,
+        }
+    },
+]
 
 export default function Login() {
     const googleClientId = process.env.REACT_APP_GOOGLE_CLIENT_ID
@@ -63,6 +104,33 @@ export default function Login() {
 
     return (
         <ContainerLogin>
+            <div className='hero-section'>
+                <div className='hero-text'>
+                    <h1 className='hero-title'>
+                        Organize seus orçamentos
+                        <span className='hero-title-gradient'>
+                            , controle seus resultados.
+                        </span>
+                    </h1>
+                    <span className='hero-subtext'>
+                        Crie orçamentos profissionais em minutos, acompanhe aprovações e tenha mais controle sobre o seu faturamento. Tudo em um só lugar, sem planilhas, sem WhatsApp bagunçado.
+                    </span>
+                </div>
+
+                <div className='hero-window'>
+                    <div className='window-topbar'>
+                        <div className='container-circle-window'>
+                            <div className='circle-window-topbar circle-1' />
+                            <div className='circle-window-topbar circle-2' />
+                            <div className='circle-window-topbar circle-3' />
+                        </div>
+                    </div>
+
+                    <BudgetMockup budgets={budgets} />
+                </div>
+            </div>
+
+
             <Main></Main>
             <LoginContent>
 

@@ -29,6 +29,7 @@ export const DivTitle = styled.div`
 
     .container-title-budget{
         width: 100%;
+        display: flex;
         justify-content: space-between;
         padding-block: 1vh 2vh;
 
@@ -94,11 +95,14 @@ export const StatusBudget = styled.div`
 
 export const InfoCardBudget = styled.div`
     width: 100%;
+    display: flex;
+    flex-direction: column;
     padding-block: 1vh;
     row-gap: 1vh;
 
     div{
         width: 100%;
+        display: flex;
         justify-content: space-between;
     
         h3{
