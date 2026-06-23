@@ -15,18 +15,27 @@ export const ContainerLogin = styled.div`
     .hero-section{
         width: 90%;
         margin: auto;
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0 10vh;
+        display: grid ;
+        grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
+        gap: 5vh 10vh;
         padding-block: 10vh;
+
+        @media (width <= 900px){
+            .hero-text{
+                width: 100%;
+            }
+        }
 
         .hero-text{
             display: flex;
             flex-direction: column;
+            place-content: center;
             flex: 1;
+            gap: 2vh;
 
             h1.hero-title{
-                margin: auto;
+                padding: 0;
+                margin: 0 auto;
                 font-size: 3rem;
                 text-align: center;
                 font-weight: 800;
@@ -45,13 +54,51 @@ export const ContainerLogin = styled.div`
             }
 
             .hero-subtext{
-                margin: auto;
+                margin: 0 auto;
                 padding-block: 5vh;
                 display: flex;
                 color: rgb(170,170,190);
                 font-size: 1.25rem;
                 line-height: 1.7;
                 text-align: center;
+            }
+
+            .container-buttons-hero{
+                width: 100%;
+                display: flex;
+                flex-wrap: wrap;
+                gap: 2rem 1rem;
+
+                button{
+                    min-width: 200px;
+                    scale: .9;
+                    flex: 1;
+                    border-radius: 5vh;
+                    font-size: 1rem;
+                    transition: 0.3s;
+
+                    &:hover{
+                        scale: 1;
+                        color: white;
+                        box-shadow: -0.5vh .5vh 3vh rgba(80, 50, 180, 1);
+
+                    }
+
+                    &.button-first-budget{
+                        box-shadow: -0.5vh 1vh 1.5vh rgba(100,180,255,0.5);
+
+                        &:hover{
+                            background: ${color.purpleHover};
+                            box-shadow: -0.5vh .5vh 3vh rgba(80, 50, 180, 1);
+                        }
+                    }
+
+                    &.button-view-demo{
+                        outline: 2px solid ${color.borderDarkColor};
+                        background: none;
+                        color: white;
+                    }
+                }
             }
         }
 

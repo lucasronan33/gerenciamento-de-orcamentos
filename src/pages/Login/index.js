@@ -8,7 +8,7 @@ import validator from 'validator'
 import { googleLoginRequest, loginRequest } from '../../store/modules/auth/actions'
 import { GoogleLogin } from '@react-oauth/google'
 import { toast } from 'react-toastify'
-import { Eye, EyeOff } from 'lucide-react'
+import { ArrowRight, Eye, EyeOff, Play } from 'lucide-react'
 import BudgetMockup from '../../components/BudgetMockup'
 
 const budgets = [
@@ -47,6 +47,7 @@ const budgets = [
         ],
         totals: {
             total: 108.79,
+
         }
     },
 ]
@@ -115,6 +116,24 @@ export default function Login() {
                     <span className='hero-subtext'>
                         Crie orçamentos profissionais em minutos, acompanhe aprovações e tenha mais controle sobre o seu faturamento. Tudo em um só lugar, sem planilhas, sem WhatsApp bagunçado.
                     </span>
+
+                    <span className='container-buttons-hero'>
+                        <button
+                            className='button-first-budget'
+                        >
+                            Criar meu primiero orçamento grátis
+                            <ArrowRight />
+                        </button>
+                        <button
+                            className='button-view-demo'
+                        >
+                            <Play />
+                            Ver demonstração
+                        </button>
+                    </span>
+                    <div className='container-benefits-hero'>
+
+                    </div>
                 </div>
 
                 <div className='hero-window'>
