@@ -15,9 +15,11 @@ export const ContainerLogin = styled.div`
     .hero-section{
         width: 90%;
         margin: auto;
-        display: grid ;
-        grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
-        gap: 5vh 10vh;
+        display: flex;
+        flex-wrap: wrap;
+        place-items: center;
+        place-content: center;
+        gap: 3vh 3vh;
         padding-block: 10vh;
 
         @media (width <= 900px){
@@ -27,16 +29,37 @@ export const ContainerLogin = styled.div`
         }
 
         .hero-text{
+            min-width: 350px;
             display: flex;
             flex-direction: column;
-            place-content: center;
+            align-items: center;
+            justify-content: space-between;
             flex: 1;
-            gap: 2vh;
+            font-size: 1rem;
+
+            .container-free-days{
+                display: flex;
+                place-items: center;
+                place-content: center;
+                margin-bottom: 1rem;
+                gap: .5rem;
+                padding: 0.25rem 1rem;
+                outline: 1px solid ${color.borderDarkColor};
+                border-radius: 2rem;
+                font-size: 0.75em;
+                color: rgba(255,255,255,0.5);
+                background: rgba(0, 0, 0, 0.1);
+
+                svg{
+                    height: 1rem;
+                    color: ${color.blueDocument};
+                }
+            }
 
             h1.hero-title{
                 padding: 0;
                 margin: 0 auto;
-                font-size: 3rem;
+                font-size: 3.5em;
                 text-align: center;
                 font-weight: 800;
                 line-height: 1;
@@ -47,10 +70,6 @@ export const ContainerLogin = styled.div`
                     background-clip: text;
                     color: transparent;
                 }
-
-                @media (width >=40rem){
-                    font-size: 4rem;
-                }
             }
 
             .hero-subtext{
@@ -58,7 +77,7 @@ export const ContainerLogin = styled.div`
                 padding-block: 5vh;
                 display: flex;
                 color: rgb(170,170,190);
-                font-size: 1.25rem;
+                font-size: .9em;
                 line-height: 1.7;
                 text-align: center;
             }
@@ -66,26 +85,28 @@ export const ContainerLogin = styled.div`
             .container-buttons-hero{
                 width: 100%;
                 display: flex;
+                place-content: center;
                 flex-wrap: wrap;
                 gap: 2rem 1rem;
 
                 button{
-                    min-width: 200px;
+                    min-width: 250px;
+                    width: fit-content;
                     scale: .9;
                     flex: 1;
                     border-radius: 5vh;
-                    font-size: 1rem;
+                    font-size: 1.1em;
                     transition: 0.3s;
 
                     &:hover{
                         scale: 1;
                         color: white;
-                        box-shadow: -0.5vh .5vh 3vh rgba(80, 50, 180, 1);
 
                     }
 
                     &.button-first-budget{
-                        box-shadow: -0.5vh 1vh 1.5vh rgba(100,180,255,0.5);
+                        background: cyan;
+                        box-shadow: -0.5vh 1vh 2rem rgba(100,180,255,0.2);
 
                         &:hover{
                             background: ${color.purpleHover};
@@ -94,56 +115,92 @@ export const ContainerLogin = styled.div`
                     }
 
                     &.button-view-demo{
-                        outline: 2px solid ${color.borderDarkColor};
+                        /* outline: 2px solid ${color.borderDarkColor}; */
                         background: none;
                         color: white;
+                        flex: 0;
+                        &:hover{
+                            box-shadow: none;
+                            filter:drop-shadow( -0.5vh .5vh 3vh rgba(80, 50, 180, 1));
+                        }
+                    }
+                }
+            }
+
+            .container-benefits-hero{
+                padding-block: 2em;
+                display: flex;
+                gap: 1em;
+
+                .hero-benefit{
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    gap: .75em;
+                    font-size:0.75em;
+                    color: rgba(255,255,255,0.6);
+                    
+                    svg{
+                        color: ${color.blueDocument};
+                        height: 1.5em;
                     }
                 }
             }
         }
 
         .hero-window{
-            max-width: 100%;
-            min-height: 20rem;
+            min-width: 300px;
+            height: fit-content;
             display: flex;
-            flex-direction: column;
             flex: 1;
-            align-self: stretch;
             border-radius: 1.5rem;
-            border: 1px solid ${color.borderDarkColor};
             background: rgba(0, 0, 0, 0.3);
             overflow: hidden;
+            scale: 0.9;
+            box-shadow: -0.5vh .5vh 3vh ${color.blueHover};
+            animation-name: mockup, mockup-light;
+            animation-duration: 15s, 5s;
+            animation-iteration-count: infinite, infinite;
+            animation-timing-function: linear,linear;
 
-            .window-topbar{
-                width: 100%;
-                height: 2rem;
-                border-bottom: 1px solid ${color.borderDarkColor};
-                background: rgba(20, 20, 20, 0.3);
-
-                .container-circle-window{
-                    display: flex;
-                    height: 100%;
-                    padding: 1vh 2vh;
-                    gap: 0.5rem;
-                    margin: auto 0;
-
-                    .circle-window-topbar{
-                        height: 100%;
-                        aspect-ratio: 1 / 1;
-                        border-radius: 50%;
-
-                        &.circle-1{
-                            background-color: rgba(255, 0, 0, 0.6);
-                        }
-                        &.circle-2{
-                            background-color: rgba(255, 200, 0, 0.6);
-                        }
-                        &.circle-3{
-                            background-color: rgba(0, 200, 0, 0.6);
-                        }
-                    }
+            @keyframes mockup-light {
+                0%{
+                    box-shadow: -0.5vh .5vh 8em ${color.blueHover};
+                }
+                50%{
+                    box-shadow: -0.5vh .5vh 3em ${color.blueHover};
+                }
+                100%{
+                    box-shadow: -0.5vh .5vh 8em ${color.blueHover};
                 }
             }
+            @keyframes mockup {
+                0%{
+                    translate: 1% 1%;
+                    
+                }
+                25%{
+                    translate: 1% -1%;
+                    
+                }
+                50%{
+                    translate: -1% -1%;
+                    
+                }
+                75%{
+                    translate: -1% 1%;
+                    
+                }
+                100%{
+                    translate: 1% 1%;
+                    
+                }
+            }
+
+            img{
+                width: 100%;
+            }
+
         }
     }
 `

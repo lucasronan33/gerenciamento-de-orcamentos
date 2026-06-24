@@ -8,48 +8,13 @@ import validator from 'validator'
 import { googleLoginRequest, loginRequest } from '../../store/modules/auth/actions'
 import { GoogleLogin } from '@react-oauth/google'
 import { toast } from 'react-toastify'
-import { ArrowRight, Eye, EyeOff, Play } from 'lucide-react'
-import BudgetMockup from '../../components/BudgetMockup'
+import { ArrowRight, Check, Eye, EyeOff, Play, Sparkles } from 'lucide-react'
+import imageMockup from '../../assets/images/mockup.png'
 
-const budgets = [
-    {
-        basic: {
-            code: 123456,
-            title: 'teste 1',
-            status: 'approved',
-            date: '01/01/2026',
-            validUntil: '01/01/2026',
-        },
-        client: {
-            name: 'Cliente Teste'
-        },
-        items: [
-            {},
-        ],
-        totals: {
-            total: 32.78,
-        }
-    },
-    {
-        basic: {
-            code: 123456,
-            title: 'teste 3',
-            status: 'producing',
-            date: '01/01/2026',
-            validUntil: '01/01/2026',
-        },
-        client: {
-            name: 'Cliente Teste'
-        },
-        items: [
-            {},
-            {},
-        ],
-        totals: {
-            total: 108.79,
-
-        }
-    },
+const benefits = [
+    'Sem cartão',
+    'Cancele quando quiser',
+    'Login com Google',
 ]
 
 export default function Login() {
@@ -107,6 +72,10 @@ export default function Login() {
         <ContainerLogin>
             <div className='hero-section'>
                 <div className='hero-text'>
+                    <span className='container-free-days'>
+                        <Sparkles />
+                        14 dias grátis — sem cartão de crédito
+                    </span>
                     <h1 className='hero-title'>
                         Organize seus orçamentos
                         <span className='hero-title-gradient'>
@@ -132,20 +101,17 @@ export default function Login() {
                         </button>
                     </span>
                     <div className='container-benefits-hero'>
-
+                        {benefits.map((benefit, index) =>
+                            <span className='hero-benefit'>
+                                <Check />
+                                {benefit}
+                            </span>
+                        )}
                     </div>
                 </div>
 
                 <div className='hero-window'>
-                    <div className='window-topbar'>
-                        <div className='container-circle-window'>
-                            <div className='circle-window-topbar circle-1' />
-                            <div className='circle-window-topbar circle-2' />
-                            <div className='circle-window-topbar circle-3' />
-                        </div>
-                    </div>
-
-                    <BudgetMockup budgets={budgets} />
+                    <img src={imageMockup} alt='' />
                 </div>
             </div>
 
