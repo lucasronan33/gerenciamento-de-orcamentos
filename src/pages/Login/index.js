@@ -1,21 +1,16 @@
-import { useEffect, useState } from 'react'
-import { Form } from '../../components/Form'
-import { ContainerLogin, LoginContent, Main } from './styled'
-import { Link, useLocation, useNavigate } from 'react-router-dom'
-import { Button } from '../../components/Button'
-import { useDispatch, useSelector } from 'react-redux'
-import validator from 'validator'
-import { googleLoginRequest, loginRequest } from '../../store/modules/auth/actions'
 import { GoogleLogin } from '@react-oauth/google'
+import { Eye, EyeOff } from 'lucide-react'
+import { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
-import { ArrowRight, Check, Eye, EyeOff, Play, Sparkles } from 'lucide-react'
-import imageMockup from '../../assets/images/mockup.png'
-
-const benefits = [
-    'Sem cartão',
-    'Cancele quando quiser',
-    'Login com Google',
-]
+import validator from 'validator'
+import { Button } from '../../components/Button'
+import { Form } from '../../components/Form'
+import { googleLoginRequest, loginRequest } from '../../store/modules/auth/actions'
+import { ContainerLogin, LoginContent, Main } from './styled'
+import HeroSection from '../../components/HeroSection'
+import PainsSection from '../../components/Pains'
 
 export default function Login() {
     const googleClientId = process.env.REACT_APP_GOOGLE_CLIENT_ID
@@ -70,51 +65,11 @@ export default function Login() {
 
     return (
         <ContainerLogin>
-            <div className='hero-section'>
-                <div className='hero-text'>
-                    <span className='container-free-days'>
-                        <Sparkles />
-                        14 dias grátis — sem cartão de crédito
-                    </span>
-                    <h1 className='hero-title'>
-                        Organize seus orçamentos
-                        <span className='hero-title-gradient'>
-                            , controle seus resultados.
-                        </span>
-                    </h1>
-                    <span className='hero-subtext'>
-                        Crie orçamentos profissionais em minutos, acompanhe aprovações e tenha mais controle sobre o seu faturamento. Tudo em um só lugar, sem planilhas, sem WhatsApp bagunçado.
-                    </span>
-
-                    <span className='container-buttons-hero'>
-                        <button
-                            className='button-first-budget'
-                        >
-                            Criar meu primiero orçamento grátis
-                            <ArrowRight />
-                        </button>
-                        <button
-                            className='button-view-demo'
-                        >
-                            <Play />
-                            Ver demonstração
-                        </button>
-                    </span>
-                    <div className='container-benefits-hero'>
-                        {benefits.map((benefit, index) =>
-                            <span className='hero-benefit'>
-                                <Check />
-                                {benefit}
-                            </span>
-                        )}
-                    </div>
-                </div>
-
-                <div className='hero-window'>
-                    <img src={imageMockup} alt='' />
-                </div>
+            <HeroSection />
+            <div className='banner-footer-hero'>
+                Usado por autônomos, MEIs, marcenarias, serralherias, comunicação visual e assistências técnicas
             </div>
-
+            <PainsSection />
 
             <Main></Main>
             <LoginContent>
