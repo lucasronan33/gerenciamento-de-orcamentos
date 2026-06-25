@@ -17,6 +17,7 @@ import RoadmapSection from '../../components/Roadmap'
 import { googleLoginRequest, loginRequest } from '../../store/modules/auth/actions'
 import HowItWorks from '../../components/HowItWorks'
 import { DashboardSection } from '../../components/DashboardSection'
+import { PricingSection } from '../../components/Pricing'
 
 export function SectionHeader({ eyebrow, title, subtitle }) {
     return (
@@ -101,10 +102,10 @@ export default function Login() {
             <BenefitsSection />
             <HowItWorks />
             <DashboardSection />
-
             <ComparisonSection />
             <FeaturesSection />
             <RoadmapSection />
+            <PricingSection />
 
             <div className='m-auto flex flex-col place-items-center p-[5vh]'>
                 <motion.form
