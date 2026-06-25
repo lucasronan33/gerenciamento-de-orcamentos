@@ -2,9 +2,9 @@ import { motion } from 'framer-motion'
 import { Layout, MessageCircle, Rocket, Zap } from 'lucide-react'
 
 const ROADMAP = [
-    { icon: Layout, title: 'CRM integrado', desc: 'Gestao completa de relacionamento com clientes.', status: 'Em breve' },
-    { icon: MessageCircle, title: 'WhatsApp integrado', desc: 'Envie orcamentos direto pelo WhatsApp.', status: 'Planejado' },
+    { icon: MessageCircle, title: 'WhatsApp integrado', desc: 'Envie orcamentos direto pelo WhatsApp.', status: 'Em breve' },
     { icon: Zap, title: 'Automacoes', desc: 'Follow-ups automaticos e notificacoes inteligentes.', status: 'Planejado' },
+    { icon: Layout, title: 'CRM integrado', desc: 'Gestao completa de relacionamento com clientes.', status: 'Futuro' },
     { icon: Rocket, title: 'ERP completo', desc: 'Estoque, notas fiscais e gestao financeira avancada.', status: 'Futuro' },
 ]
 
@@ -20,10 +20,10 @@ export default function RoadmapSection() {
                 >
                     <span className='text-sm font-bold uppercase tracking-widest text-[rgba(38,178,242,1)]'>Roadmap</span>
                     <h2 className='mb-4 mt-4 text-3xl font-extrabold text-white md:text-4xl'>
-                        O ORCA vai crescer com voce
+                        Estamos só começando
                     </h2>
                     <p className='mx-auto max-w-xl text-lg leading-7 text-[rgba(230,230,255,0.6)]'>
-                        Novas funcionalidades sendo desenvolvidas para impulsionar ainda mais o seu negocio.
+                        O ORCA evolui junto com seu negócio. Novas funcionalidades sendo desenvolvidas para impulsionar ainda mais o seu negocio.
                     </p>
                 </motion.div>
 

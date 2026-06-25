@@ -1,47 +1,96 @@
-import { motion } from 'framer-motion'
-import { FileText, Shield, Smartphone, Sparkles, TrendingUp, Zap } from 'lucide-react'
-import { SectionHeader } from '../../pages/Login'
+import React from "react";
+import { motion } from "framer-motion";
+import { Clock, FolderOpen, BarChart3, History, Award, Smartphone } from "lucide-react";
+import { SectionHeader } from '../../pages/Login';
 
-const benefits = [
-    { icon: <Zap />, title: 'Economize horas toda semana', desc: 'Modelos prontos, duplicacao em 1 clique e geracao de PDF instantanea.' },
-    { icon: <Shield />, title: 'Tudo organizado em um so lugar', desc: 'Clientes, itens, orcamentos e historico - pesquisaveis a qualquer momento.' },
-    { icon: <TrendingUp />, title: 'Controle financeiro de verdade', desc: 'Veja receita, valores a receber e taxa de aprovacao em tempo real.' },
-    { icon: <FileText />, title: 'Historico completo', desc: 'Nunca mais perca um orcamento. Tudo registrado com data e status.' },
-    { icon: <Sparkles />, title: 'Mais profissionalismo', desc: 'PDFs com sua identidade que transmitem confianca e fecham mais.' },
-    { icon: <Smartphone />, title: 'Acesse de qualquer lugar', desc: 'Plataforma 100% responsiva: notebook, tablet ou celular.' },
-]
+const BENEFITS = [
+    {
+        icon: Clock,
+        title: "Economia de tempo",
+        description: "Crie orçamentos completos em poucos minutos. Duplique, edite e envie sem retrabalho.",
+        stat: "80%",
+        statLabel: "menos tempo",
+    },
+    {
+        icon: FolderOpen,
+        title: "Tudo organizado",
+        description: "Todos os seus orçamentos, clientes e serviços em um único lugar acessível.",
+        stat: "1",
+        statLabel: "lugar central",
+    },
+    {
+        icon: BarChart3,
+        title: "Controle financeiro",
+        description: "Saiba quanto faturou, quanto tem a receber e qual sua taxa de aprovação.",
+        stat: "100%",
+        statLabel: "visibilidade",
+    },
+    {
+        icon: History,
+        title: "Histórico completo",
+        description: "Nunca mais perca um orçamento. Acesse qualquer informação do passado em segundos.",
+        stat: "∞",
+        statLabel: "registros",
+    },
+    {
+        icon: Award,
+        title: "Mais profissionalismo",
+        description: "PDFs padronizados e profissionais que impressionam seus clientes.",
+        stat: "PDF",
+        statLabel: "profissional",
+    },
+    {
+        icon: Smartphone,
+        title: "Acesso de qualquer lugar",
+        description: "Na obra, no escritório ou em casa. Funciona no celular, tablet e computador.",
+        stat: "24/7",
+        statLabel: "disponível",
+    },
+];
 
-const BenefitsSection = () => {
+export default function BenefitsSection() {
     return (
-        <section className='w-full border-b border-[rgba(35,47,53,1)] bg-black/5 py-20'>
-            <div className='mx-auto flex w-[90%] flex-col items-center justify-center gap-8'>
-                <SectionHeader
-                    eyebrow='A transformacao'
-                    title='Da bagunca ao controle, em poucos dias'
-                    subtitle='O ORCA foi feito para pequenos negocios e prestadores que precisam de organizacao sem burocracia.'
-                />
-                <div className='grid w-full max-w-6xl grid-cols-1 justify-center gap-4 sm:grid-cols-2 lg:grid-cols-3'>
-                    {benefits.map((p, index) => (
-                        <motion.article
-                            key={p.title}
-                            initial={{ opacity: 0, y: 22 }}
+        <section className="py-20 md:py-32 relative" id="recursos">
+            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-cyan-950/5 to-transparent" />
+            <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    className="text-center mb-16"
+                >
+                    <SectionHeader
+                        eyebrow='A transformacao'
+                        title='Da bagunca ao controle, em poucos dias'
+                        subtitle='Deixe de ser refém de planilhas e mensagens. Tenha o controle total do seu negócio.'
+                    />
+                </motion.div>
+
+                <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {BENEFITS.map((benefit, i) => (
+                        <motion.div
+                            key={i}
+                            initial={{ opacity: 0, y: 20 }}
                             whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true, amount: 0.25 }}
-                            transition={{ duration: 0.15, ease: 'easeOut' }}
-                            whileHover={{ y: -2 }}
-                            className='flex min-h-16 flex-col gap-2 self-stretch rounded-2xl border border-[rgba(35,47,53,1)] bg-gradient-to-b from-[rgba(15,25,35,0.8)] to-[rgba(5,15,25,0.5)] p-8 transition duration-300 hover:border-[rgba(0,210,255,0.5)]'
+                            viewport={{ once: true }}
+                            transition={{ delay: i * 0.08 }}
+                            className="group relative p-6 rounded-xl border border-cyan-500/10 bg-gradient-to-b from-cyan-500/[0.03] to-transparent hover:border-cyan-500/20 hover:from-cyan-500/[0.06] transition-all duration-300"
                         >
-                            <div className='flex w-fit rounded-xl bg-[rgba(0,210,255,0.2)] p-2 text-[rgba(0,210,255,1)]'>
-                                {p.icon}
+                            <div className="flex items-start justify-between mb-4">
+                                <div className="w-10 h-10 rounded-lg bg-cyan-500/10 flex items-center justify-center">
+                                    <benefit.icon className="w-5 h-5 text-cyan-400" />
+                                </div>
+                                <div className="text-right">
+                                    <span className="text-2xl font-bold text-cyan-400">{benefit.stat}</span>
+                                    <p className="text-[10px] text-steel uppercase tracking-wider">{benefit.statLabel}</p>
+                                </div>
                             </div>
-                            <h3 className='pt-3 text-lg font-bold'>{p.title}</h3>
-                            <p className='text-sm text-[rgba(230,230,255,0.6)]'>{p.desc}</p>
-                        </motion.article>
+                            <h3 className="text-base font-semibold text-arctic mb-2">{benefit.title}</h3>
+                            <p className="text-sm text-steel leading-relaxed">{benefit.description}</p>
+                        </motion.div>
                     ))}
                 </div>
             </div>
         </section>
-    )
+    );
 }
-
-export default BenefitsSection
