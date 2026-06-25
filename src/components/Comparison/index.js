@@ -149,14 +149,14 @@ export const ComparisonSection = () => {
                             ))}
                         </ul>
                     </div>
-                    <div className="table-after table-comparison rounded-2xl border border-brand/40 bg-brand/5 p-6 sm:p-8 glow-brand">
-                        <div className="flex items-center gap-2 text-brand font-bold">
+                    <div className="table-after table-comparison">
+                        <div>
                             <CheckCircle2 className="h-5 w-5" /> Com ORCA
                         </div>
-                        <ul className="mt-6 space-y-3">
+                        <ul >
                             {after.map((a) => (
-                                <li key={a} className="flex items-start gap-3 text-sm">
-                                    <Check className="h-4 w-4 text-brand shrink-0 mt-0.5" />
+                                <li key={a} >
+                                    <Check />
                                     <p>
                                         {a}
                                     </p>

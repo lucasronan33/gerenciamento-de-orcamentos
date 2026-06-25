@@ -13,6 +13,7 @@ import HeroSection from '../../components/HeroSection'
 import PainsSection from '../../components/Pains'
 import BenefitsSection from '../../components/Benefits'
 import { ComparisonSection } from '../../components/Comparison'
+import FeaturesSection from '../../components/Features'
 
 export function SectionHeader({ eyebrow, title, subtitle }) {
     return (
@@ -83,8 +84,11 @@ export default function Login() {
             </div>
             <PainsSection />
             <BenefitsSection />
+            {/* how to work */}
+            {/* finances */}
 
             <ComparisonSection />
+            <FeaturesSection />
 
             <Main></Main>
             <LoginContent>
