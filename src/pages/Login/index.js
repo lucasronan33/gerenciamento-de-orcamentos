@@ -12,6 +12,17 @@ import { ContainerLogin, LoginContent, Main } from './styled'
 import HeroSection from '../../components/HeroSection'
 import PainsSection from '../../components/Pains'
 import BenefitsSection from '../../components/Benefits'
+import { ComparisonSection } from '../../components/Comparison'
+
+export function SectionHeader({ eyebrow, title, subtitle }) {
+    return (
+        <div className="header">
+            <span>{eyebrow}</span>
+            <h2>{title}</h2>
+            <p>{subtitle}</p>
+        </div>
+    );
+}
 
 export default function Login() {
     const googleClientId = process.env.REACT_APP_GOOGLE_CLIENT_ID
@@ -72,6 +83,8 @@ export default function Login() {
             </div>
             <PainsSection />
             <BenefitsSection />
+
+            <ComparisonSection />
 
             <Main></Main>
             <LoginContent>

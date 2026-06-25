@@ -1,7 +1,8 @@
 import { BarChart3, Clock, FileSpreadsheet, MessageSquareText, NotebookPen, XCircle } from 'lucide-react';
 import React from 'react';
 import styled from 'styled-components';
-import { blueDocument, borderDarkColor } from '../../config/colors';
+import { borderDarkColor } from '../../config/colors';
+import { SectionHeader } from '../../pages/Login';
 
 const pains = [
     { icon: <MessageSquareText />, title: "Orçamentos perdidos", desc: "Conversas de WhatsApp engolem propostas e clientes somem sem retorno." },
@@ -12,18 +13,8 @@ const pains = [
     { icon: <BarChart3 />, title: "Sem visão financeira", desc: "Quanto você tem a receber? Quanto fechou esse mês? Difícil saber." },
 ]
 
-function SectionHeader({ eyebrow, title, subtitle }) {
-    return (
-        <div className="header">
-            <span>{eyebrow}</span>
-            <h2>{title}</h2>
-            <p>{subtitle}</p>
-        </div>
-    );
-}
 const Pain = styled.section`
     width: 100%;
-    min-height: 100dvh;
     padding-block: 10vh;
     background: rgba(0,0,0,0.05);
     border-bottom: 1px solid ${borderDarkColor};

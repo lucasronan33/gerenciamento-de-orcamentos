@@ -22,7 +22,6 @@ function SectionHeader({ eyebrow, title, subtitle }) {
 }
 const Benefits = styled.section`
     width: 100%;
-    min-height: 100dvh;
     padding-block: 10vh;
     background: rgba(0,0,0,0.05);
     border-bottom: 1px solid ${borderDarkColor};
