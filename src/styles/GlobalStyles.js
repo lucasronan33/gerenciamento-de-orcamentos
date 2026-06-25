@@ -30,7 +30,7 @@ export default createGlobalStyle`
     margin: 0;
     padding: 0;
     outline: none;
-    border: none;
+    border: 0 solid;
     background: none;
     background-color: none;
     box-sizing: border-box;

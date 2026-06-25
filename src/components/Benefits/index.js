@@ -1,132 +1,46 @@
-import { FileText, Shield, Smartphone, Sparkles, TrendingUp, Zap } from 'lucide-react';
-import styled from 'styled-components';
-import { borderDarkColor } from '../../config/colors';
+import { motion } from 'framer-motion'
+import { FileText, Shield, Smartphone, Sparkles, TrendingUp, Zap } from 'lucide-react'
+import { SectionHeader } from '../../pages/Login'
 
 const benefits = [
-    { icon: <Zap />, title: "Economize horas toda semana", desc: "Modelos prontos, duplicação em 1 clique e geração de PDF instantânea." },
-    { icon: <Shield />, title: "Tudo organizado em um só lugar", desc: "Clientes, itens, orçamentos e histórico — pesquisáveis a qualquer momento." },
-    { icon: <TrendingUp />, title: "Controle financeiro de verdade", desc: "Veja receita, valores a receber e taxa de aprovação em tempo real." },
-    { icon: <FileText />, title: "Histórico completo", desc: "Nunca mais perca um orçamento. Tudo registrado com data e status." },
-    { icon: <Sparkles />, title: "Mais profissionalismo", desc: "PDFs com sua identidade que transmitem confiança e fecham mais." },
-    { icon: <Smartphone />, title: "Acesse de qualquer lugar", desc: "Plataforma 100% responsiva: notebook, tablet ou celular." },
+    { icon: <Zap />, title: 'Economize horas toda semana', desc: 'Modelos prontos, duplicacao em 1 clique e geracao de PDF instantanea.' },
+    { icon: <Shield />, title: 'Tudo organizado em um so lugar', desc: 'Clientes, itens, orcamentos e historico - pesquisaveis a qualquer momento.' },
+    { icon: <TrendingUp />, title: 'Controle financeiro de verdade', desc: 'Veja receita, valores a receber e taxa de aprovacao em tempo real.' },
+    { icon: <FileText />, title: 'Historico completo', desc: 'Nunca mais perca um orcamento. Tudo registrado com data e status.' },
+    { icon: <Sparkles />, title: 'Mais profissionalismo', desc: 'PDFs com sua identidade que transmitem confianca e fecham mais.' },
+    { icon: <Smartphone />, title: 'Acesse de qualquer lugar', desc: 'Plataforma 100% responsiva: notebook, tablet ou celular.' },
 ]
-
-function SectionHeader({ eyebrow, title, subtitle }) {
-    return (
-        <div className="header">
-            <span>{eyebrow}</span>
-            <h2>{title}</h2>
-            <p>{subtitle}</p>
-        </div>
-    );
-}
-const Benefits = styled.section`
-    width: 100%;
-    padding-block: 10vh;
-    background: rgba(0,0,0,0.05);
-    border-bottom: 1px solid ${borderDarkColor};
-
-    .container-benefits{
-        width: 90%;
-        margin: auto;
-        display: flex;
-        flex-direction: column;
-        gap: 3vh;
-        align-items: center;
-        justify-content: center;
-
-        .header{
-            text-align: center;
-            margin: auto;
-            display: flex;
-            flex-wrap: wrap;
-            flex-direction: column;
-            gap: 1rem;
-            
-            span{
-                font-size: .9em;
-                text-transform: uppercase;
-                font-weight: 700;
-                letter-spacing: .075em;
-                color: rgba(0,210,255,1);
-            }
-            h2{
-                font-size: 2.9rem;
-                font-weight: 800;
-            }
-            p{
-                max-width: 47rem;
-                line-height: 1.5;
-                color: rgba(230,230,255,0.6);
-            }
-        }
-
-        .container-cards-benefits{
-            width: 80%;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px,1fr));
-            gap: 1rem;
-            justify-content: center;
-            align-items: center;
-
-            .card{
-                min-height: 4rem;
-                align-self: stretch;
-                padding: 2rem 2rem;
-                display: flex;
-                flex-direction: column;
-                gap: 0.5rem;
-                background: linear-gradient(rgba(15,25,35,0.8), rgba(5,15,25, 0.5));
-                border: 1px solid ${borderDarkColor};
-                border-radius: 1rem;
-                transition: 0.3s;
-                
-                &:hover{
-                    border-color: rgba(0,210,255,0.5);
-                }
-
-                div{
-                    width: fit-content;
-                    padding: 0.5rem;
-                    display: flex;
-                    border-radius: 0.75rem;
-                    background: rgba(0,210,255,0.2);
-                    color: rgba(0,210,255,1);
-                }
-
-                h3{
-                    padding-top: 0.75rem;
-                }
-
-                p{
-                    font-size: 0.9em;
-                    color: rgba(230,230,255,0.6);
-                }
-            }
-        }
-    }
-`
 
 const BenefitsSection = () => {
     return (
-        <Benefits>
-            <div className="container-benefits">
+        <section className='w-full border-b border-[rgba(35,47,53,1)] bg-black/5 py-20'>
+            <div className='mx-auto flex w-[90%] flex-col items-center justify-center gap-8'>
                 <SectionHeader
-                    eyebrow="A transformação"
-                    title="Da bagunça ao controle, em poucos dias"
-                    subtitle="O ORCA foi feito para pequenos negócios e prestadores que precisam de organização sem burocracia."
+                    eyebrow='A transformacao'
+                    title='Da bagunca ao controle, em poucos dias'
+                    subtitle='O ORCA foi feito para pequenos negocios e prestadores que precisam de organizacao sem burocracia.'
                 />
-                <div className="container-cards-benefits">
-                    {benefits.map((p) => (
-                        <div key={p.title} className='card'>
-                            <div>{p.icon}</div>
-                            <h3>{p.title}</h3>
-                            <p>{p.desc}</p>
-                        </div>
+                <div className='grid w-full max-w-6xl grid-cols-1 justify-center gap-4 sm:grid-cols-2 lg:grid-cols-3'>
+                    {benefits.map((p, index) => (
+                        <motion.article
+                            key={p.title}
+                            initial={{ opacity: 0, y: 22 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true, amount: 0.25 }}
+                            transition={{ duration: 0.15, ease: 'easeOut' }}
+                            whileHover={{ y: -2 }}
+                            className='flex min-h-16 flex-col gap-2 self-stretch rounded-2xl border border-[rgba(35,47,53,1)] bg-gradient-to-b from-[rgba(15,25,35,0.8)] to-[rgba(5,15,25,0.5)] p-8 transition duration-300 hover:border-[rgba(0,210,255,0.5)]'
+                        >
+                            <div className='flex w-fit rounded-xl bg-[rgba(0,210,255,0.2)] p-2 text-[rgba(0,210,255,1)]'>
+                                {p.icon}
+                            </div>
+                            <h3 className='pt-3 text-lg font-bold'>{p.title}</h3>
+                            <p className='text-sm text-[rgba(230,230,255,0.6)]'>{p.desc}</p>
+                        </motion.article>
                     ))}
                 </div>
             </div>
-        </Benefits>
+        </section>
     )
 }
 

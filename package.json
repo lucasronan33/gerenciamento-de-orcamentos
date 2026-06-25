@@ -8,7 +8,6 @@
     "@mui/material": "^9.0.1",
     "@mui/x-date-pickers": "^9.2.0",
     "@react-oauth/google": "^0.13.5",
-    "@tailwindcss/postcss": "^4.2.2",
     "@testing-library/dom": "^10.4.1",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
@@ -23,6 +22,7 @@
     "ejs": "^5.0.2",
     "express": "^5.2.1",
     "express-session": "^1.19.0",
+    "framer-motion": "^12.42.0",
     "helmet": "^8.1.0",
     "history": "^5.3.0",
     "lucide-react": "^1.11.0",
@@ -72,9 +72,9 @@
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.2",
     "@testing-library/user-event": "^14.6.1",
-    "autoprefixer": "^10.4.27",
+    "autoprefixer": "^10.5.2",
     "jsdom": "^27.0.1",
-    "postcss": "^8.5.8",
-    "tailwindcss": "^4.2.2"
+    "postcss": "^8.5.15",
+    "tailwindcss": "^3.4.17"
   }
 }

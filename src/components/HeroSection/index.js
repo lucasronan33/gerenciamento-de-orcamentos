@@ -1,253 +1,106 @@
+import { motion } from 'framer-motion'
 import { ArrowRight, Check, Play, Sparkles } from 'lucide-react'
 import imageMockup from '../../assets/images/mockup.png'
-import styled from 'styled-components'
-import * as color from '../../config/colors'
 
 const benefits = [
-    'Sem cartão',
+    'Sem cartao',
     'Cancele quando quiser',
     'Login com Google',
 ]
 
-const Hero = styled.div`
-    width: 90%;
-    min-height: 100dvh;
-    margin: auto;
-    display: flex;
-    flex-wrap: wrap;
-    place-items: center;
-    place-content: center;
-    gap: 3vh 3vh;
-    padding-block: 10vh;
-
-    @media (width <= 900px){
-        .hero-text{
-            width: 100%;
-        }
-    }
-
-    .hero-text{
-        min-width: 350px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: space-between;
-        flex: 1;
-        font-size: 1rem;
-
-        .container-free-days{
-            display: flex;
-            place-items: center;
-            place-content: center;
-            margin-bottom: 1rem;
-            gap: .5rem;
-            padding: 0.25rem 1rem;
-            outline: 1px solid ${color.borderDarkColor};
-            border-radius: 2rem;
-            font-size: 0.75em;
-            color: rgba(255,255,255,0.5);
-            background: rgba(0, 0, 0, 0.1);
-
-            svg{
-                height: 1rem;
-                color: ${color.blueDocument};
-            }
-        }
-
-        h1.hero-title{
-            padding: 0;
-            margin: 0 auto;
-            font-size: 3.5em;
-            text-align: center;
-            font-weight: 800;
-            line-height: 1;
-            letter-spacing: -0.025rem;
-
-            .hero-title-gradient{
-                background: linear-gradient(135deg, white , ${color.blueDocument});
-                background-clip: text;
-                color: transparent;
-            }
-        }
-
-        .hero-subtext{
-            margin: 0 auto;
-            padding-block: 5vh;
-            display: flex;
-            color: rgb(170,170,190);
-            font-size: .9em;
-            line-height: 1.7;
-            text-align: center;
-        }
-
-        .container-buttons-hero{
-            width: 100%;
-            display: flex;
-            place-content: center;
-            flex-wrap: wrap;
-            gap: 2rem 1rem;
-
-            button{
-                min-width: 250px;
-                width: fit-content;
-                scale: .9;
-                flex: 1;
-                border-radius: 5vh;
-                font-size: 1.1em;
-                transition: 0.3s;
-
-                &:hover{
-                    scale: 1;
-                    color: white;
-
-                }
-
-                &.button-first-budget{
-                    background: cyan;
-                    box-shadow: -0.5vh 1vh 2rem rgba(100,180,255,0.2);
-
-                    &:hover{
-                        background: ${color.purpleHover};
-                        box-shadow: -0.5vh .5vh 3vh rgba(80, 50, 180, 1);
-                    }
-                }
-
-                &.button-view-demo{
-                    /* outline: 2px solid ${color.borderDarkColor}; */
-                    background: none;
-                    color: white;
-                    flex: 0;
-                    &:hover{
-                        box-shadow: none;
-                        filter:drop-shadow( -0.5vh .5vh 3vh rgba(80, 50, 180, 1));
-                    }
-                }
-            }
-        }
-
-        .container-benefits-hero{
-            padding-block: 2em;
-            display: flex;
-            gap: 1em;
-
-            .hero-benefit{
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                gap: .75em;
-                font-size:0.75em;
-                color: rgba(255,255,255,0.6);
-                
-                svg{
-                    color: ${color.blueDocument};
-                    height: 1.5em;
-                }
-            }
-        }
-    }
-
-    .hero-window{
-        min-width: 300px;
-        height: fit-content;
-        display: flex;
-        flex: 1;
-        border-radius: 1.5rem;
-        background: rgba(0, 0, 0, 0.3);
-        overflow: hidden;
-        scale: 0.9;
-        box-shadow: -0.5vh .5vh 3vh ${color.blueHover};
-        animation-name: mockup, mockup-light;
-        animation-duration: 15s, 5s;
-        animation-iteration-count: infinite, infinite;
-        animation-timing-function: linear,linear;
-
-        @keyframes mockup-light {
-            0%{
-                box-shadow: -0.5vh .5vh 8em ${color.blueHover};
-            }
-            50%{
-                box-shadow: -0.5vh .5vh 3em ${color.blueHover};
-            }
-            100%{
-                box-shadow: -0.5vh .5vh 8em ${color.blueHover};
-            }
-        }
-        @keyframes mockup {
-            0%{
-                translate: 1% 1%;
-                
-            }
-            25%{
-                translate: 1% -1%;
-                
-            }
-            50%{
-                translate: -1% -1%;
-                
-            }
-            75%{
-                translate: -1% 1%;
-                
-            }
-            100%{
-                translate: 1% 1%;
-                
-            }
-        }
-
-        img{
-            width: 100%;
-        }
-
-    }
-`
-
 const HeroSection = () => {
     return (
-        <Hero>
-            <div className='hero-text'>
-                <span className='container-free-days'>
-                    <Sparkles />
-                    14 dias grátis — sem cartão de crédito
-                </span>
-                <h1 className='hero-title'>
-                    Organize seus orçamentos
-                    <span className='hero-title-gradient'>
+        <section className='mx-auto flex min-h-dvh w-[90%] flex-wrap place-content-center place-items-center gap-8 py-20'>
+            <motion.div
+                initial={{ opacity: 0, y: 28 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.7, ease: 'easeOut' }}
+                className='flex min-w-0 flex-1 basis-[350px] flex-col items-center justify-between text-base max-[420px]:basis-full'
+            >
+                <motion.span
+                    initial={{ opacity: 0, scale: 0.96 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ delay: 0.12, duration: 0.45 }}
+                    className='mb-4 flex place-content-center place-items-center gap-2 rounded-full border border-[rgba(35,47,53,1)] bg-black/10 px-4 py-1 text-center text-xs text-white/50'
+                >
+                    <Sparkles className='h-4 text-[rgba(38,178,242,1)]' />
+                    14 dias gratis - sem cartao de credito
+                </motion.span>
+
+                <h1 className='m-0 max-w-4xl p-0 text-center text-4xl font-extrabold leading-none tracking-normal sm:text-5xl lg:text-[3.5rem]'>
+                    Organize seus orcamentos
+                    <span className='bg-gradient-to-br from-white to-[rgba(38,178,242,1)] bg-clip-text text-transparent'>
                         , controle seus resultados.
                     </span>
                 </h1>
-                <span className='hero-subtext'>
-                    Crie orçamentos profissionais em minutos, acompanhe aprovações e tenha mais controle sobre o seu faturamento. Tudo em um só lugar, sem planilhas, sem WhatsApp bagunçado.
-                </span>
 
-                <span className='container-buttons-hero'>
-                    <button
-                        className='button-first-budget'
+                <p className='mx-auto flex max-w-3xl py-10 text-center text-sm leading-7 text-[rgb(170,170,190)] sm:text-base'>
+                    Crie orcamentos profissionais em minutos, acompanhe aprovacoes e tenha mais controle sobre o seu faturamento. Tudo em um so lugar, sem planilhas, sem WhatsApp baguncado.
+                </p>
+
+                <div className='flex w-full flex-wrap place-content-center gap-x-4 gap-y-8'>
+                    <motion.button
+                        initial={{ scale: 0.96 }}
+                        transition={{ duration: 0.15, ease: 'easeIn' }}
+                        whileHover={{ y: -2, scale: 1 }}
+                        whileTap={{ scale: 1 }}
+                        className='min-w-[250px] flex-1 rounded-full bg-cyan-400 text-[1.1em] shadow-[-0.5vh_1vh_2rem_rgba(100,180,255,0.2)] transition-colors duration-300 hover:bg-[rgba(117,71,209,1)] hover:text-white hover:shadow-[-0.5vh_.5vh_3vh_rgba(80,50,180,1)] sm:w-fit'
                     >
-                        Criar meu primiero orçamento grátis
+                        Criar meu primiero orcamento gratis
                         <ArrowRight />
-                    </button>
-                    <button
-                        className='button-view-demo'
+                    </motion.button>
+                    <motion.button
+                        initial={{ scale: 0.96 }}
+                        transition={{ duration: 0.15, ease: 'easeIn' }}
+                        whileHover={{ y: -2 }}
+                        whileTap={{ scale: 1 }}
+                        className='min-w-[250px] flex-1 rounded-full bg-transparent text-[1.1em] text-white transition-colors duration-300 hover:text-white hover:shadow-none hover:drop-shadow-[-0.5vh_.5vh_3vh_rgba(80,50,180,1)] sm:min-w-fit sm:flex-none'
                     >
                         <Play />
-                        Ver demonstração
-                    </button>
-                </span>
-                <div className='container-benefits-hero'>
-                    {benefits.map((benefit, index) =>
-                        <span className='hero-benefit' key={index}>
-                            <Check />
-                            {benefit}
-                        </span>
-                    )}
+                        Ver demonstracao
+                    </motion.button>
                 </div>
-            </div>
 
-            <div className='hero-window'>
-                <img src={imageMockup} alt='' />
-            </div>
-        </Hero>
+                <div className='flex flex-wrap justify-center gap-4 py-8'>
+                    {benefits.map((benefit, index) => (
+                        <motion.span
+                            key={benefit}
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 0.25 + index * 0.08 }}
+                            className='flex items-center justify-center gap-3 text-xs text-white/60'
+                        >
+                            <Check className='h-[1.5em] text-[rgba(38,178,242,1)]' />
+                            {benefit}
+                        </motion.span>
+                    ))}
+                </div>
+            </motion.div>
+
+            <motion.div
+                initial={{ opacity: 0, y: 30, scale: 0.92 }}
+                animate={{
+                    opacity: 1,
+                    y: [0, -10, 0, 10, 0],
+                    x: [0, -8, 0, 8, 0],
+                    scale: 0.9,
+                    boxShadow: [
+                        '-0.5vh 0.5vh 8em rgba(33,61,80,1)',
+                        '-0.5vh 0.5vh 3em rgba(33,61,80,1)',
+                        '-0.5vh 0.5vh 8em rgba(33,61,80,1)',
+                    ],
+                }}
+                transition={{
+                    opacity: { duration: 0.7, delay: 0.15 },
+                    y: { duration: 15, repeat: Infinity, ease: 'linear' },
+                    x: { duration: 15, repeat: Infinity, ease: 'linear' },
+                    boxShadow: { duration: 5, repeat: Infinity, ease: 'easeInOut' },
+                }}
+                className='flex h-fit min-w-0 flex-1 basis-[300px] overflow-hidden rounded-3xl bg-black/30 max-[420px]:basis-full'
+            >
+                <img className='w-full' src={imageMockup} alt='' />
+            </motion.div>
+        </section>
     )
 }
 
