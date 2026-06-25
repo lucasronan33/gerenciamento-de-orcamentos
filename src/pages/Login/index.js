@@ -15,6 +15,8 @@ import HeroSection from '../../components/HeroSection'
 import PainsSection from '../../components/Pains'
 import RoadmapSection from '../../components/Roadmap'
 import { googleLoginRequest, loginRequest } from '../../store/modules/auth/actions'
+import HowItWorks from '../../components/HowItWorks'
+import { DashboardSection } from '../../components/DashboardSection'
 
 export function SectionHeader({ eyebrow, title, subtitle }) {
     return (
@@ -25,9 +27,9 @@ export function SectionHeader({ eyebrow, title, subtitle }) {
             transition={{ duration: 0.45, ease: 'easeOut' }}
             className='mx-auto flex max-w-3xl flex-col flex-wrap gap-4 text-center'
         >
-            <span className='text-sm font-bold uppercase tracking-[0.075em] text-[rgba(0,210,255,1)]'>{eyebrow}</span>
+            <span className='text-sm font-bold uppercase tracking-[0.075em] text-brand'>{eyebrow}</span>
             <h2 className='text-3xl font-extrabold leading-tight sm:text-4xl lg:text-[2.9rem]'>{title}</h2>
-            <p className='mx-auto max-w-[47rem] leading-6 text-[rgba(230,230,255,0.6)]'>{subtitle}</p>
+            <p className='mx-auto max-w-[47rem] leading-6 text-muted-foreground'>{subtitle}</p>
         </motion.div>
     )
 }
@@ -90,13 +92,16 @@ export default function Login() {
                 initial={{ opacity: 0 }}
                 whileInView={{ opacity: 1 }}
                 viewport={{ once: true }}
-                className='mx-auto flex w-full justify-center border-y border-[rgba(35,47,53,1)] bg-black/10 px-4 py-12 text-center text-xs uppercase leading-6 tracking-[0.08em] text-white/60'
+                className='mx-auto flex w-full justify-center border-y border-border bg-surface/30 px-4 py-12 text-center text-xs uppercase leading-6 tracking-[0.08em] text-muted-foreground'
             >
                 Usado por autonomos, MEIs, marcenarias, serralherias, comunicacao visual e assistencias tecnicas
             </motion.div>
 
             <PainsSection />
             <BenefitsSection />
+            <HowItWorks />
+            <DashboardSection />
+
             <ComparisonSection />
             <FeaturesSection />
             <RoadmapSection />

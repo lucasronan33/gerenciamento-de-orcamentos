@@ -50,7 +50,7 @@ const BENEFITS = [
 
 export default function BenefitsSection() {
     return (
-        <section className="py-20 md:py-32 relative" id="recursos">
+        <section className="py-20 md:py-32 relative border-b border-[rgba(35,47,53,1)] w-full" id="recursos">
             <div className="absolute inset-0 bg-gradient-to-b from-transparent via-cyan-950/5 to-transparent" />
             <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <motion.div
@@ -85,8 +85,8 @@ export default function BenefitsSection() {
                                     <p className="text-[10px] text-steel uppercase tracking-wider">{benefit.statLabel}</p>
                                 </div>
                             </div>
-                            <h3 className="text-base font-semibold text-arctic mb-2">{benefit.title}</h3>
-                            <p className="text-sm text-steel leading-relaxed">{benefit.description}</p>
+                            <h3 className="pt-3 text-lg font-bold">{benefit.title}</h3>
+                            <p className="text-sm">{benefit.description}</p>
                         </motion.div>
                     ))}
                 </div>

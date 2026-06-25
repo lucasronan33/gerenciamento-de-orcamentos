@@ -25,6 +25,39 @@ export default createGlobalStyle`
     --approvedDarkColor:${color.approvedDarkColor};
     --rejectedDarkColor:${color.rejectedDarkColor};
     --finishedDarkColor:${color.finishedDarkColor};
+
+
+  --radius: 0.75rem;
+
+  --background: oklch(0.16 0.02 250);
+  --foreground: oklch(0.98 0.005 250);
+
+  --surface: oklch(0.20 0.022 250);
+  --surface-2: oklch(0.24 0.025 250);
+
+  --card: oklch(0.20 0.022 250);
+  --card-foreground: oklch(0.98 0.005 250);
+  --popover: oklch(0.20 0.022 250);
+  --popover-foreground: oklch(0.98 0.005 250);
+
+  --primary: oklch(0.78 0.16 220);
+  --primary-foreground: oklch(0.16 0.02 250);
+
+  --brand: oklch(0.78 0.16 220);
+  --brand-foreground: oklch(0.16 0.02 250);
+  --brand-soft: oklch(0.30 0.08 220);
+
+  --secondary: oklch(0.26 0.025 250);
+  --secondary-foreground: oklch(0.98 0.005 250);
+  --muted: oklch(0.26 0.025 250);
+  --muted-foreground: oklch(0.72 0.02 250);
+  --accent: oklch(0.30 0.05 220);
+  --accent-foreground: oklch(0.98 0.005 250);
+  --destructive: oklch(0.65 0.22 25);
+  --destructive-foreground: oklch(0.98 0.005 250);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 12%);
+  --ring: oklch(0.78 0.16 220);
 }
 *{
     margin: 0;
