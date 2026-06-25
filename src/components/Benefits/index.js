@@ -1,15 +1,14 @@
-import { BarChart3, Clock, FileSpreadsheet, MessageSquareText, NotebookPen, XCircle } from 'lucide-react';
-import React from 'react';
+import { FileText, Shield, Smartphone, Sparkles, TrendingUp, Zap } from 'lucide-react';
 import styled from 'styled-components';
-import { blueDocument, borderDarkColor } from '../../config/colors';
+import { borderDarkColor } from '../../config/colors';
 
-const pains = [
-    { icon: <MessageSquareText />, title: "Orçamentos perdidos", desc: "Conversas de WhatsApp engolem propostas e clientes somem sem retorno." },
-    { icon: <FileSpreadsheet />, title: "Planilhas desorganizadas", desc: "Excel fora de controle, fórmulas quebradas e arquivos duplicados." },
-    { icon: <NotebookPen />, title: "Papel e agenda", desc: "Anotações soltas, rasuras e zero histórico do que foi enviado." },
-    { icon: <Clock />, title: "Tempo desperdiçado", desc: "Você gasta horas refazendo o mesmo orçamento toda semana." },
-    { icon: <XCircle />, title: "Falta de acompanhamento", desc: "Sem saber quem aprovou, recusou ou está esperando resposta." },
-    { icon: <BarChart3 />, title: "Sem visão financeira", desc: "Quanto você tem a receber? Quanto fechou esse mês? Difícil saber." },
+const benefits = [
+    { icon: <Zap />, title: "Economize horas toda semana", desc: "Modelos prontos, duplicação em 1 clique e geração de PDF instantânea." },
+    { icon: <Shield />, title: "Tudo organizado em um só lugar", desc: "Clientes, itens, orçamentos e histórico — pesquisáveis a qualquer momento." },
+    { icon: <TrendingUp />, title: "Controle financeiro de verdade", desc: "Veja receita, valores a receber e taxa de aprovação em tempo real." },
+    { icon: <FileText />, title: "Histórico completo", desc: "Nunca mais perca um orçamento. Tudo registrado com data e status." },
+    { icon: <Sparkles />, title: "Mais profissionalismo", desc: "PDFs com sua identidade que transmitem confiança e fecham mais." },
+    { icon: <Smartphone />, title: "Acesse de qualquer lugar", desc: "Plataforma 100% responsiva: notebook, tablet ou celular." },
 ]
 
 function SectionHeader({ eyebrow, title, subtitle }) {
@@ -21,14 +20,14 @@ function SectionHeader({ eyebrow, title, subtitle }) {
         </div>
     );
 }
-const Pain = styled.section`
+const Benefits = styled.section`
     width: 100%;
     min-height: 100dvh;
     padding-block: 10vh;
     background: rgba(0,0,0,0.05);
     border-bottom: 1px solid ${borderDarkColor};
 
-    .container-pains{
+    .container-benefits{
         width: 90%;
         margin: auto;
         display: flex;
@@ -63,7 +62,7 @@ const Pain = styled.section`
             }
         }
 
-        .container-cards-pains{
+        .container-cards-benefits{
             width: 80%;
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(350px,1fr));
@@ -84,7 +83,7 @@ const Pain = styled.section`
                 transition: 0.3s;
                 
                 &:hover{
-                    border-color: rgba(255,70,70,0.5);
+                    border-color: rgba(0,210,255,0.5);
                 }
 
                 div{
@@ -92,8 +91,8 @@ const Pain = styled.section`
                     padding: 0.5rem;
                     display: flex;
                     border-radius: 0.75rem;
-                    background: rgba(255,70,70,0.2);
-                    color: rgba(255,70,70,1);
+                    background: rgba(0,210,255,0.2);
+                    color: rgba(0,210,255,1);
                 }
 
                 h3{
@@ -109,17 +108,17 @@ const Pain = styled.section`
     }
 `
 
-const PainsSection = () => {
+const BenefitsSection = () => {
     return (
-        <Pain>
-            <div className="container-pains">
+        <Benefits>
+            <div className="container-benefits">
                 <SectionHeader
-                    eyebrow="O problema"
-                    title="Você reconhece essa rotina?"
-                    subtitle="A maioria dos prestadores de serviço gerencia orçamentos com ferramentas que não foram feitas para isso. O resultado é previsível."
+                    eyebrow="A transformação"
+                    title="Da bagunça ao controle, em poucos dias"
+                    subtitle="O ORCA foi feito para pequenos negócios e prestadores que precisam de organização sem burocracia."
                 />
-                <div className="container-cards-pains">
-                    {pains.map((p) => (
+                <div className="container-cards-benefits">
+                    {benefits.map((p) => (
                         <div key={p.title} className='card'>
                             <div>{p.icon}</div>
                             <h3>{p.title}</h3>
@@ -128,8 +127,8 @@ const PainsSection = () => {
                     ))}
                 </div>
             </div>
-        </Pain>
+        </Benefits>
     )
 }
 
-export default PainsSection
+export default BenefitsSection

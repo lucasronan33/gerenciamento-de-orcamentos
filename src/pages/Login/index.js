@@ -11,6 +11,7 @@ import { googleLoginRequest, loginRequest } from '../../store/modules/auth/actio
 import { ContainerLogin, LoginContent, Main } from './styled'
 import HeroSection from '../../components/HeroSection'
 import PainsSection from '../../components/Pains'
+import BenefitsSection from '../../components/Benefits'
 
 export default function Login() {
     const googleClientId = process.env.REACT_APP_GOOGLE_CLIENT_ID
@@ -70,6 +71,7 @@ export default function Login() {
                 Usado por autônomos, MEIs, marcenarias, serralherias, comunicação visual e assistências técnicas
             </div>
             <PainsSection />
+            <BenefitsSection />
 
             <Main></Main>
             <LoginContent>
