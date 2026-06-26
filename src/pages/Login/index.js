@@ -1,24 +1,27 @@
 import { GoogleLogin } from '@react-oauth/google'
+import { motion } from 'framer-motion'
 import { ArrowRight, Eye, EyeOff, Menu } from 'lucide-react'
 import { useEffect, useState } from 'react'
-import { motion } from 'framer-motion'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import validator from 'validator'
+import logoUrl from "../../assets/images/logo.svg"
 import BenefitsSection from '../../components/Benefits'
 import { Button } from '../../components/Button'
 import { ComparisonSection } from '../../components/Comparison'
+import { DashboardSection } from '../../components/DashboardSection'
+import { FAQSection } from '../../components/FAQ'
 import FeaturesSection from '../../components/Features'
+import { FinalCTA } from '../../components/FinalCTA'
+import { Footer } from '../../components/Footer'
 import { Form } from '../../components/Form'
 import HeroSection from '../../components/HeroSection'
+import HowItWorks from '../../components/HowItWorks'
 import PainsSection from '../../components/Pains'
+import { PricingSection } from '../../components/Pricing'
 import RoadmapSection from '../../components/Roadmap'
 import { googleLoginRequest, loginRequest } from '../../store/modules/auth/actions'
-import HowItWorks from '../../components/HowItWorks'
-import { DashboardSection } from '../../components/DashboardSection'
-import { PricingSection } from '../../components/Pricing'
-import logoUrl from "../../assets/images/logo.svg";
 
 
 function Header() {
@@ -43,9 +46,14 @@ function Header() {
                 </nav>
                 <div className="hidden md:flex items-center gap-3">
                     <a href="#login" className="text-sm text-muted-foreground hover:text-foreground">Entrar</a>
-                    <a href="#precos" className="inline-flex items-center gap-2 rounded-full bg-brand px-4 py-2 text-sm font-semibold text-brand-foreground hover:opacity-90 transition glow-brand">
+                    <motion.a
+                        href="#precos"
+                        whileHover={{ y: -2, scale: 1 }}
+                        whileTap={{ scale: 1 }}
+                        className="inline-flex items-center justify-center gap-2 rounded-full bg-brand px-4 py-2 text-sm font-semibold text-brand-foreground transition-all duration-300 hover:opacity-90 glow-brand"
+                    >
                         Começar grátis <ArrowRight className="h-4 w-4" />
-                    </a>
+                    </motion.a>
                 </div>
                 <button onClick={() => setOpen(!open)} className="md:hidden grid place-items-center h-10 w-10 rounded-lg bg-surface border border-border" aria-label="Menu">
                     <Menu className="h-5 w-5" />
@@ -58,7 +66,14 @@ function Header() {
                             <a key={l.href} href={l.href} onClick={() => setOpen(false)} className="text-sm text-muted-foreground hover:text-foreground py-1.5">{l.label}</a>
                         ))}
                         <a href="#login" className="text-sm py-1.5">Entrar</a>
-                        <a href="#precos" className="mt-2 rounded-full bg-brand px-4 py-2 text-sm font-semibold text-brand-foreground text-center">Começar grátis</a>
+                        <motion.a
+                            href="#precos"
+                            whileHover={{ y: -2, scale: 1 }}
+                            whileTap={{ scale: 1 }}
+                            className="mt-2 inline-flex items-center justify-center rounded-full bg-brand px-4 py-2 text-sm font-semibold text-brand-foreground text-center transition-all duration-300 hover:opacity-90 glow-brand"
+                        >
+                            Começar grátis
+                        </motion.a>
                     </div>
                 </div>
             )}
@@ -156,6 +171,10 @@ export default function Login() {
             <RoadmapSection />
             <PricingSection />
 
+            <FAQSection />
+            <FinalCTA />
+            <Footer />
+
             <div className='m-auto flex flex-col place-items-center p-[5vh]'>
                 <motion.form
                     initial={{ opacity: 0, y: 24 }}
@@ -232,3 +251,4 @@ export default function Login() {
         </div>
     )
 }
+

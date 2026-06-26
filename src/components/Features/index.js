@@ -7,8 +7,8 @@ const features = [
     { icon: <Tag />, title: 'Itens e servicos', desc: 'Crie sua biblioteca de produtos e servicos com precos padronizados.' },
     { icon: <FileText />, title: 'Orcamentos rapidos', desc: 'Crie em poucos minutos com modelos, descontos, impostos e frete.' },
     { icon: <Download />, title: 'PDF profissional', desc: 'Cliente, itens, valores, observacoes e totais, pronto para enviar.' },
-    { icon: <Search />, title: 'Pesquisa rapida', desc: 'Busque por nome, e-mail ou codigo do orcamento em segundos.' },
-    { icon: <CopyIcon />, title: 'Duplicacao', desc: 'Reaproveite orcamentos antigos com 1 clique e ganhe tempo.' },
+    { icon: <Search />, title: 'Pesquisa rapida', desc: 'Busque por nome, e-mail ou codigo do orçamento em segundos.' },
+    { icon: <CopyIcon />, title: 'Duplicacao', desc: 'Reaproveite orçamentos antigos com 1 clique e ganhe tempo.' },
     { icon: <BarChart3 />, title: 'Status e dashboard', desc: 'Rascunho, enviado, aprovado, recusado, finalizado; tudo visivel.' },
     { icon: <Shield />, title: 'Login com Google', desc: 'Acesso seguro em segundos, sem precisar lembrar mais uma senha.' },
 ]

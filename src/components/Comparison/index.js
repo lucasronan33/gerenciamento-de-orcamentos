@@ -3,20 +3,20 @@ import { Check, CheckCircle2, X, XCircle } from 'lucide-react'
 import { SectionHeader } from '../../pages/Login'
 
 const before = [
-    'Conversas de orcamento perdidas no WhatsApp',
+    'Conversas de orçamento perdidas no WhatsApp',
     'Planilhas Excel quebradas e duplicadas',
     'Anotacoes em papel e agenda',
     'Sem historico de quem aprovou ou recusou',
-    'Horas refazendo o mesmo orcamento',
+    'Horas refazendo o mesmo orçamento',
     'PDFs improvisados, sem identidade',
 ]
 
 const after = [
-    'Todos os orcamentos num unico lugar, pesquisaveis',
+    'Todos os orçamentos num unico lugar, pesquisaveis',
     'Cadastro de clientes e itens reutilizaveis',
     'Geracao de PDF profissional em 1 clique',
     'Status claro: rascunho, enviado, aprovado, recusado',
-    'Duplique orcamentos antigos em segundos',
+    'Duplique orçamentos antigos em segundos',
     'Dashboard financeiro sempre atualizado',
 ]
 

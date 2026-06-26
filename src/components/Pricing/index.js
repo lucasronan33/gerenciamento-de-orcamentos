@@ -1,7 +1,7 @@
+import { motion } from 'framer-motion';
+import { ArrowRight, Check } from 'lucide-react';
 import { useState } from 'react';
 import { SectionHeader } from '../../pages/Login';
-import { ArrowRight, Check } from 'lucide-react';
-import { motion } from 'framer-motion'
 
 export function PricingSection() {
     const [annual, setAnnual] = useState(true);
@@ -45,7 +45,7 @@ export function PricingSection() {
                                 transition={{ duration: 0.15, ease: 'easeIn' }}
                                 whileHover={{ y: -2, scale: 1 }}
                                 whileTap={{ scale: 1 }}
-                                className='w-full flex-1 rounded-full text-sm text-white border border-border bg-black/30 transition-colors duration-300'
+                                className='inline-flex w-full flex-1 items-center justify-center gap-2 rounded-full border border-border bg-surface/70 px-4 py-2 text-sm font-semibold text-foreground transition-all duration-300 hover:bg-surface'
                             >
                                 Começar grátis
                             </motion.button>
@@ -71,9 +71,9 @@ export function PricingSection() {
                                 transition={{ duration: 0.15, ease: 'easeIn' }}
                                 whileHover={{ y: -2, scale: 1 }}
                                 whileTap={{ scale: 1 }}
-                                className='min-w-[250px] flex-1 rounded-full bg-cyan-400 text-sm shadow-[-0.5vh_1vh_2rem_rgba(100,180,255,0.2)] transition-colors duration-300 hover:bg-[rgba(117,71,209,1)] hover:text-white hover:shadow-[-0.5vh_.5vh_3vh_rgba(80,50,180,1)] sm:w-fit'
+                                className='inline-flex min-w-[250px] flex-1 items-center justify-center gap-2 rounded-full bg-brand px-4 py-2 text-sm font-semibold text-brand-foreground transition-all duration-300 glow-brand hover:bg-[rgba(117,71,209,1)] hover:text-white hover:shadow-[-0.5vh_.5vh_3vh_rgba(80,50,180,1)] sm:w-fit sm:min-w-fit sm:px-5 sm:py-3 sm:text-base'
                             >
-                                Criar meu primiero orcamento gratis
+                                Criar meu primeiro orçamento grátis
                                 <ArrowRight />
                             </motion.button>
                         </div>

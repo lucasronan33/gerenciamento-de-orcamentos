@@ -9,7 +9,7 @@ export default function About() {
                 <section>
                     <h1>Sobre Nos</h1>
                     <p>
-                        Este sistema foi pensado para comercios e profissionais que trabalham com orcamentos,
+                        Este sistema foi pensado para comercios e profissionais que trabalham com orçamentos,
                         atendimentos por horario e historico de servicos prestados.
                     </p>
                 </section>

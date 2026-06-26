@@ -41,7 +41,7 @@ const PainsSection = () => {
                 <SectionHeader
                     eyebrow='O problema'
                     title='Voce reconhece essa rotina?'
-                    subtitle='A maioria dos prestadores de servico gerencia orcamentos com ferramentas que nao foram feitas para isso. O resultado e previsivel.'
+                    subtitle='A maioria dos prestadores de servico gerencia orçamentos com ferramentas que nao foram feitas para isso. O resultado e previsivel.'
                 />
                 <div className='grid w-full max-w-6xl grid-cols-1 justify-center gap-4 sm:grid-cols-2 lg:grid-cols-3'>
                     {PAINS.map((pain, i) => (

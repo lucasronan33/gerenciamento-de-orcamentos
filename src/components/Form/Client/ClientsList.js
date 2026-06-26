@@ -1,15 +1,15 @@
-import './style.css'
-import { Card } from '../../DashboardsHeader/styles';
-import { Subtitle } from '../../Header/styles';
 import { Contact, Edit, Mail, Phone, RefreshCcw, Trash2 } from 'lucide-react';
-import { maskPhone } from '../../../utils/masks';
-import { WhatsAppIcon } from '../../Icons/WhatsAppIcon';
 import { useEffect, useState } from 'react';
-import { deleteClientRequest, fetchClientsRequest } from '../../../store/modules/client/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import { useClient } from '../../../context/Client';
+import { deleteClientRequest, fetchClientsRequest } from '../../../store/modules/client/actions';
+import { maskPhone } from '../../../utils/masks';
 import { Button } from '../../Button';
 import { CardIcons, ConfirmDeleteModal } from '../../Cards/styled';
+import { Card } from '../../DashboardsHeader/styles';
+import { Subtitle } from '../../Header/styles';
+import { WhatsAppIcon } from '../../Icons/WhatsAppIcon';
+import './style.css';
 
 export function ClientsList() {
     const { isLoggedIn } = useSelector(state => state.auth)
@@ -102,7 +102,7 @@ export function ClientsList() {
                                         onClick={() => setIsDeleteModalOpen(false)}
                                     />
                                     <div className='confirm-delete-content'>
-                                        <h2>Excluir orcamento?</h2>
+                                        <h2>Excluir orçamento?</h2>
                                         <p>
                                             Esta ação vai remover o cliente
                                             <strong> {client.name} </strong>

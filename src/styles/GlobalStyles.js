@@ -68,16 +68,6 @@ body{
 html,border-style,#root{
     height: 100%;
 }
-button{
-    height: fit-content;
-    display: flex;
-    cursor: pointer;
-    padding: 1.5vh 3vh;
-    font-weight: bold;
-    column-gap: 1.5vh;
-    align-items: center;
-    justify-content: center;
-}
 a{
     text-decoration: none;
 }

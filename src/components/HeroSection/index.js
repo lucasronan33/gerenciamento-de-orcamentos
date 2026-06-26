@@ -28,14 +28,14 @@ const HeroSection = () => {
                 </motion.span>
 
                 <h1 className='m-0 max-w-4xl p-0 text-center text-4xl font-extrabold leading-none tracking-normal sm:text-5xl lg:text-[3.5rem]'>
-                    Organize seus orcamentos
+                    Organize seus orçamentos
                     <span className='bg-linear-to-br from-white to-[rgba(38,178,242,1)] bg-clip-text text-transparent'>
                         , controle seus resultados.
                     </span>
                 </h1>
 
                 <p className='mx-auto flex max-w-3xl py-10 text-center text-sm leading-7 text-[rgb(170,170,190)] sm:text-base'>
-                    Crie orcamentos profissionais em minutos, acompanhe aprovacoes e tenha mais controle sobre o seu faturamento. Tudo em um so lugar, sem planilhas, sem WhatsApp baguncado.
+                    Crie orçamentos profissionais em minutos, acompanhe aprovacoes e tenha mais controle sobre o seu faturamento. Tudo em um so lugar, sem planilhas, sem WhatsApp baguncado.
                 </p>
 
                 <div className='flex w-full flex-wrap place-content-center gap-x-4 gap-y-8'>
@@ -44,9 +44,9 @@ const HeroSection = () => {
                         transition={{ duration: 0.15, ease: 'easeIn' }}
                         whileHover={{ y: -2, scale: 1 }}
                         whileTap={{ scale: 1 }}
-                        className='min-w-[250px] flex-1 rounded-full bg-cyan-400 text-[1.1em] shadow-[-0.5vh_1vh_2rem_rgba(100,180,255,0.2)] transition-colors duration-300 hover:bg-[rgba(117,71,209,1)] hover:text-white hover:shadow-[-0.5vh_.5vh_3vh_rgba(80,50,180,1)] sm:w-fit'
+                        className='inline-flex min-w-[250px] flex-1 items-center justify-center gap-2 rounded-full bg-brand px-4 py-2 text-sm font-semibold text-brand-foreground transition-all duration-300 glow-brand hover:bg-[rgba(117,71,209,1)] hover:text-white hover:shadow-[-0.5vh_.5vh_3vh_rgba(80,50,180,1)] sm:w-fit sm:min-w-fit sm:px-5 sm:py-3 sm:text-base'
                     >
-                        Criar meu primiero orcamento gratis
+                        Criar meu primeiro orçamento grátis
                         <ArrowRight />
                     </motion.button>
                     <motion.button
@@ -54,7 +54,7 @@ const HeroSection = () => {
                         transition={{ duration: 0.15, ease: 'easeIn' }}
                         whileHover={{ y: -2 }}
                         whileTap={{ scale: 1 }}
-                        className='min-w-[250px] flex-1 rounded-full bg-transparent text-[1.1em] text-white transition-colors duration-300 hover:text-white hover:shadow-none hover:drop-shadow-[-0.5vh_.5vh_3vh_rgba(80,50,180,1)] sm:min-w-fit sm:flex-none'
+                        className='inline-flex min-w-[250px] flex-1 items-center justify-center gap-2 rounded-full bg-transparent px-4 py-2 text-sm font-semibold text-white transition-all duration-300 hover:text-white hover:shadow-none hover:drop-shadow-[-0.5vh_.5vh_3vh_rgba(80,50,180,1)] sm:min-w-fit sm:flex-none sm:px-5 sm:py-3 sm:text-base'
                     >
                         <Play />
                         Ver demonstracao

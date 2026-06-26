@@ -2,7 +2,7 @@ import { motion } from 'framer-motion'
 import { Layout, MessageCircle, Rocket, Zap } from 'lucide-react'
 
 const ROADMAP = [
-    { icon: MessageCircle, title: 'WhatsApp integrado', desc: 'Envie orcamentos direto pelo WhatsApp.', status: 'Em breve' },
+    { icon: MessageCircle, title: 'WhatsApp integrado', desc: 'Envie orçamentos direto pelo WhatsApp.', status: 'Em breve' },
     { icon: Zap, title: 'Automacoes', desc: 'Follow-ups automaticos e notificacoes inteligentes.', status: 'Planejado' },
     { icon: Layout, title: 'CRM integrado', desc: 'Gestao completa de relacionamento com clientes.', status: 'Futuro' },
     { icon: Rocket, title: 'ERP completo', desc: 'Estoque, notas fiscais e gestao financeira avancada.', status: 'Futuro' },

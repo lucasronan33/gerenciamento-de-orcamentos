@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
-import { CardIcons, ConfirmDeleteModal, ContainerCardBudget, DivTitle, InfoCardBudget, StatusBudget } from './styled';
 import { Copy, Edit, Eye, Trash2 } from 'lucide-react';
-import { Button } from '../Button';
-import { useBudget } from '../../context/Budget';
+import { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { useBudget } from '../../context/Budget';
 import { createBudgetRequest, deleteBudgetRequest } from '../../store/modules/budget/actions';
-import { ViewBudget } from '../ViewBudget';
-import { formatCurrency, generateBudgetCode, isEmptyObject } from '../../utils/masks';
 import { budgetStatus } from '../../utils/budget';
+import { formatCurrency, generateBudgetCode, isEmptyObject } from '../../utils/masks';
+import { Button } from '../Button';
+import { ViewBudget } from '../ViewBudget';
+import { CardIcons, ConfirmDeleteModal, ContainerCardBudget, DivTitle, InfoCardBudget, StatusBudget } from './styled';
 
 export default function CardBudget({ budget }) {
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
@@ -138,7 +138,7 @@ export default function CardBudget({ budget }) {
                             onClick={() => setIsDeleteModalOpen(false)}
                         />
                         <div className='confirm-delete-content'>
-                            <h2>Excluir orcamento?</h2>
+                            <h2>Excluir orçamento?</h2>
                             <p>
                                 Esta acao vai remover o orçamento
                                 <strong> {budget.basic.title} </strong>
