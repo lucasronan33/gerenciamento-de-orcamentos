@@ -45,7 +45,7 @@ export function PricingSection() {
                                 transition={{ duration: 0.15, ease: 'easeIn' }}
                                 whileHover={{ y: -2, scale: 1 }}
                                 whileTap={{ scale: 1 }}
-                                className='w-full flex-1 rounded-full text-sm text-white bg-border transition-colors duration-300'
+                                className='w-full flex-1 rounded-full text-sm text-white border border-border bg-black/30 transition-colors duration-300'
                             >
                                 Começar grátis
                             </motion.button>
@@ -53,7 +53,7 @@ export function PricingSection() {
                         <PlanFeatures />
                     </div>
 
-                    <div className="relative rounded-2xl border-2 border-brand bg-gradient-to-b from-cyan-950 to-transparent p-8 glow-brand">
+                    <div className="relative rounded-2xl border-2 border-brand bg-linear-to-b from-cyan-950 to-transparent p-8 glow-brand">
                         <span className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full bg-brand text-brand-foreground text-[11px] font-bold uppercase tracking-wider">
                             Mais popular
                         </span>

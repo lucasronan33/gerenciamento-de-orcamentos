@@ -31,7 +31,7 @@ export default function FeaturesSection() {
                             viewport={{ once: true, amount: 0.25 }}
                             transition={{ delay: index * 0.05, duration: 0.42, ease: 'easeOut' }}
                             whileHover={{ y: -5 }}
-                            className='flex min-h-16 flex-col gap-2 self-stretch rounded-2xl border border-[rgba(35,47,53,1)] bg-gradient-to-b from-[rgba(15,25,35,0.8)] to-[rgba(5,15,25,0.5)] p-8 transition duration-300 hover:border-[rgba(0,210,255,0.5)]'
+                            className='flex min-h-16 flex-col gap-2 self-stretch rounded-2xl border border-[rgba(35,47,53,1)] bg-linear-to-b from-[rgba(15,25,35,0.8)] to-[rgba(5,15,25,0.5)] p-8 transition duration-300 hover:border-[rgba(0,210,255,0.5)]'
                         >
                             <div className='flex w-fit rounded-xl bg-[rgba(0,210,255,0.2)] p-2 text-[rgba(0,210,255,1)]'>
                                 {f.icon}

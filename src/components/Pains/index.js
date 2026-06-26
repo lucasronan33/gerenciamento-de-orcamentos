@@ -51,7 +51,7 @@ const PainsSection = () => {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ delay: i * 0.08 }}
-                            className="group relative p-6 rounded-xl border border-red-500/10 bg-gradient-to-b from-red-500/[0.03] to-transparent hover:border-red-500/20 hover:from-red-500/[0.06] transition-all duration-300"
+                            className="group relative p-6 rounded-xl border border-red-500/10 bg-linear-to-b from-red-500/[0.03] to-transparent hover:border-red-500/20 hover:from-red-500/[0.06] transition-all duration-300"
                         >
                             <div className="flex items-start justify-between mb-4">
                                 <div className="w-10 h-10 rounded-lg bg-[rgba(255,70,70,0.2)] flex items-center justify-center">

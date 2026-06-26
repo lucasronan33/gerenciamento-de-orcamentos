@@ -60,18 +60,18 @@ export default function HowItWorks() {
                         >
                             {/* Connector line */}
                             {i < 3 && (
-                                <div className="hidden md:block absolute top-10 left-[calc(50%+32px)] w-[calc(100%-64px)] h-px bg-gradient-to-r from-cyan-500/30 to-cyan-500/5" />
+                                <div className="hidden md:block absolute top-10 left-[calc(50%+32px)] w-[calc(100%-64px)] h-px bg-linear-to-r from-cyan-500/30 to-cyan-500/5" />
                             )}
 
                             <div className="text-center">
-                                <div className="relative inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-gradient-to-b from-cyan-500/10 to-transparent border border-cyan-500/20 mb-6">
+                                <div className="relative inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-linear-to-b from-cyan-500/10 to-transparent border border-cyan-500/20 mb-6">
                                     <step.icon className="w-8 h-8 text-cyan-400" />
                                     <span className="absolute -top-2 -right-2 w-7 h-7 rounded-full bg-cyan-500 text-void text-xs font-bold flex items-center justify-center">
                                         {step.step}
                                     </span>
                                 </div>
                                 <h3 className="text-lg font-semibold text-arctic mb-2">{step.title}</h3>
-                                <p className="text-sm text-[rgba(230,230,255,0.6)] leading-relaxed max-w-[240px] mx-auto">{step.description}</p>
+                                <p className="text-sm text-[rgba(230,230,255,0.6)] leading-relaxed max-w-60 mx-auto">{step.description}</p>
                             </div>
                         </motion.div>
                     ))}

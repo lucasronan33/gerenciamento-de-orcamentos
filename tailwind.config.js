@@ -6,6 +6,9 @@ module.exports = {
       colors: {
         background: 'var(--background)',
         foreground: 'var(--foreground)',
+        arctic: 'var(--foreground)',
+        steel: 'var(--muted-foreground)',
+        void: 'var(--background)',
         surface: 'var(--surface)',
         'surface-2': 'var(--surface-2)',
         card: 'var(--card)',

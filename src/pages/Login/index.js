@@ -1,5 +1,5 @@
 import { GoogleLogin } from '@react-oauth/google'
-import { Eye, EyeOff } from 'lucide-react'
+import { ArrowRight, Eye, EyeOff, Menu } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import { useDispatch, useSelector } from 'react-redux'
@@ -18,6 +18,54 @@ import { googleLoginRequest, loginRequest } from '../../store/modules/auth/actio
 import HowItWorks from '../../components/HowItWorks'
 import { DashboardSection } from '../../components/DashboardSection'
 import { PricingSection } from '../../components/Pricing'
+import logoUrl from "../../assets/images/logo.svg";
+
+
+function Header() {
+    const [open, setOpen] = useState(false);
+    const links = [
+        { href: "#recursos", label: "Recursos" },
+        { href: "#como-funciona", label: "Como funciona" },
+        { href: "#precos", label: "Preços" },
+        { href: "#faq", label: "FAQ" },
+    ];
+    return (
+        <header className="fixed top-0 inset-x-0 z-50 border-b border-border bg-background-70 text backdrop-blur-xl">
+            <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6">
+                <a href="#top" className="flex items-center gap-2">
+                    <img src={logoUrl} alt="ORCA logo" className="h-8 w-8" />
+                    <span className="text-lg font-extrabold tracking-tight">ORCA</span>
+                </a>
+                <nav className="hidden md:flex items-center gap-8">
+                    {links.map((l) => (
+                        <a key={l.href} href={l.href} className="text-sm text-muted-foreground hover:text-foreground transition-colors">{l.label}</a>
+                    ))}
+                </nav>
+                <div className="hidden md:flex items-center gap-3">
+                    <a href="#login" className="text-sm text-muted-foreground hover:text-foreground">Entrar</a>
+                    <a href="#precos" className="inline-flex items-center gap-2 rounded-full bg-brand px-4 py-2 text-sm font-semibold text-brand-foreground hover:opacity-90 transition glow-brand">
+                        Começar grátis <ArrowRight className="h-4 w-4" />
+                    </a>
+                </div>
+                <button onClick={() => setOpen(!open)} className="md:hidden grid place-items-center h-10 w-10 rounded-lg bg-surface border border-border" aria-label="Menu">
+                    <Menu className="h-5 w-5" />
+                </button>
+            </div>
+            {open && (
+                <div className="md:hidden border-t border-border bg-background/95 backdrop-blur-xl">
+                    <div className="px-4 py-4 flex flex-col gap-3">
+                        {links.map((l) => (
+                            <a key={l.href} href={l.href} onClick={() => setOpen(false)} className="text-sm text-muted-foreground hover:text-foreground py-1.5">{l.label}</a>
+                        ))}
+                        <a href="#login" className="text-sm py-1.5">Entrar</a>
+                        <a href="#precos" className="mt-2 rounded-full bg-brand px-4 py-2 text-sm font-semibold text-brand-foreground text-center">Começar grátis</a>
+                    </div>
+                </div>
+            )}
+        </header>
+    );
+}
+
 
 export function SectionHeader({ eyebrow, title, subtitle }) {
     return (
@@ -30,7 +78,7 @@ export function SectionHeader({ eyebrow, title, subtitle }) {
         >
             <span className='text-sm font-bold uppercase tracking-[0.075em] text-brand'>{eyebrow}</span>
             <h2 className='text-3xl font-extrabold leading-tight sm:text-4xl lg:text-[2.9rem]'>{title}</h2>
-            <p className='mx-auto max-w-[47rem] leading-6 text-muted-foreground'>{subtitle}</p>
+            <p className='mx-auto max-w-188 leading-6 text-muted-foreground'>{subtitle}</p>
         </motion.div>
     )
 }
@@ -87,7 +135,8 @@ export default function Login() {
     }, [isLoggedIn, navigate, redirectTo])
 
     return (
-        <div className='absolute min-h-dvh w-full bg-[radial-gradient(circle,rgba(38,178,242,0.3)_0%,transparent_60%)] bg-[length:100%_150%] bg-[position:0_200%] bg-no-repeat text-white [background-attachment:fixed] before:fixed before:inset-0 before:-z-10 before:bg-black/30'>
+        <div className='absolute min-h-dvh w-full bg-[radial-gradient(circle,rgba(38,178,242,0.3)_0%,transparent_60%)] bg-size-[100%_150%] bg-position-[0_200%] bg-no-repeat bg-fixed text-white before:fixed before:inset-0 before:-z-10 before:bg-black/30'>
+            <Header />
             <HeroSection />
             <motion.div
                 initial={{ opacity: 0 }}

@@ -29,7 +29,7 @@ const HeroSection = () => {
 
                 <h1 className='m-0 max-w-4xl p-0 text-center text-4xl font-extrabold leading-none tracking-normal sm:text-5xl lg:text-[3.5rem]'>
                     Organize seus orcamentos
-                    <span className='bg-gradient-to-br from-white to-[rgba(38,178,242,1)] bg-clip-text text-transparent'>
+                    <span className='bg-linear-to-br from-white to-[rgba(38,178,242,1)] bg-clip-text text-transparent'>
                         , controle seus resultados.
                     </span>
                 </h1>

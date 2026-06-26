@@ -54,7 +54,7 @@ export function DashboardSection() {
                         </div>
                         <div className="mt-3 h-32 flex items-end gap-2">
                             {[35, 50, 42, 65, 58, 88].map((h, i) => (
-                                <div key={i} className="flex-1 rounded-t-md bg-gradient-to-t from-cyan-900 to-brand" style={{ height: `${h}%` }} />
+                                <div key={i} className="flex-1 rounded-t-md bg-linear-to-t from-cyan-900 to-brand" style={{ height: `${h}%` }} />
                             ))}
                         </div>
                     </div>

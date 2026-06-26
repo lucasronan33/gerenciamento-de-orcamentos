@@ -59,15 +59,6 @@ export default createGlobalStyle`
   --input: oklch(1 0 0 / 12%);
   --ring: oklch(0.78 0.16 220);
 }
-*{
-    margin: 0;
-    padding: 0;
-    outline: none;
-    border: 0 solid;
-    background: none;
-    background-color: none;
-    box-sizing: border-box;
-}
 body{
         min-height: 100dvh;
         font-family: 'Inter';
@@ -81,24 +72,14 @@ button{
     height: fit-content;
     display: flex;
     cursor: pointer;
-    background: ${color.blueDocument};
-    border: none;
-    border-radius: 1.5vh;
     padding: 1.5vh 3vh;
-    color: ${color.primaryDarkColor};
     font-weight: bold;
     column-gap: 1.5vh;
     align-items: center;
     justify-content: center;
-
-    &:hover{
-        box-shadow: -0.2vh 0.2vh 1vh ${color.blueDocument};
-        transition: 0.2s;
-    }
 }
 a{
     text-decoration: none;
-    color: initial;
 }
 ul{
     list-style: none;

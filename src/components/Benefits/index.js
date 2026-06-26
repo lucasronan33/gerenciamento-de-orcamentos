@@ -51,7 +51,7 @@ const BENEFITS = [
 export default function BenefitsSection() {
     return (
         <section className="py-20 md:py-32 relative border-b border-[rgba(35,47,53,1)] w-full" id="recursos">
-            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-cyan-950/5 to-transparent" />
+            <div className="absolute inset-0 bg-linear-to-b from-transparent via-cyan-950/5 to-transparent" />
             <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
@@ -74,7 +74,7 @@ export default function BenefitsSection() {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ delay: i * 0.08 }}
-                            className="group relative p-6 rounded-xl border border-cyan-500/10 bg-gradient-to-b from-cyan-500/[0.03] to-transparent hover:border-cyan-500/20 hover:from-cyan-500/[0.06] transition-all duration-300"
+                            className="group relative p-6 rounded-xl border border-cyan-500/10 bg-linear-to-b from-cyan-500/0.03 to-transparent hover:border-cyan-500/20 hover:from-cyan-500/[0.06] transition-all duration-300"
                         >
                             <div className="flex items-start justify-between mb-4">
                                 <div className="w-10 h-10 rounded-lg bg-cyan-500/10 flex items-center justify-center">
