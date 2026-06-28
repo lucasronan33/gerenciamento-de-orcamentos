@@ -2,6 +2,7 @@ import { motion } from 'framer-motion'
 import { ArrowRight, Check, Play, Sparkles } from 'lucide-react'
 import imageMockup from '../../assets/images/mockup.png'
 import { scrollToId } from '../../utils/random'
+import { Button } from '../Button'
 
 const benefits = [
     'Sem cartao',
@@ -16,7 +17,7 @@ const HeroSection = () => {
                 initial={{ opacity: 0, y: 28 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.7, ease: 'easeOut' }}
-                className='flex min-w-0 flex-1 basis-[350px] flex-col items-center justify-between text-base max-[420px]:basis-full'
+                className='flex min-w-0 flex-1 basis-87.5 flex-col items-center justify-between text-base max-[420px]:basis-full'
             >
                 <motion.span
                     initial={{ opacity: 0, scale: 0.96 }}
@@ -46,22 +47,17 @@ const HeroSection = () => {
                         transition={{ duration: 0.15, ease: 'easeIn' }}
                         whileHover={{ y: -2, scale: 1 }}
                         whileTap={{ scale: 1 }}
-                        className='inline-flex min-w-[250px] flex-1 items-center justify-center gap-2 rounded-full bg-brand px-4 py-2 text-sm font-semibold text-brand-foreground transition-all duration-300 glow-brand hover:bg-[rgba(117,71,209,1)] hover:text-white hover:shadow-[-0.5vh_.5vh_3vh_rgba(80,50,180,1)] sm:w-fit sm:min-w-fit sm:px-5 sm:py-3 sm:text-base'
+                        className='inline-flex min-w-62.5 flex-1 items-center justify-center gap-2 rounded-full bg-brand px-4 py-2 text-sm font-semibold text-brand-foreground transition-all duration-300 glow-brand hover:bg-[rgba(117,71,209,1)] hover:text-white hover:shadow-[-0.5vh_.5vh_3vh_rgba(80,50,180,1)] sm:w-fit sm:min-w-fit sm:px-5 sm:py-3 sm:text-base'
                     >
                         Criar meu primeiro orçamento grátis
                         <ArrowRight />
                     </motion.button>
-                    <motion.button
+                    <Button.Secondary
                         onClick={() => scrollToId('como-funciona')}
-                        initial={{ scale: 0.96 }}
-                        transition={{ duration: 0.15, ease: 'easeIn' }}
-                        whileHover={{ y: -2 }}
-                        whileTap={{ scale: 1 }}
-                        className='inline-flex min-w-[250px] flex-1 items-center justify-center gap-2 rounded-full bg-transparent px-4 py-2 text-sm font-semibold text-white transition-all duration-300 hover:text-white hover:shadow-none hover:drop-shadow-[-0.5vh_.5vh_3vh_rgba(80,50,180,1)] sm:min-w-fit sm:flex-none sm:px-5 sm:py-3 sm:text-base'
                     >
                         <Play />
                         Ver demonstracao
-                    </motion.button>
+                    </Button.Secondary>
                 </div>
 
                 <div className='flex flex-wrap justify-center gap-4 py-8'>

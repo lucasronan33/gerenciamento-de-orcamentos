@@ -1,12 +1,12 @@
-import { Card } from '../../DashboardsHeader/styles';
-import { Subtitle } from '../../Header/styles';
 import { Edit, Package, RefreshCcw, Trash2 } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useItem } from '../../../context/Item';
+import { deleteItemRequest, fetchItemsRequest } from '../../../store/modules/item/actions';
 import { Button } from '../../Button';
 import { CardIcons, ConfirmDeleteModal } from '../../Cards/styled';
-import { deleteItemRequest, fetchItemsRequest } from '../../../store/modules/item/actions';
+import { Card } from '../../DashboardsHeader/styles';
+import { Subtitle } from '../../Header/styles';
 
 export function ItemsList() {
     const { isLoggedIn } = useSelector(state => state.auth)
