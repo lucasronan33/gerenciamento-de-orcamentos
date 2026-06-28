@@ -68,6 +68,9 @@ body{
 html,border-style,#root{
     height: 100%;
 }
+button{
+    cursor: pointer;
+}
 a{
     text-decoration: none;
 }

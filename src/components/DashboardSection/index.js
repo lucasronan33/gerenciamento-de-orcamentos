@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { ArrowRight, CheckCircle2 } from 'lucide-react';
+import { scrollToId } from '../../utils/random';
 
 export function DashboardSection() {
     return (
@@ -28,6 +29,7 @@ export function DashboardSection() {
                     </ul>
                     <div className='mt-8 inline-flex items-center '>
                         <motion.button
+                            onClick={() => scrollToId('precos')}
                             initial={{ scale: 0.96 }}
                             transition={{ duration: 0.15, ease: 'easeIn' }}
                             whileHover={{ y: -2, scale: 1 }}

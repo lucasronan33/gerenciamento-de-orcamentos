@@ -18,15 +18,15 @@ export function PricingSection() {
                 />
 
                 <div className="mt-8 flex items-center justify-center gap-3">
-                    <span className={`text-sm ${!annual ? "text-foreground" : "text-muted-foreground"}`}>Mensal</span>
+                    <span className={`text-sm ${annual ? "text-foreground" : "text-muted-foreground"}`}>Mensal</span>
                     <button
                         onClick={() => setAnnual(!annual)}
-                        className="relative h-7 w-12 rounded-full bg-surface-2 border border-border px-9"
+                        className="relative h-7 w-12 rounded-full flex items-center bg-surface-2 border border-border px-9"
                         aria-label="Alternar plano"
                     >
-                        <span className={`absolute h-5 w-5 rounded-full bg-brand transition-all ${annual ? "translate-x-full" : "-translate-x-full"}`} />
+                        <span className={`absolute h-5 w-5 rounded-full bg-brand transition-all ${!annual ? "translate-x-3" : "-translate-x-8"}`} />
                     </button>
-                    <span className={`text-sm ${annual ? "text-foreground" : "text-muted-foreground"}`}>
+                    <span className={`text-sm ${!annual ? "text-foreground" : "text-muted-foreground"}`}>
                         Anual <span className="ml-1 text-[10px] px-1.5 py-0.5 rounded-full bg-brand/20 text-brand font-semibold">economize 17%</span>
                     </span>
                 </div>

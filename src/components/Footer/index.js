@@ -25,9 +25,9 @@ export function Footer() {
                 <div>
                     <p className="font-semibold mb-3">Empresa</p>
                     <ul className="space-y-2 text-muted-foreground">
-                        <li><a href="#" className="hover:text-foreground">Contato</a></li>
-                        <li><a href="#" className="hover:text-foreground">Termos de uso</a></li>
-                        <li><a href="#" className="hover:text-foreground">Privacidade</a></li>
+                        <li><a href="#contact" className="hover:text-foreground">Contato</a></li>
+                        <li><a href="#terms" className="hover:text-foreground">Termos de uso</a></li>
+                        <li><a href="#privacy" className="hover:text-foreground">Privacidade</a></li>
                     </ul>
                 </div>
             </div>

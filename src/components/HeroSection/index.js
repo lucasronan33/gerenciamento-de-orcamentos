@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion'
 import { ArrowRight, Check, Play, Sparkles } from 'lucide-react'
 import imageMockup from '../../assets/images/mockup.png'
+import { scrollToId } from '../../utils/random'
 
 const benefits = [
     'Sem cartao',
@@ -10,7 +11,7 @@ const benefits = [
 
 const HeroSection = () => {
     return (
-        <section className='mx-auto flex min-h-dvh w-[90%] flex-wrap place-content-center place-items-center gap-8 py-20'>
+        <section className='mx-auto flex min-h-dvh w-[90%] flex-wrap place-content-center place-items-center gap-8 py-20' id='top'>
             <motion.div
                 initial={{ opacity: 0, y: 28 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -40,6 +41,7 @@ const HeroSection = () => {
 
                 <div className='flex w-full flex-wrap place-content-center gap-x-4 gap-y-8'>
                     <motion.button
+                        onClick={() => scrollToId('precos')}
                         initial={{ scale: 0.96 }}
                         transition={{ duration: 0.15, ease: 'easeIn' }}
                         whileHover={{ y: -2, scale: 1 }}
@@ -50,6 +52,7 @@ const HeroSection = () => {
                         <ArrowRight />
                     </motion.button>
                     <motion.button
+                        onClick={() => scrollToId('como-funciona')}
                         initial={{ scale: 0.96 }}
                         transition={{ duration: 0.15, ease: 'easeIn' }}
                         whileHover={{ y: -2 }}
