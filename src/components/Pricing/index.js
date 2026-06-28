@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import { ArrowRight, Check } from 'lucide-react';
 import { useState } from 'react';
-import { SectionHeader } from '../../pages/Login';
+import { SectionHeader } from '../../pages/Landing';
 
 export function PricingSection() {
     const [annual, setAnnual] = useState(true);

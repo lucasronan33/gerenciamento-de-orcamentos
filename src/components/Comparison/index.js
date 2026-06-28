@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion'
 import { Check, CheckCircle2, X, XCircle } from 'lucide-react'
-import { SectionHeader } from '../../pages/Login'
+import { SectionHeader } from '../../pages/Landing'
 
 const before = [
     'Conversas de orçamento perdidas no WhatsApp',

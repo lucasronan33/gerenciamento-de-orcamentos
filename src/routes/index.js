@@ -1,17 +1,16 @@
-import React from "react";
 import { Route, Routes } from "react-router-dom";
 
+import About from '../pages/About';
+import { Clients } from '../pages/Clients';
+import FAQ from '../pages/FAQ';
 import Home from "../pages/Home";
+import Landing from '../pages/Landing';
 import Page404 from "../pages/Page404";
-import MyRoute from "./MyRoute";
-import Login from '../pages/Login';
+import PresetItems from '../pages/PresetItems';
 import Register from '../pages/Register';
 import Settings from '../pages/Settings';
-import FAQ from '../pages/FAQ';
-import PresetItems from '../pages/PresetItems';
-import About from '../pages/About';
 import { Providers } from '../providers';
-import { Clients } from '../pages/Clients';
+import MyRoute from "./MyRoute";
 
 export default function Routers() {
     return (
@@ -19,7 +18,7 @@ export default function Routers() {
             <Routes>
                 <Route element={
                     <MyRoute isPublicOnly>
-                        <Login />
+                        <Landing />
                     </MyRoute>
                 } path='/login' />
 

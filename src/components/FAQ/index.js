@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
-import { SectionHeader } from '../../pages/Login';
 import { ChevronDown } from 'lucide-react';
+import { useState } from 'react';
+import { SectionHeader } from '../../pages/Landing';
 
 const faqs = [
     { q: "Preciso de cartão de crédito para testar?", a: "Não. O teste de 14 dias é totalmente livre. Você só decide pagar se quiser continuar após o período." },

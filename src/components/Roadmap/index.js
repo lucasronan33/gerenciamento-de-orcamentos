@@ -8,7 +8,7 @@ const ROADMAP = [
     { icon: Rocket, title: 'ERP completo', desc: 'Estoque, notas fiscais e gestao financeira avancada.', status: 'Futuro' },
 ]
 
-export default function RoadmapSection() {
+export function RoadmapSection() {
     return (
         <section className='w-full relative border-b border-[rgba(35,47,53,1)] py-20 md:py-32'>
             <div className='mx-auto max-w-4xl px-4 sm:px-6 lg:px-8'>

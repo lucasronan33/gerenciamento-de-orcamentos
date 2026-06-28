@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { BarChart3, Clock, FileSpreadsheet, MessageSquareText, NotebookPen, XCircle } from 'lucide-react';
-import { SectionHeader } from '../../pages/Login';
+import { SectionHeader } from '../../pages/Landing';
 
 const PAINS = [
     {

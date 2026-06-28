@@ -1,7 +1,6 @@
-import React from "react";
 import { motion } from "framer-motion";
-import { Clock, FolderOpen, BarChart3, History, Award, Smartphone } from "lucide-react";
-import { SectionHeader } from '../../pages/Login';
+import { Award, BarChart3, Clock, FolderOpen, History, Smartphone } from "lucide-react";
+import { SectionHeader } from '../../pages/Landing';
 
 const BENEFITS = [
     {

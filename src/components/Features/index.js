@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion'
 import { BarChart3, CopyIcon, Download, FileText, Search, Shield, Tag, Users } from 'lucide-react'
-import { SectionHeader } from '../../pages/Login'
+import { SectionHeader } from '../../pages/Landing'
 
 const features = [
     { icon: <Users />, title: 'Cadastro de clientes', desc: 'Centralize contato, CPF/CNPJ, endereco e historico de cada cliente.' },
