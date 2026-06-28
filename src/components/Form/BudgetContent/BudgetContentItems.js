@@ -1,14 +1,14 @@
-import { useEffect, useMemo, useState } from 'react';
-import { useBudget } from '../../../context/Budget'
-import { Items } from '../Items';
-import { Button } from '../../Button';
 import { Minus, Package, Plus, RefreshCcw, X } from 'lucide-react';
+import { useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchItemsRequest } from '../../../store/modules/item/actions';
-import { Subtitle } from '../../Header/styles';
-import { Card } from '../../DashboardsHeader/styles';
-import { CardIcons } from '../../Cards/styled';
 import { Form } from '..';
+import { useBudget } from '../../../context/Budget';
+import { fetchItemsRequest } from '../../../store/modules/item/actions';
+import { Button } from '../../Button';
+import { CardIcons } from '../../Cards/styled';
+import { Card } from '../../DashboardsHeader/styles';
+import { Subtitle } from '../../Header/styles';
+import { Items } from '../Items';
 
 const shippingOptions = [
     {

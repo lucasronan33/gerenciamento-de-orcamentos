@@ -1,16 +1,16 @@
 import { SaveIcon, X } from 'lucide-react';
-import { Form } from '..';
-import { useDispatch, useSelector } from 'react-redux';
-import { Button } from '../../Button';
-import { NavBudget } from '../../NewBudget/styles';
 import { useEffect, useState } from 'react';
-import { ClientAddress } from './ClientAddress';
-import { ClientInfo } from './ClientInfo';
-import validator from 'validator'
+import { useDispatch, useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
+import validator from 'validator';
+import { Form } from '..';
+import { useClient } from '../../../context/Client';
 import { clientReset, createClientRequest, updateClientRequest } from '../../../store/modules/client/actions';
 import { isValidCpfCnpj } from '../../../utils/documents';
-import { toast } from 'react-toastify';
-import { useClient } from '../../../context/Client';
+import { Button } from '../../Button';
+import { NavBudget } from '../../NewBudget/styles';
+import { ClientAddress } from './ClientAddress';
+import { ClientInfo } from './ClientInfo';
 
 export function ClientRegister() {
     const { client, resetClientState } = useClient()

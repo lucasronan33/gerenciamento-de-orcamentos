@@ -1,15 +1,15 @@
-import { useEffect, useState } from 'react';
-import { useBudget } from '../../../context/Budget'
-import { Client } from '../Client';
-import { Button } from '../../Button';
 import { Contact, Mail, Minus, Phone, Plus, RefreshCcw, X } from 'lucide-react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useBudget } from '../../../context/Budget';
 import { fetchClientsRequest } from '../../../store/modules/client/actions';
-import { Subtitle } from '../../Header/styles';
-import { Card } from '../../DashboardsHeader/styles';
 import { maskPhone } from '../../../utils/masks';
-import { WhatsAppIcon } from '../../Icons/WhatsAppIcon';
+import { Button } from '../../Button';
 import { CardIcons } from '../../Cards/styled';
+import { Card } from '../../DashboardsHeader/styles';
+import { Subtitle } from '../../Header/styles';
+import { WhatsAppIcon } from '../../Icons/WhatsAppIcon';
+import { Client } from '../Client';
 
 export function BudgetContentClient() {
     const { isLoggedIn } = useSelector(state => state.auth)
