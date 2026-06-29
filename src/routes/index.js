@@ -7,7 +7,7 @@ import Home from "../pages/Home";
 import Landing from '../pages/Landing';
 import Page404 from "../pages/Page404";
 import PresetItems from '../pages/PresetItems';
-import Register from '../pages/Register';
+import RegisterContent from '../pages/Register';
 import Settings from '../pages/Settings';
 import { Providers } from '../providers';
 import MyRoute from "./MyRoute";
@@ -24,7 +24,7 @@ export default function Routers() {
 
                 <Route element={
                     <MyRoute isPublicOnly>
-                        <Register />
+                        <RegisterContent />
                     </MyRoute>
                 } path='/register' />
 

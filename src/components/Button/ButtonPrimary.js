@@ -10,6 +10,7 @@ export default function ButtonPrimary({ children, ...rest }) {
             whileTap={{ scale: 1 }}
             className=' 
                         inline-flex 
+                        w-full
                         flex-1 
                         items-center 
                         justify-center 

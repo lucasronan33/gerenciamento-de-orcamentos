@@ -188,10 +188,6 @@ header,
         align-items: stretch;
     }
 
-    header div {
-        justify-content: center;
-    }
-
     .input-small,
     .input-medium,
     .input-large,

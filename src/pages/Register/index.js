@@ -1,14 +1,14 @@
+import { motion } from 'framer-motion'
+import { Eye, EyeOff } from 'lucide-react'
 import { useEffect, useState } from 'react'
-import { useLocation, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
+import { useLocation, useNavigate } from 'react-router-dom'
 import validator from 'validator'
 import { Button } from '../../components/Button'
-import { registerRequest, registerReset } from '../../store/modules/auth/actions'
-import { ContainerRegister, Main, RegisterContent } from './styled'
-import { Eye, EyeOff } from 'lucide-react'
 import { Form } from '../../components/Form'
+import { registerRequest, registerReset } from '../../store/modules/auth/actions'
 
-export default function Register() {
+export default function RegisterContent({ modalVisible, setModalVisible }) {
     const [showPassword, setShowPassword] = useState(false)
     const [formData, setFormData] = useState({
         nome: '',
@@ -100,93 +100,127 @@ export default function Register() {
         }
     }, [dispatch, isLoggedIn, isRegistered, navigate, redirectTo])
 
+    useEffect(() => {
+        if (modalVisible !== 'register') {
+            return
+        }
+    }, [
+        modalVisible
+    ])
     return (
-        <ContainerRegister>
-            <Main></Main>
-            <RegisterContent>
-                <h1>Cadastro</h1>
+        <motion.form
+            onMouseUp={(e) => e.stopPropagation()}
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.45, ease: 'easeOut' }}
+            onSubmit={() => handleSubmit}
+            className='
+            z-99
+            relative
+            m-auto
+            bg-accent/50
+            flex
+            min-h-[70vh]
+            w-full
+            max-w-xl
+            flex-col
+            items-center
+            justify-around
+            rounded-[2vh]
+            p-[4vh]
+            shadow-[-1vh_2vh_3vh_rgba(0,0,0,0.2)]
+            '
+        >
+            <header className='flex flex-row items-center justify-center pb-3'>
+                <h1 className='text-4xl sm:text-5xl font-extrabold'>Cadastro</h1>
+                <div className='h-[4vh] self-start justify-self-start'></div>
+            </header>
+            <div className='
+            w-full
+            flex
+            flex-1
+            flex-col
+            place-items-center
+            place-content-start
+            '>
+                <div className='w-full flex flex-col gap-[1vh] py-3'>
+                    <Form.Label name='nome' text='Nome' />
+                    <Form.Input
+                        name='nome'
+                        typeInput='text'
+                        placeholder='Digite seu nome'
+                        value={formData.nome}
+                        onChange={handleChange}
+                    />
+                    {formErrors.nome && <span className='field-helper error'>{formErrors.nome}</span>}
+                </div>
 
-                <form onSubmit={handleSubmit}>
-                    <Form.Root>
-                        <Form.ContainerInput>
-                            <Form.Label name='nome' text='Nome' />
-                            <Form.Input
-                                name='nome'
-                                typeInput='text'
-                                placeholder='Digite seu nome'
-                                value={formData.nome}
-                                onChange={handleChange}
-                            />
-                            {formErrors.nome && <span className='field-helper error'>{formErrors.nome}</span>}
-                        </Form.ContainerInput>
+                <div className='w-full flex flex-col gap-[1vh] py-3'>
+                    <Form.Label name='email' text='E-mail' />
+                    <Form.Input
+                        name='email'
+                        typeInput='email'
+                        placeholder='Digite seu e-mail'
+                        value={formData.email}
+                        onChange={handleChange}
+                    />
+                    {formErrors.email && <span className='field-helper error'>{formErrors.email}</span>}
+                </div>
 
-                        <Form.ContainerInput>
-                            <Form.Label name='email' text='E-mail' />
-                            <Form.Input
-                                name='email'
-                                typeInput='email'
-                                placeholder='Digite seu e-mail'
-                                value={formData.email}
-                                onChange={handleChange}
-                            />
-                            {formErrors.email && <span className='field-helper error'>{formErrors.email}</span>}
-                        </Form.ContainerInput>
+                <div className='w-full flex flex-col gap-[1vh] py-3'>
+                    <Form.Label name='senha' text='Senha' />
+                    <Form.Input
+                        name='senha'
+                        typeInput={showPassword ? 'text' : 'password'}
+                        placeholder='Digite sua senha'
+                        value={formData.senha}
+                        onChange={handleChange}
+                        endIcon={showPassword ? <Eye size={18} /> : <EyeOff size={18} />}
+                        onEndIconClick={() => setShowPassword((prevState) => !prevState)}
+                        aria-label={showPassword ? 'Ocultar senha' : 'Mostrar senha'}
+                        title={showPassword ? 'Ocultar senha' : 'Mostrar senha'}
+                    />
+                    {formErrors.senha && <span className='field-helper error'>{formErrors.senha}</span>}
+                </div>
 
-                        <Form.ContainerInput>
-                            <Form.Label name='senha' text='Senha' />
-                            <Form.Input
-                                name='senha'
-                                typeInput={showPassword ? 'text' : 'password'}
-                                placeholder='Digite sua senha'
-                                value={formData.senha}
-                                onChange={handleChange}
-                                endIcon={showPassword ? <Eye size={18} /> : <EyeOff size={18} />}
-                                onEndIconClick={() => setShowPassword((prevState) => !prevState)}
-                                aria-label={showPassword ? 'Ocultar senha' : 'Mostrar senha'}
-                                title={showPassword ? 'Ocultar senha' : 'Mostrar senha'}
-                            />
-                            {formErrors.senha && <span className='field-helper error'>{formErrors.senha}</span>}
-                        </Form.ContainerInput>
+                <div className='w-full flex flex-col gap-[1vh] py-3'>
+                    <Form.Label name='confirmarSenha' text='Confirmar senha' />
+                    <Form.Input
+                        name='confirmarSenha'
+                        typeInput={showPassword ? 'text' : 'password'}
+                        placeholder='Confirme sua senha'
+                        value={formData.confirmarSenha}
+                        onChange={handleChange}
+                        endIcon={showPassword ? <Eye size={18} /> : <EyeOff size={18} />}
+                        onEndIconClick={() => setShowPassword((prevState) => !prevState)}
+                        aria-label={showPassword ? 'Ocultar senha' : 'Mostrar senha'}
+                        title={showPassword ? 'Ocultar senha' : 'Mostrar senha'}
+                    />
+                    {formErrors.confirmarSenha && <span className='field-helper error'>{formErrors.confirmarSenha}</span>}
+                </div>
 
-                        <Form.ContainerInput>
-                            <Form.Label name='confirmarSenha' text='Confirmar senha' />
-                            <Form.Input
-                                name='confirmarSenha'
-                                typeInput={showPassword ? 'text' : 'password'}
-                                placeholder='Confirme sua senha'
-                                value={formData.confirmarSenha}
-                                onChange={handleChange}
-                                endIcon={showPassword ? <Eye size={18} /> : <EyeOff size={18} />}
-                                onEndIconClick={() => setShowPassword((prevState) => !prevState)}
-                                aria-label={showPassword ? 'Ocultar senha' : 'Mostrar senha'}
-                                title={showPassword ? 'Ocultar senha' : 'Mostrar senha'}
-                            />
-                            {formErrors.confirmarSenha && <span className='field-helper error'>{formErrors.confirmarSenha}</span>}
-                        </Form.ContainerInput>
+                <div className='w-full flex flex-col gap-[1vh] py-3'>
+                    <Form.Label name='telefone' text='Telefone' />
+                    <Form.Input
+                        name='telefone'
+                        typeInput='tel'
+                        placeholder='Digite seu telefone (opcional)'
+                        value={formData.telefone}
+                        onChange={handleChange}
+                    />
+                    {formErrors.telefone && <span className='field-helper error'>{formErrors.telefone}</span>}
+                </div>
 
-                        <Form.ContainerInput>
-                            <Form.Label name='telefone' text='Telefone' />
-                            <Form.Input
-                                name='telefone'
-                                typeInput='tel'
-                                placeholder='Digite seu telefone (opcional)'
-                                value={formData.telefone}
-                                onChange={handleChange}
-                            />
-                            {formErrors.telefone && <span className='field-helper error'>{formErrors.telefone}</span>}
-                        </Form.ContainerInput>
-
-                        <div className='container-ButtonsRegister'>
-                            <Button.Root className='btn-cancel' onClick={() => navigate('/login')}>
-                                Voltar
-                            </Button.Root>
-                            <Button.Root type='submit' disabled={isLoading}>
-                                {isLoading ? 'Cadastrando...' : 'Cadastrar-se'}
-                            </Button.Root>
-                        </div>
-                    </Form.Root>
-                </form>
-            </RegisterContent>
-        </ContainerRegister>
+                <div className='mt-4 flex w-full flex-col justify-center gap-6 sm:flex-row-reverse'>
+                    <Button.Primary type='submit' disabled={isLoading}>
+                        {isLoading ? 'Cadastrando...' : 'Cadastrar-se'}
+                    </Button.Primary>
+                    <Button.Cancel className='btn-cancel' onClick={() => setModalVisible('login')}>
+                        Voltar
+                    </Button.Cancel>
+                </div>
+            </div>
+        </motion.form>
     )
 }

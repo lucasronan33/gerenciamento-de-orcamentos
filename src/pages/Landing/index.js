@@ -12,10 +12,12 @@ import { FinalCTA } from '../../components/FinalCTA'
 import { Footer } from '../../components/Footer'
 import HeroSection from '../../components/HeroSection'
 import HowItWorks from '../../components/HowItWorks'
+import LoginContent from '../../components/Login'
 import PainsSection from '../../components/Pains'
 import { PricingSection } from '../../components/Pricing'
 import { RoadmapSection } from '../../components/Roadmap'
 import { scrollToId } from '../../utils/random'
+import RegisterContent from '../Register'
 
 export function SectionHeader({ eyebrow, title, subtitle }) {
     return (
@@ -35,27 +37,68 @@ export function SectionHeader({ eyebrow, title, subtitle }) {
 
 function Header() {
     const [open, setOpen] = useState(false);
+    const [loginOpen, setLoginOpen] = useState(false);
+    const [modalVisible, setModalVisible] = useState('login')
     const links = [
         { id: "recursos", label: "Recursos" },
         { id: "como-funciona", label: "Como funciona" },
         { id: "precos", label: "Preços" },
         { id: "faq", label: "FAQ" },
     ];
+
+    function handleVisible() {
+        if (loginOpen) {
+            setLoginOpen(false)
+            document.body.removeAttribute('style')
+            return
+        }
+        setLoginOpen(true)
+        document.body.style.overflow = 'hidden'
+    }
     return (
         <>
+            {loginOpen && (
+                <div
+                    onMouseUp={(e) => handleVisible()}
+                    className='
+                        modal-surface
+                        absolute
+                        z-99
+                        w-full
+                        min-h-dvh
+                        flex
+                        m-auto
+                        flex-col 
+                        place-content-center
+                        place-items-center 
+                        p-[5vh]
+                '>
+                    {modalVisible === 'login' && (
+                        <LoginContent setModalVisible={setModalVisible} />
+                    )}
+                    {modalVisible === 'register' && (
+                        <RegisterContent setModalVisible={setModalVisible} />
+                    )}
+                </div>
+            )}
+
             <header className="fixed top-0 inset-x-0 z-50 border-b border-border bg-background-70 text backdrop-blur-xl">
-                <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6">
+                <div className="mx-auto flex h-16 items-center justify-between px-4 sm:px-6">
                     <button onClick={() => scrollToId('top')} className="flex items-center gap-2">
                         <img src={logoUrl} alt="ORCA logo" className="h-8 w-8" />
                         <span className="text-lg font-extrabold tracking-tight">ORCA</span>
                     </button>
                     <nav className="hidden md:flex items-center gap-8">
                         {links.map((l) => (
-                            <button key={l.href} onClick={() => scrollToId(l.id)} className="text-sm text-muted-foreground hover:text-foreground transition-colors">{l.label}</button>
+                            <button key={l.id} onClick={() => scrollToId(l.id)} className="text-sm text-muted-foreground hover:text-foreground transition-colors">{l.label}</button>
                         ))}
                     </nav>
                     <div className="hidden md:flex items-center gap-3">
-                        <button onClick={() => scrollToId('login')} className="text-sm text-muted-foreground hover:text-foreground">Entrar</button>
+                        <Button.Secondary
+                            onClick={() => handleVisible()}
+                        >
+                            Entrar
+                        </Button.Secondary>
                         <motion.button
                             onClick={() => scrollToId('precos')}
                             initial={{ scale: 0.96 }}
@@ -90,11 +133,16 @@ function Header() {
                                     {l.label}
                                 </button>
                             ))}
-                            <Button.Secondary>
+                            <Button.Secondary
+                                onClick={() => handleVisible()}
+                            >
                                 Entrar
                             </Button.Secondary>
                             <motion.button
-                                onClick={scrollToId("precos")}
+                                onClick={() => {
+                                    scrollToId("precos")
+                                    setOpen(false)
+                                }}
                                 whileHover={{ y: -2, scale: 1 }}
                                 whileTap={{ scale: 1 }}
                                 className="mt-2 inline-flex items-center justify-center rounded-full bg-brand px-4 py-2 text-sm font-semibold text-brand-foreground text-center transition-all duration-300 hover:opacity-90 glow-brand"
