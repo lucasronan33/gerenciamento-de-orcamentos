@@ -22,6 +22,34 @@ const initialState = {
         shippingType: 'SF',
     }
 }
+
+function filterBudgetsBySearch(items, selectedFilter, value) {
+    const normalizeValue = String(value).toLowerCase().trim()
+
+    return items.filter(item => {
+        if (selectedFilter !== 'all states' && item.basic?.status !== selectedFilter) {
+            return false
+        }
+
+        if (!normalizeValue) return true
+
+        const searchableFields = [
+            item.basic?.code,
+            item.basic?.name,
+            item.basic?.title,
+            item.client?.name,
+            item.client?.enterpriseName,
+            item.client?.email,
+            item.client?.phone,
+        ]
+
+        return searchableFields.some(field => {
+            const normalizedField = String(field || '').toLowerCase()
+            return normalizedField.includes(normalizeValue)
+        })
+    })
+}
+
 export function BudgetProvider({ children }) {
     const [budget, setBudget] = useState(initialState)
     const [budgetOpen, setBudgetOpen] = useState(false)
@@ -35,10 +63,12 @@ export function BudgetProvider({ children }) {
 
     function inputFilterBudgets(value) {
         setSearchBudget(value)
+        setFilteredBudgets(filterBudgetsBySearch(budgets, filterSelected, value))
     }
 
     function filterBudgets(filterValue) {
         setFilterSelected(filterValue)
+        setFilteredBudgets(filterBudgetsBySearch(budgets, filterValue, searchBudget))
     }
 
     const calcTotalBudgets = useMemo(() => {
@@ -123,29 +153,7 @@ export function BudgetProvider({ children }) {
     ])
 
     useEffect(() => {
-        const normalizeValue = String(searchBudget).toLowerCase().trim()
-
-        const filtered = budgets.filter(item => {
-            if (filterSelected !== 'all states' && item.basic.status !== filterSelected) {
-                return false
-            }
-
-            if (!normalizeValue) return true
-
-            const code = String(item.basic.code || '').toLowerCase()
-            const name = String(item.basic.name || '').toLowerCase()
-            const enterpriseName = String(item.client?.enterpriseName || '').toLowerCase()
-            const email = String(item.client?.email || '').toLowerCase()
-
-            return (
-                code.includes(normalizeValue) ||
-                name.includes(normalizeValue) ||
-                enterpriseName.includes(normalizeValue) ||
-                email.includes(normalizeValue)
-            )
-        })
-
-        setFilteredBudgets(structuredClone(filtered))
+        setFilteredBudgets(structuredClone(filterBudgetsBySearch(budgets, filterSelected, searchBudget)))
     }, [budgets, filterSelected, searchBudget])
 
     return (
@@ -171,6 +179,8 @@ export function BudgetProvider({ children }) {
 
                     filterSelected,
                     setFilterSelected,
+                    searchBudget,
+                    setSearchBudget,
                     inputFilterBudgets,
                     filterBudgets,
                     filteredBudgets,

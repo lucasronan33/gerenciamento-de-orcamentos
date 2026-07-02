@@ -1,10 +1,9 @@
-import React from 'react';
-import { Container } from '../../styles/GlobalStyles';
-import { DivContainerFilter, InptSearch } from './styles'
 import { Search } from 'lucide-react';
-import { useBudget } from '../../context/Budget'
-import { Card } from '../DashboardsHeader/styles';
+import { useBudget } from '../../context/Budget';
+import { Container } from '../../styles/GlobalStyles';
 import { budgetStatus } from '../../utils/budget';
+import { Card } from '../DashboardsHeader/styles';
+import { DivContainerFilter, InptSearch } from './styles';
 
 budgetStatus.push(
     {
@@ -13,7 +12,7 @@ budgetStatus.push(
     })
 
 export default function BudgetStatusFilter() {
-    const { inputFilterBudgets, filterBudgets, filterSelected } = useBudget()
+    const { inputFilterBudgets, filterBudgets, filterSelected, searchBudget } = useBudget()
 
     return (
         <Container>
@@ -26,6 +25,7 @@ export default function BudgetStatusFilter() {
                             type='text'
                             className='input-search'
                             placeholder='Buscar por número, cliente ou e-mail'
+                            value={searchBudget}
                             onChange={(e) => {
                                 inputFilterBudgets(e.target.value)
                             }}
