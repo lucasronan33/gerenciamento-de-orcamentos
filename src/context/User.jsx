@@ -1,8 +1,14 @@
-const { createContext, useState, useContext } = require('react');
+import {
+    createContext,
+    useState,
+    useContext
+} from 'react'
 
 const UserContext = createContext()
 
-export const UserProvider = ({ children }) => {
+export const UserProvider = ({
+    children
+}) => {
     const [user, setUser] = useState({})
 
     function updateUser(field, settings) {
@@ -11,30 +17,31 @@ export const UserProvider = ({ children }) => {
             [field]: settings
         }))
     }
+
     function updateSubUser(field, subfield, setting) {
         setUser(prev => ({
             ...prev,
             [field]: {
                 ...prev[field],
-                [subfield]:
-                    typeof setting === 'function'
-                        ? setting(prev[field][subfield])
-                        : setting
+                [subfield]: typeof setting === 'function' ?
+                    setting(prev[field][subfield]) :
+                    setting
             }
         }))
     }
 
-    return (
-        <UserContext.Provider value={
+    return ( <
+        UserContext.Provider value = {
             {
                 user,
                 setUser,
                 updateUser,
                 updateSubUser,
             }
-        }>
-            {children}
-        </UserContext.Provider>
+        } > {
+            children
+        } <
+        /UserContext.Provider>
     )
 }
 

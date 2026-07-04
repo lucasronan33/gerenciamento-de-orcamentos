@@ -1,8 +1,20 @@
 import dayjs from 'dayjs';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchBudgetsRequest } from '../store/modules/budget/actions';
+import {
+    useDispatch,
+    useSelector
+} from 'react-redux';
+import {
+    fetchBudgetsRequest
+} from '../store/modules/budget/actions';
 
-const { createContext, useState, useContext, useCallback, useEffect, useMemo } = require('react');
+import {
+    createContext,
+    useState,
+    useContext,
+    useCallback,
+    useEffect,
+    useMemo
+} from 'react'
 
 const BudgetContext = createContext()
 
@@ -50,15 +62,23 @@ function filterBudgetsBySearch(items, selectedFilter, value) {
     })
 }
 
-export function BudgetProvider({ children }) {
+export function BudgetProvider({
+    children
+}) {
     const [budget, setBudget] = useState(initialState)
     const [budgetOpen, setBudgetOpen] = useState(false)
     const [viewBudget, setViewBudget] = useState(false)
     const [filterSelected, setFilterSelected] = useState('all states')
     const [searchBudget, setSearchBudget] = useState('')
     const [filteredBudgets, setFilteredBudgets] = useState([])
-    const { budgets, success, loadedBudgets } = useSelector(state => state.budget)
-    const { isLoggedIn } = useSelector(state => state.auth)
+    const {
+        budgets,
+        success,
+        loadedBudgets
+    } = useSelector(state => state.budget)
+    const {
+        isLoggedIn
+    } = useSelector(state => state.auth)
     const dispatch = useDispatch()
 
     function inputFilterBudgets(value) {
@@ -136,7 +156,10 @@ export function BudgetProvider({ children }) {
                 if (item._id !== id) {
                     return item
                 }
-                const updated = { ...item, [field]: value }
+                const updated = {
+                    ...item,
+                    [field]: value
+                }
                 return updated
             })
         }))
@@ -156,38 +179,38 @@ export function BudgetProvider({ children }) {
         setFilteredBudgets(structuredClone(filterBudgetsBySearch(budgets, filterSelected, searchBudget)))
     }, [budgets, filterSelected, searchBudget])
 
-    return (
-        <BudgetContext.Provider
-            value={
-                {
-                    initialState,
-                    budget,
-                    setBudget,
-                    updateBudget,
-                    updateItem,
-                    updateTotals,
-                    calcTotal,
+    return ( <
+        BudgetContext.Provider value = {
+            {
+                initialState,
+                budget,
+                setBudget,
+                updateBudget,
+                updateItem,
+                updateTotals,
+                calcTotal,
 
-                    budgetOpen,
-                    setBudgetOpen,
-                    viewBudget,
-                    setViewBudget,
+                budgetOpen,
+                setBudgetOpen,
+                viewBudget,
+                setViewBudget,
 
-                    budgets,
-                    calcTotalBudgets,
-                    getBudgetsByStatus,
+                budgets,
+                calcTotalBudgets,
+                getBudgetsByStatus,
 
-                    filterSelected,
-                    setFilterSelected,
-                    searchBudget,
-                    setSearchBudget,
-                    inputFilterBudgets,
-                    filterBudgets,
-                    filteredBudgets,
-                }
-            }>
-            {children}
-        </BudgetContext.Provider>
+                filterSelected,
+                setFilterSelected,
+                searchBudget,
+                setSearchBudget,
+                inputFilterBudgets,
+                filterBudgets,
+                filteredBudgets,
+            }
+        } > {
+            children
+        } <
+        /BudgetContext.Provider>
     )
 }
 

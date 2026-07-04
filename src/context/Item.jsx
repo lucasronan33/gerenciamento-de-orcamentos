@@ -1,4 +1,8 @@
-const { createContext, useState, useContext } = require('react');
+import {
+    createContext,
+    useState,
+    useContext
+} from 'react'
 
 const ItemContext = createContext()
 const initialState = {
@@ -11,7 +15,9 @@ const initialState = {
     obsItem: '',
 }
 
-export const ItemProvider = ({ children }) => {
+export const ItemProvider = ({
+    children
+}) => {
     const [item, setItem] = useState(initialState)
 
     function resetItemState() {
@@ -25,17 +31,18 @@ export const ItemProvider = ({ children }) => {
         }))
     }
 
-    return (
-        <ItemContext.Provider value={
+    return ( <
+        ItemContext.Provider value = {
             {
                 item,
                 setItem,
                 updateItem,
                 resetItemState,
             }
-        }>
-            {children}
-        </ItemContext.Provider>
+        } > {
+            children
+        } <
+        /ItemContext.Provider>
     )
 }
 

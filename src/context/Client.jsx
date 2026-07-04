@@ -1,8 +1,14 @@
-const { createContext, useState, useContext } = require('react');
+import {
+    createContext,
+    useState,
+    useContext
+} from 'react';
 
 const ClientContext = createContext()
 
-export const ClientProvider = ({ children }) => {
+export const ClientProvider = ({
+    children
+}) => {
     const [client, setClient] = useState()
 
     function resetClientState() {
@@ -15,21 +21,21 @@ export const ClientProvider = ({ children }) => {
             [field]: settings
         }))
     }
+
     function updateSubClient(field, subfield, setting) {
         setClient(prev => ({
             ...prev,
             [field]: {
                 ...prev[field],
-                [subfield]:
-                    typeof setting === 'function'
-                        ? setting(prev[field][subfield])
-                        : setting
+                [subfield]: typeof setting === 'function' ?
+                    setting(prev[field][subfield]) :
+                    setting
             }
         }))
     }
 
-    return (
-        <ClientContext.Provider value={
+    return ( <
+        ClientContext.Provider value = {
             {
                 client,
                 setClient,
@@ -37,9 +43,10 @@ export const ClientProvider = ({ children }) => {
                 updateSubClient,
                 resetClientState,
             }
-        }>
-            {children}
-        </ClientContext.Provider>
+        } > {
+            children
+        } <
+        /ClientContext.Provider>
     )
 }
 

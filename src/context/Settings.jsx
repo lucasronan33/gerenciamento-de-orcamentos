@@ -1,4 +1,8 @@
-const { createContext, useContext, useState } = require('react')
+import {
+    createContext,
+    useContext,
+    useState
+} from 'react'
 
 const SettingsContext = createContext()
 
@@ -13,7 +17,9 @@ const initialState = {
     }
 }
 
-export function SettingsProvider({ children }) {
+export function SettingsProvider({
+    children
+}) {
     const [settings, setSettings] = useState(initialState)
 
     function updateSettings(field, settings) {
@@ -22,21 +28,21 @@ export function SettingsProvider({ children }) {
             [field]: settings
         }))
     }
+
     function updateSubSettings(field, subfield, setting) {
         setSettings(prev => ({
             ...prev,
             [field]: {
                 ...prev[field],
-                [subfield]:
-                    typeof setting === 'function'
-                        ? setting(prev[field][subfield])
-                        : setting
+                [subfield]: typeof setting === 'function' ?
+                    setting(prev[field][subfield]) :
+                    setting
             }
         }))
     }
 
-    return (
-        <SettingsContext.Provider value={
+    return ( <
+        SettingsContext.Provider value = {
             {
                 settings,
                 setSettings,
@@ -44,10 +50,11 @@ export function SettingsProvider({ children }) {
                 updateSubSettings,
                 initialState,
             }
-        }
-        >
-            {children}
-        </SettingsContext.Provider>
+        } >
+        {
+            children
+        } <
+        /SettingsContext.Provider>
     )
 }
 

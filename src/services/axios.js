@@ -1,10 +1,10 @@
 import axios from "axios";
-import { clearAccessToken, getAccessToken, setAccessToken } from "./authToken";
-import store from '../store/store'
 import { authMeFailure } from '../store/modules/auth/actions';
+import store from '../store/store';
+import { clearAccessToken, getAccessToken, setAccessToken } from "./authToken";
 
 const api = axios.create({
-    baseURL: process.env.REACT_APP_API_URI,
+    baseURL: import.meta.env.VITE_API_URI,
     withCredentials: true,
 })
 
