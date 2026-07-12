@@ -1,151 +1,167 @@
-import validator from 'validator'
-import { toast } from 'react-toastify';
-import { UserAddress } from './UserAddress';
-import { UserBasic } from './UserBasic';
-import { UserPrivacy } from './UserPrivacy';
-import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { SaveIcon } from 'lucide-react';
-import { Button } from '../Button';
-import { Form } from '../Form';
-import { NavBudget } from '../NewBudget/styles';
-import { useUser } from '../../context/User';
-import { updateUserRequest } from '../../store/modules/auth/actions';
-import { isValidCpfCnpj } from '../../utils/documents';
+import { SaveIcon } from "lucide-react";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
+import validator from "validator";
+import { useUser } from "../../context/User";
+import { updateUserRequest } from "../../store/modules/auth/actions";
+import { isValidCpfCnpj } from "../../utils/documents";
+import { Button } from "../Button";
+import { Form } from "../Form";
+import { UserAddress } from "./UserAddress";
+import { UserBasic } from "./UserBasic";
+import { UserPrivacy } from "./UserPrivacy";
 
 export const UserSettings = () => {
-    const { isLoading, isLoggedIn, user: dataUser } = useSelector((state) => state.auth || {})
-    const { user, setUser } = useUser()
-    const dispatch = useDispatch()
+    const {
+        isLoading,
+        isLoggedIn,
+        user: dataUser,
+    } = useSelector((state) => state.auth || {});
+    const { user, setUser } = useUser();
+    const dispatch = useDispatch();
 
-    const [active, setActive] = useState('Básico')
-    const options = [
-        'Básico',
-        'Endereço',
-        'Privacidade',
-    ]
+    const [active, setActive] = useState("Básico");
+    const options = ["Básico", "Endereço", "Privacidade"];
     const tabs = [
-        { key: 'Básico', component: <UserBasic user={user} /> },
-        { key: 'Endereço', component: <UserAddress user={user} /> },
-        { key: 'Privacidade', component: <UserPrivacy user={user} /> },
-    ]
+        { key: "Básico", component: <UserBasic user={user} /> },
+        { key: "Endereço", component: <UserAddress user={user} /> },
+        { key: "Privacidade", component: <UserPrivacy user={user} /> },
+    ];
 
     const handleButtonActive = (option) => {
-        setActive(option)
-    }
+        setActive(option);
+    };
 
     const validateUserData = (data) => {
-        const errors = []
+        const errors = [];
 
         if (!validator.isLength(data.name, { min: 2, max: 80 })) {
             errors.push({
-                field: 'Nome',
-                message: 'deve ter entre 2 e 80 caracteres.',
-            })
+                field: "Nome",
+                message: "deve ter entre 2 e 80 caracteres.",
+            });
         }
 
         if (!validator.isEmail(data.email)) {
             errors.push({
-                field: 'Email',
-                message: 'deve ser um e-mail valido.',
-            })
+                field: "Email",
+                message: "deve ser um e-mail valido.",
+            });
         }
 
-        if (data.password && !validator.isLength(data.password, { min: 8, max: 50 })) {
+        if (
+            data.password &&
+            !validator.isLength(data.password, { min: 8, max: 50 })
+        ) {
             errors.push({
-                field: 'Senha',
-                message: 'deve ter entre 8 e 50 caracteres.',
-            })
+                field: "Senha",
+                message: "deve ter entre 8 e 50 caracteres.",
+            });
         }
 
         if (data.password && !data.currentPassword) {
             errors.push({
-                field: 'Senha atual',
-                message: 'obrigatória para alterar senha.',
-            })
+                field: "Senha atual",
+                message: "obrigatória para alterar senha.",
+            });
         }
 
         if (data.currentPassword && !data.password) {
             errors.push({
-                field: 'Nova senha',
-                message: 'obrigatória para alterar senha.',
-            })
+                field: "Nova senha",
+                message: "obrigatória para alterar senha.",
+            });
         }
 
         if (data.phone && !validator.matches(data.phone, /^\d{11}$/)) {
             errors.push({
-                field: 'Telefone',
-                message: 'deve estar no formato (DD) 9 XXXX-XXXX.',
-            })
+                field: "Telefone",
+                message: "deve estar no formato (DD) 9 XXXX-XXXX.",
+            });
         }
 
         if (data.cpf_cnpj && !/^\d+$/.test(data.cpf_cnpj)) {
             errors.push({
-                field: 'CPF/CNPJ',
-                message: 'deve conter apenas numeros.',
-            })
+                field: "CPF/CNPJ",
+                message: "deve conter apenas numeros.",
+            });
         }
 
         if (data.cpf_cnpj && !isValidCpfCnpj(data.cpf_cnpj)) {
             errors.push({
-                field: 'CPF/CNPJ',
-                message: 'o cpf ou cnpj inserido nao e valido.',
-            })
+                field: "CPF/CNPJ",
+                message: "o cpf ou cnpj inserido nao e valido.",
+            });
         }
 
-        return errors
-    }
+        return errors;
+    };
 
     const handleSubmit = (e) => {
-        e.preventDefault()
+        e.preventDefault();
 
-        if (!isLoggedIn) return
-        const errors = validateUserData(user)
+        if (!isLoggedIn) return;
+        const errors = validateUserData(user);
 
         if (errors.length > 0) {
-            errors.forEach(value => toast.error(<div>
-                <strong>{value.field}: </strong>{value.message} </div>,
-                { autoClose: 5000, hideProgressBar: true }))
-            return
+            errors.forEach((value) =>
+                toast.error(
+                    <div>
+                        <strong>{value.field}: </strong>
+                        {value.message}{" "}
+                    </div>,
+                    { autoClose: 5000, hideProgressBar: true },
+                ),
+            );
+            return;
         }
 
-        dispatch(updateUserRequest(user))
+        dispatch(updateUserRequest(user));
         setUser((prev) => ({
             ...prev,
-            password: '',
-            currentPassword: '',
-        }))
-    }
+            password: "",
+            currentPassword: "",
+        }));
+    };
 
     useEffect(() => {
-        if (!isLoggedIn) return
-        setUser(dataUser)
-    }, [isLoggedIn, dataUser, setUser])
+        if (!isLoggedIn) return;
+        setUser(dataUser);
+    }, [isLoggedIn, dataUser, setUser]);
 
     return (
-
-        <section >
-            <form
-                className='container-settings'
-                onSubmit={handleSubmit}
-            >
-                <NavBudget className='nav-settings'>
+        <section>
+            <form className="container-settings" onSubmit={handleSubmit}>
+                <div
+                    className="
+                sm:w-[80%]
+                sm:p-15
+                m-auto
+                p-10
+                gap-5
+                flex
+                flex-col
+                rounded-4xl
+                bg-button-dark
+                "
+                >
                     {options.map((item) => (
                         <Button.Root
                             key={item}
                             onClick={() => handleButtonActive(item)}
-                            className={`button-nav-budget ${active === item ? 'active' : ''}`}
+                            className={`button-nav-budget ${active === item ? "active" : ""}`}
                         >
                             {item}
                         </Button.Root>
                     ))}
-                </NavBudget>
+                </div>
 
-                <Form.Root >
+                <Form.Root>
                     {tabs.map((tab) => (
                         <div
                             key={tab.key}
-                            className={`tab-budget-content ${active === tab.key ? 'content-budget-active' : ''}`}
+                            className={`tab-budget-content ${active === tab.key ? "content-budget-active" : ""}`}
                         >
                             {tab.component}
                         </div>
@@ -154,14 +170,15 @@ export const UserSettings = () => {
 
                 <Button.Container>
                     <Button.Root
-                        className='btn-save'
-                        type='submit'
-                        disabled={isLoading} >
+                        className="btn-save"
+                        type="submit"
+                        disabled={isLoading}
+                    >
                         <Button.Icon icon={SaveIcon} />
-                        {isLoading ? 'Salvando...' : 'Salvar'}
+                        {isLoading ? "Salvando..." : "Salvar"}
                     </Button.Root>
                 </Button.Container>
             </form>
-        </section >
-    )
-}
+        </section>
+    );
+};

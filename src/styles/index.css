@@ -4,35 +4,67 @@
 :root {
     --radius: 0.75rem;
 
-    --background: oklch(0.16 0.02 250);
-    --foreground: oklch(0.98 0.005 250);
+    --background: rgb(7, 14, 22);
+    --foreground: rgb(246, 249, 252);
 
-    --surface: oklch(0.20 0.022 250);
-    --surface-2: oklch(0.24 0.025 250);
+    --surface: rgb(14, 23, 32);
+    --surface-2: rgb(22, 32, 43);
 
-    --card: oklch(0.20 0.022 250);
-    --card-foreground: oklch(0.98 0.005 250);
-    --popover: oklch(0.20 0.022 250);
-    --popover-foreground: oklch(0.98 0.005 250);
+    --card: rgb(14, 23, 32);
+    --card-foreground: rgb(246, 249, 252);
+    --popover: rgb(14, 23, 32);
+    --popover-foreground: rgb(246, 249, 252);
 
-    --primary: oklch(0.78 0.16 220);
-    --primary-foreground: oklch(0.16 0.02 250);
+    --primary: rgb(0, 205, 253);
+    --primary-foreground: rgb(7, 14, 22);
 
-    --brand: oklch(0.78 0.16 220);
-    --brand-foreground: oklch(0.16 0.02 250);
-    --brand-soft: oklch(0.30 0.08 220);
+    --brand: rgb(0, 205, 253);
+    --brand-foreground: rgb(7, 14, 22);
+    --brand-soft: rgb(0, 54, 73);
 
-    --secondary: oklch(0.26 0.025 250);
-    --secondary-foreground: oklch(0.98 0.005 250);
-    --muted: oklch(0.26 0.025 250);
-    --muted-foreground: oklch(0.72 0.02 250);
-    --accent: oklch(0.30 0.05 220);
-    --accent-foreground: oklch(0.98 0.005 250);
-    --destructive: oklch(0.65 0.22 25);
-    --destructive-foreground: oklch(0.98 0.005 250);
-    --border: oklch(1 0 0 / 10%);
-    --input: oklch(1 0 0 / 12%);
-    --ring: oklch(0.78 0.16 220);
+    --secondary: rgb(27, 37, 48);
+    --secondary-foreground: rgb(246, 249, 252);
+    --muted: rgb(27, 37, 48);
+    --muted-foreground: rgb(156, 166, 177);
+    --accent: rgb(7, 51, 63);
+    --accent-foreground: rgb(246, 249, 252);
+    --destructive: rgb(249, 65, 68);
+    --destructive-foreground: rgb(246, 249, 252);
+    --border: rgba(255, 255, 255, 0.1);
+    --input: rgba(255, 255, 255, 0.12);
+    --ring: rgb(0, 205, 253);
+}
+
+@theme {
+    --color-success: rgba(52, 211, 153, 1);
+    --color-info: #0197F6;
+    --color-error: #e74d3c;
+    --color-warning: #f2af29;
+
+    --color-primary: #000;
+    --color-primary-dark: rgba(16, 26, 34, 1);
+    --color-secondary-dark: rgba(21, 31, 40, 1);
+    --color-button-dark: rgba(16, 26, 34, 1);
+    --color-border-dark: rgba(35, 47, 53, 1);
+    --color-secondaryText-dark: rgba(150, 150, 160);
+    --color-inputHover: rgba(200, 224, 224, 1);
+
+    --color-blueDocument: rgba(38, 178, 242, 1);
+    --color-blueHover: rgba(33, 61, 80, 1);
+    --color-purpleHover: rgba(117, 71, 209, 1);
+
+    --color-sketch-dark: rgba(220, 220, 220, 1);
+    --color-sketch: rgba(220, 220, 220, 0.2);
+    --color-sent-dark: rgba(38, 178, 242, 1);
+    --color-sent: rgba(38, 178, 242, 0.2);
+    --color-approved: rgba(52, 211, 153, 0.2);
+    --color-approved-dark: rgba(52, 211, 153, 1);
+    --color-producing: rgba(240, 175, 40, 0.2);
+    --color-producing-dark: rgba(240, 175, 40, 1);
+    --color-rejected: rgba(231, 77, 60, 0.2);
+    --color-rejected-dark: rgba(231, 77, 60, 1);
+    --color-finished: rgba(180, 80, 255, 0.2);
+    --color-finished-dark: rgba(180, 80, 255, 1);
 }
 
 @layer base {
@@ -50,13 +82,140 @@
         font-family: "Inter", ui-sans-serif, system-ui, sans-serif;
         -webkit-font-smoothing: antialiased;
         background-image:
-            radial-gradient(60% 50% at 50% 0%, oklch(0.78 0.16 220 / 0.15), transparent 70%),
-            radial-gradient(40% 40% at 90% 10%, oklch(0.65 0.18 200 / 0.10), transparent 70%);
+            radial-gradient(60% 50% at 50% 0%, rgba(0, 205, 253, 0.15), transparent 70%),
+            radial-gradient(40% 40% at 90% 10%, rgba(0, 173, 186, 0.1), transparent 70%);
         background-attachment: fixed;
     }
 }
 
 @layer utilities {
+    .tab-budget-content {
+        width: 100%;
+        display: none !important;
+        gap: 3vh;
+    }
+
+    .content-budget-active {
+        display: flex !important;
+        align-items: end;
+        flex-wrap: wrap;
+    }
+
+    .btn-default {
+        height: fit-content;
+        display: flex;
+        cursor: pointer;
+        padding: 1.5vh 3vh;
+        font-weight: bold;
+        column-gap: 1.5vh;
+        align-items: center;
+        justify-content: center;
+        border-radius: 2vh;
+    }
+
+    .btn-cancel {
+        background: none;
+        border: 1px solid var(--errorColor);
+        color: var(--errorColor);
+    }
+
+    .btn-cancel:hover {
+        background: var(--errorColor);
+        border: 1px solid var(--errorColor);
+        color: white;
+        box-shadow: inset -0.2vh 0.2vh 1vh black;
+    }
+
+    .nav-budget {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 2vh;
+        padding: 1vh 1.5vh;
+        border-radius: 2vh;
+        justify-content: space-between;
+        align-items: center;
+        background: var(--color-secondary-dark);
+    }
+
+    .button-nav-budget {
+        min-width: 150px;
+        display: flex;
+        flex: 1;
+        align-items: center;
+        justify-content: center;
+        padding-block: 0.75vh;
+        border-radius: 1.5vh;
+        background: none;
+        color: var(--blueHover);
+        font-weight: bold;
+    }
+
+    .button-nav-budget:hover {
+        background: var(--blueHover);
+        color: var(--buttonDarkColor);
+        box-shadow: inset 0.2vh 0.2vh 0.5vh var(--primaryDarkColor);
+    }
+
+    .button-nav-budget.active {
+        background: var(--blueDocument);
+    }
+
+    .button-nav-budget.active:hover {
+        box-shadow: none;
+        color: var(--blueHover);
+    }
+
+    .card-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: 300ms;
+    }
+
+    .card-icon:hover {
+        background: var(--blueHover);
+        box-shadow: inset 0.1vh 0.3vh 0.5vh var(--primaryDarkColor);
+        border-color: var(--blueHover);
+    }
+
+    .trash-icon {
+        background: rgba(70, 20, 20, 0.3) !important;
+        border-color: rgba(255, 0, 0, 0.2) !important;
+    }
+
+    .trash-icon:hover {
+        background: #ff8a7d !important;
+        box-shadow: inset 0.1vh 0.3vh 0.5vh #c23e2f;
+
+        svg {
+            color: #c23e2f;
+        }
+    }
+
+    .viewOrc {
+        width: 45%;
+    }
+
+    .links,
+    .viewOrc {
+        background: var(--primaryDarkColor);
+        flex-grow: 1;
+        padding: 1vh;
+        border: 1px solid var(--borderDarkColor);
+        border-radius: 10px;
+        gap: 1vh;
+
+        .trashIco {
+            color: darkred;
+        }
+
+        svg {
+            max-width: 100%;
+            max-height: 100%;
+        }
+    }
+
     .modal-surface::before {
         width: 100%;
         min-height: 100%;
@@ -65,36 +224,36 @@
         inset: 0;
         z-index: 98;
 
-        background: oklch(0.20 0.022 250 / 0.75);
+        background: rgba(14, 23, 32, 0.75);
         backdrop-filter: blur(18px);
         -webkit-backdrop-filter: blur(18px);
 
         box-shadow:
-            0 10px 40px oklch(0 0 0 / 0.25),
-            inset 0 1px 0 oklch(1 0 0 / 0.05);
+            0 10px 40px rgba(0, 0, 0, 0.25),
+            inset 0 1px 0 rgba(255, 255, 255, 0.05);
     }
 
     .bg-grid {
         background-image:
-            linear-gradient(to right, oklch(1 0 0 / 0.05) 1px, transparent 1px),
-            linear-gradient(to bottom, oklch(1 0 0 / 0.05) 1px, transparent 1px);
+            linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+            linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
         background-size: 48px 48px;
     }
 
     .text-gradient-brand {
-        background: linear-gradient(135deg, oklch(0.98 0.005 250) 0%, oklch(0.78 0.16 220) 100%);
+        background: linear-gradient(135deg, rgb(246, 249, 252) 0%, #00cdfd 100%);
         -webkit-background-clip: text;
         background-clip: text;
         color: transparent;
     }
 
     .glow-brand {
-        box-shadow: 0 10px 40px -10px oklch(0.78 0.16 220 / 0.55), 0 0 0 1px oklch(0.78 0.16 220 / 0.25) inset;
+        box-shadow: 0 10px 40px -10px rgba(0, 205, 253, 0.55), 0 0 0 1px oklch(0.78 0.16 220 / 0.25) inset;
     }
 
     .card-glass {
-        background: linear-gradient(180deg, oklch(0.22 0.025 250 / 0.8), oklch(0.18 0.02 250 / 0.6));
-        border: 1px solid oklch(1 0 0 / 0.08);
+        background: linear-gradient(180deg, rgba(18, 28, 38, 0.8), rgba(11, 18, 26, 0.6));
+        border: 1px solid rgba(255, 255, 255, 0.08);
         backdrop-filter: blur(8px);
     }
 
@@ -104,6 +263,6 @@
     }
 
     .bg-gradient-chart-full {
-        background: linear-gradient(180deg, oklch(0.78 0.16 220 / 0.3), oklch(0.78 0.16 220));
+        background: linear-gradient(180deg, rgba(0, 205, 253, 0.3), oklch(0.78 0.16 220));
     }
 }

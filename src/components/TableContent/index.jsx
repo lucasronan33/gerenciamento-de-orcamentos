@@ -1,66 +1,62 @@
-import { FileText, Package, Users } from 'lucide-react';
-import { Container } from '../../styles/GlobalStyles';
-import { Card } from '../DashboardsHeader/styles';
-import React, { useState } from 'react';
-import { Button } from '../Button';
-import { NavBudget } from '../NewBudget/styles';
-import { Form } from '../Form';
-import { BudgetsList } from './BudgetsList';
+import { FileText, Package, Users } from "lucide-react";
+import { useState } from "react";
+import { Container } from "../../styles/GlobalStyles";
+import { Button } from "../Button";
+import { Card } from "../DashboardsHeader/styles";
+import { Form } from "../Form";
+import { BudgetsList } from "./BudgetsList";
 
 const navHeader = [
     {
-        title: 'Orçamentos',
+        title: "Orçamentos",
         icon: FileText,
     },
     {
-        title: 'Clientes',
+        title: "Clientes",
         icon: Users,
     },
     {
-        title: 'Itens/Serviços',
+        title: "Itens/Serviços",
         icon: Package,
     },
-]
-
+];
 
 const tabs = [
-    { key: 'Orçamentos', component: <BudgetsList /> },
-    { key: 'Clientes', component: <></> },
-    { key: 'Itens/Serviços', component: <></> },
-]
+    { key: "Orçamentos", component: <BudgetsList /> },
+    { key: "Clientes", component: <></> },
+    { key: "Itens/Serviços", component: <></> },
+];
 
 export default function TableContent() {
-    const [active, setActive] = useState('Orçamentos')
+    const [active, setActive] = useState("Orçamentos");
 
     const handleButtonActive = (option) => {
-        setActive(option)
-    }
+        setActive(option);
+    };
     return (
         <Container>
             <Card>
-
-                <NavBudget>
+                <div className="nav-budget">
                     {navHeader.map((item) => {
-                        const Icon = item.icon
+                        const Icon = item.icon;
                         return (
                             <Button.Root
                                 key={item.title}
                                 onClick={() => handleButtonActive(item.title)}
-                                className={`button-nav-budget ${active === item.title ? 'active' : ''}`}
+                                className={`button-nav-budget ${active === item.title ? "active" : ""}`}
                             >
                                 <Icon />
                                 {item.title}
                             </Button.Root>
-                        )
-                    })
-                    }
-                </NavBudget>
+                        );
+                    })}
+                </div>
 
-                <Form.Root >
+                <Form.Root>
                     {tabs.map((tab) => (
                         <div
                             key={tab.key}
-                            className={`tab-budget-content ${active === tab.key ? 'content-budget-active' : ''}`}
+                            className={`tab-budget-content ${active === tab.key ? "content-budget-active" : ""}`}
                         >
                             {tab.component}
                         </div>
@@ -68,5 +64,5 @@ export default function TableContent() {
                 </Form.Root>
             </Card>
         </Container>
-    )
+    );
 }

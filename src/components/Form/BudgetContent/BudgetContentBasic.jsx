@@ -1,145 +1,138 @@
-import React, { useEffect } from 'react';
-import '../style.css'
+import { useEffect } from "react";
+import "../style.css";
 
-import { Form } from '..';
-import { useBudget } from '../../../context/Budget'
-import { DatePicker, TimePicker } from '@mui/x-date-pickers';
-import dayjs from 'dayjs';
-import { generateBudgetCode } from '../../../utils/masks';
-import { budgetStatus } from '../../../utils/budget';
+import { DatePicker, TimePicker } from "@mui/x-date-pickers";
+import dayjs from "dayjs";
+import { Form } from "..";
+import { useBudget } from "../../../context/Budget";
+import { budgetStatus } from "../../../utils/budget";
+import { generateBudgetCode } from "../../../utils/masks";
 
 export function BudgetContentBasic() {
-    const { budget, updateBudget } = useBudget()
+    const { budget, updateBudget } = useBudget();
 
     useEffect(() => {
         if (!budget.basic.code) {
-            const code = generateBudgetCode()
-            updateBudget('basic', 'code', code)
+            const code = generateBudgetCode();
+            updateBudget("basic", "code", code);
         }
-    }, [
-        updateBudget,
-        budget.basic.code
-    ])
+    }, [updateBudget, budget.basic.code]);
 
     return (
         <>
             <Form.ContainerInput>
                 <Form.Label
-                    text='Numero do Orçamento *'
-                    htmlFor='budgetNumber' />
+                    text="Numero do Orçamento *"
+                    htmlFor="budgetNumber"
+                />
                 <Form.LockedLabel
-                    placeholder='Numero do Orçamento'
-                    id='budgetNumber'
-                    name='budgetNumber'
-                    text={budget.basic?.code || ''} />
+                    placeholder="Numero do Orçamento"
+                    id="budgetNumber"
+                    name="budgetNumber"
+                    text={budget.basic?.code || ""}
+                />
             </Form.ContainerInput>
 
             <Form.ContainerInput>
                 <Form.Label
-                    text='Título do orçamento *'
-                    htmlFor={'titleBudget'} />
+                    text="Título do orçamento *"
+                    htmlFor={"titleBudget"}
+                />
                 <Form.Input
-                    typeInput='text'
-                    placeholder='ex.: Nome do serviço'
-                    id='titleBudget'
-                    name='titleBudget'
-                    value={budget.basic.title || ''}
-                    onChange={(e) => updateBudget('basic', 'title', e.target.value)}
+                    typeInput="text"
+                    placeholder="ex.: Nome do serviço"
+                    id="titleBudget"
+                    name="titleBudget"
+                    value={budget.basic.title || ""}
+                    onChange={(e) =>
+                        updateBudget("basic", "title", e.target.value)
+                    }
                 />
             </Form.ContainerInput>
 
-            <Form.ContainerInput size='meidum'>
-                <Form.Label
-                    text='Status do Orçamento'
-                    htmlFor='budgetStatus' />
+            <Form.ContainerInput size="meidum">
+                <Form.Label text="Status do Orçamento" htmlFor="budgetStatus" />
 
                 <select
                     value={budget.basic.status}
                     onChange={(e) => {
-                        updateBudget('basic', 'status', e.target.value)
+                        updateBudget("basic", "status", e.target.value);
                     }}
                 >
-                    {budgetStatus.map(value => (
+                    {budgetStatus.map((value, index) => (
                         <option
-                            key={value.value}
-                            value={value.value}>
+                            key={value.value + Math.floor(Math.random() * 99)}
+                            value={value.value}
+                        >
                             {value.text}
                         </option>
                     ))}
                 </select>
             </Form.ContainerInput>
 
-            <div className='budget-container-items'>
+            <div className="budget-container-items">
                 <Form.ContainerInput>
-                    <Form.Label
-                        text='Data *'
-                        htmlFor='date' />
+                    <Form.Label text="Data *" htmlFor="date" />
                     <DatePicker
-                        className='datePicker'
-                        format='DD/MM/YYYY'
+                        className="datePicker"
+                        format="DD/MM/YYYY"
                         slotProps={{
                             textField: {
-                                id: 'date'
-                            }
+                                id: "date",
+                            },
                         }}
-                        name='date'
+                        name="date"
                         defaultValue={null}
-                        value={dayjs(budget.basic.date, 'DD-MM-YYYY')}
+                        value={dayjs(budget.basic.date, "DD-MM-YYYY")}
                         onChange={(date) => {
-                            if (!date) return
-                            const formatedDate = date.format('DD-MM-YYYY')
-                            updateBudget('basic', 'date', formatedDate)
+                            if (!date) return;
+                            const formatedDate = date.format("DD-MM-YYYY");
+                            updateBudget("basic", "date", formatedDate);
                         }}
                     />
                 </Form.ContainerInput>
 
                 <Form.ContainerInput>
-                    <Form.Label
-                        text='Valido até'
-                        htmlFor='validUntil' />
+                    <Form.Label text="Valido até" htmlFor="validUntil" />
                     <DatePicker
-                        className='datePicker'
-                        format='DD/MM/YYYY'
+                        className="datePicker"
+                        format="DD/MM/YYYY"
                         slotProps={{
                             textField: {
-                                id: 'validUntil'
-                            }
+                                id: "validUntil",
+                            },
                         }}
-                        name='validUntil'
+                        name="validUntil"
                         defaultValue={null}
-                        value={dayjs(budget.basic.validUntil, 'DD-MM-YYYY')}
+                        value={dayjs(budget.basic.validUntil, "DD-MM-YYYY")}
                         onChange={(date) => {
-                            if (!date) return
-                            const formatedDate = date.format('DD-MM-YYYY')
-                            updateBudget('basic', 'validUntil', formatedDate)
+                            if (!date) return;
+                            const formatedDate = date.format("DD-MM-YYYY");
+                            updateBudget("basic", "validUntil", formatedDate);
                         }}
                     />
                 </Form.ContainerInput>
 
                 <Form.ContainerInput>
-                    <Form.Label
-                        htmlFor='time'
-                        text='Horário' />
+                    <Form.Label htmlFor="time" text="Horário" />
                     <TimePicker
-                        className='datePicker'
+                        className="datePicker"
                         defaultValue={null}
                         slotProps={{
                             textField: {
-                                id: 'time'
-                            }
+                                id: "time",
+                            },
                         }}
-                        name='time'
-                        value={dayjs(budget.basic.time, 'HH:mm')}
+                        name="time"
+                        value={dayjs(budget.basic.time, "HH:mm")}
                         onChange={(date) => {
-                            if (!date) return
-                            const formatedTime = date.format('HH:mm')
-                            updateBudget('basic', 'time', formatedTime)
+                            if (!date) return;
+                            const formatedTime = date.format("HH:mm");
+                            updateBudget("basic", "time", formatedTime);
                         }}
                     />
-
                 </Form.ContainerInput>
-
             </div>
         </>
-    )
+    );
 }

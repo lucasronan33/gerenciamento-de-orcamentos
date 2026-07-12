@@ -27,37 +27,37 @@ export default createGlobalStyle`
     --finishedDarkColor:${color.finishedDarkColor};
 
 
-  --radius: 0.75rem;
+    --radius: 0.75rem;
 
-  --background: oklch(0.16 0.02 250);
-  --foreground: oklch(0.98 0.005 250);
+    --background: rgb(7, 14, 22);
+    --foreground: rgb(246, 249, 252);
 
-  --surface: oklch(0.20 0.022 250);
-  --surface-2: oklch(0.24 0.025 250);
+    --surface: rgb(14, 23, 32);
+    --surface-2: rgb(22, 32, 43);
 
-  --card: oklch(0.20 0.022 250);
-  --card-foreground: oklch(0.98 0.005 250);
-  --popover: oklch(0.20 0.022 250);
-  --popover-foreground: oklch(0.98 0.005 250);
+    --card: rgb(14, 23, 32);
+    --card-foreground: rgb(246, 249, 252);
+    --popover: rgb(14, 23, 32);
+    --popover-foreground: rgb(246, 249, 252);
 
-  --primary: oklch(0.78 0.16 220);
-  --primary-foreground: oklch(0.16 0.02 250);
+    --primary: rgb(0, 205, 253);
+    --primary-foreground: rgb(7, 14, 22);
 
-  --brand: oklch(0.78 0.16 220);
-  --brand-foreground: oklch(0.16 0.02 250);
-  --brand-soft: oklch(0.30 0.08 220);
+    --brand: rgb(0, 205, 253);
+    --brand-foreground: rgb(7, 14, 22);
+    --brand-soft: rgb(0, 54, 73);
 
-  --secondary: oklch(0.26 0.025 250);
-  --secondary-foreground: oklch(0.98 0.005 250);
-  --muted: oklch(0.26 0.025 250);
-  --muted-foreground: oklch(0.72 0.02 250);
-  --accent: oklch(0.30 0.05 220);
-  --accent-foreground: oklch(0.98 0.005 250);
-  --destructive: oklch(0.65 0.22 25);
-  --destructive-foreground: oklch(0.98 0.005 250);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 12%);
-  --ring: oklch(0.78 0.16 220);
+    --secondary: rgb(27, 37, 48);
+    --secondary-foreground: rgb(246, 249, 252);
+    --muted: rgb(27, 37, 48);
+    --muted-foreground: rgb(156, 166, 177);
+    --accent: rgb(7, 51, 63);
+    --accent-foreground: rgb(246, 249, 252);
+    --destructive: rgb(249, 65, 68);
+    --destructive-foreground: rgb(246, 249, 252);
+    --border: rgba(255, 255, 255, 0.1);
+    --input: rgba(255, 255, 255, 0.12);
+    --ring: rgb(0, 205, 253);
 }
 body{
         min-height: 100dvh;

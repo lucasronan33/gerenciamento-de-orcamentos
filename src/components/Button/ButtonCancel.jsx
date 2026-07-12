@@ -1,15 +1,20 @@
-import { motion } from 'framer-motion'
+import { motion } from "framer-motion";
 
 export const ButtonCancel = ({ children, ...rest }) => {
     return (
         <motion.button
             {...rest}
             initial={{ scale: 0.96 }}
-            transition={{ duration: 0.15, ease: 'easeIn' }}
+            transition={{ duration: 0.15, ease: "easeIn" }}
             whileHover={{ y: -2, scale: 1 }}
             whileTap={{ scale: 1 }}
-            className='
-                        flex-1
+            className="
+                        inline-flex 
+                        w-full
+                        flex-1 
+                        items-center 
+                        justify-center 
+                        gap-2 
                         border-2
                         border-destructive/60
                         rounded-full
@@ -21,9 +26,9 @@ export const ButtonCancel = ({ children, ...rest }) => {
                         hover:text-white
                         hover:inset-shadow-[-0.2vh_0.2vh_1vh_black]
                         transition-all
-                        '
+                        "
         >
             {children}
         </motion.button>
-    )
-}
+    );
+};
