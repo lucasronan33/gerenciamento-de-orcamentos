@@ -89,6 +89,49 @@
 }
 
 @layer utilities {
+    .container {
+        max-width: 90%;
+        margin: auto;
+        padding-block: 30px;
+        justify-content: center;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 2vh;
+        border-radius: 4px;
+    }
+
+    .card {
+        background: var(--color-secondary-dark);
+        min-width: 200px;
+        flex-grow: 1;
+        padding: 3vh;
+        display: flex;
+        gap: 3vh;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        border-radius: 1.5vh;
+        border: 1px solid var(--border);
+    }
+
+    .dashboard-background-icon {
+        position: relative;
+        padding-block: 1vh;
+    }
+
+    .dashboard-background-icon svg+div {
+        width: 100%;
+        height: 100%;
+        padding-inline: 2vh;
+        top: 50%;
+        left: 50%;
+        translate: -50% -50%;
+        offset-anchor: auto;
+        position: absolute;
+        border-radius: 1vh;
+        opacity: 0.15;
+    }
+
     .tab-budget-content {
         width: 100%;
         display: none !important;

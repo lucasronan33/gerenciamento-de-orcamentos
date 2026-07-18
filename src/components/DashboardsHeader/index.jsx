@@ -1,98 +1,100 @@
-import React, { useEffect, useMemo } from 'react';
-import { CircleCheckBig, Clock, DollarSign, FileText, TrendingUp } from 'lucide-react';
+import {
+    CircleCheckBig,
+    Clock,
+    DollarSign,
+    FileText,
+    TrendingUp,
+} from "lucide-react";
+import { useEffect, useMemo } from "react";
 
-import * as colors from '../../config/colors';
-import { Card } from './styles';
-import { Container } from '../../styles/GlobalStyles';
-import { useBudget } from '../../context/Budget'
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchClientsRequest } from '../../store/modules/client/actions';
-import { CardDashboard } from '../Cards/CardDashboard';
-import { formatCurrency } from '../../utils/masks';
-
+import { useDispatch, useSelector } from "react-redux";
+import { useBudget } from "../../context/Budget";
+import { fetchClientsRequest } from "../../store/modules/client/actions";
+import { formatCurrency } from "../../utils/masks";
+import { CardDashboard } from "../Cards/CardDashboard";
 
 export default function DashboardsHeader() {
-    const { isLoggedIn } = useSelector(state => state.auth)
-    const { budgets, getBudgetsByStatus } = useBudget()
-    const dispatch = useDispatch()
+    const { isLoggedIn } = useSelector((state) => state.auth);
+    const { budgets, getBudgetsByStatus } = useBudget();
+    const dispatch = useDispatch();
 
     const sumValueByStatus = (status = []) => {
-        const total = getBudgetsByStatus(status)
-        return total.reduce((prevValue, currentValue) => {
-            const value = Number(currentValue.totals.total)
+        const total = getBudgetsByStatus(status);
+        return total
+            .reduce((prevValue, currentValue) => {
+                const value = Number(currentValue.totals.total);
 
-            return prevValue + value
-        }, 0).toFixed(2)
-    }
+                return prevValue + value;
+            }, 0)
+            .toFixed(2);
+    };
 
     const approvedPercent = useMemo(() => {
-        const totalBudgets = budgets.length
-        const totalApprovedBudgets = getBudgetsByStatus(['approved', 'producing', 'finished']).length
+        const totalBudgets = budgets.length;
+        const totalApprovedBudgets = getBudgetsByStatus([
+            "approved",
+            "producing",
+            "finished",
+        ]).length;
 
         function calcTotal() {
-            let total = totalApprovedBudgets / totalBudgets * 100
-            return total.toFixed(1)
+            let total = (totalApprovedBudgets / totalBudgets) * 100;
+            return total.toFixed(1);
         }
-        return calcTotal()
-    }, [
-        budgets,
-        getBudgetsByStatus
-    ])
+        return calcTotal();
+    }, [budgets, getBudgetsByStatus]);
 
     const cards = [
         {
-            title: 'Receita',
-            content: formatCurrency(sumValueByStatus(['finished'])),
+            title: "Receita",
+            content: formatCurrency(sumValueByStatus(["finished"])),
             icon: DollarSign,
-            colorIcon: colors.successColor,
-            colorText: colors.successColor,
+            colorIcon: "bg-success",
+            colorText: "text-success",
         },
         {
-            title: 'A receber',
-            content: formatCurrency(sumValueByStatus(['approved', 'producing'])),
+            title: "A receber",
+            content: formatCurrency(
+                sumValueByStatus(["approved", "producing"]),
+            ),
             icon: Clock,
-            colorIcon: colors.warningColor,
-            colorText: colors.warningColor,
+            colorIcon: "bg-warning",
+            colorText: "text-warning",
         },
         {
-            title: 'Orçamentos',
+            title: "Orçamentos",
             content: `${budgets.length} emitidos`,
             icon: FileText,
-            colorIcon: colors.blueDocument,
-            colorText: colors.blueDocument,
+            colorIcon: "bg-blueDocument",
+            colorText: "text-blueDocument",
         },
         {
-            title: 'Orçamentos',
-            content: `${getBudgetsByStatus(['approved', 'producing']).length} aprovados`,
+            title: "Orçamentos",
+            content: `${getBudgetsByStatus(["approved", "producing"]).length} aprovados`,
             icon: CircleCheckBig,
-            colorIcon: colors.successColor,
-            colorText: colors.successColor,
+            colorIcon: "bg-success",
+            colorText: "text-success",
         },
         {
-            title: 'Taxa de aprovação',
+            title: "Taxa de aprovação",
             content: `${approvedPercent}%`,
             icon: TrendingUp,
-            colorIcon: colors.blueDocument,
-            colorText: colors.blueDocument,
+            colorIcon: "bg-blueDocument",
+            colorText: "text-blueDocument",
         },
-    ]
+    ];
     useEffect(() => {
-        if (!isLoggedIn) return
-        dispatch(fetchClientsRequest())
-    }, [isLoggedIn, dispatch])
+        if (!isLoggedIn) return;
+        dispatch(fetchClientsRequest());
+    }, [isLoggedIn, dispatch]);
 
     return (
-        <>
-            <Container>
-                {cards.map((item, index) =>
-                    <Card key={index}>
-                        <CardDashboard
-                            data={item}
-                        />
-                    </Card>
-                )}
-
-            </Container>
-        </>
-    )
+        <div className="container">
+            {cards.map((item, index) => (
+                <div className="card" key={index}>
+                    <CardDashboard data={item} />
+                </div>
+            ))}
+        </div>
+    );
 }
