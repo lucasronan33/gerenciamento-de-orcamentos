@@ -44,6 +44,7 @@
     --color-primary: #000;
     --color-primary-dark: rgba(16, 26, 34, 1);
     --color-secondary-dark: rgba(21, 31, 40, 1);
+    --color-secondary-text-dark: rgba(150, 150, 160);
     --color-button-dark: rgba(16, 26, 34, 1);
     --color-border-dark: rgba(35, 47, 53, 1);
     --color-secondaryText-dark: rgba(150, 150, 160);
@@ -89,6 +90,25 @@
 }
 
 @layer utilities {
+    .title {
+        font-size: clamp(2vh, 3vh, 5vh);
+        font-weight: bolder;
+    }
+
+    .subtitle {
+        font-size: large;
+        color: var(--color-secondary-text-dark);
+    }
+
+    .logo {
+        width: 10vh !important;
+        height: 10vh;
+        background-image: url(../../assets/images/logo.svg);
+        background-repeat: no-repeat;
+        background-size: contain;
+        cursor: pointer;
+    }
+
     .container {
         max-width: 90%;
         margin: auto;
