@@ -11,7 +11,6 @@ import {
 import { Button } from "../Button";
 import { Form } from "../Form";
 import { Subtitle, Title } from "../Header/styles";
-import "./style.css";
 
 export default function NewBudget() {
     const dispatch = useDispatch();
