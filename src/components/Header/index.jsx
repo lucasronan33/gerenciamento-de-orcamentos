@@ -7,7 +7,6 @@ import { budgetReset } from "../../store/modules/budget/actions";
 import { Button } from "../Button";
 import NewBudget from "../NewBudget";
 import Sidebar from "../Sidebar";
-import "./style.css";
 
 export default function Header() {
     const { budgetOpen, setBudgetOpen, setBudget, initialState } = useBudget();

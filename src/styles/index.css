@@ -242,6 +242,14 @@
         border-color: var(--blueHover);
     }
 
+    .card-icon-hover {
+        &:hover {
+            background: var(--blueHover);
+            box-shadow: inset 0.1vh 0.3vh 0.5vh var(--primaryDarkColor);
+            border-color: var(--blueHover);
+        }
+    }
+
     .trash-icon {
         background: rgba(70, 20, 20, 0.3) !important;
         border-color: rgba(255, 0, 0, 0.2) !important;
