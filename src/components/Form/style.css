@@ -87,7 +87,7 @@ select:focus,
 }
 
 .datePicker svg {
-    fill: var(--blueDocument);
+    color: var(--blueDocument);
 }
 
 select {

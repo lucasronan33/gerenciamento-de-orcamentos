@@ -1,5 +1,4 @@
 import { useEffect } from "react";
-import "../style.css";
 
 import { DatePicker, TimePicker } from "@mui/x-date-pickers";
 import dayjs from "dayjs";
@@ -70,7 +69,15 @@ export function BudgetContentBasic() {
                 </select>
             </Form.ContainerInput>
 
-            <div className="budget-container-items">
+            <div
+                className="
+            w-full
+            gap-[3vh]
+            flex
+            flex-wrap
+            items-end
+            "
+            >
                 <Form.ContainerInput>
                     <Form.Label text="Data *" htmlFor="date" />
                     <DatePicker
