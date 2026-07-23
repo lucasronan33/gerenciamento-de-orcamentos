@@ -90,6 +90,91 @@
 }
 
 @layer utilities {
+    .box-client:last-child {
+        border: none;
+    }
+
+    .box-client>span {
+        margin: auto;
+        display: flex;
+        gap: 2vh;
+        color: slategray;
+        font-size: x-large;
+    }
+
+
+    .box-client {
+        width: 100%;
+        padding-block: 2vh;
+        place-items: center;
+        gap: 2vh 3vh;
+        border-bottom: 1px solid var(--borderDarkColor);
+    }
+
+    .box-client:hover .icons-clients-list {
+        height: fit-content;
+        scale: 1;
+        justify-self: flex-end;
+    }
+
+    .initials-client-name {
+        width: 6vh;
+        aspect-ratio: 1 / 1;
+        justify-content: center;
+        align-items: center;
+        padding: 1.5vh;
+        color: var(--blueDocument);
+        background: var(--blueHover);
+        border-radius: 50%;
+    }
+
+    .form-container-input {
+        display: flex;
+        height: fit-content;
+        flex-direction: column;
+        gap: 0.5vh;
+
+        & .input-small {
+            width: 20%;
+            align-self: flex-end;
+        }
+
+        & .input-medium {
+            width: 30%;
+            align-self: flex-end;
+            justify-content: flex-end;
+        }
+
+        & .input-large {
+            width: 60%;
+            align-self: flex-end;
+        }
+
+        & .input-xx-large {
+            width: 100%;
+            align-self: flex-end;
+        }
+
+        & .input-fill {
+            flex-grow: 1;
+            align-self: flex-end;
+        }
+    }
+
+    .datePicker {
+        & fieldset {
+            border: none;
+        }
+
+        div>div {
+            padding: 0;
+        }
+
+        svg {
+            color: var(--blueDocument);
+        }
+    }
+
     .title {
         font-size: clamp(2vh, 3vh, 5vh);
         font-weight: bolder;
