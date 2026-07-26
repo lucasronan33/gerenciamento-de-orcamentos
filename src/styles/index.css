@@ -90,6 +90,21 @@
 }
 
 @layer utilities {
+    .container-client-infos {
+        flex-grow: 1;
+        flex-direction: column;
+        gap: 0.5vh;
+        align-items: start !important;
+    }
+
+
+    .container-contact-client {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1.5vh 5vh;
+    }
+
     .box-client:last-child {
         border: none;
     }
@@ -128,37 +143,30 @@
         border-radius: 50%;
     }
 
-    .form-container-input {
-        display: flex;
-        height: fit-content;
-        flex-direction: column;
-        gap: 0.5vh;
+    .input-small {
+        width: 20%;
+        align-self: flex-end;
+    }
 
-        & .input-small {
-            width: 20%;
-            align-self: flex-end;
-        }
+    .input-medium {
+        width: 30%;
+        align-self: flex-end;
+        justify-content: flex-end;
+    }
 
-        & .input-medium {
-            width: 30%;
-            align-self: flex-end;
-            justify-content: flex-end;
-        }
+    .input-large {
+        width: 60%;
+        align-self: flex-end;
+    }
 
-        & .input-large {
-            width: 60%;
-            align-self: flex-end;
-        }
+    .input-xx-large {
+        width: 100%;
+        align-self: flex-end;
+    }
 
-        & .input-xx-large {
-            width: 100%;
-            align-self: flex-end;
-        }
-
-        & .input-fill {
-            flex-grow: 1;
-            align-self: flex-end;
-        }
+    .input-fill {
+        flex-grow: 1;
+        align-self: flex-end;
     }
 
     .datePicker {
