@@ -136,7 +136,7 @@ export function BudgetContentItems() {
                   <Form.LockedLabel
                     typeInput="number"
                     name="total"
-                    text={`R$ ${(item.quantity * item.unityPrice).toFixed(2)}`}
+                    text={`R$ ${(item.quantity * item.total).toFixed(2)}`}
                   />
                 </Form.ContainerInput>
               </Form.Root>
