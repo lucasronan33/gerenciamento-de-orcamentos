@@ -1,35 +1,21 @@
 import propTypes from "prop-types";
 
-export function FormLabel({ htmlFor, text }) {
-    if (!htmlFor) {
-        return (
-            <span
-                className="
+export function FormLabel({ text, ...rest }) {
+  return (
+    <label
+      {...rest}
+      className="
             w-full
             text-2xl
             font-bold
             "
-            >
-                {text}
-            </span>
-        );
-    }
-
-    return (
-        <label
-            htmlFor={htmlFor}
-            className="
-            w-full
-            text-2xl
-            font-bold
-            "
-        >
-            {text}
-        </label>
-    );
+    >
+      {text}
+    </label>
+  );
 }
 
 FormLabel.propTypes = {
-    htmlFor: propTypes.string,
-    text: propTypes.string,
+  htmlFor: propTypes.string,
+  text: propTypes.string,
 };

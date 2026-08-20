@@ -53,7 +53,7 @@ export function ItemsRegister() {
   return (
     <form className="container-settings" onSubmit={handleSubmit}>
       <Form.ContainerInput>
-        <Form.Label text="Código/ID" />
+        <Form.Label htmlFor="code" text="Código/ID" />
         <Form.Input
           typeInput="text"
           placeholder="Código do produto"
@@ -64,7 +64,7 @@ export function ItemsRegister() {
       </Form.ContainerInput>
 
       <Form.ContainerInput>
-        <Form.Label text="Nome do Item/Produto" />
+        <Form.Label htmlFor="name" text="Nome do Item/Produto" />
         <Form.Input
           typeInput="text"
           placeholder="Ex.: Caneta"
@@ -75,7 +75,7 @@ export function ItemsRegister() {
       </Form.ContainerInput>
 
       <Form.ContainerInput>
-        <Form.Label text="Categoria" />
+        <Form.Label htmlFor="category" text="Categoria" />
         <Form.Input
           typeInput="text"
           placeholder="Ex.: Escritório"
@@ -86,8 +86,9 @@ export function ItemsRegister() {
       </Form.ContainerInput>
 
       <Form.ContainerInput size="xx-large">
-        <Form.Label text="Unidade" />
+        <Form.Label htmlFor="unity" text="Unidade" />
         <select
+          name="unity"
           value={item.unity}
           onChange={(e) => updateItem("unity", e.target.value)}
         >
@@ -97,7 +98,7 @@ export function ItemsRegister() {
         </select>
       </Form.ContainerInput>
       <Form.ContainerInput size="small">
-        <Form.Label text="Preço Unit. *" />
+        <Form.Label htmlFor="unityPrice" text="Preço Unit. *" />
         <Form.Input
           typeInput="text"
           name="unityPrice"
@@ -108,7 +109,7 @@ export function ItemsRegister() {
       </Form.ContainerInput>
 
       <Form.ContainerInput size="medium">
-        <Form.Label text="Impostos sob produto (%)" />
+        <Form.Label htmlFor="itemTaxes" text="Impostos sob produto (%)" />
         <Form.Input
           typeInput="number"
           name="itemTaxes"
@@ -119,7 +120,7 @@ export function ItemsRegister() {
       </Form.ContainerInput>
 
       <Form.ContainerInput size="xx-large">
-        <Form.Label text="Obs. do item" />
+        <Form.Label htmlFor="obsItem" text="Obs. do item" />
         <Form.Input
           typeInput="text"
           placeholder="Ex.: Usado somente para limpeza"
@@ -134,33 +135,45 @@ export function ItemsRegister() {
         <Form.LockedLabel text={`R$ ${total}`} />
       </Form.ContainerInput>
 
-      <Form.ContainerInput size="medium">
-        {item.taxes > 0 && (
+      {item.taxes > 0 && (
+        <Form.ContainerInput size="medium">
           <div className="taxes-card-item">{`Impostos (${item.taxes}%)`}</div>
-        )}
-      </Form.ContainerInput>
+        </Form.ContainerInput>
+      )}
 
-      <Button.Container className="buttons-register">
-        <Button.Root
-          className="btn-cancel btn-save"
-          type="reset"
-          onClick={handleReset}
+      <div
+        className="
+        flex
+        justify-end
+        w-full
+      "
+      >
+        <div
+          className="
+          w-[50%]
+          max-sm:w-full
+          flex
+          flex-wrap
+          gap-5
+      "
         >
-          <Button.Icon icon={X} />
-          Limpar
-        </Button.Root>
+          <Button.Cancel onClick={resetItemState}>
+            <X />
+            Limpar
+          </Button.Cancel>
 
-        <Button.Root className="btn-save" type="submit">
-          <Button.Icon icon={SaveIcon} />
-          {item._id
-            ? !isLoading
-              ? "Atualizar"
-              : "Atualizando..."
-            : !isLoading
-              ? "Cadastrar"
-              : "Cadastrando..."}
-        </Button.Root>
-      </Button.Container>
+          <Button.Primary>
+            <SaveIcon />
+            {item?._id
+              ? !isLoading
+                ? "Atualizar"
+                : "Atualizando..."
+              : !isLoading
+                ? "Cadastrar"
+                : "Cadastrando..."}
+          </Button.Primary>
+        </div>
+      </div>
     </form>
   );
 }

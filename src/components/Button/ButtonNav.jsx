@@ -9,7 +9,7 @@ export const ButtonNav = ({ item, active, children, ...rest }) => {
         flex-1
         items-center
         justify-center
-        py-3
+        py-1
         rounded-2xl
         text-blueHover
         font-bold
@@ -31,7 +31,7 @@ export const ButtonNav = ({ item, active, children, ...rest }) => {
         flex-1
         items-center
         justify-center
-        py-3
+        py-1
         rounded-2xl
         text-blueHover
         font-bold

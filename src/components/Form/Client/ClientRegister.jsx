@@ -115,7 +115,17 @@ export function ClientRegister() {
   }, [isLoggedIn, dispatch]);
   return (
     <form onSubmit={handleSubmit} className="container-settings">
-      <div className="nav-budget">
+      <div
+        className="
+          w-full
+          p-5
+          gap-5
+          flex
+          max-sm:flex-col
+          rounded-4xl
+          bg-button-dark
+          "
+      >
         {options.map((item) => (
           <Button.Nav
             key={item}
