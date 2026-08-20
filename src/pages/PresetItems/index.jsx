@@ -13,8 +13,8 @@ export default function PresetItems() {
     >
       <Header />
       <Container>
-        <main className="settings-page">
-          <section className="settings-heading">
+        <main>
+          <section>
             <span
               className="
             font-black

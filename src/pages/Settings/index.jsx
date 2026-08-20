@@ -36,7 +36,7 @@ export default function Settings() {
         w-[90%]
         m-auto"
       >
-        <section className="settings-heading">
+        <section>
           <span
             className="
             font-black
