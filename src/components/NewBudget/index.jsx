@@ -168,13 +168,15 @@ export default function NewBudget() {
 
           <div className="nav-budget">
             {options.map((item) => (
-              <Button.Root
+              <Button.Nav
                 key={item}
                 onClick={() => handleButtonActive(item)}
-                className={`button-nav-budget ${active === item ? "active" : ""}`}
+                active={active}
+                item={item}
+                type="button"
               >
                 {item}
-              </Button.Root>
+              </Button.Nav>
             ))}
           </div>
         </div>

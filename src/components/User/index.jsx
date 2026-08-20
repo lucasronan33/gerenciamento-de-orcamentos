@@ -13,172 +13,198 @@ import { UserBasic } from "./UserBasic";
 import { UserPrivacy } from "./UserPrivacy";
 
 export const UserSettings = () => {
-    const {
-        isLoading,
-        isLoggedIn,
-        user: dataUser,
-    } = useSelector((state) => state.auth || {});
-    const { user, setUser } = useUser();
-    const dispatch = useDispatch();
+  const {
+    isLoading,
+    isLoggedIn,
+    user: dataUser,
+  } = useSelector((state) => state.auth || {});
+  const { user, setUser } = useUser();
+  const dispatch = useDispatch();
 
-    const [active, setActive] = useState("Básico");
-    const options = ["Básico", "Endereço", "Privacidade"];
-    const tabs = [
-        { key: "Básico", component: <UserBasic user={user} /> },
-        { key: "Endereço", component: <UserAddress user={user} /> },
-        { key: "Privacidade", component: <UserPrivacy user={user} /> },
-    ];
+  const [active, setActive] = useState("Básico");
+  const options = ["Básico", "Endereço", "Privacidade"];
+  const tabs = [
+    { key: "Básico", component: <UserBasic user={user} /> },
+    { key: "Endereço", component: <UserAddress user={user} /> },
+    { key: "Privacidade", component: <UserPrivacy user={user} /> },
+  ];
 
-    const handleButtonActive = (option) => {
-        setActive(option);
-    };
+  const handleButtonActive = (option) => {
+    setActive(option);
+  };
 
-    const validateUserData = (data) => {
-        const errors = [];
+  const validateUserData = (data) => {
+    const errors = [];
 
-        if (!validator.isLength(data.name, { min: 2, max: 80 })) {
-            errors.push({
-                field: "Nome",
-                message: "deve ter entre 2 e 80 caracteres.",
-            });
-        }
+    if (!validator.isLength(data.name, { min: 2, max: 80 })) {
+      errors.push({
+        field: "Nome",
+        message: "deve ter entre 2 e 80 caracteres.",
+      });
+    }
 
-        if (!validator.isEmail(data.email)) {
-            errors.push({
-                field: "Email",
-                message: "deve ser um e-mail valido.",
-            });
-        }
+    if (!validator.isEmail(data.email)) {
+      errors.push({
+        field: "Email",
+        message: "deve ser um e-mail valido.",
+      });
+    }
 
-        if (
-            data.password &&
-            !validator.isLength(data.password, { min: 8, max: 50 })
-        ) {
-            errors.push({
-                field: "Senha",
-                message: "deve ter entre 8 e 50 caracteres.",
-            });
-        }
+    if (
+      data.password &&
+      !validator.isLength(data.password, { min: 8, max: 50 })
+    ) {
+      errors.push({
+        field: "Senha",
+        message: "deve ter entre 8 e 50 caracteres.",
+      });
+    }
 
-        if (data.password && !data.currentPassword) {
-            errors.push({
-                field: "Senha atual",
-                message: "obrigatória para alterar senha.",
-            });
-        }
+    if (data.password && !data.currentPassword) {
+      errors.push({
+        field: "Senha atual",
+        message: "obrigatória para alterar senha.",
+      });
+    }
 
-        if (data.currentPassword && !data.password) {
-            errors.push({
-                field: "Nova senha",
-                message: "obrigatória para alterar senha.",
-            });
-        }
+    if (data.currentPassword && !data.password) {
+      errors.push({
+        field: "Nova senha",
+        message: "obrigatória para alterar senha.",
+      });
+    }
 
-        if (data.phone && !validator.matches(data.phone, /^\d{11}$/)) {
-            errors.push({
-                field: "Telefone",
-                message: "deve estar no formato (DD) 9 XXXX-XXXX.",
-            });
-        }
+    if (data.phone && !validator.matches(data.phone, /^\d{11}$/)) {
+      errors.push({
+        field: "Telefone",
+        message: "deve estar no formato (DD) 9 XXXX-XXXX.",
+      });
+    }
 
-        if (data.cpf_cnpj && !/^\d+$/.test(data.cpf_cnpj)) {
-            errors.push({
-                field: "CPF/CNPJ",
-                message: "deve conter apenas numeros.",
-            });
-        }
+    if (data.cpf_cnpj && !/^\d+$/.test(data.cpf_cnpj)) {
+      errors.push({
+        field: "CPF/CNPJ",
+        message: "deve conter apenas numeros.",
+      });
+    }
 
-        if (data.cpf_cnpj && !isValidCpfCnpj(data.cpf_cnpj)) {
-            errors.push({
-                field: "CPF/CNPJ",
-                message: "o cpf ou cnpj inserido nao e valido.",
-            });
-        }
+    if (data.cpf_cnpj && !isValidCpfCnpj(data.cpf_cnpj)) {
+      errors.push({
+        field: "CPF/CNPJ",
+        message: "o cpf ou cnpj inserido nao e valido.",
+      });
+    }
 
-        return errors;
-    };
+    return errors;
+  };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
+  const handleSubmit = (e) => {
+    e.preventDefault();
 
-        if (!isLoggedIn) return;
-        const errors = validateUserData(user);
+    if (!isLoggedIn) return;
+    const errors = validateUserData(user);
 
-        if (errors.length > 0) {
-            errors.forEach((value) =>
-                toast.error(
-                    <div>
-                        <strong>{value.field}: </strong>
-                        {value.message}{" "}
-                    </div>,
-                    { autoClose: 5000, hideProgressBar: true },
-                ),
+    if (errors.length > 0) {
+      errors.forEach((value) =>
+        toast.error(
+          <div>
+            <strong>{value.field}: </strong>
+            {value.message}{" "}
+          </div>,
+          { autoClose: 5000, hideProgressBar: true },
+        ),
+      );
+      return;
+    }
+
+    dispatch(updateUserRequest(user));
+    setUser((prev) => ({
+      ...prev,
+      password: "",
+      currentPassword: "",
+    }));
+  };
+
+  useEffect(() => {
+    if (!isLoggedIn) return;
+    setUser(dataUser);
+  }, [isLoggedIn, dataUser, setUser]);
+
+  return (
+    <section>
+      <form className="container-settings" onSubmit={handleSubmit}>
+        <div
+          className="
+          w-full
+          p-5
+          gap-5
+          flex
+          max-sm:flex-col
+          rounded-4xl
+          bg-button-dark
+          "
+        >
+          {options.map((item) => {
+            if (dataUser.provider === "google") {
+              return (
+                item !== "Privacidade" && (
+                  <Button.Nav
+                    key={item}
+                    onClick={() => handleButtonActive(item)}
+                    active={active}
+                    item={item}
+                    type="button"
+                  >
+                    {item}
+                  </Button.Nav>
+                )
+              );
+            }
+            return (
+              <Button.Nav
+                key={item}
+                onClick={() => handleButtonActive(item)}
+                active={active}
+                item={item}
+                type="button"
+              >
+                {item}
+              </Button.Nav>
             );
-            return;
-        }
+          })}
+        </div>
 
-        dispatch(updateUserRequest(user));
-        setUser((prev) => ({
-            ...prev,
-            password: "",
-            currentPassword: "",
-        }));
-    };
+        <Form.Root>
+          {tabs.map((tab) => (
+            <div
+              key={tab.key}
+              className={`tab-budget-content ${active === tab.key ? "content-budget-active" : ""}`}
+            >
+              {tab.component}
+            </div>
+          ))}
+        </Form.Root>
 
-    useEffect(() => {
-        if (!isLoggedIn) return;
-        setUser(dataUser);
-    }, [isLoggedIn, dataUser, setUser]);
-
-    return (
-        <section>
-            <form className="container-settings" onSubmit={handleSubmit}>
-                <div
-                    className="
-                sm:w-[80%]
-                sm:p-15
-                m-auto
-                p-10
-                gap-5
-                flex
-                flex-col
-                rounded-4xl
-                bg-button-dark
-                "
-                >
-                    {options.map((item) => (
-                        <Button.Root
-                            key={item}
-                            onClick={() => handleButtonActive(item)}
-                            className={`button-nav-budget ${active === item ? "active" : ""}`}
-                        >
-                            {item}
-                        </Button.Root>
-                    ))}
-                </div>
-
-                <Form.Root>
-                    {tabs.map((tab) => (
-                        <div
-                            key={tab.key}
-                            className={`tab-budget-content ${active === tab.key ? "content-budget-active" : ""}`}
-                        >
-                            {tab.component}
-                        </div>
-                    ))}
-                </Form.Root>
-
-                <Button.Container>
-                    <Button.Root
-                        className="btn-save"
-                        type="submit"
-                        disabled={isLoading}
-                    >
-                        <Button.Icon icon={SaveIcon} />
-                        {isLoading ? "Salvando..." : "Salvar"}
-                    </Button.Root>
-                </Button.Container>
-            </form>
-        </section>
-    );
+        <div
+          className="
+          w-full
+          flex
+          justify-end
+        "
+        >
+          <div
+            className="
+            flex
+            sm:min-w-80
+          "
+          >
+            <Button.Primary>
+              <SaveIcon />
+              {isLoading ? "Salvando..." : "Salvar"}
+            </Button.Primary>
+          </div>
+        </div>
+      </form>
+    </section>
+  );
 };
