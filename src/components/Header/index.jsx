@@ -9,82 +9,96 @@ import NewBudget from "../NewBudget";
 import Sidebar from "../Sidebar";
 
 export default function Header() {
-    const { budgetOpen, setBudgetOpen, setBudget, initialState } = useBudget();
-    const { user } = useSelector((state) => state.auth);
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
+  const { budgetOpen, setBudgetOpen, setBudget, initialState } = useBudget();
+  const { user } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-    useEffect(() => {
-        if (!budgetOpen) {
-            document.body.removeAttribute("style");
-            dispatch(budgetReset());
-            setBudget(initialState);
-            return;
-        }
-        if (budgetOpen) {
-            document.body.style.overflow = "hidden";
-            return;
-        }
-    }, [budgetOpen, initialState, dispatch, setBudget]);
+  useEffect(() => {
+    if (!budgetOpen) {
+      document.body.removeAttribute("style");
+      dispatch(budgetReset());
+      setBudget(initialState);
+      return;
+    }
+    if (budgetOpen) {
+      document.body.style.overflow = "hidden";
+      return;
+    }
+  }, [budgetOpen, initialState, dispatch, setBudget]);
 
-    return (
+  return (
+    <div
+      className="
+      max-w-[90%]
+      min-h-[10vh]
+      m-auto
+      py-[2.5vh]
+      flex
+      justify-between
+      items-center
+      flex-auto
+      flex-wrap
+      gap-[3vh]
+      "
+    >
+      {budgetOpen && <NewBudget />}
+      <>
         <div
-            className="
-        w-full
-        min-h-[10vh]
-        flex
-        items-center
-        justify-around
-        py-[2.5vh]
-        "
+          className="
+          flex
+          max-md:flex-col
+          items-center
+          justify-between
+          gap-[3vh]
+          "
         >
-            {budgetOpen && <NewBudget />}
-            <div
-                className="
-            w-[90%]
+          <Sidebar />
+          <div
+            className="
+            max-md:w-full
             flex
-            justify-around
-            items-center
-            flex-auto
-            flex-wrap
+            max-[375px]:flex-col
+            max-[375px]:items-center
             gap-[3vh]
+          "
+          >
+            <div className="logo" onClick={() => navigate("/")} />
+            <div
+              className="
+            h-full
+            flex
+            flex-1
+            flex-col
+            justify-around
+            gap-y-[0.7vh]
             "
             >
-                <div
-                    className="
-                flex
-                items-center
-                justify-between
-                gap-[3vh]
-                "
-                >
-                    <Sidebar />
-                    <div className="logo" onClick={() => navigate("/")} />
-                    <div
-                        className="
-                    h-full
-                    flex
-                    flex-1
-                    flex-col
-                    justify-around
-                    gap-y-[0.7vh]
-                    "
-                    >
-                        <div className="subtitle">Bem-vindo ao ORCA</div>
-                        <div className="title">{user.name}</div>
-                    </div>
-                </div>
-                <div>
-                    <Button.Primary
-                        onClick={() => {
-                            setBudgetOpen(true);
-                        }}
-                    >
-                        <Plus />
-                        Novo Orçamento
-                    </Button.Primary>
-                </div>
+              <div className="subtitle">Bem-vindo ao ORCA</div>
+              <div className="title">{user.name}</div>
             </div>
+          </div>
         </div>
-    );
+        <div
+          className="
+          flex
+          flex-1
+          items-center
+          justify-end
+        "
+        >
+          <div>
+            <Button.Primary
+              onClick={() => {
+                setBudgetOpen(true);
+              }}
+            >
+              <Plus />
+              Novo Orçamento
+            </Button.Primary>
+          </div>
+        </div>
+      </>
+    </div>
+  );
 }

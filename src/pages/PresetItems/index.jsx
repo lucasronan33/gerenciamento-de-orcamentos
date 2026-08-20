@@ -5,7 +5,12 @@ import "./style.css";
 
 export default function PresetItems() {
   return (
-    <>
+    <div
+      className="
+      w-[95%]
+      m-auto
+    "
+    >
       <Header />
       <Container>
         <main className="settings-page">
@@ -37,6 +42,6 @@ export default function PresetItems() {
         </main>
         <Items.List />
       </Container>
-    </>
+    </div>
   );
 }
