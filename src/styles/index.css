@@ -90,6 +90,21 @@
 }
 
 @layer utilities {
+  .container-settings {
+    background: var(--secondaryDarkColor);
+    display: flex;
+    margin-block: 3vh;
+    padding: 2vh;
+    gap: 3vh;
+    border: 1px solid var(--borderDarkColor);
+    border-radius: 2vh;
+    flex-wrap: wrap;
+  }
+
+  .container-settings:hover {
+    box-shadow: -0.2vh 0.2vh 2vh var(--blueHover);
+  }
+
   .container-client-infos {
     flex-grow: 1;
     flex-direction: column;
@@ -292,34 +307,6 @@
     justify-content: space-between;
     align-items: center;
     background: var(--color-secondary-dark);
-  }
-
-  .button-nav-budget {
-    min-width: 150px;
-    display: flex;
-    flex: 1;
-    align-items: center;
-    justify-content: center;
-    padding-block: 0.75vh;
-    border-radius: 1.5vh;
-    background: none;
-    color: var(--blueHover);
-    font-weight: bold;
-  }
-
-  .button-nav-budget:hover {
-    background: var(--blueHover);
-    color: var(--buttonDarkColor);
-    box-shadow: inset 0.2vh 0.2vh 0.5vh var(--primaryDarkColor);
-  }
-
-  .button-nav-budget.active {
-    background: var(--blueDocument);
-  }
-
-  .button-nav-budget.active:hover {
-    box-shadow: none;
-    color: var(--blueHover);
   }
 
   .card-icon {

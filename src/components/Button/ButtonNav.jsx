@@ -1,0 +1,50 @@
+export const ButtonNav = ({ item, active, children, ...rest }) => {
+  if (active === item) {
+    return (
+      <button
+        {...rest}
+        className="
+        min-w-37.5
+        flex
+        flex-1
+        items-center
+        justify-center
+        py-3
+        rounded-2xl
+        text-blueHover
+        font-bold
+        bg-blueDocument
+        duration-300
+        "
+      >
+        {children}
+      </button>
+    );
+  }
+  return (
+    <button
+      {...rest}
+      className="
+        min-w-37.5
+        scale-95
+        flex
+        flex-1
+        items-center
+        justify-center
+        py-3
+        rounded-2xl
+        text-blueHover
+        font-bold
+        bg-none
+        duration-300
+        hove:scale-100
+        hover:bg-blueHover
+        hover:text-button-dark
+        hover:shadow-[inset_0.2vh_0.2vh_0.5vh_var(--primaryDarkColor)]
+        "
+      {...rest}
+    >
+      {children}
+    </button>
+  );
+};
