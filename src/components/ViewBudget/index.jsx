@@ -161,6 +161,7 @@ export function ViewBudget() {
       link.remove();
       window.URL.revokeObjectURL(blobUrl);
     } catch (error) {
+      console.log(error);
       const status = error.response?.status;
 
       if (status === 404) {

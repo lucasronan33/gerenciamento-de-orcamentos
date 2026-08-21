@@ -17,15 +17,15 @@ export default function PresetItems() {
           <section>
             <span
               className="
-            font-black
-            text-4xl
-            max-sm:text-3xl
-            uppercase
-            bg-linear-to-br
-            from-white
-            to-blueDocument
-            bg-clip-text text-transparent
-          "
+              font-black
+              text-4xl
+              max-sm:text-3xl
+              uppercase
+              bg-linear-to-br
+              from-white
+              to-blueDocument
+              bg-clip-text text-transparent
+            "
             >
               cadastro de itens
             </span>

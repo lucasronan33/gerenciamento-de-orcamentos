@@ -160,13 +160,13 @@ export default function CardBudget({ budget }) {
         >
           <div className="w-full flex justify-between">
             <p>Data: </p>
-            <p>{budget.basic.date.replaceAll("-", " / ")} </p>
+            <p>{budget.basic.date} </p>
           </div>
 
           {budget.basic.validUntil ? (
             <div className="w-full flex justify-between">
               <p>Validade: </p>
-              <p>{budget.basic.validUntil.replaceAll("-", " / ")} </p>
+              <p>{budget.basic.validUntil} </p>
             </div>
           ) : (
             budget.basic.time && (
