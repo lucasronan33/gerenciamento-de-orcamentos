@@ -161,7 +161,13 @@ export function ViewBudget() {
       link.remove();
       window.URL.revokeObjectURL(blobUrl);
     } catch (error) {
-      console.log(error);
+      console.error("Erro ao gerar PDF:", {
+        message: error.message,
+        code: error.code,
+        status: error.response?.status,
+        data: error.response?.data,
+        url: `${error.config?.baseURL || ""}${error.config?.url || ""}`,
+      });
       const status = error.response?.status;
 
       if (status === 404) {
