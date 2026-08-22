@@ -1,3 +1,4 @@
+import dayjs from "dayjs";
 import { Copy, Edit, Eye, Trash2 } from "lucide-react";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
@@ -160,13 +161,13 @@ export default function CardBudget({ budget }) {
         >
           <div className="w-full flex justify-between">
             <p>Data: </p>
-            <p>{budget.basic.date} </p>
+            <p>{dayjs(budget.basic.date).format("DD/MM/YYYY")} </p>
           </div>
 
           {budget.basic.validUntil ? (
             <div className="w-full flex justify-between">
               <p>Validade: </p>
-              <p>{budget.basic.validUntil} </p>
+              <p>{dayjs(budget.basic.validUntil).format("DD/MM/YYYY")} </p>
             </div>
           ) : (
             budget.basic.time && (

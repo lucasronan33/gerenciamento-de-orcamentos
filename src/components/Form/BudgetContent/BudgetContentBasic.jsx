@@ -105,11 +105,10 @@ export function BudgetContentBasic() {
             }}
             name="date"
             defaultValue={null}
-            value={dayjs(budget.basic.date, "DD-MM-YYYY")}
+            value={dayjs(budget.basic.date)}
             onChange={(date) => {
               if (!date) return;
-              const formatedDate = date.format("DD-MM-YYYY");
-              updateBudget("basic", "date", formatedDate);
+              updateBudget("basic", "date", new Date(date));
             }}
           />
         </Form.ContainerInput>
@@ -126,11 +125,10 @@ export function BudgetContentBasic() {
             }}
             name="validUntil"
             defaultValue={null}
-            value={dayjs(budget.basic.validUntil, "DD-MM-YYYY")}
+            value={dayjs(budget.basic.validUntil)}
             onChange={(date) => {
               if (!date) return;
-              const formatedDate = date.format("DD-MM-YYYY");
-              updateBudget("basic", "validUntil", formatedDate);
+              updateBudget("basic", "validUntil", new Date(date));
             }}
           />
         </Form.ContainerInput>

@@ -51,25 +51,13 @@ export default function NewBudget() {
         message: "Nenhum item selecionado!",
       });
 
-    if (
-      !budget.basic.date ||
-      !validator.isDate(budget.basic.date, {
-        format: "DD-MM-YYYY",
-        strictMode: true,
-      })
-    )
+    if (!budget.basic.date || !Date(budget.basic.date))
       formErrors.push({
         field: "DATA",
         message: "Data ou formato da data invalido",
       });
 
-    if (
-      budget.basic.validUntil &&
-      !validator.isDate(budget.basic.validUntil, {
-        format: "DD-MM-YYYY",
-        strictMode: true,
-      })
-    )
+    if (budget.basic.validUntil && !Date(budget.basic.validUntil))
       formErrors.push({
         field: "VALIDO ATÉ",
         message: "Data ou formato da data invalido",

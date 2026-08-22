@@ -1,4 +1,3 @@
-import dayjs from 'dayjs';
 import * as types from '../types';
 
 
@@ -25,14 +24,7 @@ export default function reducer(state = initialState, action) {
         isLoadingBudgets: false,
         loadedBudgets: true,
         success: false,
-        budgets: action.payload.map(budget => ({
-          ...budget,
-          basic: {
-            ...budget.basic,
-            date: dayjs(budget.basic.date).format("DD/MM/YYYY"),
-            validUntil: dayjs(budget.basic.validUntil).format("DD/MM/YYYY")
-          }
-        })),
+        budgets: action.payload,
         errors: []
       }
     case types.FETCH_BUDGETS_FAILURE:
