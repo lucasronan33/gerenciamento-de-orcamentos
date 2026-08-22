@@ -10,5 +10,11 @@
   "javascript.suggest.completeFunctionCalls": true,
   "javascript.preferences.importModuleSpecifier": "shortest",
   "typescript.preferences.importModuleSpecifier": "shortest",
-  "editor.wordWrap": "on"
+  "editor.wordWrap": "on",
+  "chat.tools.terminal.autoApprove": {
+    "/^node \"C:\\\\Users\\\\Lucas Torres\\\\\\.claude\\\\skills\\\\browser-automation\\\\browser\\.mjs\" https://gerenciamento-de-orcamentos\\.vercel\\.app --eval \"\\[\\.\\.\\.performance\\.getEntriesByType\\('resource'\\)\\]\\.map\\(r=>r\\.name\\)\\.filter\\(n=>n\\.includes\\('vercel'\\)\\|\\|n\\.includes\\('api'\\)\\)\"$/": {
+      "approve": true,
+      "matchCommandLine": true
+    }
+  }
 }

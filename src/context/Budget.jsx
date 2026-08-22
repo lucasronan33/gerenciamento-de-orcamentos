@@ -3,209 +3,208 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchBudgetsRequest } from "../store/modules/budget/actions";
 
 import {
-    createContext,
-    useCallback,
-    useContext,
-    useEffect,
-    useMemo,
-    useState,
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
 } from "react";
 
 const BudgetContext = createContext();
 
 const initialState = {
-    basic: {
-        title: "",
-        date: dayjs().format("DD-MM-YYYY"),
-    },
-    items: [],
-    conditions: {
-        paymentMethod: "at sight",
-    },
-    totals: {
-        discount: 0,
-        taxes: 0,
-        shipping: 0,
-        shippingType: "SF",
-    },
+  basic: {
+    title: "",
+    date: dayjs().format("DD-MM-YYYY"),
+  },
+  items: [],
+  conditions: {
+    paymentMethod: "at sight",
+  },
+  totals: {
+    discount: 0,
+    taxes: 0,
+    shipping: 0,
+    shippingType: "SF",
+  },
 };
 
 function filterBudgetsBySearch(items, selectedFilter, value) {
-    const normalizeValue = String(value).toLowerCase().trim();
+  const normalizeValue = String(value).toLowerCase().trim();
 
-    return items.filter((item) => {
-        if (
-            selectedFilter !== "all states" &&
-            item.basic?.status !== selectedFilter
-        ) {
-            return false;
-        }
+  return items.filter((item) => {
+    if (
+      selectedFilter !== "all states" &&
+      item.basic?.status !== selectedFilter
+    ) {
+      return false;
+    }
 
-        if (!normalizeValue) return true;
+    if (!normalizeValue) return true;
 
-        const searchableFields = [
-            item.basic?.code,
-            item.basic?.name,
-            item.basic?.title,
-            item.client?.name,
-            item.client?.enterpriseName,
-            item.client?.email,
-            item.client?.phone,
-        ];
+    const searchableFields = [
+      item.basic?.code,
+      item.basic?.name,
+      item.basic?.title,
+      item.client?.name,
+      item.client?.enterpriseName,
+      item.client?.email,
+      item.client?.phone,
+    ];
 
-        return searchableFields.some((field) => {
-            const normalizedField = String(field || "").toLowerCase();
-            return normalizedField.includes(normalizeValue);
-        });
+    return searchableFields.some((field) => {
+      const normalizedField = String(field || "").toLowerCase();
+      return normalizedField.includes(normalizeValue);
     });
+  });
 }
 
 export function BudgetProvider({ children }) {
-    const [budget, setBudget] = useState(initialState);
-    const [budgetOpen, setBudgetOpen] = useState(false);
-    const [viewBudget, setViewBudget] = useState(false);
-    const [filterSelected, setFilterSelected] = useState("all states");
-    const [searchBudget, setSearchBudget] = useState("");
-    const [filteredBudgets, setFilteredBudgets] = useState([]);
-    const { budgets, success, loadedBudgets } = useSelector(
-        (state) => state.budget,
+  const [budget, setBudget] = useState(initialState);
+  const [budgetOpen, setBudgetOpen] = useState(false);
+  const [viewBudget, setViewBudget] = useState(false);
+  const [filterSelected, setFilterSelected] = useState("all states");
+  const [searchBudget, setSearchBudget] = useState("");
+  const [filteredBudgets, setFilteredBudgets] = useState([]);
+  const { budgets, success, loadedBudgets } = useSelector(
+    (state) => state.budget,
+  );
+  const { isLoggedIn } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+
+  function inputFilterBudgets(value) {
+    setSearchBudget(value);
+    setFilteredBudgets(filterBudgetsBySearch(budgets, filterSelected, value));
+  }
+
+  function filterBudgets(filterValue) {
+    setFilterSelected(filterValue);
+    setFilteredBudgets(
+      filterBudgetsBySearch(budgets, filterValue, searchBudget),
     );
-    const { isLoggedIn } = useSelector((state) => state.auth);
-    const dispatch = useDispatch();
+  }
 
-    function inputFilterBudgets(value) {
-        setSearchBudget(value);
-        setFilteredBudgets(
-            filterBudgetsBySearch(budgets, filterSelected, value),
-        );
-    }
+  const calcTotalBudgets = useMemo(() => {
+    const total = budgets
+      .reduce((prevValue, currentValue) => {
+        const value = Number(currentValue.totals.total) || 0;
+        return prevValue + value;
+      }, 0)
+      .toFixed(2);
 
-    function filterBudgets(filterValue) {
-        setFilterSelected(filterValue);
-        setFilteredBudgets(
-            filterBudgetsBySearch(budgets, filterValue, searchBudget),
-        );
-    }
+    return total;
+  }, [budgets]);
 
-    const calcTotalBudgets = useMemo(() => {
-        const total = budgets
-            .reduce((prevValue, currentValue) => {
-                const value = Number(currentValue.totals.total) || 0;
-                return prevValue + value;
-            }, 0)
-            .toFixed(2);
+  const getBudgetsByStatus = useCallback(
+    (status) => {
+      const total = budgets.filter((item) =>
+        status.includes(item.basic.status.toLowerCase().trim()),
+      );
+      return total;
+    },
+    [budgets],
+  );
 
-        return total;
-    }, [budgets]);
+  const updateBudget = useCallback((field, subfield, value) => {
+    setBudget((prev) => ({
+      ...prev,
+      [field]: {
+        ...prev[field],
+        [subfield]: value,
+      },
+    }));
+    console.log(value);
+  }, []);
 
-    const getBudgetsByStatus = useCallback(
-        (status) => {
-            const total = budgets.filter((item) =>
-                status.includes(item.basic.status.toLowerCase().trim()),
-            );
-            return total;
+  const updateTotals = useCallback((field, value) => {
+    setBudget((prev) => {
+      if (prev.totals[field] === value) return prev;
+
+      return {
+        ...prev,
+        totals: {
+          ...prev.totals,
+          [field]: value,
         },
-        [budgets],
+      };
+    });
+  }, []);
+
+  function calcTotal(item) {
+    let total =
+      item.quantity * item.unityPrice -
+      item.quantity * item.unityPrice * (item.discount / 100);
+
+    total *= item.taxes / 100 + 1;
+
+    return total.toFixed(2);
+  }
+
+  const updateItem = useCallback((id, field, value) => {
+    setBudget((prev) => ({
+      ...prev,
+      items: prev.items.map((item) => {
+        if (item._id !== id) {
+          return item;
+        }
+        const updated = {
+          ...item,
+          [field]: value,
+        };
+        return updated;
+      }),
+    }));
+  }, []);
+
+  useEffect(() => {
+    if (!isLoggedIn) return;
+    dispatch(fetchBudgetsRequest());
+  }, [dispatch, success, isLoggedIn, loadedBudgets]);
+
+  useEffect(() => {
+    setFilteredBudgets(
+      structuredClone(
+        filterBudgetsBySearch(budgets, filterSelected, searchBudget),
+      ),
     );
+  }, [budgets, filterSelected, searchBudget]);
 
-    const updateBudget = useCallback((field, subfield, value) => {
-        setBudget((prev) => ({
-            ...prev,
-            [field]: {
-                ...prev[field],
-                [subfield]: value,
-            },
-        }));
-    }, []);
+  return (
+    <BudgetContext.Provider
+      value={{
+        initialState,
+        budget,
+        setBudget,
+        updateBudget,
+        updateItem,
+        updateTotals,
+        calcTotal,
 
-    const updateTotals = useCallback((field, value) => {
-        setBudget((prev) => {
-            if (prev.totals[field] === value) return prev;
+        budgetOpen,
+        setBudgetOpen,
+        viewBudget,
+        setViewBudget,
 
-            return {
-                ...prev,
-                totals: {
-                    ...prev.totals,
-                    [field]: value,
-                },
-            };
-        });
-    }, []);
+        budgets,
+        calcTotalBudgets,
+        getBudgetsByStatus,
 
-    function calcTotal(item) {
-        let total =
-            item.quantity * item.unityPrice -
-            item.quantity * item.unityPrice * (item.discount / 100);
-
-        total *= item.taxes / 100 + 1;
-
-        return total.toFixed(2);
-    }
-
-    const updateItem = useCallback((id, field, value) => {
-        setBudget((prev) => ({
-            ...prev,
-            items: prev.items.map((item) => {
-                if (item._id !== id) {
-                    return item;
-                }
-                const updated = {
-                    ...item,
-                    [field]: value,
-                };
-                return updated;
-            }),
-        }));
-    }, []);
-
-    useEffect(() => {
-        if (!isLoggedIn) return;
-        dispatch(fetchBudgetsRequest());
-    }, [dispatch, success, isLoggedIn, loadedBudgets]);
-
-    useEffect(() => {
-        setFilteredBudgets(
-            structuredClone(
-                filterBudgetsBySearch(budgets, filterSelected, searchBudget),
-            ),
-        );
-    }, [budgets, filterSelected, searchBudget]);
-
-    return (
-        <BudgetContext.Provider
-            value={{
-                initialState,
-                budget,
-                setBudget,
-                updateBudget,
-                updateItem,
-                updateTotals,
-                calcTotal,
-
-                budgetOpen,
-                setBudgetOpen,
-                viewBudget,
-                setViewBudget,
-
-                budgets,
-                calcTotalBudgets,
-                getBudgetsByStatus,
-
-                filterSelected,
-                setFilterSelected,
-                searchBudget,
-                setSearchBudget,
-                inputFilterBudgets,
-                filterBudgets,
-                filteredBudgets,
-            }}
-        >
-            {" "}
-            {children}{" "}
-        </BudgetContext.Provider>
-    );
+        filterSelected,
+        setFilterSelected,
+        searchBudget,
+        setSearchBudget,
+        inputFilterBudgets,
+        filterBudgets,
+        filteredBudgets,
+      }}
+    >
+      {" "}
+      {children}{" "}
+    </BudgetContext.Provider>
+  );
 }
 
 export function useBudget() {
-    return useContext(BudgetContext);
+  return useContext(BudgetContext);
 }
