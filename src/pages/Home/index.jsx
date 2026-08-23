@@ -37,7 +37,7 @@ export default function Home() {
       <div
         className="
           max-w-[90%]
-          my-7.5
+          py-7.5
           mx-auto
           grid
           items-start
