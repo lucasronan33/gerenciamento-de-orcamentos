@@ -1,42 +1,32 @@
-import './style.css'
-import propTypes from 'prop-types'
+import propTypes from "prop-types";
+import "./style.css";
 
-export function FormInput({ typeInput, placeholder, endIcon, onEndIconClick, ...rest }) {
-    if (endIcon) {
-        return (
-            <div className='form-budget-input-with-icon'>
-                <input
-                    id={rest.id || rest.name}
-                    type={typeInput}
-                    placeholder={placeholder}
-                    {...rest}
-                />
-                <button
-                    type='button'
-                    className='form-budget-input-icon-button'
-                    onClick={onEndIconClick}
-                    aria-label={rest['aria-label']}
-                    title={rest.title}
-                >
-                    {endIcon}
-                </button>
-            </div>
-        )
-    }
-
+export function FormInput({ placeholder, endIcon, onEndIconClick, ...rest }) {
+  if (endIcon) {
     return (
-        <input
-            id={rest.id || rest.name}
-            type={typeInput}
-            placeholder={placeholder}
-            {...rest}
-        />
-    )
+      <div className="form-budget-input-with-icon">
+        <input id={rest.id || rest.name} placeholder={placeholder} {...rest} />
+        <button
+          type="button"
+          className="form-budget-input-icon-button"
+          onClick={onEndIconClick}
+          aria-label={rest["aria-label"]}
+          title={rest.title}
+        >
+          {endIcon}
+        </button>
+      </div>
+    );
+  }
+
+  return (
+    <input id={rest.id || rest.name} placeholder={placeholder} {...rest} />
+  );
 }
 
 FormInput.propTypes = {
-    typeInput: propTypes.string,
-    placeholder: propTypes.string,
-    endIcon: propTypes.node,
-    onEndIconClick: propTypes.func,
-}
+  typeInput: propTypes.string,
+  placeholder: propTypes.string,
+  endIcon: propTypes.node,
+  onEndIconClick: propTypes.func,
+};

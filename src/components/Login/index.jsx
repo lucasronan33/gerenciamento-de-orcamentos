@@ -115,7 +115,7 @@ export default function LoginContent({ modalVisible, setModalVisible }) {
           <Form.Label name="email" text="E-mail" />
           <Form.Input
             name="email"
-            typeInput="email"
+            type="email"
             placeholder="Digite seu e-mail para fazer login"
             value={formData.email}
             onChange={handleChange}
@@ -130,7 +130,7 @@ export default function LoginContent({ modalVisible, setModalVisible }) {
           <Form.Label name="password" text="Senha" />
           <Form.Input
             name="password"
-            typeInput={showPassword ? "text" : "password"}
+            type={showPassword ? "text" : "password"}
             placeholder="Digite sua senha para fazer login"
             value={formData.password}
             onChange={handleChange}

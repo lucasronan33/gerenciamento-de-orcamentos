@@ -55,7 +55,7 @@ export function ItemsRegister() {
       <Form.ContainerInput>
         <Form.Label htmlFor="code" text="Código/ID" />
         <Form.Input
-          typeInput="text"
+          type="text"
           placeholder="Código do produto"
           name="code"
           value={item.code}
@@ -66,7 +66,7 @@ export function ItemsRegister() {
       <Form.ContainerInput>
         <Form.Label htmlFor="name" text="Nome do Item/Produto" />
         <Form.Input
-          typeInput="text"
+          type="text"
           placeholder="Ex.: Caneta"
           name="name"
           value={item.name}
@@ -77,7 +77,7 @@ export function ItemsRegister() {
       <Form.ContainerInput>
         <Form.Label htmlFor="category" text="Categoria" />
         <Form.Input
-          typeInput="text"
+          type="text"
           placeholder="Ex.: Escritório"
           name="category"
           value={item.category}
@@ -100,9 +100,10 @@ export function ItemsRegister() {
       <Form.ContainerInput size="small">
         <Form.Label htmlFor="unityPrice" text="Preço Unit. *" />
         <Form.Input
-          typeInput="text"
+          type="number"
           name="unityPrice"
           min="0"
+          step="0.01"
           value={item.unityPrice}
           onChange={(e) => updateItem("unityPrice", e.target.value)}
         />
@@ -111,7 +112,7 @@ export function ItemsRegister() {
       <Form.ContainerInput size="medium">
         <Form.Label htmlFor="itemTaxes" text="Impostos sob produto (%)" />
         <Form.Input
-          typeInput="number"
+          type="number"
           name="itemTaxes"
           min="0"
           value={item.taxes}
@@ -122,7 +123,7 @@ export function ItemsRegister() {
       <Form.ContainerInput size="xx-large">
         <Form.Label htmlFor="obsItem" text="Obs. do item" />
         <Form.Input
-          typeInput="text"
+          type="text"
           placeholder="Ex.: Usado somente para limpeza"
           name="obsItem"
           value={item.obsItem}

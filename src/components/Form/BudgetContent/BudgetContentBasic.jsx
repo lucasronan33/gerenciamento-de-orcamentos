@@ -36,7 +36,7 @@ export function BudgetContentBasic() {
       <Form.ContainerInput>
         <Form.Label text="Título do orçamento *" htmlFor={"titleBudget"} />
         <Form.Input
-          typeInput="text"
+          type="text"
           placeholder="ex.: Nome do serviço"
           id="titleBudget"
           name="titleBudget"
@@ -52,6 +52,10 @@ export function BudgetContentBasic() {
           value={budget.basic.status}
           onChange={(e) => {
             updateBudget("basic", "status", e.target.value);
+            if (e.target.value === "finished") {
+              setPaymentCompleted(true);
+              updateBudget("totals", "amountPaid", budget.totals.total);
+            }
           }}
         >
           {budgetStatus.map((value, index) => (
@@ -80,7 +84,16 @@ export function BudgetContentBasic() {
           />
         </div>
         {paymentCompleted && (
-          <Form.Input placeholder={"Valor pago"} typeInput={"text"} />
+          <Form.Input
+            placeholder={"Valor pago"}
+            value={budget.totals.amountPaid}
+            onChange={(e) =>
+              updateBudget("totals", "amountPaid", e.target.value)
+            }
+            type="number"
+            min="0"
+            step="0.01"
+          />
         )}
       </Form.ContainerInput>
 
