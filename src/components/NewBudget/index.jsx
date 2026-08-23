@@ -75,6 +75,12 @@ export default function NewBudget() {
         message: "Horario ou formato do horario invalido",
       });
 
+    if (budget.totals.amountPaid && budget.totals.amountPaid < 0)
+      formErrors.push({
+        field: "VALOR PAGO",
+        message: "Não pode ser menor que 0",
+      });
+
     if (formErrors.length > 0) {
       formErrors.forEach((value) =>
         toast.error(
@@ -98,6 +104,7 @@ export default function NewBudget() {
         setBudgetOpen(false);
       }
     } catch (err) {
+      console.error(err);
       toast.error(err.message);
     }
   };

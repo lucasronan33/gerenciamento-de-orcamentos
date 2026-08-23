@@ -1,4 +1,3 @@
-import dayjs from "dayjs";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchBudgetsRequest } from "../store/modules/budget/actions";
 
@@ -16,7 +15,8 @@ const BudgetContext = createContext();
 const initialState = {
   basic: {
     title: "",
-    date: dayjs().format("DD-MM-YYYY"),
+    date: new Date(),
+    validUntil: new Date(),
   },
   items: [],
   conditions: {
@@ -114,7 +114,6 @@ export function BudgetProvider({ children }) {
         [subfield]: value,
       },
     }));
-    console.log(value);
   }, []);
 
   const updateTotals = useCallback((field, value) => {

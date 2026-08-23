@@ -31,7 +31,8 @@ const shippingOptions = [
 
 export function BudgetContentItems() {
   const { isLoggedIn } = useSelector((state) => state.auth);
-  const { budget, updateTotals, setBudget, updateItem } = useBudget();
+  const { budget, updateTotals, setBudget, updateBudget, updateItem } =
+    useBudget();
   const [isRegister, setIsRegister] = useState(false);
   const { success, items, isLoadingItems } = useSelector(
     (state) => state.item || {},
@@ -79,6 +80,10 @@ export function BudgetContentItems() {
     dispatch(fetchItemsRequest());
   }, [isLoggedIn, isRegister, success, dispatch]);
 
+  useEffect(() => {
+    updateBudget("totals", "total", total);
+  }, [total]);
+
   return (
     <>
       {!isRegister ? (
@@ -123,7 +128,7 @@ export function BudgetContentItems() {
                 <Form.ContainerInput>
                   <Form.Label text="Quant." />
                   <Form.Input
-                    typeInput="number"
+                    type="number"
                     name="quantity"
                     value={item.quantity}
                     onChange={(e) =>
@@ -134,7 +139,7 @@ export function BudgetContentItems() {
                 <Form.ContainerInput>
                   <Form.Label text="Total" />
                   <Form.LockedLabel
-                    typeInput="number"
+                    type="number"
                     name="total"
                     text={`R$ ${(item.quantity * item.total).toFixed(2)}`}
                   />
@@ -162,7 +167,7 @@ export function BudgetContentItems() {
           <Form.ContainerInput>
             <Form.Label text="Desconto Global (%)" />
             <Form.Input
-              typeInput="number"
+              type="number"
               name="globalDiscount"
               min="0"
               value={budget.totals.discount}
@@ -178,7 +183,7 @@ export function BudgetContentItems() {
           <Form.ContainerInput>
             <Form.Label text="Impostos (%)" />
             <Form.Input
-              typeInput="number"
+              type="number"
               name="taxes"
               min="0"
               value={budget.totals.taxes}
@@ -210,7 +215,7 @@ export function BudgetContentItems() {
             <Form.ContainerInput>
               <Form.Label text="Valor do Frete" />
               <Form.Input
-                typeInput="number"
+                type="number"
                 name="shippingFee"
                 min="0"
                 value={budget.totals.shipping}
