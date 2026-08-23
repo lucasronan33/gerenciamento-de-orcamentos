@@ -17,7 +17,6 @@ export const amountPaid = () => {
 
   const { getBudgetsByStatus } = useBudget()
   const total = getBudgetsByStatus(['approved', 'producing', 'finished']);
-  console.log(total)
   return total
     .reduce((prevValue, currentValue) => {
       const value = Number(currentValue.totals.amountPaid) || 0;

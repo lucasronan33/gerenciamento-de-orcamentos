@@ -9,7 +9,7 @@ import { budgetStatus } from "../../../utils/budget";
 import { generateBudgetCode } from "../../../utils/masks";
 
 export function BudgetContentBasic() {
-  const { budget, updateBudget } = useBudget();
+  const { budget, setBudget, updateBudget } = useBudget();
 
   const [paymentCompleted, setPaymentCompleted] = useState(
     budget.totals.amountPaid ? true : false,
@@ -78,9 +78,13 @@ export function BudgetContentBasic() {
             className="w-fit"
             checked={budget.totals.amountPaid || paymentCompleted}
             onChange={() => {
-              paymentCompleted === true
-                ? updateBudget("totals", "amountPaid", 0)
-                : updateBudget("totals", "amountPaid", budget.totals.total);
+              if (paymentCompleted === true) {
+                const newBudget = { ...budget };
+                delete newBudget.totals.amountPaid;
+                setBudget(newBudget);
+              } else {
+                updateBudget("totals", "amountPaid", budget.totals.total);
+              }
               setPaymentCompleted(!paymentCompleted);
             }}
           />
