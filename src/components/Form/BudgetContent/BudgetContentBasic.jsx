@@ -11,8 +11,9 @@ import { generateBudgetCode } from "../../../utils/masks";
 export function BudgetContentBasic() {
   const { budget, updateBudget } = useBudget();
 
-  const [paymentCompleted, setPaymentCompleted] = useState(false);
-  const [amountPaid, setAmountPaid] = useState("false");
+  const [paymentCompleted, setPaymentCompleted] = useState(
+    budget.totals.amountPaid ? true : false,
+  );
 
   useEffect(() => {
     if (!budget.basic.code) {
@@ -52,7 +53,7 @@ export function BudgetContentBasic() {
           value={budget.basic.status}
           onChange={(e) => {
             updateBudget("basic", "status", e.target.value);
-            if (e.target.value === "finished") {
+            if (e.target.value === "finished" && !budget.totals.amountPaid) {
               setPaymentCompleted(true);
               updateBudget("totals", "amountPaid", budget.totals.total);
             }
@@ -75,8 +76,13 @@ export function BudgetContentBasic() {
             name="payment-completed"
             id="payment-completed"
             className="w-fit"
-            checked={paymentCompleted}
-            onChange={() => setPaymentCompleted(!paymentCompleted)}
+            checked={budget.totals.amountPaid || paymentCompleted}
+            onChange={() => {
+              paymentCompleted === true
+                ? updateBudget("totals", "amountPaid", 0)
+                : updateBudget("totals", "amountPaid", budget.totals.total);
+              setPaymentCompleted(!paymentCompleted);
+            }}
           />
           <Form.Label
             htmlFor={"payment-completed"}
