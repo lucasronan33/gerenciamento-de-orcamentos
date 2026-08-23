@@ -142,9 +142,14 @@ export default function CardBudget({ budget }) {
             className={
               !isEmptyObject(currentBudgetStatus)
                 ? `
+                flex
+                items-center
+                justify-center
                 px-5
                 py-1.25
+                gap-2
                 text-sm
+                text-center
                 border
                 rounded-[10px]
                 ${statusClasses[currentBudgetStatus.toLowerCase()]}
@@ -153,6 +158,20 @@ export default function CardBudget({ budget }) {
             }
           >
             {!isEmptyObject(currentBudgetStatus) ? currentBudgetStatus : ""}
+            {["approved", "producing", "finished"].includes(
+              budget.basic.status,
+            ) &&
+              (!budget.totals.amountPaid ||
+                budget.totals.amountPaid < budget.totals.total) && (
+                <div
+                  className="
+              w-2
+              aspect-square
+              bg-producing-dark
+              rounded-full
+              "
+                />
+              )}
           </div>
         </div>
       </div>
