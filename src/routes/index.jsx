@@ -3,6 +3,7 @@ import { Route, Routes } from "react-router-dom";
 import { ViewBudget } from "../components/ViewBudget";
 import About from "../pages/About";
 import { Clients } from "../pages/Clients";
+import { Dashboards } from "../pages/Dashboards";
 import FAQ from "../pages/FAQ";
 import Home from "../pages/Home";
 import Landing from "../pages/Landing";
@@ -42,6 +43,15 @@ export default function Routers() {
             </MyRoute>
           }
           path="/"
+        />
+
+        <Route
+          element={
+            <MyRoute isClosed>
+              <Dashboards />
+            </MyRoute>
+          }
+          path="/dashboards"
         />
 
         <Route
