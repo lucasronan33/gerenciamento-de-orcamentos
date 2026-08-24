@@ -8,6 +8,7 @@ import {
 import { useEffect, useMemo } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { useBudget } from "../../context/Budget";
 import { fetchClientsRequest } from "../../store/modules/client/actions";
 import { amountPaid, sumValueByStatus } from "../../utils/calcs";
@@ -18,6 +19,7 @@ export default function DashboardsHeader() {
   const { isLoggedIn } = useSelector((state) => state.auth);
   const { budgets, getBudgetsByStatus } = useBudget();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const approvedPercent = useMemo(() => {
     const totalBudgets = budgets.length;
@@ -81,7 +83,25 @@ export default function DashboardsHeader() {
   return (
     <div className="container">
       {cards.map((item, index) => (
-        <div className="card" key={index}>
+        <div
+          onClick={() => navigate("/dashboards")}
+          key={index}
+          className="
+          min-w-50
+          bg-secondary-dark
+          p-[3vh]
+          flex
+          gap-5
+          flex-wrap
+          items-center
+          justify-between
+          border
+          border-border
+          rounded-2xl
+          grow
+          cursor-pointer
+          "
+        >
           <CardDashboard data={item} />
         </div>
       ))}
