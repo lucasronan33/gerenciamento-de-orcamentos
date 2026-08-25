@@ -58,7 +58,7 @@ export function ClientAddress() {
         <Form.Label text={"CEP"} htmlFor={"zipCode"} />
         <Form.Input
           placeholder={"00000-000"}
-          type={"number"}
+          type={"text"}
           id={"zipCode"}
           name={"zipCode"}
           value={maskZipCode(client?.address?.zipCode) || ""}
