@@ -7,6 +7,7 @@ import {
 } from "lucide-react";
 import { useEffect, useMemo } from "react";
 
+import { getBudgetsByStatus } from "@/utils/budget";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useBudget } from "../../context/Budget";
@@ -17,17 +18,16 @@ import { CardDashboard } from "../Cards/CardDashboard";
 
 export default function DashboardsHeader() {
   const { isLoggedIn } = useSelector((state) => state.auth);
-  const { budgets, getBudgetsByStatus } = useBudget();
+  const { budgets } = useBudget();
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const approvedPercent = useMemo(() => {
     const totalBudgets = budgets.length;
-    const totalApprovedBudgets = getBudgetsByStatus([
-      "approved",
-      "producing",
-      "finished",
-    ]).length;
+    const totalApprovedBudgets = getBudgetsByStatus(
+      ["approved", "producing", "finished"],
+      budgets,
+    ).length;
 
     function calcTotal() {
       let total = (totalApprovedBudgets / totalBudgets) * 100;
@@ -39,7 +39,7 @@ export default function DashboardsHeader() {
   const cards = [
     {
       title: "Receita",
-      content: formatCurrency(amountPaid()),
+      content: formatCurrency(amountPaid(budgets)),
       icon: DollarSign,
       colorIcon: "bg-success",
       colorText: "text-success",
@@ -47,7 +47,8 @@ export default function DashboardsHeader() {
     {
       title: "A receber",
       content: formatCurrency(
-        sumValueByStatus(["approved", "producing", "finished"]) - amountPaid(),
+        sumValueByStatus(["approved", "producing", "finished"], budgets) -
+          amountPaid(budgets),
       ),
       icon: Clock,
       colorIcon: "bg-warning",
@@ -62,7 +63,7 @@ export default function DashboardsHeader() {
     },
     {
       title: "Orçamentos",
-      content: `${getBudgetsByStatus(["approved", "producing"]).length} aprovados`,
+      content: `${getBudgetsByStatus(["approved", "producing", "finished"], budgets).length} aprovados`,
       icon: CircleCheckBig,
       colorIcon: "bg-success",
       colorText: "text-success",
