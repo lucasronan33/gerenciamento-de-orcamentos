@@ -96,16 +96,6 @@ export function BudgetProvider({ children }) {
     return total;
   }, [budgets]);
 
-  const getBudgetsByStatus = useCallback(
-    (status) => {
-      const total = budgets.filter((item) =>
-        status.includes(item.basic.status.toLowerCase().trim()),
-      );
-      return total;
-    },
-    [budgets],
-  );
-
   const updateBudget = useCallback((field, subfield, value) => {
     setBudget((prev) => ({
       ...prev,
@@ -187,7 +177,6 @@ export function BudgetProvider({ children }) {
 
         budgets,
         calcTotalBudgets,
-        getBudgetsByStatus,
 
         filterSelected,
         setFilterSelected,
