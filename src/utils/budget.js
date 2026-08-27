@@ -26,22 +26,65 @@ export const budgetStatus = [
   },
 ];
 
+export const getBudgetsByStatus =
+  (status, budgets) => {
+    const total = budgets.filter((item) =>
+      status.includes(item.basic.status.toLowerCase().trim()),
+    );
+    return total;
+  }
+
 export const groupBudgetsByDate = (budgets) => {
-  return budgets.reduce((acc, budget) => {
-    const date = new Date(budget.basic.date);
+  const groupedBudgets = []
+  budgets.forEach(budget => {
+    const date = new Date(budget.basic.date)
 
-    const year = date.getFullYear();
-    const month = date.getMonth() + 1;
+    const year = date.getFullYear()
+    const month = date.getMonth() + 1
 
-    if (!acc[year]) acc[year] = {};
+    const selectedBudget = groupedBudgets.find(item => item.year === year && item.month === month)
 
-    if (!acc[year][month]) acc[year][month] = {
-      budgets: [],
-      total: 0
-    };
+    if (selectedBudget) {
+      selectedBudget.budgets.push(budget)
+      selectedBudget.total += Number(budget.totals.amountPaid || 0)
+      return selectedBudget
+    }
+    groupedBudgets.push({
+      year,
+      month,
+      budgets: [budget],
+      total: Number(budget.totals.amountPaid || 0)
+    })
 
-    acc[year][month].budgets.push(budget);
-    acc[year][month].total += Number(budget.totals.amountPaid || 0)
-    return acc;
-  }, {});
-};
+  })
+  return groupedBudgets
+}
+
+export const getLast12Months = budgetsArray => {
+  const now = new Date()
+
+  const months = []
+
+  for (let i = 11; i >= 0; i--) {
+    const date = new Date(
+      now.getFullYear(),
+      now.getMonth() - i,
+      1
+    )
+
+    const year = date.getFullYear()
+    const month = date.getMonth() + 1
+
+    const data = budgetsArray.find(item => item.year === year && item.month === month)
+    const total = Number(data?.total ?? 0).toFixed(2)
+
+    months.push({
+      year,
+      month,
+      total: Number(total),
+      budgets: data?.budgets ?? []
+    })
+
+  }
+  return months
+}

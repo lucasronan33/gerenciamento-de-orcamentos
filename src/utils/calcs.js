@@ -1,9 +1,8 @@
-import { useBudget } from '../context/Budget';
+import { getBudgetsByStatus } from './budget';
 
-export const sumValueByStatus = (status = []) => {
-  const { getBudgetsByStatus } = useBudget()
+export const sumValueByStatus = (status = [], budgets = []) => {
 
-  const total = getBudgetsByStatus(status);
+  const total = getBudgetsByStatus(status, budgets);
   return total
     .reduce((prevValue, currentValue) => {
       const value = Number(currentValue.totals.total);
@@ -13,10 +12,9 @@ export const sumValueByStatus = (status = []) => {
     .toFixed(2);
 };
 
-export const amountPaid = () => {
+export const amountPaid = (budgets = []) => {
 
-  const { getBudgetsByStatus } = useBudget()
-  const total = getBudgetsByStatus(['approved', 'producing', 'finished']);
+  const total = getBudgetsByStatus(['approved', 'producing', 'finished'], budgets);
   return total
     .reduce((prevValue, currentValue) => {
       const value = Number(currentValue.totals.amountPaid) || 0;
