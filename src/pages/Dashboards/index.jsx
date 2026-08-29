@@ -1,6 +1,5 @@
 "use client";
 
-import { TrendingUp } from "lucide-react";
 import { Bar, BarChart, CartesianGrid, Legend, XAxis, YAxis } from "recharts";
 
 import {
@@ -76,9 +75,10 @@ export const Dashboards = () => {
       <Header />
       <div
         className="
-        w-[80%]
+        w-[95%]
         mx-auto
         flex
+        max-sm:flex-col
         gap-5
         "
       >
@@ -94,12 +94,12 @@ export const Dashboards = () => {
           color={{
             stroke: [
               "var(--brand)",
-              "var(--color-green-500)",
+              "var(--color-approved-dark)",
               "var(--color-red-500)",
             ],
             primary: [
               "var(--brand)",
-              "var(--color-green-500)",
+              "var(--color-approved-dark)",
               "var(--color-red-500)",
             ],
             secondary: [
@@ -120,13 +120,13 @@ export function ChartBarDefault({ data, chartConfig, title, color }) {
       <CardHeader>
         <CardDescription>{title}</CardDescription>
       </CardHeader>
-      <CardContent>
-        <ChartContainer config={chartConfig} className="w-full">
+      <CardContent className="p-0 w-full">
+        <ChartContainer config={chartConfig} className="w-full h-[25vh]">
           <BarChart accessibilityLayer data={data}>
             <defs>
-              <linearGradient id="desktopGradient" x1="0" y1="1" x2="0" y2="0">
-                <stop offset="0%" stopColor="var(--color-cyan-900)" />
-                <stop offset="100%" stopColor="var(--brand)" />
+              <linearGradient id="recipe" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stopColor="var(--brand)" />
+                <stop offset="100%" stopColor="var(--color-cyan-900)" />
               </linearGradient>
             </defs>
             <CartesianGrid vertical={false} />
@@ -139,16 +139,17 @@ export function ChartBarDefault({ data, chartConfig, title, color }) {
             />
             <YAxis />
             <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
-            <Bar dataKey="total" fill="url(#desktopGradient)" radius={10} />
+            <Bar dataKey="total" fill="url(#recipe)" radius={10} />
           </BarChart>
         </ChartContainer>
       </CardContent>
-      <CardFooter className="flex-col items-start gap-2 text-sm">
-        <div className="flex gap-2 leading-none font-medium">
-          Trending up by 5.2% this month <TrendingUp className="h-4 w-4" />
-        </div>
+      <CardFooter className="flex-col items-start gap-2 text-sm h-full">
         <div className="leading-none text-muted-foreground">
-          Showing total visitors for the last 6 months
+          <MonthPercent
+            data={data}
+            subdata={"total"}
+            text={"Receita comparado ao mês anterior:"}
+          />
         </div>
       </CardFooter>
     </Card>
@@ -161,8 +162,8 @@ export function ChartAreaGradient({ title, data, chartConfig, color }) {
       <CardHeader>
         <CardDescription>{title}</CardDescription>
       </CardHeader>
-      <CardContent>
-        <ChartContainer config={chartConfig}>
+      <CardContent className={"w-full p-0"}>
+        <ChartContainer config={chartConfig} className="h-[25vh] w-full">
           <AreaChart
             accessibilityLayer
             data={data}
@@ -253,14 +254,29 @@ export function ChartAreaGradient({ title, data, chartConfig, color }) {
           </AreaChart>
         </ChartContainer>
       </CardContent>
-      <CardFooter>
+      <CardFooter className={"h-full"}>
         <div className="flex w-full items-start gap-2 text-sm">
           <div className="grid gap-2">
-            <div className="flex items-center gap-2 leading-none font-medium">
-              Trending up by 5.2% this month <TrendingUp className="h-4 w-4" />
+            <div className="leading-none text-muted-foreground">
+              <MonthPercent
+                data={data}
+                subdata={"Orçados"}
+                text={"Orçamentos emititdos comparado ao mês anterior:"}
+              />
             </div>
-            <div className="flex items-center gap-2 leading-none text-muted-foreground">
-              January - June 2024
+            <div className="leading-none text-muted-foreground">
+              <MonthPercent
+                data={data}
+                subdata={"Aprovados"}
+                text={"Orçamentos aprovados comparado ao mês anterior:"}
+              />
+            </div>
+            <div className="leading-none text-muted-foreground">
+              <MonthPercent
+                data={data}
+                subdata={"Rejeitados"}
+                text={"Orçamentos rejeitados comparado ao mês anterior:"}
+              />
             </div>
           </div>
         </div>
@@ -268,3 +284,23 @@ export function ChartAreaGradient({ title, data, chartConfig, color }) {
     </Card>
   );
 }
+
+const MonthPercent = ({ data, subdata, text }) => {
+  const result = (
+    ((data[data.length - 1]?.[subdata] - data[data.length - 2]?.[subdata]) /
+      data[data.length - 2]?.[subdata]) *
+    100
+  ).toFixed(2);
+
+  return Number(result) > 0 ? (
+    <span>
+      {text}
+      <span className="font-bold text-approved-dark"> +{result}%</span>
+    </span>
+  ) : (
+    <span>
+      {text}
+      <span className="font-bold text-rejected-dark"> {result}%</span>
+    </span>
+  );
+};
