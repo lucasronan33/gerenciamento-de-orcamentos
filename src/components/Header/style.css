@@ -1,62 +1,62 @@
 .header {
-    width: 100%;
-    min-height: 10vh;
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    padding-block: 2.5vh;
+  width: 100%;
+  min-height: 10vh;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding-block: 2.5vh;
 }
 
 .header * {
-    display: flex;
+  display: flex;
 }
 
 .container {
-    width: 90%;
-    justify-content: space-between;
-    align-items: center;
-    flex: auto auto;
-    flex-wrap: wrap;
-    gap: 3vh;
+  width: 90%;
+  justify-content: space-between;
+  align-items: center;
+  flex: auto auto;
+  flex-wrap: wrap;
+  gap: 3vh;
 }
 
 .container-logo-title {
-    align-items: center;
+  align-items: center;
 }
 
 /*----------------------------------------*/
 .logo {
-    width: 10vh !important;
-    height: 10vh;
-    background-image: url(/images/logo.svg);
-    background-repeat: no-repeat;
-    background-size: contain;
-    cursor: pointer;
+  width: 10vh !important;
+  height: 10vh;
+  background-image: url(/images/logo.svg);
+  background-repeat: no-repeat;
+  background-size: contain;
+  cursor: pointer;
 }
 
 /*----------------------------------------*/
 .container-logo-title {
-    justify-content: space-between;
-    gap: 3vh;
+  justify-content: space-between;
+  gap: 3vh;
 }
 
 .container-title {
-    height: 100%;
-    flex-grow: 1;
-    flex-direction: column;
-    justify-content: space-around;
-    row-gap: 0.7vh;
+  height: 100%;
+  flex-grow: 1;
+  flex-direction: column;
+  justify-content: space-around;
+  row-gap: 0.7vh;
 }
 
 /*----------------------------------------*/
 .button-header {
-    max-width: 100%;
-    justify-content: center;
+  max-width: 100%;
+  justify-content: center;
 }
 
 @media (width < 815px) {
-    .button-header {
-        width: 100%;
-        justify-content: center;
-    }
+  .button-header {
+    width: 100%;
+    justify-content: center;
+  }
 }

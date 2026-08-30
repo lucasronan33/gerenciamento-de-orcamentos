@@ -82,24 +82,35 @@ export default function DashboardsHeader() {
   }, [isLoggedIn, dispatch]);
 
   return (
-    <div className="container">
+    <div
+      className="
+      w-[90%]
+      m-auto
+      flex
+      flex-wrap
+      items-center
+      justify-between
+      gap-3
+      py-7.5
+    "
+    >
       {cards.map((item, index) => (
         <div
           onClick={() => navigate("/dashboards")}
           key={index}
           className="
-          min-w-50
           bg-secondary-dark
-          p-[3vh]
+          p-5
           flex
+          flex-1
           gap-5
           flex-wrap
           items-center
           justify-between
+          self-stretch
           border
           border-border
           rounded-2xl
-          grow
           cursor-pointer
           "
         >
