@@ -11,7 +11,6 @@ import {
 } from "../../store/modules/budget/actions";
 import { Button } from "../Button";
 import { Form } from "../Form";
-import { Subtitle, Title } from "../Header/styles";
 
 export default function NewBudget() {
   const dispatch = useDispatch();
@@ -142,8 +141,8 @@ export default function NewBudget() {
         <div
           className="
           sm:pt-15
-          sm:px-15
-          px-10
+          sm:px-10
+          px-5
           pt-10
           pb-5
           sm:sticky
@@ -157,8 +156,22 @@ export default function NewBudget() {
           "
         >
           <div className="flex flex-col">
-            <Title>Novo Orçamento</Title>
-            <Subtitle>Preencha as informações do orçamento</Subtitle>
+            <h1
+              className="
+              text-2xl
+              font-bold
+            "
+            >
+              Novo Orçamento
+            </h1>
+            <h2
+              className="
+              max-sm:text-sm
+              text-slate-600
+            "
+            >
+              Preencha as informações do orçamento
+            </h2>
           </div>
 
           <div className="nav-budget">
@@ -199,7 +212,7 @@ export default function NewBudget() {
         <div
           className="
           px-10
-          py-10
+          py-3
           z-15
           mt-10
           sticky

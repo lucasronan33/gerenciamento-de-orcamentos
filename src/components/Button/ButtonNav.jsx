@@ -4,13 +4,14 @@ export const ButtonNav = ({ item, active, children, ...rest }) => {
       <button
         {...rest}
         className="
-        min-w-37.5
         flex
         flex-1
         items-center
         justify-center
+        px-3
         py-1
         rounded-2xl
+        max-sm:text-xs
         text-blueHover
         font-bold
         bg-blueDocument
@@ -25,14 +26,15 @@ export const ButtonNav = ({ item, active, children, ...rest }) => {
     <button
       {...rest}
       className="
-        min-w-37.5
         scale-95
         flex
         flex-1
         items-center
         justify-center
+        px-3
         py-1
         rounded-2xl
+        max-sm:text-xs
         text-blueHover
         font-bold
         bg-none
