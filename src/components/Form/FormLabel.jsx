@@ -1,16 +1,27 @@
 import propTypes from "prop-types";
 
-export function FormLabel({ text, ...rest }) {
+export function FormLabel({ text, required = false, ...rest }) {
   return (
     <label
       {...rest}
       className="
             w-full
-            text-2xl
+            flex
+            gap-3
+            text-sm
             font-bold
             "
     >
       {text}
+      {required && (
+        <span
+          className="
+        text-rejected-dark
+        "
+        >
+          *
+        </span>
+      )}
     </label>
   );
 }

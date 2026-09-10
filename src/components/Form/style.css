@@ -1,202 +1,195 @@
 .form-budget-container-input {
-    display: flex;
-    height: fit-content;
-    flex-direction: column;
-    gap: 0.5vh;
-}
-
-label,
-.form-budget-label {
-    width: 100%;
-    font-size: large;
-    font-weight: 600;
+  display: flex;
+  height: fit-content;
+  flex-direction: column;
+  gap: 0.5vh;
 }
 
 input:not(input[type='checkbox']),
 select {
-    height: 5vh;
+  height: 5vh;
 }
 
 .form-budget-input-with-icon {
-    width: 100%;
-    display: flex;
-    position: relative;
-    flex-direction: row !important;
-    outline: 1px solid var(--borderDarkColor);
-    border-radius: 1vh;
-    overflow: visible;
-    background: var(--primaryDarkColor);
+  width: 100%;
+  display: flex;
+  position: relative;
+  flex-direction: row !important;
+  outline: 1px solid var(--borderDarkColor);
+  border-radius: 1vh;
+  overflow: visible;
+  background: var(--primaryDarkColor);
 }
 
 .form-budget-input-with-icon input {
-    background: none !important;
-    padding-right: 7.5vh;
-    outline: none !important;
+  background: none !important;
+  padding-right: 7.5vh;
+  outline: none !important;
 }
 
 .form-budget-input-with-icon:focus-within {
-    background: var(--blueHover);
-    outline: var(--blueDocument) 1px solid;
-    box-shadow: 0px 0px 10px var(--blueHover);
+  background: var(--blueHover);
+  outline: var(--blueDocument) 1px solid;
+  box-shadow: 0px 0px 10px var(--blueHover);
 }
 
 .form-budget-input-icon-button {
-    width: fit-content;
-    border-radius: 1vh;
-    padding-inline: 2vh;
+  width: fit-content;
+  border-radius: 1vh;
+  padding-inline: 2vh;
 }
 
 input:not(input[type='checkbox']):hover,
 textarea:hover,
 select:hover,
 .datePicker>div:first-child:hover {
-    background: var(--secondaryDarkColor);
+  background: var(--secondaryDarkColor);
 }
 
 input:not(input[type='checkbox']),
 textarea,
 select,
 .datePicker>div:first-child {
-    width: 100%;
-    font-size: medium;
-    background: var(--primaryDarkColor);
-    padding: 1vh 2.5vh;
-    border-radius: 1vh;
-    align-items: center;
-    outline: 1px solid var(--borderDarkColor);
-    color: white;
-    resize: none;
-    font-family: inherit;
+  width: 100%;
+  font-size: medium;
+  background: var(--primaryDarkColor);
+  padding: 1vh 2.5vh;
+  border-radius: 1vh;
+  align-items: center;
+  outline: 1px solid var(--borderDarkColor);
+  color: white;
+  resize: none;
+  font-family: inherit;
 }
 
 input:not(input[type='checkbox']):focus,
 textarea:focus,
 select:focus,
 .datePicker:focus {
-    background: var(--blueHover);
-    outline: var(--blueDocument) 1px solid;
-    box-shadow: 0px 0px 10px var(--blueHover);
+  background: var(--blueHover);
+  outline: var(--blueDocument) 1px solid;
+  box-shadow: 0px 0px 10px var(--blueHover);
 }
 
 .datePicker fieldset {
-    border: none;
+  border: none;
 }
 
 .datePicker>div>div {
-    padding: 0;
+  padding: 0;
 }
 
 .datePicker svg {
-    color: var(--blueDocument);
+  color: var(--blueDocument);
 }
 
 select {
-    appearance: base-select;
+  appearance: base-select;
 }
 
 .input-small {
-    width: 20%;
-    align-self: flex-end;
+  width: 20%;
+  align-self: flex-end;
 }
 
 .input-medium {
-    width: 30%;
-    align-self: flex-end;
-    justify-content: flex-end;
+  width: 30%;
+  align-self: flex-end;
+  justify-content: flex-end;
 }
 
 .input-large {
-    width: 60%;
-    align-self: flex-end;
+  width: 60%;
+  align-self: flex-end;
 }
 
 .input-xx-large {
-    width: 100%;
-    align-self: flex-end;
+  width: 100%;
+  align-self: flex-end;
 }
 
 .input-fill {
-    flex-grow: 1;
-    align-self: flex-end;
+  flex-grow: 1;
+  align-self: flex-end;
 }
 
 header,
 .content {
-    width: 100%;
-    justify-content: space-between;
-    align-items: center;
-    text-align: center;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
 }
 
 .budget-container-items {
-    width: 100%;
-    gap: 3vh;
-    flex-wrap: wrap;
-    align-items: end;
+  width: 100%;
+  gap: 3vh;
+  flex-wrap: wrap;
+  align-items: end;
 }
 
 .budget-content-items {
-    width: 100%;
-    min-height: 15vh;
-    padding-bottom: 3vh;
-    justify-content: center;
-    align-items: center;
-    color: #555;
-    border-bottom: var(--borderDarkColor) solid 1px;
+  width: 100%;
+  min-height: 15vh;
+  padding-bottom: 3vh;
+  justify-content: center;
+  align-items: center;
+  color: #555;
+  border-bottom: var(--borderDarkColor) solid 1px;
 }
 
 .budget-total-subtotal-container {
-    width: 100%;
-    align-items: flex-end !important;
-    flex-direction: column;
+  width: 100%;
+  align-items: flex-end !important;
+  flex-direction: column;
 }
 
 .budget-total-subtotal-container div {
-    width: 60%;
-    justify-content: space-between;
+  width: 60%;
+  justify-content: space-between;
 }
 
 .budget-total-subtotal-container div span {
-    padding-block: 2vh;
+  padding-block: 2vh;
 }
 
 .budget-total-subtotal-container .budget-subtotal-container.last {
-    border-bottom: var(--borderDarkColor) solid 1px;
+  border-bottom: var(--borderDarkColor) solid 1px;
 }
 
 .budget-subtotal-container.discount {
-    color: var(--successColor);
+  color: var(--successColor);
 }
 
 .budget-subtotal-container.taxes {
-    color: var(--errorColor);
+  color: var(--errorColor);
 }
 
 .budget-subtotal-container span {
-    font-weight: normal;
+  font-weight: normal;
 }
 
 .budget-total-container span {
-    font-size: x-large;
-    font-weight: bold;
+  font-size: x-large;
+  font-weight: bold;
 }
 
 @media (width < 500px) {
-    header {
-        flex-direction: column;
-        row-gap: 2vh;
-        align-items: stretch;
-    }
+  header {
+    flex-direction: column;
+    row-gap: 2vh;
+    align-items: stretch;
+  }
 
-    .input-small,
-    .input-medium,
-    .input-large,
-    .input-xx-large,
-    .input-fill {
-        flex-grow: 1;
-    }
+  .input-small,
+  .input-medium,
+  .input-large,
+  .input-xx-large,
+  .input-fill {
+    flex-grow: 1;
+  }
 
-    .budget-total-subtotal-container div {
-        width: 100%;
-    }
+  .budget-total-subtotal-container div {
+    width: 100%;
+  }
 }

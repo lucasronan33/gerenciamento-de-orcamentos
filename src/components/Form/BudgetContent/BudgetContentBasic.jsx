@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 import { Checkbox } from "@mui/material";
-import { DatePicker, TimePicker } from "@mui/x-date-pickers";
+import { DatePicker } from "@mui/x-date-pickers";
 import dayjs from "dayjs";
 import { Form } from "..";
 import { useBudget } from "../../../context/Budget";
@@ -25,7 +25,11 @@ export function BudgetContentBasic() {
   return (
     <>
       <Form.ContainerInput>
-        <Form.Label text="Numero do Orçamento *" htmlFor="budgetNumber" />
+        <Form.Label
+          text="Numero do Orçamento"
+          htmlFor="budgetNumber"
+          required
+        />
         <Form.LockedLabel
           placeholder="Numero do Orçamento"
           id="budgetNumber"
@@ -35,7 +39,11 @@ export function BudgetContentBasic() {
       </Form.ContainerInput>
 
       <Form.ContainerInput>
-        <Form.Label text="Título do orçamento *" htmlFor={"titleBudget"} />
+        <Form.Label
+          text="Título do orçamento"
+          htmlFor={"titleBudget"}
+          required
+        />
         <Form.Input
           type="text"
           placeholder="ex.: Nome do serviço"
@@ -46,11 +54,17 @@ export function BudgetContentBasic() {
         />
       </Form.ContainerInput>
 
-      <Form.ContainerInput size="meidum">
-        <Form.Label text="Status do Orçamento" htmlFor="budgetStatus" />
+      <Form.ContainerInput>
+        <Form.Label
+          text="Status do Orçamento"
+          htmlFor="budgetStatus"
+          required
+        />
 
         <select
           value={budget.basic.status}
+          id="budgetStatus"
+          name="budgetStatus"
           onChange={(e) => {
             updateBudget("basic", "status", e.target.value);
             if (e.target.value === "finished" && !budget.totals.amountPaid) {
@@ -152,26 +166,6 @@ export function BudgetContentBasic() {
             onChange={(date) => {
               if (!date) return;
               updateBudget("basic", "validUntil", new Date(date));
-            }}
-          />
-        </Form.ContainerInput>
-
-        <Form.ContainerInput>
-          <Form.Label htmlFor="time" text="Horário" />
-          <TimePicker
-            className="datePicker"
-            defaultValue={null}
-            slotProps={{
-              textField: {
-                id: "time",
-              },
-            }}
-            name="time"
-            value={dayjs(budget.basic.time, "HH:mm")}
-            onChange={(date) => {
-              if (!date) return;
-              const formatedTime = date.format("HH:mm");
-              updateBudget("basic", "time", formatedTime);
             }}
           />
         </Form.ContainerInput>

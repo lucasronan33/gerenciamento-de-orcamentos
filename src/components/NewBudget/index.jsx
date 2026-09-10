@@ -221,8 +221,7 @@ export default function NewBudget() {
           flex-wrap
           gap-y-3
           gap-x-50
-          bg-button-dark/90
-          backdrop-blur-2xl
+          backdrop-blur-xs
         "
         >
           <Button.Cancel onClick={handleCancel}>
