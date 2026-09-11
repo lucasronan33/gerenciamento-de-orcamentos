@@ -86,7 +86,7 @@ export default function CardBudget({ budget }) {
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       className="
-        bg-secondary-dark
+        bg-secondary/50
         p-[3vh]
         flex
         flex-wrap
@@ -95,6 +95,7 @@ export default function CardBudget({ budget }) {
         border
         border-border-dark
         rounded-[2vh]
+        hover:shadow-xl
         "
     >
       {viewBudget && <ViewBudget />}
@@ -105,7 +106,7 @@ export default function CardBudget({ budget }) {
       >
         <h2
           className="
-          line-clamp-2
+          line-clamp-1
           font-semibold
           w-full
           text-left
