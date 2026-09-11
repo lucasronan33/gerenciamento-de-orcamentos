@@ -19,7 +19,6 @@ export default function reducer(state = initialState, action) {
         errors: [],
       };
     case types.FETCH_BUDGETS_SUCCESS:
-      console.log(action.payload.length)
       return {
         ...state,
         isLoadingBudgets: false,

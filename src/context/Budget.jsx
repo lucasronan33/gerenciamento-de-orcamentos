@@ -31,16 +31,22 @@ const initialState = {
   },
 };
 
-function filterBudgetsBySearch(items, selectedFilter, value) {
+function filterBudgetsBySearch(items, selectedFilter, value, payment) {
   const normalizeValue = String(value).toLowerCase().trim();
 
   return items.filter((item) => {
     if (
       selectedFilter !== "all states" &&
       item.basic?.status !== selectedFilter
-    ) {
+    )
       return false;
-    }
+
+    const totalPaid =
+      item.totals.amountPaid.reduce(
+        (prev, acc) => prev + (acc.value || 0),
+        0,
+      ) ?? 0;
+    if (payment && !(totalPaid < item.totals.total)) return false;
 
     if (!normalizeValue) return true;
 
@@ -68,6 +74,8 @@ export function BudgetProvider({ children }) {
   const [filterSelected, setFilterSelected] = useState("all states");
   const [searchBudget, setSearchBudget] = useState("");
   const [filteredBudgets, setFilteredBudgets] = useState([]);
+  const [paymentPending, setPaymentPending] = useState(false);
+
   const { budgets, success, loadedBudgets } = useSelector(
     (state) => state.budget,
   );
@@ -76,13 +84,15 @@ export function BudgetProvider({ children }) {
 
   function inputFilterBudgets(value) {
     setSearchBudget(value);
-    setFilteredBudgets(filterBudgetsBySearch(budgets, filterSelected, value));
+    setFilteredBudgets(
+      filterBudgetsBySearch(budgets, filterSelected, value, paymentPending),
+    );
   }
 
   function filterBudgets(filterValue) {
     setFilterSelected(filterValue);
     setFilteredBudgets(
-      filterBudgetsBySearch(budgets, filterValue, searchBudget),
+      filterBudgetsBySearch(budgets, filterValue, searchBudget, paymentPending),
     );
   }
 
@@ -155,10 +165,15 @@ export function BudgetProvider({ children }) {
   useEffect(() => {
     setFilteredBudgets(
       structuredClone(
-        filterBudgetsBySearch(budgets, filterSelected, searchBudget),
+        filterBudgetsBySearch(
+          budgets,
+          filterSelected,
+          searchBudget,
+          paymentPending,
+        ),
       ),
     );
-  }, [budgets, filterSelected, searchBudget]);
+  }, [budgets, filterSelected, searchBudget, paymentPending]);
 
   return (
     <BudgetContext.Provider
@@ -170,6 +185,8 @@ export function BudgetProvider({ children }) {
         updateItem,
         updateTotals,
         calcTotal,
+        paymentPending,
+        setPaymentPending,
 
         budgetOpen,
         setBudgetOpen,
@@ -186,6 +203,7 @@ export function BudgetProvider({ children }) {
         inputFilterBudgets,
         filterBudgets,
         filteredBudgets,
+        setFilteredBudgets,
       }}
     >
       {" "}
