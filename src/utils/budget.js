@@ -46,16 +46,46 @@ export const groupBudgetsByDate = (budgets) => {
 
     if (selectedBudget) {
       selectedBudget.budgets.push(budget)
-      selectedBudget.total += Number(budget.totals.amountPaid || 0)
+      selectedBudget.total += budget.totals.amountPaid.reduce((prev = 0, acc) => (prev + Number(acc.value)), 0) || 0
       return selectedBudget
     }
     groupedBudgets.push({
       year,
       month,
       budgets: [budget],
-      total: Number(budget.totals.amountPaid || 0)
+      total: budget.totals.amountPaid.reduce((prev = 0, acc) => (prev + Number(acc.value)), 0) || 0
     })
 
+  })
+  return groupedBudgets
+}
+
+export const groupBudgetsByPaymentDate = (budgets) => {
+
+  const groupedBudgets = []
+  budgets.forEach(budget => {
+    budget.totals.amountPaid.forEach(b => {
+      const date = new Date(b.date)
+
+      const year = date.getFullYear()
+      const month = date.getMonth() + 1
+
+      const selectedBudget = groupedBudgets.find(item => item.year === year && item.month === month)
+
+      // console.log(b.value, new Date(b.date).toLocaleString())
+      if (selectedBudget) {
+        selectedBudget.total += Number(b.value) || 0
+        selectedBudget.budgets.push(budget)
+
+        return selectedBudget
+      }
+      groupedBudgets.push({
+        year,
+        month,
+        budgets: [budget],
+        total: Number(b.value) || 0
+      })
+    })
   })
   return groupedBudgets
 }

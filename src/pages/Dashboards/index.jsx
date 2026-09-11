@@ -20,6 +20,7 @@ import {
   getBudgetsByStatus,
   getLast12Months,
   groupBudgetsByDate,
+  groupBudgetsByPaymentDate,
 } from "@/utils/budget";
 import { Area, AreaChart } from "recharts";
 import Header from "../../components/Header";
@@ -48,17 +49,19 @@ const chartConfig = {
 export const Dashboards = () => {
   const { budgets } = useBudget();
 
-  const formatBudgets = groupBudgetsByDate(budgets);
-  const groupedBudgets = getLast12Months(formatBudgets);
+  const groupedBudgetsByPaymentDate = groupBudgetsByPaymentDate(budgets);
+  const last12MonthsPaidBudgets = getLast12Months(groupedBudgetsByPaymentDate);
+  const groupedBudgetsByDate = groupBudgetsByDate(budgets);
+  const last12MonthsBudgetsByDate = getLast12Months(groupedBudgetsByDate);
 
-  const recipeData = groupedBudgets.map((data) => ({
+  const recipeData = last12MonthsPaidBudgets.map((data) => ({
     month: new Intl.DateTimeFormat("pt-BR", { month: "long" }).format(
       new Date(data.year, data.month - 1, 1),
     ),
     total: data.total,
   }));
 
-  const chartBudgetsApproved = groupedBudgets.map((data) => ({
+  const chartBudgetsApproved = last12MonthsBudgetsByDate.map((data) => ({
     month: new Intl.DateTimeFormat("pt-BR", { month: "long" }).format(
       new Date(data.year, data.month - 1, 1),
     ),

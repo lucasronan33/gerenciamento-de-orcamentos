@@ -176,7 +176,7 @@ export function BudgetContentBasic() {
                     <Form.Input
                       name={"value" + i}
                       placeholder={"Valor pago"}
-                      value={Number(payment.value).toFixed(2)}
+                      value={payment.value}
                       onChange={(e) => {
                         setBudget((prev) => {
                           const nextAmountPaid = [...prev.totals.amountPaid];

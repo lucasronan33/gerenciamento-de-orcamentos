@@ -36,6 +36,7 @@ export default function DashboardsHeader() {
     return calcTotal();
   }, [budgets, getBudgetsByStatus]);
 
+  // console.log(budgets);
   const cards = [
     {
       title: "Receita",
