@@ -27,6 +27,7 @@ const initialState = {
     taxes: 0,
     shipping: 0,
     shippingType: "SF",
+    amountPaid: [],
   },
 };
 

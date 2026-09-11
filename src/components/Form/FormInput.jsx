@@ -8,10 +8,10 @@ export function FormInput({ placeholder, endIcon, onEndIconClick, ...rest }) {
         <input id={rest.id || rest.name} placeholder={placeholder} {...rest} />
         <button
           type="button"
-          className="form-budget-input-icon-button"
           onClick={onEndIconClick}
           aria-label={rest["aria-label"]}
           title={rest.title}
+          {...rest}
         >
           {endIcon}
         </button>
