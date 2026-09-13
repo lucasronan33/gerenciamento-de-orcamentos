@@ -46,7 +46,6 @@ export default function Home() {
     <div>
       <Header />
       <DashboardsHeader />
-      <BudgetStatusFilter />
       {/* <TableContent /> */}
       <div
         className="
@@ -63,6 +62,8 @@ export default function Home() {
           bg-secondary-dark
         "
       >
+        <BudgetStatusFilter />
+
         <div
           className="
           flex
