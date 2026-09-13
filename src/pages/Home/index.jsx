@@ -143,11 +143,11 @@ const LayoutGrid = ({ data }) => (
   <div
     className="
           w-full
-          gap-5
+          gap-3
           mx-auto
           grid
           items-start
-          grid-cols-[repeat(auto-fit,minmax(300px,1fr))]
+          sm:grid-cols-[repeat(auto-fit,minmax(300px,1fr))]
           "
   >
     {data.budgets.length < 1 ? (

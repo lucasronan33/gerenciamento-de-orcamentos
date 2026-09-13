@@ -86,16 +86,19 @@ export default function CardBudget({ budget }) {
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       className="
+      w-fit
         bg-secondary/50
-        p-[3vh]
+        p-5
         flex
+        flex-1
         flex-wrap
         items-center
         justify-center
         border
         border-border-dark
-        rounded-[2vh]
+        rounded-2xl
         hover:shadow-xl
+        text-sm
         "
     >
       {viewBudget && <ViewBudget />}
@@ -118,10 +121,11 @@ export default function CardBudget({ budget }) {
         </h2>
         <h4
           className="
-          pt-[1vh]
-          line-clamp-2
+          py-1
+          line-clamp-1
           text-secondaryText-dark
           text-left
+          text-xs
           justify-start
           w-full
           "
@@ -135,8 +139,7 @@ export default function CardBudget({ budget }) {
           flex
           justify-between
           items-end
-          pt-[1vh]
-          pb-[2vh]"
+          pb-5"
         >
           <p className="text-secondaryText-dark">{budget.basic.code} </p>
           <div
@@ -149,7 +152,7 @@ export default function CardBudget({ budget }) {
                 px-5
                 py-1.25
                 gap-2
-                text-sm
+                text-xs
                 text-center
                 border
                 rounded-[10px]
@@ -179,32 +182,57 @@ export default function CardBudget({ budget }) {
 
       <div
         className="
+        w-full
+        flex
+        flex-col
+        py-1
+        gap-y-3
+        "
+      >
+        <div
+          className="
           w-full
           flex
-          flex-col
-          py-[1vh]
-          gap-y-[1vh]"
-      >
-        <div className="w-full flex justify-between">
+          justify-between
+          "
+        >
           <p>Data: </p>
           <p>{dayjs(budget.basic.date).format("DD/MM/YYYY")} </p>
         </div>
 
         {budget.basic.validUntil ? (
-          <div className="w-full flex justify-between">
+          <div
+            className="
+            w-full
+            flex
+            justify-between
+            "
+          >
             <p>Validade: </p>
             <p>{dayjs(budget.basic.validUntil).format("DD/MM/YYYY")} </p>
           </div>
         ) : (
           budget.basic.time && (
-            <div className="w-full flex justify-between">
+            <div
+              className="
+              w-full
+              flex
+              justify-between
+              "
+            >
               <p>Horário: </p>
               <p>{budget.basic.time} </p>
             </div>
           )
         )}
 
-        <div className="w-full flex justify-between">
+        <div
+          className="
+          w-full
+          flex
+          justify-between
+          "
+        >
           <p>Itens: </p>
           <p>{budget.items?.length || 0} </p>
         </div>
@@ -217,9 +245,16 @@ export default function CardBudget({ budget }) {
           py-[1vh]
           gap-y-[1vh]"
       >
-        <div className="w-full flex justify-between">
-          <h3 className="pb-[2vh]">Total: </h3>
-          <h3 className="pb-[2vh]">{formatCurrency(budget.totals.total)} </h3>
+        <div
+          className="
+          w-full
+          flex
+          justify-between
+          font-bold
+          "
+        >
+          <h3>Total: </h3>
+          <h3>{formatCurrency(budget.totals.total)} </h3>
         </div>
       </div>
       <motion.div
@@ -231,7 +266,7 @@ export default function CardBudget({ budget }) {
           flex-wrap
           items-center
           justify-between
-          gap-[1vh]
+          gap-3
           overflow-hidden
           "
       >
