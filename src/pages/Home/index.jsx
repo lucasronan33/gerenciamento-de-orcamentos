@@ -3,13 +3,14 @@ import "./style.css";
 import { FileText, Grid3x2, Plus, Rows3, Users } from "lucide-react";
 import BudgetStatusFilter from "../../components/BudgetStatusFilter";
 import { Button } from "../../components/Button";
-import CardBudget from "../../components/Cards/CardBudget";
+import CardBudget, { statusClasses } from "../../components/Cards/CardBudget";
 import DashboardsHeader from "../../components/DashboardsHeader";
 import { Card } from "../../components/DashboardsHeader/styles";
 import Header from "../../components/Header";
 import { useBudget } from "../../context/Budget";
 // import TableContent from '../../components/TableContent';
 import { budgetStatus } from "@/utils/budget";
+import { formatCurrency, isEmptyObject } from "@/utils/masks";
 import dayjs from "dayjs";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -183,56 +184,56 @@ const LayoutGrid = ({ data }) => (
 );
 
 const LayoutRow = ({ data }) => {
-  const rowData = (obj = {}) => [
+  const rowData = (budget = {}) => [
     {
       header: "Cód.",
-      data: obj.basic.code,
+      data: budget.basic.code,
       align: "text-start",
     },
     {
       header: "Orc.",
-      data: obj.basic.title,
+      data: budget.basic.title,
       align: "text-start",
     },
     {
       header: "Cliente",
-      data: obj.client.name,
+      data: budget.client.name,
       align: "text-start",
     },
     {
       header: "Itens",
-      data: obj.items.length,
+      data: budget.items.length,
     },
     {
       header: "Valor",
-      data: obj.totals.total,
+      data: formatCurrency(budget.totals.total),
       align: "text-end",
     },
     {
       header: "Status",
-      data: budgetStatus.map((item) =>
-        item.value === obj.basic.status ? item.text : false,
-      ),
+      data:
+        budgetStatus.find((item) => item.value === budget.basic.status)?.text ??
+        "",
     },
     {
       header: "Data",
-      data: dayjs(obj.basic.date).format("DD/MM/YYYY"),
+      data: dayjs(budget.basic.date).format("DD/MM/YYYY"),
     },
     {
       header: "Validade",
-      data: dayjs(obj.basic.validUntil).format("DD/MM/YYYY"),
+      data: dayjs(budget.basic.validUntil).format("DD/MM/YYYY"),
     },
   ];
   return (
     <div
       className="
           w-full
-          h-[40vh]
+          max-h-[40vh]
           gap-3
           mx-auto
           flex
           flex-col
-          items-start
+          items-center
           bg-secondary/50
           border
           border-border-dark
@@ -261,52 +262,126 @@ const LayoutRow = ({ data }) => {
         </Card>
       ) : (
         <table className="w-full border-separate border-spacing-0">
-          <tr>
-            {rowData(data.filteredBudgets[0]).map((row, i) => (
-              <th
-                key={row.header + i}
-                className="
-                px-5
-                py-1
-                not-first:border-l
-                border-l-border-dark
-                bg-secondary-dark
-                sticky
-                top-0
-                z-20
-                "
-              >
-                {row.header}
-              </th>
-            ))}
-          </tr>
+          <thead>
+            <tr>
+              {rowData(data.filteredBudgets[0]).map((row, i) => (
+                <th
+                  key={row.header + i}
+                  className="
+                  px-5
+                  py-1
+                  not-first:border-l
+                  border-l-border-dark
+                  bg-secondary-dark
+                  sticky
+                  top-0
+                  z-20
+                  duration-300
+                  hover:bg-primary-dark
+                  cursor-pointer
+                  "
+                >
+                  {row.header}
+                </th>
+              ))}
+            </tr>
+          </thead>
           {data.filteredBudgets.map((budget) => {
             const date = (value) => {
               return dayjs(value).format("DD/MM/YYYY");
             };
             return (
-              <tr
-                key={budget._id}
-                className="
-              h-10
-              hover:bg-blueHover
-              "
-              >
-                {rowData(budget).map((line, index) => (
-                  <td
-                    key={line.header + line.data + index}
-                    className={`
+              <tbody>
+                <tr
+                  key={budget._id}
+                  className="
+                  h-10
+                  duration-300
+                  hover:bg-blueHover
+                  "
+                >
+                  {rowData(budget).map((line, index) => {
+                    if (
+                      budgetStatus.map((obj) => obj.text).includes(line.data)
+                    ) {
+                      const currentBudgetStatus = budgetStatus.reduce(
+                        (obj, item) => {
+                          if (item.value === budget.basic.status)
+                            obj = item.text;
+                          return obj;
+                        },
+                        {},
+                      );
+
+                      return (
+                        <td
+                          key={line.header + line.data + index}
+                          className={`
+                        ${line.align ? line.align : ""}
+                        px-5
+                        not-first:border-l
+                        border-t
+                        border-border-dark
+                    `}
+                        >
+                          <div
+                            className={
+                              !isEmptyObject(currentBudgetStatus)
+                                ? `
+                              flex
+                              items-center
+                              justify-center
+                              px-5
+                              py-1.25
+                              gap-2
+                              text-xs
+                              text-center
+                              border
+                              rounded-[10px]
+                ${statusClasses[currentBudgetStatus.toLowerCase()]}
+                  `
+                                : ""
+                            }
+                          >
+                            {!isEmptyObject(currentBudgetStatus)
+                              ? currentBudgetStatus
+                              : ""}
+                            {["approved", "producing", "finished"].includes(
+                              budget.basic.status,
+                            ) &&
+                              (!budget.totals.amountPaid ||
+                                budget.totals.amountPaid <
+                                  budget.totals.total) && (
+                                <div
+                                  className="
+                                w-2
+                                aspect-square
+                                bg-producing-dark
+                                rounded-full
+                                "
+                                />
+                              )}
+                          </div>
+                        </td>
+                      );
+                    }
+                    return (
+                      <td
+                        key={line.header + line.data + index}
+                        className={`
                     ${line.align ? line.align : ""}
                     px-5
                     not-first:border-l
                     border-t
                     border-border-dark
                     `}
-                  >
-                    {line.data}
-                  </td>
-                ))}
-              </tr>
+                      >
+                        {line.data}
+                      </td>
+                    );
+                  })}
+                </tr>
+              </tbody>
             );
           })}
         </table>
