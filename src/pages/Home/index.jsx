@@ -9,6 +9,8 @@ import { Card } from "../../components/DashboardsHeader/styles";
 import Header from "../../components/Header";
 import { useBudget } from "../../context/Budget";
 // import TableContent from '../../components/TableContent';
+import { budgetStatus } from "@/utils/budget";
+import dayjs from "dayjs";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -130,7 +132,9 @@ export default function Home() {
           })}
         </div>
 
-        {layoutSelected === "grid" && (
+        {layoutSelected === "row" ? (
+          <LayoutRow data={{ budgets, filteredBudgets }} />
+        ) : (
           <LayoutGrid data={{ budgets, filteredBudgets }} />
         )}
       </div>
@@ -177,3 +181,136 @@ const LayoutGrid = ({ data }) => (
     )}
   </div>
 );
+
+const LayoutRow = ({ data }) => {
+  const rowData = (obj = {}) => [
+    {
+      header: "Cód.",
+      data: obj.basic.code,
+      align: "text-start",
+    },
+    {
+      header: "Orc.",
+      data: obj.basic.title,
+      align: "text-start",
+    },
+    {
+      header: "Cliente",
+      data: obj.client.name,
+      align: "text-start",
+    },
+    {
+      header: "Itens",
+      data: obj.items.length,
+    },
+    {
+      header: "Valor",
+      data: obj.totals.total,
+      align: "text-end",
+    },
+    {
+      header: "Status",
+      data: budgetStatus.map((item) =>
+        item.value === obj.basic.status ? item.text : false,
+      ),
+    },
+    {
+      header: "Data",
+      data: dayjs(obj.basic.date).format("DD/MM/YYYY"),
+    },
+    {
+      header: "Validade",
+      data: dayjs(obj.basic.validUntil).format("DD/MM/YYYY"),
+    },
+  ];
+  return (
+    <div
+      className="
+          w-full
+          h-[40vh]
+          gap-3
+          mx-auto
+          flex
+          flex-col
+          items-start
+          bg-secondary/50
+          border
+          border-border-dark
+          rounded-xl
+          overflow-auto
+          "
+    >
+      {data.budgets.length < 1 ? (
+        <Card className="cardHomeNewBudget">
+          <FileText className="iconFile" />
+          <h3>Nenhum orçamento criado</h3>
+          <p>Clique no botão "Novo Orçamento" para começar</p>
+          <Button.Root
+            className="button-header"
+            onClick={() => setBudgetOpen(true)}
+          >
+            <Plus />
+            Novo Orçamento
+          </Button.Root>
+        </Card>
+      ) : data.filteredBudgets.length < 1 ? (
+        <Card className="cardHomeNewBudget">
+          <FileText className="iconFile" />
+          <h3>Nenhum orçamento encontrado</h3>
+          <p>Tente ajustar os filtros de busca</p>
+        </Card>
+      ) : (
+        <table className="w-full border-separate border-spacing-0">
+          <tr>
+            {rowData(data.filteredBudgets[0]).map((row, i) => (
+              <th
+                key={row.header + i}
+                className="
+                px-5
+                py-1
+                not-first:border-l
+                border-l-border-dark
+                bg-secondary-dark
+                sticky
+                top-0
+                z-20
+                "
+              >
+                {row.header}
+              </th>
+            ))}
+          </tr>
+          {data.filteredBudgets.map((budget) => {
+            const date = (value) => {
+              return dayjs(value).format("DD/MM/YYYY");
+            };
+            return (
+              <tr
+                key={budget._id}
+                className="
+              h-10
+              hover:bg-blueHover
+              "
+              >
+                {rowData(budget).map((line, index) => (
+                  <td
+                    key={line.header + line.data + index}
+                    className={`
+                    ${line.align ? line.align : ""}
+                    px-5
+                    not-first:border-l
+                    border-t
+                    border-border-dark
+                    `}
+                  >
+                    {line.data}
+                  </td>
+                ))}
+              </tr>
+            );
+          })}
+        </table>
+      )}
+    </div>
+  );
+};

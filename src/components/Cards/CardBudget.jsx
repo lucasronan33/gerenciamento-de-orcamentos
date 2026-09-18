@@ -19,7 +19,7 @@ import { Button } from "../Button";
 import { ViewBudget } from "../ViewBudget";
 import { ConfirmDeleteModal } from "./styled";
 
-const statusClasses = {
+export const statusClasses = {
   rascunho: `
         bg-sketch
         border-sketch-dark
