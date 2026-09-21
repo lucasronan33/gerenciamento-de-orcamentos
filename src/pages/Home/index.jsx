@@ -11,6 +11,7 @@ import { useBudget } from "../../context/Budget";
 // import TableContent from '../../components/TableContent';
 import { budgetStatus } from "@/utils/budget";
 import { formatCurrency, isEmptyObject } from "@/utils/masks";
+import { Checkbox } from "@mui/material";
 import dayjs from "dayjs";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -49,7 +50,6 @@ export default function Home() {
     <div>
       <Header />
       <DashboardsHeader />
-      {/* <TableContent /> */}
       <div
         className="
           max-w-[90%]
@@ -79,7 +79,7 @@ export default function Home() {
             if (layoutSelected === l.name)
               return (
                 <div
-                  key={i}
+                  key={i + crypto.randomUUID()}
                   onClick={() => setLayoutSelected(l.name)}
                   className="
                   p-3
@@ -177,22 +177,20 @@ const LayoutGrid = ({ data }) => (
       </Card>
     ) : (
       data.filteredBudgets.map((budget) => (
-        <CardBudget key={budget._id} budget={budget} />
+        <CardBudget key={budget._id + crypto.randomUUID()} budget={budget} />
       ))
     )}
   </div>
 );
 
 const LayoutRow = ({ data }) => {
+  const [checkboxSelected, setCheckboxSelected] = useState(false);
+  const [budgetsSelected, setBudgetsSelected] = useState([]);
+
   const rowData = (budget = {}) => [
     {
       header: "Cód.",
       data: budget.basic.code,
-      align: "text-start",
-    },
-    {
-      header: "Orc.",
-      data: budget.basic.title,
       align: "text-start",
     },
     {
@@ -201,8 +199,14 @@ const LayoutRow = ({ data }) => {
       align: "text-start",
     },
     {
+      header: "Orc.",
+      data: budget.basic.title,
+      align: "text-start",
+    },
+    {
       header: "Itens",
       data: budget.items.length,
+      align: "text-end",
     },
     {
       header: "Valor",
@@ -218,10 +222,12 @@ const LayoutRow = ({ data }) => {
     {
       header: "Data",
       data: dayjs(budget.basic.date).format("DD/MM/YYYY"),
+      align: "text-end",
     },
     {
       header: "Validade",
       data: dayjs(budget.basic.validUntil).format("DD/MM/YYYY"),
+      align: "text-end",
     },
   ];
   return (
@@ -233,12 +239,14 @@ const LayoutRow = ({ data }) => {
           mx-auto
           flex
           flex-col
-          items-center
+          items-start
           bg-secondary/50
           border
           border-border-dark
           rounded-xl
           overflow-auto
+
+          scrollbar-thumb-purpleHover
           "
     >
       {data.budgets.length < 1 ? (
@@ -261,73 +269,144 @@ const LayoutRow = ({ data }) => {
           <p>Tente ajustar os filtros de busca</p>
         </Card>
       ) : (
-        <table className="w-full border-separate border-spacing-0">
+        <table
+          key={crypto.randomUUID()}
+          className="
+          w-full
+          border-separate
+          border-spacing-0
+          max-sm:text-xs
+          "
+        >
           <thead>
             <tr>
+              <th
+                className="
+                bg-secondary-dark
+                sticky
+                top-0
+                z-20
+                duration-300
+                hover:bg-primary-dark
+                cursor-pointer
+                group
+                "
+              >
+                <Checkbox
+                  checked={
+                    budgetsSelected.length > 0 &&
+                    budgetsSelected.length === data.filteredBudgets.length
+                      ? true
+                      : false
+                  }
+                  onChange={() =>
+                    setBudgetsSelected(
+                      budgetsSelected.length < data.filteredBudgets.length
+                        ? [...data.filteredBudgets]
+                        : [],
+                    )
+                  }
+                  sx={{
+                    color: "var(--color-secondaryText-dark)",
+                  }}
+                  className={`
+                  group-hover:opacity-100  
+                  group-focus:opacity-100  
+                  ${budgetsSelected.length > 0 ? "opacity-100" : "opacity-0"}
+                  `}
+                />
+              </th>
               {rowData(data.filteredBudgets[0]).map((row, i) => (
                 <th
-                  key={row.header + i}
-                  className="
+                  key={row.header + i + crypto.randomUUID()}
+                  className={`
+                  ${row.align}
                   px-5
-                  py-1
-                  not-first:border-l
-                  border-l-border-dark
+                  py-2
+                  max-sm:py-3
                   bg-secondary-dark
                   sticky
                   top-0
                   z-20
                   duration-300
                   hover:bg-primary-dark
-                  cursor-pointer
-                  "
+                  cursor-pointer`}
                 >
                   {row.header}
                 </th>
               ))}
             </tr>
           </thead>
-          {data.filteredBudgets.map((budget) => {
-            const date = (value) => {
-              return dayjs(value).format("DD/MM/YYYY");
-            };
-            return (
-              <tbody>
-                <tr
-                  key={budget._id}
+          <tbody>
+            {data.filteredBudgets.map((budget) => (
+              <tr
+                key={budget._id + crypto.randomUUID()}
+                className="
+                h-10
+                duration-300
+                hover:bg-blueHover
+                group
+                "
+              >
+                <td
                   className="
-                  h-10
-                  duration-300
-                  hover:bg-blueHover
+                  border-t
+                  border-border-dark
                   "
                 >
-                  {rowData(budget).map((line, index) => {
-                    if (
-                      budgetStatus.map((obj) => obj.text).includes(line.data)
-                    ) {
-                      const currentBudgetStatus = budgetStatus.reduce(
-                        (obj, item) => {
-                          if (item.value === budget.basic.status)
-                            obj = item.text;
-                          return obj;
-                        },
-                        {},
-                      );
+                  <Checkbox
+                    checked={
+                      budgetsSelected.find((val) => val._id === budget._id)
+                        ? true
+                        : false
+                    }
+                    onChange={() =>
+                      setBudgetsSelected(
+                        budgetsSelected.find((val) => val._id === budget._id)
+                          ? [
+                              ...budgetsSelected.filter(
+                                (val) => val._id !== budget._id,
+                              ),
+                            ]
+                          : [...budgetsSelected, budget],
+                      )
+                    }
+                    sx={{
+                      color: "var(--color-secondaryText-dark)",
+                    }}
+                    className={`
+                    group-hover:opacity-100  
+                    group-focus:opacity-100  
+                    ${budgetsSelected.length > 0 ? "opacity-100" : "opacity-0"}
+                  `}
+                  />
+                </td>
+                {rowData(budget).map((line, index) => {
+                  if (budgetStatus.map((obj) => obj.text).includes(line.data)) {
+                    const currentBudgetStatus = budgetStatus.reduce(
+                      (obj, item) => {
+                        if (item.value === budget.basic.status) obj = item.text;
+                        return obj;
+                      },
+                      {},
+                    );
 
-                      return (
-                        <td
-                          key={line.header + line.data + index}
-                          className={`
-                        ${line.align ? line.align : ""}
-                        px-5
-                        not-first:border-l
-                        border-t
-                        border-border-dark
+                    return (
+                      <td
+                        key={
+                          line.header + line.data + index + crypto.randomUUID()
+                        }
+                        className={`
+                          ${line.align ? line.align : ""}
+                          px-5
+                          border-t
+                          border-border-dark
                     `}
-                        >
-                          <div
-                            className={
-                              !isEmptyObject(currentBudgetStatus)
-                                ? `
+                      >
+                        <div
+                          className={
+                            !isEmptyObject(currentBudgetStatus)
+                              ? `
                               flex
                               items-center
                               justify-center
@@ -340,50 +419,54 @@ const LayoutRow = ({ data }) => {
                               rounded-[10px]
                 ${statusClasses[currentBudgetStatus.toLowerCase()]}
                   `
-                                : ""
-                            }
-                          >
-                            {!isEmptyObject(currentBudgetStatus)
-                              ? currentBudgetStatus
-                              : ""}
-                            {["approved", "producing", "finished"].includes(
-                              budget.basic.status,
-                            ) &&
-                              (!budget.totals.amountPaid ||
-                                budget.totals.amountPaid <
-                                  budget.totals.total) && (
-                                <div
-                                  className="
+                              : ""
+                          }
+                        >
+                          {!isEmptyObject(currentBudgetStatus)
+                            ? currentBudgetStatus
+                            : ""}
+                          {["approved", "producing", "finished"].includes(
+                            budget.basic.status,
+                          ) &&
+                            (!budget.totals.amountPaid ||
+                              budget.totals.amountPaid <
+                                budget.totals.total) && (
+                              <div
+                                className="
                                 w-2
                                 aspect-square
                                 bg-producing-dark
                                 rounded-full
                                 "
-                                />
-                              )}
-                          </div>
-                        </td>
-                      );
-                    }
-                    return (
-                      <td
-                        key={line.header + line.data + index}
-                        className={`
+                              />
+                            )}
+                        </div>
+                      </td>
+                    );
+                  }
+                  return (
+                    <td
+                      key={line.header + line.data + index}
+                      className={`
                     ${line.align ? line.align : ""}
                     px-5
-                    not-first:border-l
                     border-t
                     border-border-dark
                     `}
+                    >
+                      <span
+                        className="
+                      line-clamp-1
+                      "
                       >
                         {line.data}
-                      </td>
-                    );
-                  })}
-                </tr>
-              </tbody>
-            );
-          })}
+                      </span>
+                    </td>
+                  );
+                })}
+              </tr>
+            ))}
+          </tbody>
         </table>
       )}
     </div>
