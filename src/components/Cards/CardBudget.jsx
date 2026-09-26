@@ -317,20 +317,15 @@ export default function CardBudget({ budget }) {
               do historico.
             </p>
             <div className="confirm-delete-actions">
-              <Button.Root
-                className="btn-cancel"
+              <Button.Cancel
                 onClick={() => setIsDeleteModalOpen(false)}
                 disabled={isDeleting}
               >
                 Cancelar
-              </Button.Root>
-              <Button.Root
-                className="btn-delete"
-                onClick={handleDelete}
-                disabled={isDeleting}
-              >
+              </Button.Cancel>
+              <Button.Primary onClick={handleDelete} disabled={isDeleting}>
                 {isDeleting ? "Excluindo..." : "Excluir"}
-              </Button.Root>
+              </Button.Primary>
             </div>
           </div>
         </ConfirmDeleteModal>

@@ -1,6 +1,17 @@
 import "./style.css";
 
-import { FileText, Grid3x2, Plus, Rows3, Users } from "lucide-react";
+import {
+  Copy,
+  EllipsisVertical,
+  FileText,
+  Grid3x2,
+  Pen,
+  Plus,
+  Printer,
+  Rows3,
+  Trash2,
+  Users,
+} from "lucide-react";
 import BudgetStatusFilter from "../../components/BudgetStatusFilter";
 import { Button } from "../../components/Button";
 import CardBudget, { statusClasses } from "../../components/Cards/CardBudget";
@@ -9,11 +20,23 @@ import { Card } from "../../components/DashboardsHeader/styles";
 import Header from "../../components/Header";
 import { useBudget } from "../../context/Budget";
 // import TableContent from '../../components/TableContent';
+import { ConfirmDeleteModal } from "@/components/Cards/styled";
+import { ViewBudget } from "@/components/ViewBudget";
+import {
+  createBudgetRequest,
+  deleteBudgetRequest,
+} from "@/store/modules/budget/actions";
 import { budgetStatus } from "@/utils/budget";
-import { formatCurrency, isEmptyObject } from "@/utils/masks";
+import {
+  formatCurrency,
+  generateBudgetCode,
+  isEmptyObject,
+} from "@/utils/masks";
 import { Checkbox } from "@mui/material";
 import dayjs from "dayjs";
 import { useState } from "react";
+import { createPortal } from "react-dom";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 const layout = [
@@ -184,8 +207,15 @@ const LayoutGrid = ({ data }) => (
 );
 
 const LayoutRow = ({ data }) => {
-  const [checkboxSelected, setCheckboxSelected] = useState(false);
+  const { setBudgetOpen, setBudget, setViewBudget, viewBudget } = useBudget();
+
   const [budgetsSelected, setBudgetsSelected] = useState([]);
+  const [budgetMenuOpen, setBudgetMenuOpen] = useState(false);
+  const [menuPosition, setMenuPosition] = useState({ top: 0, left: 0 });
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
+
+  const dispatch = useDispatch();
 
   const rowData = (budget = {}) => [
     {
@@ -196,7 +226,7 @@ const LayoutRow = ({ data }) => {
     {
       header: "Cliente",
       data: budget.client.name,
-      align: "text-start",
+      align: "text-start ",
     },
     {
       header: "Orc.",
@@ -230,6 +260,61 @@ const LayoutRow = ({ data }) => {
       align: "text-end",
     },
   ];
+
+  const budgetMenu = () => [
+    {
+      icon: Pen,
+      text: "Editar",
+      action: (budget) => {
+        setBudgetOpen(budget);
+        setBudget(budget);
+        setBudgetMenuOpen(false);
+      },
+    },
+    {
+      icon: Copy,
+      text: "Duplicar",
+      action: (budget) => {
+        const copy = { ...budget };
+        copy.basic.code = generateBudgetCode();
+
+        dispatch(createBudgetRequest(copy));
+        setBudgetMenuOpen(false);
+      },
+    },
+    {
+      icon: Printer,
+      text: "Imprimir",
+      action: (budget) => {
+        setViewBudget(budget);
+        setBudget(budget);
+        setBudgetMenuOpen(false);
+      },
+    },
+    {
+      icon: Trash2,
+      text: "Deletar",
+      action: () => {
+        setIsDeleteModalOpen(true);
+      },
+    },
+  ];
+
+  const handleDelete = async (budget) => {
+    console.log(budget);
+    try {
+      setIsDeleting(true);
+      dispatch(deleteBudgetRequest(budget));
+      setIsDeleteModalOpen(false);
+      setBudgetMenuOpen(false);
+    } catch {
+      setIsDeleteModalOpen(false);
+      setBudgetMenuOpen(false);
+    } finally {
+      setIsDeleting(false);
+      setBudgetMenuOpen(false);
+    }
+  };
   return (
     <div
       className="
@@ -240,7 +325,6 @@ const LayoutRow = ({ data }) => {
           flex
           flex-col
           items-start
-          bg-secondary/50
           border
           border-border-dark
           rounded-xl
@@ -249,6 +333,7 @@ const LayoutRow = ({ data }) => {
           scrollbar-thumb-purpleHover
           "
     >
+      {viewBudget && <ViewBudget />}
       {data.budgets.length < 1 ? (
         <Card className="cardHomeNewBudget">
           <FileText className="iconFile" />
@@ -278,14 +363,21 @@ const LayoutRow = ({ data }) => {
           max-sm:text-xs
           "
         >
-          <thead>
+          <thead
+            className="
+                sticky
+                inset-0
+                z-1
+                bg-secondary-dark
+              "
+          >
             <tr>
               <th
                 className="
-                bg-secondary-dark
                 sticky
-                top-0
-                z-20
+                inset-0
+                z-3
+                bg-secondary-dark
                 duration-300
                 hover:bg-primary-dark
                 cursor-pointer
@@ -327,7 +419,7 @@ const LayoutRow = ({ data }) => {
                   bg-secondary-dark
                   sticky
                   top-0
-                  z-20
+                  z-3
                   duration-300
                   hover:bg-primary-dark
                   cursor-pointer`}
@@ -335,6 +427,13 @@ const LayoutRow = ({ data }) => {
                   {row.header}
                 </th>
               ))}
+              <th
+                className="
+                sticky
+                inset-0
+                z-3
+                "
+              ></th>
             </tr>
           </thead>
           <tbody>
@@ -343,13 +442,20 @@ const LayoutRow = ({ data }) => {
                 key={budget._id + crypto.randomUUID()}
                 className="
                 h-10
-                duration-300
-                hover:bg-blueHover
                 group
+                relative
+                duration-300
+                bg-secondary
+                hover:bg-blueHover
+                focus:bg-blueHover
                 "
               >
                 <td
                   className="
+                  duration-300
+                  bg-secondary
+                  group-hover:bg-blueHover
+                  group-focus:bg-blueHover
                   border-t
                   border-border-dark
                   "
@@ -375,6 +481,7 @@ const LayoutRow = ({ data }) => {
                       color: "var(--color-secondaryText-dark)",
                     }}
                     className={`
+                      duration-300
                     group-hover:opacity-100  
                     group-focus:opacity-100  
                     ${budgetsSelected.length > 0 ? "opacity-100" : "opacity-0"}
@@ -398,6 +505,10 @@ const LayoutRow = ({ data }) => {
                         }
                         className={`
                           ${line.align ? line.align : ""}
+                          duration-300
+                          bg-secondary
+                          group-focus:bg-blueHover
+                          group-hover:bg-blueHover
                           px-5
                           border-t
                           border-border-dark
@@ -449,6 +560,10 @@ const LayoutRow = ({ data }) => {
                       key={line.header + line.data + index}
                       className={`
                     ${line.align ? line.align : ""}
+                    duration-300
+                    bg-secondary
+                    group-hover:bg-blueHover
+                    group-focus:bg-blueHover
                     px-5
                     border-t
                     border-border-dark
@@ -464,11 +579,149 @@ const LayoutRow = ({ data }) => {
                     </td>
                   );
                 })}
+                <td
+                  className="
+                  relative
+                  border-t
+                  border-border-dark
+                  "
+                >
+                  <EllipsisVertical
+                    onClick={(e) => {
+                      const rect = e.currentTarget.getBoundingClientRect();
+
+                      setBudgetsSelected([]);
+                      setBudgetMenuOpen({ ...budget });
+                      setMenuPosition(rect);
+                    }}
+                    className="
+                    text-secondaryText-dark
+                    opacity-0
+                    group-hover:opacity-100
+                    cursor-pointer
+                    "
+                  />
+                  {budgetMenuOpen?.basic?.code === budget.basic.code &&
+                    createPortal(
+                      <div
+                        onClick={() => setBudgetMenuOpen(false)}
+                        className="
+                        w-full
+                        h-full
+                        fixed
+                        inset-0
+                        z-1
+                        bg-black/20
+                        backdrop-blur-[2px]
+                        "
+                      >
+                        <div
+                          onClick={(e) => {
+                            e.stopPropagation();
+                          }}
+                          style={{
+                            top: menuPosition.bottom,
+                            right: window.innerWidth - menuPosition.left,
+                          }}
+                          className="
+                          w-fit
+                      absolute
+                      py-3
+                      right-[50%]
+                      z-2
+                      flex
+                      flex-col
+                      text-xs
+                      rounded-xl
+                      rounded-tr-none
+                      bg-purpleHover
+                      shadow-xl
+                      shadow-blueHover
+                      "
+                        >
+                          {budgetMenu(budget).map((menu, menuIndex) => {
+                            const Icon = menu.icon;
+                            return (
+                              <div
+                                key={menuIndex + crypto.randomUUID()}
+                                onClick={() => menu.action(budget)}
+                                className={`
+                        px-5
+                        py-2
+                        gap-3
+                        flex
+                        items-center
+                        cursor-pointer
+                        duration-300
+                        ${
+                          menu.text === "Deletar"
+                            ? "hover:bg-rejected-dark"
+                            : "hover:bg-blueHover"
+                        }
+                        ${
+                          menu.text === "Deletar"
+                            ? "hover:text-red-900"
+                            : "hover:text-primary"
+                        }
+                        
+                        not-first:border-t
+                        border-border-dark
+                        `}
+                              >
+                                <Icon size={"0.9rem"} />
+                                {menu.text}
+                              </div>
+                            );
+                          })}
+                        </div>
+                      </div>,
+                      document.body,
+                    )}
+                </td>
               </tr>
             ))}
           </tbody>
         </table>
       )}
+
+      {isDeleteModalOpen && budgetMenuOpen && (
+        <ConfirmDeleteModal>
+          <button
+            type="button"
+            className="confirm-delete-overlay"
+            aria-label="Fechar confirmacao"
+            onClick={() => setIsDeleteModalOpen(false)}
+          />
+          <div className="confirm-delete-content">
+            <h2>Excluir orçamento?</h2>
+            <p>
+              Esta acao vai remover o orçamento
+              {console.log(budgetMenuOpen)}
+              <strong> {budgetMenuOpen.basic.title} </strong>
+              do historico.
+            </p>
+            <div className="confirm-delete-actions">
+              <Button.Cancel
+                onClick={() => setIsDeleteModalOpen(false)}
+                disabled={isDeleting}
+              >
+                Cancelar
+              </Button.Cancel>
+              <Button.Primary
+                onClick={() => handleDelete(budgetMenuOpen)}
+                disabled={isDeleting}
+              >
+                {isDeleting ? "Excluindo..." : "Excluir"}
+              </Button.Primary>
+            </div>
+          </div>
+        </ConfirmDeleteModal>
+      )}
     </div>
   );
+};
+
+const DeleteModal = (budget, isDeleteModalOpen) => {
+  if (!isDeleteModalOpen) return;
+  return;
 };
