@@ -1,6 +1,7 @@
 import "./style.css";
 
 import {
+  ChevronDown,
   Copy,
   EllipsisVertical,
   FileText,
@@ -21,6 +22,7 @@ import Header from "../../components/Header";
 import { useBudget } from "../../context/Budget";
 // import TableContent from '../../components/TableContent';
 import { ConfirmDeleteModal } from "@/components/Cards/styled";
+import { Form } from "@/components/Form";
 import { ViewBudget } from "@/components/ViewBudget";
 import {
   createBudgetRequest,
@@ -33,6 +35,7 @@ import {
   isEmptyObject,
 } from "@/utils/masks";
 import { Checkbox } from "@mui/material";
+import { DatePicker } from "@mui/x-date-pickers";
 import dayjs from "dayjs";
 import { useState } from "react";
 import { createPortal } from "react-dom";
@@ -301,7 +304,11 @@ const LayoutRow = ({ data }) => {
   ];
 
   const handleDelete = async (budget) => {
-    console.log(budget);
+    if (!budget) {
+      setIsDeleteModalOpen(false);
+      setBudgetMenuOpen(false);
+      return;
+    }
     try {
       setIsDeleting(true);
       dispatch(deleteBudgetRequest(budget));
@@ -315,11 +322,222 @@ const LayoutRow = ({ data }) => {
       setBudgetMenuOpen(false);
     }
   };
+
+  const firtsBudget = data.filteredBudgets[0];
+
   return (
     <div
       className="
+      w-full
+      flex
+      flex-col
+      gap-3
+      "
+    >
+      {budgetsSelected.length > 0 && (
+        <table
+          className="
+          p-3
+          gap-1
+          bg-secondary
+          border
+          border-border-dark
+          rounded-md
+          border-separate
+          border-spacing-1
+          "
+        >
+          <thead>
+            <tr>
+              <td
+                className="
+              font-bold
+              text-sm
+              text-start
+              "
+              >
+                Valor:
+              </td>
+              <td
+                className="
+              font-bold
+              text-sm
+              text-start
+              "
+              >
+                Data:
+              </td>
+              <td
+                className="
+              font-bold
+              text-sm
+              text-start
+              "
+              >
+                Validade:
+              </td>
+              <td
+                className="
+              font-bold
+              text-sm
+              text-start
+              "
+              >
+                Status:
+              </td>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr>
+              <td>
+                <input type="number" min={0.1} placeholder="R$" />
+              </td>
+              <td>
+                <Form.ContainerInput>
+                  <DatePicker
+                    className="datePicker"
+                    format="DD/MM/YYYY"
+                    defaultValue={null}
+                  />
+                </Form.ContainerInput>
+              </td>
+              <td>
+                <Form.ContainerInput>
+                  <DatePicker
+                    className="datePicker"
+                    format="DD/MM/YYYY"
+                    defaultValue={null}
+                  />
+                </Form.ContainerInput>
+              </td>
+              <td>
+                {rowData(firtsBudget).map((line, index) => {
+                  if (budgetStatus.map((obj) => obj.text).includes(line.data)) {
+                    const currentBudgetStatus = budgetStatus.reduce(
+                      (obj, item) => {
+                        if (item.value === firtsBudget.basic.status)
+                          obj = item.text;
+                        return obj;
+                      },
+                      {},
+                    );
+
+                    return (
+                      <div
+                        key={crypto.randomUUID()}
+                        className="
+                        w-full
+                        h-full
+                        px-3
+                        py-3
+                        flex
+                        items-center
+                        justify-between
+                        border
+                        border-border-dark
+                        rounded-md
+                        duration-300
+                        hover:bg-blueHover
+                        cursor-pointer
+                      "
+                      >
+                        <div
+                          className={
+                            !isEmptyObject(currentBudgetStatus)
+                              ? `
+                    w-fit
+                    flex
+                    items-center
+                    justify-center
+                    px-5
+                    py-1.25
+                    gap-2
+                    text-xs
+                    text-center
+                    border
+                    rounded-[10px]
+                ${statusClasses[currentBudgetStatus.toLowerCase()]}
+                  `
+                              : ""
+                          }
+                        >
+                          {!isEmptyObject(currentBudgetStatus)
+                            ? currentBudgetStatus
+                            : ""}
+                        </div>
+
+                        <ChevronDown />
+                      </div>
+                    );
+                  }
+                })}
+              </td>
+              <td>
+                <div
+                  className="
+                  w-fit
+                  h-full
+                  p-2
+                  flex
+                  items-center
+                  rounded-md
+
+                  text-gray-500
+                  hover:text-blueDocument
+                  border-2
+                  border-secondary-dark
+                  bg-secondary-dark
+                  inset-shadow-sm
+                  inset-shadow-primary-dark
+                  hover:border-blueHover
+                  hover:bg-blueHover
+                  hover:inset-shadow-sm
+                  hover:inset-shadow-secondary
+                  cursor-pointer
+                  "
+                >
+                  <Copy />
+                </div>
+              </td>
+              <td>
+                <div
+                  className="
+                  w-fit
+                  h-full
+                  p-2
+                  flex
+                  items-center
+                  rounded-md
+
+                  border-2
+                  text-rejected
+                  hover:text-white
+                  border-rejected
+                  bg-rejected
+                  inset-shadow-sm
+                  inset-shadow-black/20
+                  hover:border-rejected-dark
+                  hover:bg-rejected-dark
+                  hover:inset-shadow-sm
+                  hover:inset-shadow-secondary
+                  cursor-pointer
+                  "
+                >
+                  <Trash2 />
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      )}
+      <div
+        className="
           w-full
-          max-h-[40vh]
+          min-h-[40vh]
+          h-[40vh]
+          max-h-fit
+          resize-y
           gap-3
           mx-auto
           flex
@@ -332,48 +550,48 @@ const LayoutRow = ({ data }) => {
 
           scrollbar-thumb-purpleHover
           "
-    >
-      {viewBudget && <ViewBudget />}
-      {data.budgets.length < 1 ? (
-        <Card className="cardHomeNewBudget">
-          <FileText className="iconFile" />
-          <h3>Nenhum orçamento criado</h3>
-          <p>Clique no botão "Novo Orçamento" para começar</p>
-          <Button.Root
-            className="button-header"
-            onClick={() => setBudgetOpen(true)}
-          >
-            <Plus />
-            Novo Orçamento
-          </Button.Root>
-        </Card>
-      ) : data.filteredBudgets.length < 1 ? (
-        <Card className="cardHomeNewBudget">
-          <FileText className="iconFile" />
-          <h3>Nenhum orçamento encontrado</h3>
-          <p>Tente ajustar os filtros de busca</p>
-        </Card>
-      ) : (
-        <table
-          key={crypto.randomUUID()}
-          className="
+      >
+        {viewBudget && <ViewBudget />}
+        {data.budgets.length < 1 ? (
+          <Card className="cardHomeNewBudget">
+            <FileText className="iconFile" />
+            <h3>Nenhum orçamento criado</h3>
+            <p>Clique no botão "Novo Orçamento" para começar</p>
+            <Button.Root
+              className="button-header"
+              onClick={() => setBudgetOpen(true)}
+            >
+              <Plus />
+              Novo Orçamento
+            </Button.Root>
+          </Card>
+        ) : data.filteredBudgets.length < 1 ? (
+          <Card className="cardHomeNewBudget">
+            <FileText className="iconFile" />
+            <h3>Nenhum orçamento encontrado</h3>
+            <p>Tente ajustar os filtros de busca</p>
+          </Card>
+        ) : (
+          <table
+            key={crypto.randomUUID()}
+            className="
           w-full
           border-separate
           border-spacing-0
           max-sm:text-xs
           "
-        >
-          <thead
-            className="
+          >
+            <thead
+              className="
                 sticky
                 inset-0
                 z-1
                 bg-secondary-dark
               "
-          >
-            <tr>
-              <th
-                className="
+            >
+              <tr>
+                <th
+                  className="
                 sticky
                 inset-0
                 z-3
@@ -383,35 +601,35 @@ const LayoutRow = ({ data }) => {
                 cursor-pointer
                 group
                 "
-              >
-                <Checkbox
-                  checked={
-                    budgetsSelected.length > 0 &&
-                    budgetsSelected.length === data.filteredBudgets.length
-                      ? true
-                      : false
-                  }
-                  onChange={() =>
-                    setBudgetsSelected(
-                      budgetsSelected.length < data.filteredBudgets.length
-                        ? [...data.filteredBudgets]
-                        : [],
-                    )
-                  }
-                  sx={{
-                    color: "var(--color-secondaryText-dark)",
-                  }}
-                  className={`
+                >
+                  <Checkbox
+                    checked={
+                      budgetsSelected.length > 0 &&
+                      budgetsSelected.length === data.filteredBudgets.length
+                        ? true
+                        : false
+                    }
+                    onChange={() =>
+                      setBudgetsSelected(
+                        budgetsSelected.length < data.filteredBudgets.length
+                          ? [...data.filteredBudgets]
+                          : [],
+                      )
+                    }
+                    sx={{
+                      color: "var(--color-secondaryText-dark)",
+                    }}
+                    className={`
                   group-hover:opacity-100  
                   group-focus:opacity-100  
                   ${budgetsSelected.length > 0 ? "opacity-100" : "opacity-0"}
                   `}
-                />
-              </th>
-              {rowData(data.filteredBudgets[0]).map((row, i) => (
-                <th
-                  key={row.header + i + crypto.randomUUID()}
-                  className={`
+                  />
+                </th>
+                {rowData(data.filteredBudgets[0]).map((row, i) => (
+                  <th
+                    key={row.header + i + crypto.randomUUID()}
+                    className={`
                   ${row.align}
                   px-5
                   py-2
@@ -423,24 +641,24 @@ const LayoutRow = ({ data }) => {
                   duration-300
                   hover:bg-primary-dark
                   cursor-pointer`}
-                >
-                  {row.header}
-                </th>
-              ))}
-              <th
-                className="
+                  >
+                    {row.header}
+                  </th>
+                ))}
+                <th
+                  className="
                 sticky
                 inset-0
                 z-3
                 "
-              ></th>
-            </tr>
-          </thead>
-          <tbody>
-            {data.filteredBudgets.map((budget) => (
-              <tr
-                key={budget._id + crypto.randomUUID()}
-                className="
+                ></th>
+              </tr>
+            </thead>
+            <tbody>
+              {data.filteredBudgets.map((budget) => (
+                <tr
+                  key={budget._id + crypto.randomUUID()}
+                  className="
                 h-10
                 group
                 relative
@@ -449,9 +667,9 @@ const LayoutRow = ({ data }) => {
                 hover:bg-blueHover
                 focus:bg-blueHover
                 "
-              >
-                <td
-                  className="
+                >
+                  <td
+                    className="
                   duration-300
                   bg-secondary
                   group-hover:bg-blueHover
@@ -459,51 +677,57 @@ const LayoutRow = ({ data }) => {
                   border-t
                   border-border-dark
                   "
-                >
-                  <Checkbox
-                    checked={
-                      budgetsSelected.find((val) => val._id === budget._id)
-                        ? true
-                        : false
-                    }
-                    onChange={() =>
-                      setBudgetsSelected(
+                  >
+                    <Checkbox
+                      checked={
                         budgetsSelected.find((val) => val._id === budget._id)
-                          ? [
-                              ...budgetsSelected.filter(
-                                (val) => val._id !== budget._id,
-                              ),
-                            ]
-                          : [...budgetsSelected, budget],
-                      )
-                    }
-                    sx={{
-                      color: "var(--color-secondaryText-dark)",
-                    }}
-                    className={`
+                          ? true
+                          : false
+                      }
+                      onChange={() =>
+                        setBudgetsSelected(
+                          budgetsSelected.find((val) => val._id === budget._id)
+                            ? [
+                                ...budgetsSelected.filter(
+                                  (val) => val._id !== budget._id,
+                                ),
+                              ]
+                            : [...budgetsSelected, budget],
+                        )
+                      }
+                      sx={{
+                        color: "var(--color-secondaryText-dark)",
+                      }}
+                      className={`
                       duration-300
                     group-hover:opacity-100  
                     group-focus:opacity-100  
                     ${budgetsSelected.length > 0 ? "opacity-100" : "opacity-0"}
                   `}
-                  />
-                </td>
-                {rowData(budget).map((line, index) => {
-                  if (budgetStatus.map((obj) => obj.text).includes(line.data)) {
-                    const currentBudgetStatus = budgetStatus.reduce(
-                      (obj, item) => {
-                        if (item.value === budget.basic.status) obj = item.text;
-                        return obj;
-                      },
-                      {},
-                    );
+                    />
+                  </td>
+                  {rowData(budget).map((line, index) => {
+                    if (
+                      budgetStatus.map((obj) => obj.text).includes(line.data)
+                    ) {
+                      const currentBudgetStatus = budgetStatus.reduce(
+                        (obj, item) => {
+                          if (item.value === budget.basic.status)
+                            obj = item.text;
+                          return obj;
+                        },
+                        {},
+                      );
 
-                    return (
-                      <td
-                        key={
-                          line.header + line.data + index + crypto.randomUUID()
-                        }
-                        className={`
+                      return (
+                        <td
+                          key={
+                            line.header +
+                            line.data +
+                            index +
+                            crypto.randomUUID()
+                          }
+                          className={`
                           ${line.align ? line.align : ""}
                           duration-300
                           bg-secondary
@@ -513,11 +737,11 @@ const LayoutRow = ({ data }) => {
                           border-t
                           border-border-dark
                     `}
-                      >
-                        <div
-                          className={
-                            !isEmptyObject(currentBudgetStatus)
-                              ? `
+                        >
+                          <div
+                            className={
+                              !isEmptyObject(currentBudgetStatus)
+                                ? `
                               flex
                               items-center
                               justify-center
@@ -530,35 +754,35 @@ const LayoutRow = ({ data }) => {
                               rounded-[10px]
                 ${statusClasses[currentBudgetStatus.toLowerCase()]}
                   `
-                              : ""
-                          }
-                        >
-                          {!isEmptyObject(currentBudgetStatus)
-                            ? currentBudgetStatus
-                            : ""}
-                          {["approved", "producing", "finished"].includes(
-                            budget.basic.status,
-                          ) &&
-                            (!budget.totals.amountPaid ||
-                              budget.totals.amountPaid <
-                                budget.totals.total) && (
-                              <div
-                                className="
+                                : ""
+                            }
+                          >
+                            {!isEmptyObject(currentBudgetStatus)
+                              ? currentBudgetStatus
+                              : ""}
+                            {["approved", "producing", "finished"].includes(
+                              budget.basic.status,
+                            ) &&
+                              (!budget.totals.amountPaid ||
+                                budget.totals.amountPaid <
+                                  budget.totals.total) && (
+                                <div
+                                  className="
                                 w-2
                                 aspect-square
                                 bg-producing-dark
                                 rounded-full
                                 "
-                              />
-                            )}
-                        </div>
-                      </td>
-                    );
-                  }
-                  return (
-                    <td
-                      key={line.header + line.data + index}
-                      className={`
+                                />
+                              )}
+                          </div>
+                        </td>
+                      );
+                    }
+                    return (
+                      <td
+                        key={line.header + line.data + index}
+                        className={`
                     ${line.align ? line.align : ""}
                     duration-300
                     bg-secondary
@@ -568,44 +792,44 @@ const LayoutRow = ({ data }) => {
                     border-t
                     border-border-dark
                     `}
-                    >
-                      <span
-                        className="
+                      >
+                        <span
+                          className="
                       line-clamp-1
                       "
-                      >
-                        {line.data}
-                      </span>
-                    </td>
-                  );
-                })}
-                <td
-                  className="
+                        >
+                          {line.data}
+                        </span>
+                      </td>
+                    );
+                  })}
+                  <td
+                    className="
                   relative
                   border-t
                   border-border-dark
                   "
-                >
-                  <EllipsisVertical
-                    onClick={(e) => {
-                      const rect = e.currentTarget.getBoundingClientRect();
+                  >
+                    <EllipsisVertical
+                      onClick={(e) => {
+                        const rect = e.currentTarget.getBoundingClientRect();
 
-                      setBudgetsSelected([]);
-                      setBudgetMenuOpen({ ...budget });
-                      setMenuPosition(rect);
-                    }}
-                    className="
+                        setBudgetsSelected([]);
+                        setBudgetMenuOpen({ ...budget });
+                        setMenuPosition(rect);
+                      }}
+                      className="
                     text-secondaryText-dark
                     opacity-0
                     group-hover:opacity-100
                     cursor-pointer
                     "
-                  />
-                  {budgetMenuOpen?.basic?.code === budget.basic.code &&
-                    createPortal(
-                      <div
-                        onClick={() => setBudgetMenuOpen(false)}
-                        className="
+                    />
+                    {budgetMenuOpen?.basic?.code === budget.basic.code &&
+                      createPortal(
+                        <div
+                          onClick={() => setBudgetMenuOpen(false)}
+                          className="
                         w-full
                         h-full
                         fixed
@@ -614,16 +838,16 @@ const LayoutRow = ({ data }) => {
                         bg-black/20
                         backdrop-blur-[2px]
                         "
-                      >
-                        <div
-                          onClick={(e) => {
-                            e.stopPropagation();
-                          }}
-                          style={{
-                            top: menuPosition.bottom,
-                            right: window.innerWidth - menuPosition.left,
-                          }}
-                          className="
+                        >
+                          <div
+                            onClick={(e) => {
+                              e.stopPropagation();
+                            }}
+                            style={{
+                              top: menuPosition.bottom,
+                              right: window.innerWidth - menuPosition.left,
+                            }}
+                            className="
                           w-fit
                       absolute
                       py-3
@@ -638,14 +862,14 @@ const LayoutRow = ({ data }) => {
                       shadow-xl
                       shadow-blueHover
                       "
-                        >
-                          {budgetMenu(budget).map((menu, menuIndex) => {
-                            const Icon = menu.icon;
-                            return (
-                              <div
-                                key={menuIndex + crypto.randomUUID()}
-                                onClick={() => menu.action(budget)}
-                                className={`
+                          >
+                            {budgetMenu(budget).map((menu, menuIndex) => {
+                              const Icon = menu.icon;
+                              return (
+                                <div
+                                  key={menuIndex + crypto.randomUUID()}
+                                  onClick={() => menu.action(budget)}
+                                  className={`
                         px-5
                         py-2
                         gap-3
@@ -667,56 +891,56 @@ const LayoutRow = ({ data }) => {
                         not-first:border-t
                         border-border-dark
                         `}
-                              >
-                                <Icon size={"0.9rem"} />
-                                {menu.text}
-                              </div>
-                            );
-                          })}
-                        </div>
-                      </div>,
-                      document.body,
-                    )}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      )}
+                                >
+                                  <Icon size={"0.9rem"} />
+                                  {menu.text}
+                                </div>
+                              );
+                            })}
+                          </div>
+                        </div>,
+                        document.body,
+                      )}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
 
-      {isDeleteModalOpen && budgetMenuOpen && (
-        <ConfirmDeleteModal>
-          <button
-            type="button"
-            className="confirm-delete-overlay"
-            aria-label="Fechar confirmacao"
-            onClick={() => setIsDeleteModalOpen(false)}
-          />
-          <div className="confirm-delete-content">
-            <h2>Excluir orçamento?</h2>
-            <p>
-              Esta acao vai remover o orçamento
-              {console.log(budgetMenuOpen)}
-              <strong> {budgetMenuOpen.basic.title} </strong>
-              do historico.
-            </p>
-            <div className="confirm-delete-actions">
-              <Button.Cancel
-                onClick={() => setIsDeleteModalOpen(false)}
-                disabled={isDeleting}
-              >
-                Cancelar
-              </Button.Cancel>
-              <Button.Primary
-                onClick={() => handleDelete(budgetMenuOpen)}
-                disabled={isDeleting}
-              >
-                {isDeleting ? "Excluindo..." : "Excluir"}
-              </Button.Primary>
+        {isDeleteModalOpen && budgetMenuOpen && (
+          <ConfirmDeleteModal>
+            <button
+              type="button"
+              className="confirm-delete-overlay"
+              aria-label="Fechar confirmacao"
+              onClick={() => setIsDeleteModalOpen(false)}
+            />
+            <div className="confirm-delete-content">
+              <h2>Excluir orçamento?</h2>
+              <p>
+                Esta acao vai remover o orçamento
+                <strong> {budgetMenuOpen.basic.title} </strong>
+                do historico.
+              </p>
+              <div className="confirm-delete-actions">
+                <Button.Cancel
+                  onClick={() => setIsDeleteModalOpen(false)}
+                  disabled={isDeleting}
+                >
+                  Cancelar
+                </Button.Cancel>
+                <Button.Primary
+                  onClick={() => handleDelete(budgetMenuOpen)}
+                  disabled={isDeleting}
+                >
+                  {isDeleting ? "Excluindo..." : "Excluir"}
+                </Button.Primary>
+              </div>
             </div>
-          </div>
-        </ConfirmDeleteModal>
-      )}
+          </ConfirmDeleteModal>
+        )}
+      </div>
     </div>
   );
 };
