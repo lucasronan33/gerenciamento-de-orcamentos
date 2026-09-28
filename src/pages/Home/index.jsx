@@ -74,7 +74,11 @@ export default function Home() {
   ];
 
   return (
-    <div>
+    <div
+      className="
+      pb-20
+      "
+    >
       <Header />
       <DashboardsHeader />
       <div
@@ -96,8 +100,8 @@ export default function Home() {
 
         <div
           className="
-          flex
           h-fit
+          flex
           gap-3
           "
         >
@@ -335,6 +339,120 @@ const LayoutRow = ({ data }) => {
       gap-3
       "
     >
+      {budgetsSelected.length > 0 &&
+        createPortal(
+          <footer
+            className="
+            w-full
+            fixed
+            bottom-0
+            bg-primary-dark/75
+            backdrop-blur-xl
+            shadow-xl
+            shadow-purpleHover
+            "
+          >
+            <div
+              className="
+              w-[90%]
+              m-auto
+              flex
+              justify-end
+              gap-5
+              text-sm
+              py-2
+              "
+            >
+              <span
+                className="
+              h-full
+              px-3
+              py-2
+              flex
+              rounded-md
+              rounded-bl-none
+              bg-sketch
+              text-sketch-dark
+              items-center
+              "
+              >
+                {`Selecionados: ${budgetsSelected.length}`}
+              </span>
+
+              {budgetsSelected.reduce(
+                (prev, acc) =>
+                  prev + acc.totals.amountPaid.reduce((p, a) => p + a.value, 0),
+                0,
+              ) <
+                budgetsSelected.reduce(
+                  (prev, acc) => prev + acc.totals.total,
+                  0,
+                ) && (
+                <div
+                  className="
+              px-3
+              py-2
+              rounded-md
+              rounded-bl-none
+              bg-producing
+              text-producing-dark
+              "
+                >
+                  Pendente:
+                  <span
+                    className="
+              pl-2
+              font-semibold
+              "
+                  >
+                    {formatCurrency(
+                      budgetsSelected.reduce(
+                        (prev, acc) => prev + acc.totals.total,
+                        0,
+                      ) -
+                        budgetsSelected.reduce(
+                          (prev, acc) =>
+                            prev +
+                            acc.totals.amountPaid.reduce(
+                              (p, a) => p + a.value,
+                              0,
+                            ),
+                          0,
+                        ),
+                    )}
+                  </span>
+                </div>
+              )}
+
+              <div
+                className="
+              px-3
+              py-2
+              rounded-md
+              rounded-bl-none
+              bg-finished
+              text-finished-dark
+              "
+              >
+                Total:
+                <span
+                  className="
+              pl-2
+              font-semibold
+              "
+                >
+                  {formatCurrency(
+                    budgetsSelected.reduce(
+                      (prev, acc) => prev + acc.totals.total,
+                      0,
+                    ),
+                  )}
+                </span>
+              </div>
+            </div>
+          </footer>,
+          document.body,
+        )}
       {budgetsSelected.length > 0 && (
         <section
           className="
@@ -623,7 +741,6 @@ const LayoutRow = ({ data }) => {
       <div
         className="
           w-full
-          min-h-[40vh]
           h-[40vh]
           max-h-fit
           resize-y
