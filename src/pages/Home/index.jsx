@@ -10,6 +10,7 @@ import {
   Plus,
   Printer,
   Rows3,
+  Save,
   Trash2,
   Users,
 } from "lucide-react";
@@ -335,83 +336,145 @@ const LayoutRow = ({ data }) => {
       "
     >
       {budgetsSelected.length > 0 && (
-        <table
+        <section
           className="
-          p-3
-          gap-1
-          bg-secondary
-          border
-          border-border-dark
-          rounded-md
-          border-separate
-          border-spacing-1
-          "
+            w-full
+            flex
+            flex-col
+            p-3
+            gap-3
+            bg-secondary
+            border
+            border-border-dark
+            rounded-md
+            "
         >
-          <thead>
-            <tr>
-              <td
-                className="
-              font-bold
-              text-sm
-              text-start
+          <div
+            className="
+            w-full
+            flex
+            gap-3
+            "
+          >
+            <div
+              className="
+              w-fit
+              h-full
+              flex
+              flex-col
+              gap-1
+              self-stretch
               "
+            >
+              <span
+                className="
+                text-sm
+                text-start
+                font-bold
+                "
               >
                 Valor:
-              </td>
-              <td
-                className="
-              font-bold
+              </span>
+              <input type="number" min={0.1} placeholder="R$" />
+            </div>
+            <div
+              className="
+              w-fit
+              h-full
+              flex
+              flex-col
+              gap-1
               text-sm
               text-start
+              font-bold
               "
+            >
+              <span
+                className="
+                text-sm
+                text-start
+                font-bold
+                "
               >
                 Data:
-              </td>
-              <td
-                className="
-              font-bold
+              </span>
+              <Form.ContainerInput>
+                <DatePicker
+                  className="datePicker"
+                  format="DD/MM/YYYY"
+                  defaultValue={null}
+                />
+              </Form.ContainerInput>
+            </div>
+            <div
+              className="
+              w-fit
+              h-full
+              flex
+              flex-col
+              gap-1
               text-sm
               text-start
+              font-bold
               "
+            >
+              <span
+                className="
+                text-sm
+                text-start
+                font-bold
+                "
               >
                 Validade:
-              </td>
-              <td
-                className="
-              font-bold
+              </span>
+              <Form.ContainerInput>
+                <DatePicker
+                  className="datePicker"
+                  format="DD/MM/YYYY"
+                  defaultValue={null}
+                />
+              </Form.ContainerInput>
+            </div>
+            <div
+              className="
+              w-fit
+              h-full
+              flex
+              flex-col
+              self-stretch
+              gap-1
               text-sm
               text-start
+              font-bold
               "
+            >
+              <span
+                className="
+                text-sm
+                text-start
+                font-bold
+                "
               >
                 Status:
-              </td>
-            </tr>
-          </thead>
+              </span>
 
-          <tbody>
-            <tr>
-              <td>
-                <input type="number" min={0.1} placeholder="R$" />
-              </td>
-              <td>
-                <Form.ContainerInput>
-                  <DatePicker
-                    className="datePicker"
-                    format="DD/MM/YYYY"
-                    defaultValue={null}
-                  />
-                </Form.ContainerInput>
-              </td>
-              <td>
-                <Form.ContainerInput>
-                  <DatePicker
-                    className="datePicker"
-                    format="DD/MM/YYYY"
-                    defaultValue={null}
-                  />
-                </Form.ContainerInput>
-              </td>
-              <td>
+              <div
+                className="
+                w-full
+                h-full
+                p-2.5
+                flex
+                gap-3
+                items-center
+                justify-between
+                border
+                border-border-dark
+                rounded-md
+                duration-300
+                hover:bg-blueHover
+                cursor-pointer
+              "
+              >
                 {rowData(firtsBudget).map((line, index) => {
                   if (budgetStatus.map((obj) => obj.text).includes(line.data)) {
                     const currentBudgetStatus = budgetStatus.reduce(
@@ -426,56 +489,50 @@ const LayoutRow = ({ data }) => {
                     return (
                       <div
                         key={crypto.randomUUID()}
-                        className="
-                        w-full
-                        h-full
-                        px-3
-                        py-3
-                        flex
-                        items-center
-                        justify-between
-                        border
-                        border-border-dark
-                        rounded-md
-                        duration-300
-                        hover:bg-blueHover
-                        cursor-pointer
-                      "
+                        className={
+                          !isEmptyObject(currentBudgetStatus)
+                            ? `
+                              w-fit
+                              h-full
+                              flex
+                              items-center
+                              justify-center
+                              px-5
+                              py-1.25
+                              gap-2
+                              text-xs
+                              text-center
+                              border
+                              rounded-md
+                          ${statusClasses[currentBudgetStatus.toLowerCase()]}
+                            `
+                            : ""
+                        }
                       >
-                        <div
-                          className={
-                            !isEmptyObject(currentBudgetStatus)
-                              ? `
-                    w-fit
-                    flex
-                    items-center
-                    justify-center
-                    px-5
-                    py-1.25
-                    gap-2
-                    text-xs
-                    text-center
-                    border
-                    rounded-[10px]
-                ${statusClasses[currentBudgetStatus.toLowerCase()]}
-                  `
-                              : ""
-                          }
-                        >
-                          {!isEmptyObject(currentBudgetStatus)
-                            ? currentBudgetStatus
-                            : ""}
-                        </div>
-
-                        <ChevronDown />
+                        {!isEmptyObject(currentBudgetStatus)
+                          ? currentBudgetStatus
+                          : ""}
                       </div>
                     );
                   }
                 })}
-              </td>
-              <td>
-                <div
-                  className="
+                <ChevronDown />
+              </div>
+            </div>
+            <div
+              className="
+              w-fit
+              flex
+              flex-col
+              items-end
+              gap-1
+              text-sm
+              text-start
+              font-bold
+              "
+            >
+              <div
+                className="
                   w-fit
                   h-full
                   p-2
@@ -484,6 +541,7 @@ const LayoutRow = ({ data }) => {
                   rounded-md
 
                   text-gray-500
+                  duration-300
                   hover:text-blueDocument
                   border-2
                   border-secondary-dark
@@ -496,13 +554,24 @@ const LayoutRow = ({ data }) => {
                   hover:inset-shadow-secondary
                   cursor-pointer
                   "
-                >
-                  <Copy />
-                </div>
-              </td>
-              <td>
-                <div
-                  className="
+              >
+                <Copy />
+              </div>
+            </div>
+            <div
+              className="
+              w-fit
+              flex
+              flex-col
+              items-end
+              gap-1
+              text-sm
+              text-start
+              font-bold
+              "
+            >
+              <div
+                className="
                   w-fit
                   h-full
                   p-2
@@ -511,6 +580,7 @@ const LayoutRow = ({ data }) => {
                   rounded-md
 
                   border-2
+                  duration-300
                   text-rejected
                   hover:text-white
                   border-rejected
@@ -523,13 +593,32 @@ const LayoutRow = ({ data }) => {
                   hover:inset-shadow-secondary
                   cursor-pointer
                   "
-                >
-                  <Trash2 />
-                </div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+              >
+                <Trash2 />
+              </div>
+            </div>
+          </div>
+
+          <div
+            className="
+            w-full
+            flex
+            justify-end
+            "
+          >
+            <div
+              className="
+            w-fit
+            flex
+            "
+            >
+              <Button.Primary>
+                <Save />
+                Atualizar
+              </Button.Primary>
+            </div>
+          </div>
+        </section>
       )}
       <div
         className="
