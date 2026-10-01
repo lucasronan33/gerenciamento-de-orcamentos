@@ -328,7 +328,7 @@ const LayoutRow = ({ data }) => {
     }
   };
 
-  const firtsBudget = data.filteredBudgets[0];
+  const firtsBudget = budgetsSelected[budgetsSelected.length - 1];
 
   return (
     <div
@@ -410,15 +410,20 @@ const LayoutRow = ({ data }) => {
                         (prev, acc) => prev + acc.totals.total,
                         0,
                       ) -
-                        budgetsSelected.reduce(
-                          (prev, acc) =>
+                        budgetsSelected.reduce((prev, acc) => {
+                          const status = ["sketch", "sent", "rejected"];
+
+                          if (status.includes(acc.basic.status)) {
+                            return prev + acc.totals.total;
+                          }
+                          return (
                             prev +
                             acc.totals.amountPaid.reduce(
                               (p, a) => p + a.value,
                               0,
-                            ),
-                          0,
-                        ),
+                            )
+                          );
+                        }, 0),
                     )}
                   </span>
                 </div>
@@ -606,7 +611,7 @@ const LayoutRow = ({ data }) => {
 
                     return (
                       <div
-                        key={crypto.randomUUID()}
+                        key={index + crypto.randomUUID()}
                         className={
                           !isEmptyObject(currentBudgetStatus)
                             ? `
