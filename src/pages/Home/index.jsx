@@ -1,6 +1,7 @@
 import "./style.css";
 
 import {
+  BrushCleaning,
   ChevronDown,
   Copy,
   EllipsisVertical,
@@ -318,6 +319,26 @@ const LayoutRow = ({ data }) => {
     try {
       setIsDeleting(true);
       dispatch(deleteBudgetRequest(budget));
+      setIsDeleteModalOpen(false);
+      setBudgetMenuOpen(false);
+    } catch {
+      setIsDeleteModalOpen(false);
+      setBudgetMenuOpen(false);
+    } finally {
+      setIsDeleting(false);
+      setBudgetMenuOpen(false);
+    }
+  };
+
+  const handleMultipleDelete = async (budget) => {
+    if (!budget.length > 0) {
+      setIsDeleteModalOpen(false);
+      setBudgetMenuOpen(false);
+      return;
+    }
+    try {
+      setIsDeleting(true);
+      budget.map((b) => dispatch(deleteBudgetRequest(b)));
       setIsDeleteModalOpen(false);
       setBudgetMenuOpen(false);
     } catch {
@@ -707,21 +728,10 @@ const LayoutRow = ({ data }) => {
             </div>
             <div
               className="
-              w-fit
-              flex
-              flex-col
-              items-end
-              gap-1
-              text-sm
-              text-start
-              font-bold
-              "
-            >
-              <div
-                className="
                   w-fit
-                  h-full
-                  p-2
+                  h-fit
+                  self-end
+                  p-3
                   flex
                   items-center
                   rounded-md
@@ -740,27 +750,43 @@ const LayoutRow = ({ data }) => {
                   hover:inset-shadow-secondary
                   cursor-pointer
                   "
-              >
-                <Copy />
-              </div>
+            >
+              <BrushCleaning />
             </div>
             <div
               className="
-              w-fit
-              flex
-              flex-col
-              items-end
-              gap-1
-              text-sm
-              text-start
-              font-bold
-              "
-            >
-              <div
-                className="
                   w-fit
-                  h-full
-                  p-2
+                  h-fit
+                  self-end
+                  p-3
+                  flex
+                  items-center
+                  rounded-md
+
+                  text-gray-500
+                  duration-300
+                  hover:text-blueDocument
+                  border-2
+                  border-secondary-dark
+                  bg-secondary-dark
+                  inset-shadow-sm
+                  inset-shadow-primary-dark
+                  hover:border-blueHover
+                  hover:bg-blueHover
+                  hover:inset-shadow-sm
+                  hover:inset-shadow-secondary
+                  cursor-pointer
+                  "
+            >
+              <Copy />
+            </div>
+            <div
+              onClick={() => setIsDeleteModalOpen(true)}
+              className="
+                  w-fit
+                  h-fit
+                  self-end
+                  p-3
                   flex
                   items-center
                   rounded-md
@@ -779,9 +805,8 @@ const LayoutRow = ({ data }) => {
                   hover:inset-shadow-secondary
                   cursor-pointer
                   "
-              >
-                <Trash2 />
-              </div>
+            >
+              <Trash2 />
             </div>
           </div>
 
@@ -1206,6 +1231,70 @@ const LayoutRow = ({ data }) => {
                 </Button.Cancel>
                 <Button.Primary
                   onClick={() => handleDelete(budgetMenuOpen)}
+                  disabled={isDeleting}
+                >
+                  {isDeleting ? "Excluindo..." : "Excluir"}
+                </Button.Primary>
+              </div>
+            </div>
+          </ConfirmDeleteModal>
+        )}
+
+        {isDeleteModalOpen && budgetsSelected && (
+          <ConfirmDeleteModal>
+            <button
+              type="button"
+              className="confirm-delete-overlay"
+              aria-label="Fechar confirmacao"
+              onClick={() => setIsDeleteModalOpen(false)}
+            />
+            <div className="confirm-delete-content">
+              <h2>Excluir orçamento?</h2>
+              <p>
+                Esta ação irá{" "}
+                <span
+                  className="
+                font-bold
+                text-rejected-dark"
+                >
+                  remover
+                </span>{" "}
+                os orçamentos do seu histórico:
+                <div
+                  className="
+                  max-h-[30vh]
+                  overflow-auto
+                  pt-2
+                "
+                >
+                  {budgetsSelected.map((b, i) => (
+                    <p
+                      key={i}
+                      className="
+                      py-0.5
+                    "
+                    >
+                      <span>{`${i + 1}: `}</span>
+                      <span
+                        className="
+                        font-bold
+                        "
+                      >
+                        {b.basic.title}{" "}
+                      </span>
+                    </p>
+                  ))}
+                </div>
+              </p>
+              <div className="confirm-delete-actions">
+                <Button.Cancel
+                  onClick={() => setIsDeleteModalOpen(false)}
+                  disabled={isDeleting}
+                >
+                  Cancelar
+                </Button.Cancel>
+                <Button.Primary
+                  onClick={() => handleMultipleDelete(budgetsSelected)}
                   disabled={isDeleting}
                 >
                   {isDeleting ? "Excluindo..." : "Excluir"}
