@@ -222,6 +222,7 @@ const LayoutRow = ({ data }) => {
   const [menuPosition, setMenuPosition] = useState({ top: 0, left: 0 });
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
+  const [modalStatusOpen, setModalStatusOpen] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -582,6 +583,7 @@ const LayoutRow = ({ data }) => {
               </span>
 
               <div
+                onClick={() => setModalStatusOpen(!modalStatusOpen)}
                 className="
                 w-full
                 h-full
@@ -596,8 +598,69 @@ const LayoutRow = ({ data }) => {
                 duration-300
                 hover:bg-blueHover
                 cursor-pointer
+                relative
               "
               >
+                <div
+                  onClick={(e) => e.stopPropagation()}
+                  className={`
+                    w-full
+                    ${modalStatusOpen ? "flex" : "hidden"}
+                    flex-col
+                    items-center
+                    absolute
+                    top-full
+                    left-0
+                    py-2
+                    cursor-pointer
+                    border
+                    rounded-t-none
+                    rounded-lg
+                    bg-secondary
+                    shadow-lg
+                    shadow-blueHover
+                    font-normal
+                    z-20
+                    `}
+                >
+                  {budgetStatus.map((status, index) => (
+                    <div
+                      key={index}
+                      className="
+                      w-full
+                      py-1.5
+                      flex
+                      items-center
+                      justify-center
+                      hover:bg-secondary-dark
+                      "
+                    >
+                      <div
+                        key={index + crypto.randomUUID()}
+                        className={`
+                              w-[75%]
+                              h-full
+                              flex
+                              items-center
+                              justify-center
+                              px-5
+                              py-1
+                              gap-2
+                              text-xs
+                              text-center
+                              border
+                              rounded-md
+                          bg-${status.value}
+                          border-${status.value}-dark
+                          text-${status.value}-dark
+                            `}
+                      >
+                        {status.text}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
                 {rowData(firtsBudget).map((line, index) => {
                   if (budgetStatus.map((obj) => obj.text).includes(line.data)) {
                     const currentBudgetStatus = budgetStatus.reduce(
