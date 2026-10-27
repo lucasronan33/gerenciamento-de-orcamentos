@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { Eye, EyeOff } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import validator from "validator";
 import {
@@ -83,7 +83,7 @@ export default function LoginContent({ modalVisible, setModalVisible }) {
 
   return (
     <motion.form
-      onMouseUp={(e) => e.stopPropagation()}
+      onClick={(e) => e.stopPropagation()}
       initial={{
         opacity: 0,
         y: 24,
@@ -97,21 +97,93 @@ export default function LoginContent({ modalVisible, setModalVisible }) {
         amount: 0.3,
       }}
       transition={{
-        duration: 0.45,
+        duration: 0.5,
         ease: "easeOut",
       }}
       onSubmit={handleSubmit}
-      className="z-99 bg-accent/50 flex min-h-[70vh] w-full max-w-xl flex-col items-center justify-around rounded-[2vh] p-[4vh] shadow-[-1vh_2vh_3vh_rgba(0,0,0,0.2)]"
+      className="
+      z-99
+      bg-accent/50
+      flex
+      min-h-[70vh]
+      w-full
+      max-w-xl
+      flex-col
+      items-center
+      justify-around
+      rounded-[2vh]
+      p-[4vh]
+      shadow-[-1vh_2vh_3vh_rgba(0,0,0,0.2)]
+      "
     >
-      <header className="flex flex-row items-center justify-center pb-3">
-        <h1 className="text-5xl font-extrabold"> Login </h1>
-        <div className="h-[4vh] self-start justify-self-start"> </div>
-      </header>
+      <motion.header
+        initial={{
+          opacity: 0,
+          y: 24,
+        }}
+        whileInView={{
+          opacity: 1,
+          y: 0,
+        }}
+        viewport={{
+          once: true,
+          amount: 0.3,
+        }}
+        transition={{
+          delay: 0.3 - 0.2,
+          duration: 0.5,
+          ease: "easeOut",
+        }}
+        className="
+        pb-3
+        "
+      >
+        <h1
+          className="
+        text-5xl
+        m-auto
+        font-extrabold
+        "
+        >
+          Login
+        </h1>
+      </motion.header>
       <div
         className="
-        w - full flex flex-1 flex-col place-items-center place-content-start "
+        w-full
+        flex
+        flex-1
+        flex-col
+        place-items-center
+        place-content-start
+        "
       >
-        <div className="w-full flex flex-col gap-[1vh] py-5">
+        <motion.div
+          initial={{
+            opacity: 0,
+            y: 24,
+          }}
+          whileInView={{
+            opacity: 1,
+            y: 0,
+          }}
+          viewport={{
+            once: true,
+            amount: 0.3,
+          }}
+          transition={{
+            delay: 0.5 - 0.2,
+            duration: 0.5,
+            ease: "easeOut",
+          }}
+          className="
+          w-full
+          flex
+          flex-col
+          gap-[1vh]
+          py-5
+          "
+        >
           <Form.Label name="email" text="E-mail" />
           <Form.Input
             name="email"
@@ -121,12 +193,42 @@ export default function LoginContent({ modalVisible, setModalVisible }) {
             onChange={handleChange}
           />
           {formErrors.email && (
-            <span className="text-sm font-semibold text-error">
+            <span
+              className="
+            text-sm
+            font-semibold
+            text-error
+            "
+            >
               {formErrors.email}
             </span>
           )}
-        </div>
-        <div className="w-full flex flex-col gap-[1vh] py-5">
+        </motion.div>
+        <motion.div
+          initial={{
+            opacity: 0,
+            y: 24,
+          }}
+          whileInView={{
+            opacity: 1,
+            y: 0,
+          }}
+          viewport={{
+            once: true,
+            amount: 0.3,
+          }}
+          transition={{
+            delay: 0.7 - 0.2,
+            duration: 0.5,
+            ease: "easeOut",
+          }}
+          className="
+        w-full
+        flex
+        flex-col
+        gap-[1vh]
+        py-5"
+        >
           <Form.Label name="password" text="Senha" />
           <Form.Input
             name="password"
@@ -134,53 +236,152 @@ export default function LoginContent({ modalVisible, setModalVisible }) {
             placeholder="Digite sua senha para fazer login"
             value={formData.password}
             onChange={handleChange}
-            endIcon={showPassword ? <Eye size={18} /> : <EyeOff size={18} />}
-            onEndIconClick={() => setShowPassword((prevState) => !prevState)}
+            endIcon={
+              <div
+                onClick={() => {
+                  setShowPassword((prevState) => !prevState);
+                }}
+                className="
+                px-5
+                text-white
+                flex
+                items-center
+                cursor-pointer
+                "
+              >
+                {showPassword ? <Eye size={18} /> : <EyeOff size={18} />}
+              </div>
+            }
             aria-label={showPassword ? "Ocultar senha" : "Mostrar senha"}
             title={showPassword ? "Ocultar senha" : "Mostrar senha"}
           />
           {formErrors.password && (
-            <span className="text-sm font-semibold text-error">
+            <span
+              className="
+            text-sm
+            font-semibold
+            text-error"
+            >
               {formErrors.password}
             </span>
           )}
-        </div>
-        <div className="flex h-fit w-full flex-row flex-wrap items-center justify-between gap-y-4 pb-[7vh]">
-          <Link
-            className="text-base text-[#aaa] underline"
-            to="forgot-password"
-          >
-            Esqueci minha senha
-          </Link>
-        </div>
-        {hasGoogleClientId ? (
-          <GoogleLogin
-            theme="filled_blue"
-            onSuccess={(credentialResponse) => {
-              dispatch(
-                googleLoginRequest({
-                  credential: credentialResponse.credential,
-                }),
-              );
-            }}
-            onError={() =>
-              toast.error("Nao foi possivel iniciar o login com Google.")
-            }
-          />
-        ) : (
-          <span className="text-sm font-semibold text-error">
-            Login com Google indisponivel no momento.
-          </span>
-        )}
+        </motion.div>
+        <motion.div
+          initial={{
+            opacity: 0,
+            y: 0,
+          }}
+          whileInView={{
+            opacity: 1,
+            y: 0,
+          }}
+          viewport={{
+            once: true,
+            amount: 0.3,
+          }}
+          transition={{
+            delay: 0.9 - 0.2,
+            duration: 0.5,
+            ease: "easeOut",
+          }}
+          onClick={() => navigate("/forgot-password")}
+          className="
+        flex
+        h-fit
+        self-end
+        flex-row
+        flex-wrap
+        items-center
+        justify-between
+        gap-y-4
+        mb-[7vh]
+        text-secondary-text-dark
+        underline
+        duration-300
+        hover:text-blueDocument
+        cursor-pointer
+        "
+        >
+          Esqueci minha senha
+        </motion.div>
+        <motion.div
+          initial={{
+            opacity: 0,
+            y: 24,
+          }}
+          whileInView={{
+            opacity: 1,
+            y: 0,
+          }}
+          viewport={{
+            once: true,
+            amount: 0.3,
+          }}
+          transition={{
+            delay: 1.1 - 0.2,
+            duration: 0.5,
+            ease: "easeOut",
+          }}
+        >
+          {hasGoogleClientId ? (
+            <GoogleLogin
+              theme="filled_blue"
+              onSuccess={(credentialResponse) => {
+                dispatch(
+                  googleLoginRequest({
+                    credential: credentialResponse.credential,
+                  }),
+                );
+              }}
+              onError={() =>
+                toast.error("Nao foi possivel iniciar o login com Google.")
+              }
+            />
+          ) : (
+            <span className="text-sm font-semibold text-error">
+              Login com Google indisponivel no momento.
+            </span>
+          )}
+        </motion.div>
       </div>
-      <div className="mt-4 flex w-full flex-col justify-center items-center gap-6 sm:flex-row">
-        <Button.Secondary onClick={() => setModalVisible("register")}>
+      <motion.div
+        initial={{
+          opacity: 0,
+          y: 24,
+        }}
+        whileInView={{
+          opacity: 1,
+          y: 0,
+        }}
+        viewport={{
+          once: true,
+          amount: 0.3,
+        }}
+        transition={{
+          delay: 1.3 - 0.2,
+          duration: 0.5,
+          ease: "easeOut",
+        }}
+        className="
+      mt-4
+      flex
+      w-full
+      flex-col
+      justify-center
+      items-center
+      gap-6
+      sm:flex-row"
+      >
+        <Button.Secondary
+          type="button"
+          onClick={() => setModalVisible("register")}
+        >
           Cadastre - se
         </Button.Secondary>
         <Button.Primary type="submit" disabled={isLoading}>
           {isLoading ? "Entrando..." : "Entrar"}
         </Button.Primary>
-      </div>
+      </motion.div>
     </motion.form>
   );
 }

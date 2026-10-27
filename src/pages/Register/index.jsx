@@ -121,7 +121,7 @@ export default function RegisterContent({ modalVisible, setModalVisible }) {
   }, [modalVisible]);
   return (
     <motion.form
-      onMouseUp={(e) => e.stopPropagation()}
+      onClick={(e) => e.stopPropagation()}
       initial={{ opacity: 0, y: 24 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.3 }}
@@ -194,8 +194,22 @@ export default function RegisterContent({ modalVisible, setModalVisible }) {
             placeholder="Digite sua senha"
             value={formData.senha}
             onChange={handleChange}
-            endIcon={showPassword ? <Eye size={18} /> : <EyeOff size={18} />}
-            onEndIconClick={() => setShowPassword((prevState) => !prevState)}
+            endIcon={
+              <div
+                onClick={() => {
+                  setShowPassword((prevState) => !prevState);
+                }}
+                className="
+                px-5
+                text-white
+                flex
+                items-center
+                cursor-pointer
+                "
+              >
+                {showPassword ? <Eye size={18} /> : <EyeOff size={18} />}
+              </div>
+            }
             aria-label={showPassword ? "Ocultar senha" : "Mostrar senha"}
             title={showPassword ? "Ocultar senha" : "Mostrar senha"}
           />
@@ -212,8 +226,22 @@ export default function RegisterContent({ modalVisible, setModalVisible }) {
             placeholder="Confirme sua senha"
             value={formData.confirmarSenha}
             onChange={handleChange}
-            endIcon={showPassword ? <Eye size={18} /> : <EyeOff size={18} />}
-            onEndIconClick={() => setShowPassword((prevState) => !prevState)}
+            endIcon={
+              <div
+                onClick={() => {
+                  setShowPassword((prevState) => !prevState);
+                }}
+                className="
+                px-5
+                text-white
+                flex
+                items-center
+                cursor-pointer
+                "
+              >
+                {showPassword ? <Eye size={18} /> : <EyeOff size={18} />}
+              </div>
+            }
             aria-label={showPassword ? "Ocultar senha" : "Mostrar senha"}
             title={showPassword ? "Ocultar senha" : "Mostrar senha"}
           />

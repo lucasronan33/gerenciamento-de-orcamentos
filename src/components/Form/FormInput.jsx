@@ -1,20 +1,12 @@
 import propTypes from "prop-types";
 import "./style.css";
 
-export function FormInput({ placeholder, endIcon, onEndIconClick, ...rest }) {
+export function FormInput({ placeholder, endIcon, ...rest }) {
   if (endIcon) {
     return (
       <div className="form-budget-input-with-icon">
         <input id={rest.id || rest.name} placeholder={placeholder} {...rest} />
-        <button
-          type="button"
-          onClick={onEndIconClick}
-          aria-label={rest["aria-label"]}
-          title={rest.title}
-          {...rest}
-        >
-          {endIcon}
-        </button>
+        {endIcon}
       </div>
     );
   }
@@ -28,5 +20,4 @@ FormInput.propTypes = {
   typeInput: propTypes.string,
   placeholder: propTypes.string,
   endIcon: propTypes.node,
-  onEndIconClick: propTypes.func,
 };
